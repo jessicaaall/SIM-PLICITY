@@ -1,7 +1,7 @@
 # Tugas Besar IF2212 Pemrograman Berorientasi Objek STI K01 Kelompok 3
 
 ## **Sim-Plicity**
-#### Sim-Plicity merupakan blablabla. Fitur-fitur yang terdapat dalam game ini di antaranya:
+Sim-Plicity merupakan blablabla. Fitur-fitur yang terdapat dalam game ini di antaranya :
 - Blabla
 - Blabla
 - Blabla
