@@ -16,7 +16,7 @@ public class MainMenuPanel extends JPanel {
         setPreferredSize(new Dimension(640, 640));
 
     }
-    public void paint(Graphics g){
+    public void paintComponent(Graphics g){
         Graphics2D g2D = (Graphics2D) g;
         g2D.setPaint(Color.black);
         g2D.setFont(new Font("Comic Sans", Font.BOLD, 80));
