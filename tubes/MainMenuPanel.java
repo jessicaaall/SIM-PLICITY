@@ -13,13 +13,13 @@ public class MainMenuPanel extends JPanel {
 //        gbc.insets = new Insets(50,0,0,0);
         MenuPanel menuPanel = new MenuPanel();
         this.add(menuPanel);
-        setPreferredSize(new Dimension(800, 800));
+        setPreferredSize(new Dimension(640, 640));
 
     }
     public void paint(Graphics g){
         Graphics2D g2D = (Graphics2D) g;
         g2D.setPaint(Color.black);
-        g2D.setFont(new Font("Comic Sans", Font.BOLD, 100));
-        g2D.drawString("Sim-Plicity", 150, 100);
+        g2D.setFont(new Font("Comic Sans", Font.BOLD, 80));
+        g2D.drawString("Sim-Plicity", 120, 120);
     }
 }

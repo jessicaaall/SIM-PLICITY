@@ -12,15 +12,15 @@ public class MenuPanel extends JPanel implements ActionListener {
         // set the panel properties
 //        setLayout(new GridLayout(3, 1));
         setLayout(null);
-        setBounds(200,200, 400,300);
-        setPreferredSize(new Dimension(400,300));
+        setBounds(160,160, 320,240);
+        setPreferredSize(new Dimension(320,240));
         // create and add button
         startButton = new MainMenuButton("Start");
         helpButton = new MainMenuButton("Help");
         exitButton = new MainMenuButton("Exit");
-        startButton.setBounds(0, 0, 400, 100);
-        helpButton.setBounds(0, 100, 400, 100);
-        exitButton.setBounds(0, 200, 400, 100);
+        startButton.setBounds(0, 0, 320, 80);
+        helpButton.setBounds(0, 80, 320, 80);
+        exitButton.setBounds(0, 160, 320, 80);
         add(startButton);
         add(helpButton);
         add(exitButton);
