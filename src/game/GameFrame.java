@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameFrame extends JFrame {
-    GameFrame(){
+    public GameFrame(){
 //        GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         setTitle("Sim-Plicity Kelompok 3");
 //        setSize(800, 640);

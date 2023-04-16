@@ -6,12 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class WorldPanel extends JPanel implements Runnable{
-    World world;
-    final int UNIT_SIZE = 8;
-    final int WORLD_WIDTH = 640;
-    final int WORLD_HEIGHT= 640;
+    private World world;
+    public final int UNIT_SIZE = 8;
+    public final int WORLD_WIDTH = 640;
+    public final int WORLD_HEIGHT= 640;
 
-    WorldPanel(World world) {
+    public WorldPanel(World world) {
         this.world = world;
         setPreferredSize(new Dimension(640, 640));
         setLayout(null);
@@ -20,6 +20,13 @@ public class WorldPanel extends JPanel implements Runnable{
 
     Thread mainThread;
     int FPS = 60;
+
+    public World getWorld() {
+        return world;
+    }
+    public void setWorld(World world){
+        this.world = world;
+    }
 
     public void startMainThread(){
         mainThread = new Thread(this);

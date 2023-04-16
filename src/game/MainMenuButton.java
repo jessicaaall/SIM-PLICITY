@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainMenuButton extends JButton {
-    MainMenuButton(String text){
+    public MainMenuButton(String text){
         this.setText(text);
         this.setFocusable(false);
         this.setHorizontalTextPosition(JButton.CENTER);
