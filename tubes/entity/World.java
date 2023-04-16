@@ -1,23 +1,21 @@
-package game;
-import java.util.ArrayList;
+package entity;
 
 public class World {
-    /*
     private int panjang;
     private int lebar;
-    private ArrayList<Rumah> daftarRumah;
+//    private ArrayList<Rumah> daftarRumah;
     private int jumlahSim;
-    private ArrayList<Sim> daftarSim;
-    private Waktu waktu;
+//    private ArrayList<Sim> daftarSim;
+//    private Waktu waktu;
 
     //pembuatan world menggunakan design pattern Singleton
     private static World world = new World();
     private World(){
         panjang = 64;
         lebar = 64;
-        daftarRumah = new ArrayList<Rumah>();
-        daftarSim = new ArrayList<Sim>();
-        waktu = new Waktu();
+//        daftarRumah = new ArrayList<Rumah>();
+//        daftarSim = new ArrayList<Sim>();
+//        waktu = new Waktu();
     }
     public static World getWorld(){
         return world;
@@ -31,28 +29,28 @@ public class World {
         return lebar;
     }
 
-    public ArrayList<Rumah> getDaftarRumah() {
+    /*public ArrayList<Rumah> getDaftarRumah() {
         return daftarRumah;
-    }
+    }*/
 
     public int getJumlahSim() {
         return jumlahSim;
     }
 
-    public ArrayList<Sim> getDaftarSim() {
+   /* public ArrayList<Sim> getDaftarSim() {
         return daftarSim;
-    }
-    public void tambahSim(Sim sim){
+    }*/
+    /*public void tambahSim(Sim sim){
         daftarSim.add(sim);
         jumlahSim++;
-    }
-
+    }*/
+    /*
     public Waktu getWaktu() {
         return waktu;
-    }
+    }*/
+    /*
     public void increaseWaktu() throws InterruptedException {
         waktu.setDetik(waktu.getDetik+1);
         Thread.sleep(1000);
-    }
-     */
+    }*/
 }

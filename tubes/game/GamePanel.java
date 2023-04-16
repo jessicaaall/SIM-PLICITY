@@ -1,9 +1,10 @@
 package game;
+
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class GamePanel  {
+public class GamePanel extends JPanel implements Runnable {
+    @Override
+    public void run() {
 
+    }
 }
