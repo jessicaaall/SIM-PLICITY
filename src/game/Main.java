@@ -8,7 +8,7 @@ public class Main {
         MainMenuPanel mainMenuPanel = new MainMenuPanel(mainPanel);
         //frame.setBackground(Color.pink);
         mainPanel.add(mainMenuPanel);
-        frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
+        frame.getContentPane().add(mainPanel);
         frame.pack();
         frame.setVisible(true);
         frame.setResizable(false);

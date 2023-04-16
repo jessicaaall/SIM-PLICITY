@@ -11,5 +11,6 @@ public class GameFrame extends JFrame {
 //        device.setFullScreenWindow(this);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+//        setBounds(0,0, 800, 640);
     }
 }

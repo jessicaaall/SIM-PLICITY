@@ -1,8 +1,8 @@
 package entity;
 
 public class World {
-    private int panjang;
-    private int lebar;
+    private int width;
+    private int height;
 //    private ArrayList<Rumah> daftarRumah;
     private int jumlahSim;
 //    private ArrayList<Sim> daftarSim;
@@ -11,8 +11,8 @@ public class World {
     //pembuatan world menggunakan design pattern Singleton
     private static World world = new World();
     private World(){
-        panjang = 64;
-        lebar = 64;
+        height = 64;
+        width = 64;
 //        daftarRumah = new ArrayList<Rumah>();
 //        daftarSim = new ArrayList<Sim>();
 //        waktu = new Waktu();
@@ -21,12 +21,12 @@ public class World {
         return world;
     }
 
-    public int getPanjang() {
-        return panjang;
+    public int getWidth() {
+        return width;
     }
 
-    public int getLebar() {
-        return lebar;
+    public int getHeight() {
+        return height;
     }
 
     /*public ArrayList<Rumah> getDaftarRumah() {
