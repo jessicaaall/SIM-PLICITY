@@ -1,3 +1,4 @@
+package game;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -39,6 +40,7 @@ public class MenuPanel extends JPanel implements ActionListener {
             // TODO: implement help screen logic
             System.out.println("Opening help screen...");
         } else if (e.getSource() == exitButton) {
+            System.out.println("Exit the program...");
             System.exit(0);
         }
     }

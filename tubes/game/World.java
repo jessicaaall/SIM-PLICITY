@@ -1,3 +1,4 @@
+package game;
 import java.util.ArrayList;
 
 public class World {
@@ -8,6 +9,8 @@ public class World {
     private int jumlahSim;
     private ArrayList<Sim> daftarSim;
     private Waktu waktu;
+
+    //pembuatan world menggunakan design pattern Singleton
     private static World world = new World();
     private World(){
         panjang = 64;
@@ -48,7 +51,7 @@ public class World {
         return waktu;
     }
     public void increaseWaktu() throws InterruptedException {
-        Waktu.setDetik(Waktu.getDetik+1);
+        waktu.setDetik(waktu.getDetik+1);
         Thread.sleep(1000);
     }
      */
