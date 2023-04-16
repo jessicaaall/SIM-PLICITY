@@ -16,6 +16,9 @@ Sim-Plicity merupakan blablabla. Fitur-fitur yang terdapat dalam game ini di ant
 | 18221107 | Ken Azizan | | 
 | 18221161 | Reyhan Putra Ananda | | 
 
+### Panduan pengerjaan
+1. mau nambah class bisa ke folder tubes/game
+2. tambah file .java nya, jangan lupa tambahin "package game;" di baris pertama program
 
 ### **Tahapan Kompilasi**
 1. Blabla
