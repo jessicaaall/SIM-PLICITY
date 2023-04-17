@@ -14,9 +14,9 @@ public class HelpPanel extends JPanel implements ActionListener {
         backButton = new JButton("Back to Main Menu");
         setLayout(null);
         setPreferredSize(mp.getPreferredSize());
-        setBounds(0,0, 800, 640);
+        setBounds(0,0, mp.width, mp.height);
         setVisible(true);
-        backButton.setBounds(300, 480, 200, 100);
+        backButton.setBounds((mp.width -200)/2, mp.height-150, 200, 100);
         backButton.setFocusable(false);
         backButton.setHorizontalTextPosition(JButton.CENTER);
         backButton.setVerticalTextPosition(JButton.CENTER);
@@ -24,6 +24,7 @@ public class HelpPanel extends JPanel implements ActionListener {
         backButton.setForeground(Color.black);
         backButton.addActionListener(this);
         add(backButton);
+        setDoubleBuffered(true);
 //        backButton.setVisible(true);
     }
 
@@ -38,7 +39,7 @@ public class HelpPanel extends JPanel implements ActionListener {
         g2d.setFont(new Font("Impact",Font.PLAIN,25));
         g2d.setPaint(Color.black);
         for (String line:lines){
-            g2d.drawString(line, 200, y);
+            g2d.drawString(line, 1*mp.width/5, y);
             y += 30;
         }
     }

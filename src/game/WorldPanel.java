@@ -20,8 +20,8 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     public int WORLD_WIDTH;
     public int WORLD_HEIGHT;
     private int mapX =0, mapY=0;
-    private int cameraWidth = 640;
-    private int cameraHeight = 640;
+    private int cameraWidth;
+    private int cameraHeight;
     private int lastMouseX, lastMouseY;
 //    private Rumah[][] koordinat;
     public MainMenuPanel mmp;
@@ -32,11 +32,13 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     Sound sound = new Sound();
     public WorldPanel(World world, MainPanel mp) {
         this.mp = mp;
+        cameraWidth = mp.height-50;
+        cameraHeight = mp.height-50;
         toMainMenuButton.setFocusable(false);
         toMainMenuButton.setHorizontalTextPosition(JButton.CENTER);
         toMainMenuButton.setVerticalTextPosition(JButton.CENTER);
-        toMainMenuButton.setFont(new Font("Comic Sans", Font.BOLD, 25));
-        toMainMenuButton.setBounds(5,5,50, 50);
+        toMainMenuButton.setFont(new Font("Comic Sans", Font.BOLD, 15));
+        toMainMenuButton.setBounds(5,5,30, 30);
         toMainMenuButton.addActionListener(this);
         toMainMenuButton.setBackground(Color.yellow);
         this.mp.add(toMainMenuButton);
@@ -46,11 +48,12 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         this.world = world;
         WORLD_WIDTH = world.getWidth()*UNIT_SIZE;
         WORLD_HEIGHT= world.getHeight()*UNIT_SIZE;
-        setPreferredSize(new Dimension(640, 640));
+        setPreferredSize(new Dimension(cameraWidth, cameraHeight));
         setLayout(null);
-        setBounds(0, 0, 640, 640);
+        setBounds(0, (mp.height-cameraHeight)/2, cameraWidth, cameraHeight);
         addMouseListener(this);
         addMouseMotionListener(this);
+        setDoubleBuffered(true);
         playMusic(0);
     }
 
