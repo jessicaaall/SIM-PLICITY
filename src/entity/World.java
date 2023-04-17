@@ -9,16 +9,12 @@ public class World {
 //    private Waktu waktu;
 
     //pembuatan world menggunakan design pattern Singleton
-    private static World world = new World();
-    private World(){
+    public World(){
         height = 64;
         width = 64;
 //        daftarRumah = new ArrayList<Rumah>();
 //        daftarSim = new ArrayList<Sim>();
 //        waktu = new Waktu();
-    }
-    public static World getWorld(){
-        return world;
     }
 
     public int getWidth() {

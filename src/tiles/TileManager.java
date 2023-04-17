@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class TileManager {
     WorldPanel wp;
+    //HousePane hp;
     Tile[] tiles;
     public TileManager(WorldPanel worldPanel){
         wp = worldPanel;

@@ -3,24 +3,44 @@ package game;
 import entity.World;
 import tiles.TileManager;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Objects;
 
-public class WorldPanel extends JPanel implements Runnable, MouseListener, MouseMotionListener {
+public class WorldPanel extends JPanel implements Runnable, MouseListener, MouseMotionListener, ActionListener {
     private World world;
+    private MainPanel mp;
+    private boolean isDragging = false;
     public final int UNIT_SIZE = 40;
     public int WORLD_WIDTH;
     public int WORLD_HEIGHT;
-    private int mapX, mapY;
+    private int mapX =0, mapY=0;
+    private int cameraWidth = 640;
+    private int cameraHeight = 640;
     private int lastMouseX, lastMouseY;
 //    private Rumah[][] koordinat;
+    public MainMenuPanel mmp;
+
+    public JButton toMainMenuButton = new JButton("X");
 
     TileManager tileManager = new TileManager(this);
+    Sound sound = new Sound();
+    public WorldPanel(World world, MainPanel mp) {
+        this.mp = mp;
+        toMainMenuButton.setFocusable(false);
+        toMainMenuButton.setHorizontalTextPosition(JButton.CENTER);
+        toMainMenuButton.setVerticalTextPosition(JButton.CENTER);
+        toMainMenuButton.setFont(new Font("Comic Sans", Font.BOLD, 25));
+        toMainMenuButton.setBounds(5,5,50, 50);
+        toMainMenuButton.addActionListener(this);
+        toMainMenuButton.setBackground(Color.yellow);
+        this.mp.add(toMainMenuButton);
 
-    public WorldPanel(World world) {
         mapX = 0;
         mapY = 0;
         this.world = world;
@@ -31,6 +51,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         setBounds(0, 0, 640, 640);
         addMouseListener(this);
         addMouseMotionListener(this);
+        playMusic(0);
     }
 
     Thread mainThread;
@@ -46,6 +67,18 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     public void startMainThread(){
         mainThread = new Thread(this);
         mainThread.start();
+    }
+    public void playMusic(int i){
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+    public void stopMusic(){
+        sound.stop();
+    }
+    public void playSFX(int i){
+        sound.setFile(i);
+        sound.play();
     }
     @Override
     public void run() {
@@ -84,19 +117,19 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.translate(mapX, mapY);
+        g2d.translate(-mapX, -mapY);
+//        g2d.transform(transform);
         for (int i = 0; i < world.getWidth(); i++){
             for (int j = 0; j < world.getHeight(); j++){
-                tileManager.draw(g2d, i*UNIT_SIZE-mapX, j*UNIT_SIZE-mapY);
+                tileManager.draw(g2d, i*UNIT_SIZE, j*UNIT_SIZE);
 
             }
         }
         for (int i = 0; i <= world.getWidth(); i++){
             int linePos = i*UNIT_SIZE;
-            g2d.drawLine(linePos - mapX, 0-mapY, linePos-mapX, world.getWidth()*UNIT_SIZE-mapY);
-            g2d.drawLine(0 - mapX, linePos-mapY, world.getWidth()*UNIT_SIZE-mapX, linePos-mapY);
+            g2d.drawLine(linePos, 0, linePos, world.getWidth()*UNIT_SIZE);
+            g2d.drawLine(0, linePos, world.getWidth()*UNIT_SIZE, linePos);
         }
-        g2d.fillOval(mapX, mapY, UNIT_SIZE, UNIT_SIZE);
         g2d.dispose();
     }
 
@@ -111,6 +144,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             // start dragging the map
             lastMouseX = e.getX();
             lastMouseY = e.getY();
+            isDragging = true;
         }
     }
 
@@ -118,6 +152,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
             // stop dragging the map
+            isDragging = false;
         }
     }
 
@@ -135,21 +170,41 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     public void mouseDragged(MouseEvent e) {
         if (SwingUtilities.isLeftMouseButton(e)) {
             // update the position of the map based on the mouse movement
-            int dx = e.getX() - lastMouseX;
-            int dy = e.getY() - lastMouseY;
-            mapX += dx;
-            mapY += dy;
-            // limit the map position to prevent scrolling too far out of bounds
-            mapX = Math.max(Math.min(mapX, getWidth() - world.getWidth()), 0);
-            mapY = Math.max(Math.min(mapY, getHeight() - world.getHeight()), 0);
-            lastMouseX = e.getX();
-            lastMouseY = e.getY();
-            repaint();
+            if (isDragging) {
+                int dx = e.getX() - lastMouseX;
+                int dy = e.getY() - lastMouseY;
+                mapX += dx;
+                mapY += dy;
+                // limit the map position to prevent scrolling too far out of bounds
+                mapX = Math.max(Math.min(mapX, getWidth() - world.getWidth()), 0);
+                mapY = Math.max(Math.min(mapY, getHeight() - world.getHeight()), 0);
+                //update the transform
+//            transform = new AffineTransform();
+//            transform.translate(mapX, mapY);
+                lastMouseX = e.getX();
+                lastMouseY = e.getY();
+                repaint();
+            }
         }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == toMainMenuButton){
+            System.out.println("Exit Game");
+            stopMusic();
+            this.mainThread.interrupt();
+            this.mainThread =null;
+            mp.remove(toMainMenuButton);
+            mp.add(mmp, BorderLayout.CENTER);
+            mp.remove(this);
+            mp.revalidate();
+            mp.repaint();
+        }
     }
 }

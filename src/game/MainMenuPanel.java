@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 public class MainMenuPanel extends JPanel {
     GridBagConstraints gbc;
     private MainPanel mainPanel;
+    private HelpPanel helpPanel;
+    private MainMenuPanel mmp = this;
     private class MenuPanel extends JPanel implements ActionListener {
 
         private MainMenuButton startButton;
@@ -37,13 +39,18 @@ public class MainMenuPanel extends JPanel {
         }
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == startButton){
+            if (e.getSource().equals(startButton) ){
                 System.out.println("Starting game...");
                 mainPanel.showWorldPanel();
             }
-            else if (e.getSource() == helpButton) {
+            else if (e.getSource().equals(helpButton) ) {
                 // TODO: implement help screen logic
                 System.out.println("Opening help screen...");
+                mainPanel.remove(mmp);
+                mainPanel.add(helpPanel, BorderLayout.CENTER);
+                mainPanel.revalidate();
+                mainPanel.repaint();
+
             } else if (e.getSource() == exitButton) {
                 System.out.println("Exit the program...");
                 System.exit(0);
@@ -52,6 +59,8 @@ public class MainMenuPanel extends JPanel {
     }
     MainMenuPanel(MainPanel mainPanel){
         this.mainPanel = mainPanel;
+        this.helpPanel = new HelpPanel(mainPanel);
+        helpPanel.mmp = this;
         setLayout(null);
 //        GridBagConstraints gbc = new GridBagConstraints();
 //        gbc.gridx=0;

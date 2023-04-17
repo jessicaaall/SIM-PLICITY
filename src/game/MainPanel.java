@@ -13,17 +13,19 @@ public class MainPanel extends JPanel  {
         this.setDoubleBuffered(true);
     }
     public void showWorldPanel() {
+        World world = new World();
+        WorldPanel worldPanel = new WorldPanel(world, this);
         Component[] components = this.getComponents();
         for (Component component : components){
             if (component instanceof MainMenuPanel){
+                worldPanel.mmp = (MainMenuPanel) component;
                 remove(component);
                 break;
             }
         }
-        World world = World.getWorld();
-        WorldPanel worldPanel = new WorldPanel(world);
+
         worldPanel.startMainThread();
-        add(worldPanel, BorderLayout.CENTER);
+        add(worldPanel, BorderLayout.PAGE_START);
         revalidate(); // to update the layout
         repaint(); // to repaint the panel
     }
