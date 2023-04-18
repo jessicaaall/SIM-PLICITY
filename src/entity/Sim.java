@@ -17,12 +17,23 @@ public class Sim {
     private ArrayList<Rumah> kepemilikanRumah;
     private int waktuTidur;
 
-    // Konstruktor (Memakai singleton pattern)
-    private Sim() {} // Buat konstruktor Sim private
-    private static Sim instanceSim = new Sim(); // Buat objek Simnya
-    public static Sim getInstanceSim() { // Buat method buat return Simnya aja
-        return instanceSim;
+    // Konstruktor
+    public Sim(String namaLengkap) {
+        // Berdasarkan parameter
+        this.namaLengkap = namaLengkap;
+        
+        // Tidak berdasarkan parameter
+        this.kekenyangan = 80;
+        this.mood = 80;
+        this.kesehatan = 80;
+        this.uang = 100;
+        //this.pekerjaan = ;
+        this.status = "";
+        //this.inventory = ;
+
+
     }
+
 
     // Method : Getter
     public String getNamaLengkap() {

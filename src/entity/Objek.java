@@ -34,6 +34,4 @@ public class Objek {
         Objek objek = (Objek)obj;
         return this.id == objek.getId();
     }
-
-    
 }
