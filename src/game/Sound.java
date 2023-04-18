@@ -8,7 +8,7 @@ public class Sound {
     URL soundURL[] = new URL[30];
 
     /*
-    *Kalau Mau nambah audio sendiri bisa upload audio file format wav ke folder package res
+    *Kalau Mau nambah audio sendiri bisa upload audio file format wav ke folder package sound
     * kalau mau insert ke URL nya bisa pakai "/sound/[nama file audio].wav
      */
     public Sound(){
