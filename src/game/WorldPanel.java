@@ -16,6 +16,7 @@ import java.util.Objects;
 public class WorldPanel extends JPanel implements Runnable, MouseListener, MouseMotionListener, ActionListener {
     private World world;
     private MainPanel mp;
+    public WorldInfoPanel wip;
     private boolean isDragging = false;
     public final int UNIT_SIZE = 40;
     public int WORLD_WIDTH;
@@ -26,9 +27,9 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     private int lastMouseX, lastMouseY;
 //    private Rumah[][] koordinat;
     public MainMenuPanel mmp;
+    private int mouseHoverX = -1;
+    private int mouseHoverY = -1;
 
-    public JButton toMainMenuButton = new JButton("X");
-    public JButton addHouseButton = new JButton("Add House");
 
     TileManager tileManager = new TileManager(this);
     Sound sound = new Sound();
@@ -36,14 +37,6 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         this.mp = mp;
         cameraWidth = mp.height-50;
         cameraHeight = mp.height-50;
-        toMainMenuButton.setFocusable(false);
-        toMainMenuButton.setHorizontalTextPosition(JButton.CENTER);
-        toMainMenuButton.setVerticalTextPosition(JButton.CENTER);
-        toMainMenuButton.setFont(new Font("Comic Sans", Font.BOLD, 15));
-        toMainMenuButton.setBounds(5,5,30, 30);
-        toMainMenuButton.addActionListener(this);
-        toMainMenuButton.setBackground(Color.yellow);
-        this.mp.add(toMainMenuButton);
 
         mapX = 0;
         mapY = 0;
@@ -57,11 +50,15 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         addMouseMotionListener(this);
         setDoubleBuffered(true);
         playMusic(0);
+        wip = new WorldInfoPanel( this.mp, this);
+        mp.add(wip);
     }
 
     Thread mainThread;
     int FPS = 60;
     int currentFPS;
+
+
 
     public World getWorld() {
         return world;
@@ -125,7 +122,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.translate(-mapX, -mapY);
-        for (int i = 0; i < world.getWidth(); i++){
+        for (int i = 0; i <= world.getWidth(); i++){
             for (int j = 0; j < world.getHeight(); j++){
                 tileManager.draw(g2d, i*UNIT_SIZE, j*UNIT_SIZE);
 
@@ -162,6 +159,14 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         g2d.setColor(Color.WHITE);
         g2d.setFont(new Font("Comic Sans", Font.PLAIN, 15));
         g2d.drawString("FPS = " + currentFPS, fpsX, fpsY);
+
+        // draw the current world position under the mouse cursor
+        if (mouseHoverX >= 0 && mouseHoverX < WORLD_WIDTH && mouseHoverY >= 0 && mouseHoverY < WORLD_HEIGHT) {
+            String worldPosition = "(" + (mouseHoverX / UNIT_SIZE) + ", " + (mouseHoverY / UNIT_SIZE) + ")";
+            g2d.setColor(Color.WHITE);
+            g2d.drawString(worldPosition,  mapX + 10, mapY + cameraHeight - 20);
+        }
+
     }
 
     @Override
@@ -216,21 +221,14 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        // set mouseHoverX and mouseHoverY to the mouse position
+        mouseHoverX = e.getX() + mapX;
+        mouseHoverY = e.getY() + mapY;
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == toMainMenuButton){
-            System.out.println("Exit Game");
-            stopMusic();
-            this.mainThread.interrupt();
-            this.mainThread =null;
-            mp.remove(toMainMenuButton);
-            mp.add(mmp, BorderLayout.CENTER);
-            mp.remove(this);
-            mp.revalidate();
-            mp.repaint();
-        }
+
     }
 }
