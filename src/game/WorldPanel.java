@@ -61,6 +61,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
 
     Thread mainThread;
     int FPS = 60;
+    int currentFPS;
 
     public World getWorld() {
         return world;
@@ -107,7 +108,8 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
                 drawCount++;
             }
             if (timer >= Math.pow(10, 9)){
-                System.out.println("FPS = "+drawCount);
+//                System.out.println("FPS = "+drawCount);
+                currentFPS = drawCount;
                 drawCount = 0;
                 timer = 0;
             }
@@ -145,7 +147,15 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             g2d.setColor(color);
             g2d.fillRect(location.x*UNIT_SIZE, location.y*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
         }
-        g2d.dispose();
+
+        // calculate the position of the FPS text
+        int fpsX = mapX + 10;
+        int fpsY = mapY + 20;
+
+        // draw the FPS text
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new Font("Comic Sans", Font.PLAIN, 15));
+        g2d.drawString("FPS = " + currentFPS, fpsX, fpsY);
     }
 
     @Override
