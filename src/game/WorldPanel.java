@@ -1,5 +1,6 @@
 package game;
 
+import entity.Rumah;
 import entity.World;
 import tiles.TileManager;
 
@@ -27,6 +28,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     public MainMenuPanel mmp;
 
     public JButton toMainMenuButton = new JButton("X");
+    public JButton addHouseButton = new JButton("Add House");
 
     TileManager tileManager = new TileManager(this);
     Sound sound = new Sound();
@@ -121,7 +123,6 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.translate(-mapX, -mapY);
-//        g2d.transform(transform);
         for (int i = 0; i < world.getWidth(); i++){
             for (int j = 0; j < world.getHeight(); j++){
                 tileManager.draw(g2d, i*UNIT_SIZE, j*UNIT_SIZE);
@@ -129,9 +130,20 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             }
         }
         for (int i = 0; i <= world.getWidth(); i++){
-            int linePos = i*UNIT_SIZE;
-            g2d.drawLine(linePos, 0, linePos, world.getWidth()*UNIT_SIZE);
-            g2d.drawLine(0, linePos, world.getWidth()*UNIT_SIZE, linePos);
+            for (int j = 0; j <= world.getHeight(); j++){
+                int linePos1 = i*UNIT_SIZE;
+                int linePos2 = j*UNIT_SIZE;
+                g2d.drawLine(linePos1, 0, linePos1, world.getWidth()*UNIT_SIZE);
+                g2d.drawLine(0, linePos2, world.getWidth()*UNIT_SIZE, linePos2);
+            }
+
+        }
+        // draw houses
+        for (Rumah rumah : world.getDaftarRumah()) {
+            Point location = rumah.getLokasi();
+            Color color = rumah.getColor();
+            g2d.setColor(color);
+            g2d.fillRect(location.x*UNIT_SIZE, location.y*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
         }
         g2d.dispose();
     }
@@ -176,14 +188,11 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             if (isDragging) {
                 int dx = e.getX() - lastMouseX;
                 int dy = e.getY() - lastMouseY;
-                mapX += dx;
-                mapY += dy;
-                // limit the map position to prevent scrolling too far out of bounds
-                mapX = Math.max(Math.min(mapX, getWidth() - world.getWidth()), 0);
-                mapY = Math.max(Math.min(mapY, getHeight() - world.getHeight()), 0);
-                //update the transform
-//            transform = new AffineTransform();
-//            transform.translate(mapX, mapY);
+                mapX = Math.max(0, Math.min(mapX + dx, WORLD_WIDTH - cameraWidth));
+                mapY = Math.max(0, Math.min(mapY + dy, WORLD_HEIGHT - cameraHeight));
+//                mapX += dx;
+//                mapY += dy;
+
                 lastMouseX = e.getX();
                 lastMouseY = e.getY();
                 repaint();

@@ -7,14 +7,15 @@ import java.awt.*;
 
 public class MainPanel extends JPanel  {
     int width = 1120;
+    private World world;
     int height = 630;
-    public MainPanel(){
+    public MainPanel(World world){
+        this.world = world;
         this.setPreferredSize(new Dimension(width, height));
         this.setBackground(Color.pink);
         this.setDoubleBuffered(true);
     }
     public void showWorldPanel() {
-        World world = new World();
         WorldPanel worldPanel = new WorldPanel(world, this);
         Component[] components = this.getComponents();
         for (Component component : components){
