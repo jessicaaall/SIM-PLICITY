@@ -72,6 +72,9 @@ public class Sim {
     public void setKekenyangan(int newKekenyangan) {
         this.kekenyangan = newKekenyangan;
     }
+    public void setUang(int uang) {
+        this.uang = uang;
+    }
     
     // Method : Terkait Sim (Nonaksi)
 
