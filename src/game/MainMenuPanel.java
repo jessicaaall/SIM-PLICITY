@@ -18,7 +18,7 @@ public class MainMenuPanel extends JPanel {
             // set the panel properties
 //        setLayout(new GridLayout(3, 1));
             setLayout(null);
-            setBounds(200,160, 400,240);
+            setBounds((mainPanel.width-400)/2,160, 400,240);
             setPreferredSize(new Dimension(400,240));
             setDoubleBuffered(true);
             // create and add button
@@ -70,14 +70,15 @@ public class MainMenuPanel extends JPanel {
 //        gbc.insets = new Insets(50,0,0,0);
         MenuPanel menuPanel = new MenuPanel();
         this.add(menuPanel);
-        setPreferredSize(new Dimension(800, 640));
+        setPreferredSize(new Dimension(mainPanel.width, mainPanel.height));
+        setDoubleBuffered(true);
 
     }
     public void paintComponent(Graphics g){
         Graphics2D g2D = (Graphics2D) g;
         g2D.setPaint(Color.black);
         g2D.setFont(new Font("Comic Sans", Font.BOLD, 80));
-        g2D.drawString("Sim-Plicity", 200, 120);
+        g2D.drawString("Sim-Plicity", 32* mainPanel.width/100, 120);
 //        g2D.dispose();
     }
 

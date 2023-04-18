@@ -6,9 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainPanel extends JPanel  {
-
+    int width = 1120;
+    int height = 630;
     public MainPanel(){
-        this.setPreferredSize(new Dimension(800, 640));
+        this.setPreferredSize(new Dimension(width, height));
         this.setBackground(Color.pink);
         this.setDoubleBuffered(true);
     }
@@ -25,7 +26,7 @@ public class MainPanel extends JPanel  {
         }
 
         worldPanel.startMainThread();
-        add(worldPanel, BorderLayout.PAGE_START);
+        add(worldPanel, BorderLayout.WEST);
         revalidate(); // to update the layout
         repaint(); // to repaint the panel
     }
