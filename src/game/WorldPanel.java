@@ -145,7 +145,13 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             Point location = rumah.getLokasi();
             Color color = rumah.getColor();
             g2d.setColor(color);
-            g2d.fillRect(location.x*UNIT_SIZE, location.y*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
+            g2d.fillRect((location.x*UNIT_SIZE+(UNIT_SIZE/4)), (location.y*UNIT_SIZE+(UNIT_SIZE/2)), UNIT_SIZE/2, UNIT_SIZE/2-UNIT_SIZE/8);
+            Polygon roof = new Polygon();
+            roof.addPoint(location.x*UNIT_SIZE, location.y*UNIT_SIZE+UNIT_SIZE/2);
+            roof.addPoint(location.x*UNIT_SIZE+UNIT_SIZE/2, location.y*UNIT_SIZE);
+            roof.addPoint(location.x*UNIT_SIZE+UNIT_SIZE, location.y*UNIT_SIZE+UNIT_SIZE/2);
+            g2d.setColor(new Color(0x964B00));
+            g2d.fillPolygon(roof);
         }
 
         // calculate the position of the FPS text
