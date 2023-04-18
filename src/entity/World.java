@@ -14,9 +14,9 @@ public class World {
     public World(){
         height = 64;
         width = 64;
-//        daftarRumah = new ArrayList<Rumah>();
-//        daftarSim = new ArrayList<Sim>();
-//        waktu = new Waktu();
+        daftarRumah = new ArrayList<Rumah>();
+        daftarSim = new ArrayList<Sim>();
+        waktu = new Waktu();
     }
 
     public int getWidth() {
@@ -27,9 +27,9 @@ public class World {
         return height;
     }
 
-    /*public ArrayList<Rumah> getDaftarRumah() {
+    public ArrayList<Rumah> getDaftarRumah() {
         return daftarRumah;
-    }*/
+    }
 
     public int getJumlahSim() {
         return jumlahSim;
@@ -44,5 +44,9 @@ public class World {
     }
     public Waktu getWaktu() {
         return waktu;
+    }
+
+    public void tambahRumah(Rumah rumah){
+        daftarRumah.add(rumah);
     }
 }

@@ -1,5 +1,6 @@
 package game;
 
+import entity.Rumah;
 import entity.World;
 import tiles.TileManager;
 
@@ -27,6 +28,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     public MainMenuPanel mmp;
 
     public JButton toMainMenuButton = new JButton("X");
+    public JButton addHouseButton = new JButton("Add House");
 
     TileManager tileManager = new TileManager(this);
     Sound sound = new Sound();
@@ -59,6 +61,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
 
     Thread mainThread;
     int FPS = 60;
+    int currentFPS;
 
     public World getWorld() {
         return world;
@@ -105,7 +108,8 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
                 drawCount++;
             }
             if (timer >= Math.pow(10, 9)){
-                System.out.println("FPS = "+drawCount);
+//                System.out.println("FPS = "+drawCount);
+                currentFPS = drawCount;
                 drawCount = 0;
                 timer = 0;
             }
@@ -121,7 +125,6 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.translate(-mapX, -mapY);
-//        g2d.transform(transform);
         for (int i = 0; i < world.getWidth(); i++){
             for (int j = 0; j < world.getHeight(); j++){
                 tileManager.draw(g2d, i*UNIT_SIZE, j*UNIT_SIZE);
@@ -129,11 +132,36 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             }
         }
         for (int i = 0; i <= world.getWidth(); i++){
-            int linePos = i*UNIT_SIZE;
-            g2d.drawLine(linePos, 0, linePos, world.getWidth()*UNIT_SIZE);
-            g2d.drawLine(0, linePos, world.getWidth()*UNIT_SIZE, linePos);
+            for (int j = 0; j <= world.getHeight(); j++){
+                int linePos1 = i*UNIT_SIZE;
+                int linePos2 = j*UNIT_SIZE;
+                g2d.drawLine(linePos1, 0, linePos1, world.getWidth()*UNIT_SIZE);
+                g2d.drawLine(0, linePos2, world.getWidth()*UNIT_SIZE, linePos2);
+            }
+
         }
-        g2d.dispose();
+        // draw houses
+        for (Rumah rumah : world.getDaftarRumah()) {
+            Point location = rumah.getLokasi();
+            Color color = rumah.getColor();
+            g2d.setColor(color);
+            g2d.fillRect((location.x*UNIT_SIZE+(UNIT_SIZE/4)), (location.y*UNIT_SIZE+(UNIT_SIZE/2)), UNIT_SIZE/2, UNIT_SIZE/2-UNIT_SIZE/8);
+            Polygon roof = new Polygon();
+            roof.addPoint(location.x*UNIT_SIZE, location.y*UNIT_SIZE+UNIT_SIZE/2);
+            roof.addPoint(location.x*UNIT_SIZE+UNIT_SIZE/2, location.y*UNIT_SIZE);
+            roof.addPoint(location.x*UNIT_SIZE+UNIT_SIZE, location.y*UNIT_SIZE+UNIT_SIZE/2);
+            g2d.setColor(new Color(0x964B00));
+            g2d.fillPolygon(roof);
+        }
+
+        // calculate the position of the FPS text
+        int fpsX = mapX + 10;
+        int fpsY = mapY + 20;
+
+        // draw the FPS text
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new Font("Comic Sans", Font.PLAIN, 15));
+        g2d.drawString("FPS = " + currentFPS, fpsX, fpsY);
     }
 
     @Override
@@ -176,14 +204,9 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             if (isDragging) {
                 int dx = e.getX() - lastMouseX;
                 int dy = e.getY() - lastMouseY;
-                mapX += dx;
-                mapY += dy;
-                // limit the map position to prevent scrolling too far out of bounds
-                mapX = Math.max(Math.min(mapX, getWidth() - world.getWidth()), 0);
-                mapY = Math.max(Math.min(mapY, getHeight() - world.getHeight()), 0);
-                //update the transform
-//            transform = new AffineTransform();
-//            transform.translate(mapX, mapY);
+                mapX = Math.max(0, Math.min(mapX + dx, WORLD_WIDTH - cameraWidth));
+                mapY = Math.max(0, Math.min(mapY + dy, WORLD_HEIGHT - cameraHeight));
+
                 lastMouseX = e.getX();
                 lastMouseY = e.getY();
                 repaint();
