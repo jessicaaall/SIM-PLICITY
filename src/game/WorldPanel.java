@@ -190,8 +190,6 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
                 int dy = e.getY() - lastMouseY;
                 mapX = Math.max(0, Math.min(mapX + dx, WORLD_WIDTH - cameraWidth));
                 mapY = Math.max(0, Math.min(mapY + dy, WORLD_HEIGHT - cameraHeight));
-//                mapX += dx;
-//                mapY += dy;
 
                 lastMouseX = e.getX();
                 lastMouseY = e.getY();
