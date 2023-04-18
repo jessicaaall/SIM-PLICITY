@@ -6,6 +6,11 @@ import java.net.URL;
 public class Sound {
     Clip clip;
     URL soundURL[] = new URL[30];
+
+    /*
+    *Kalau Mau nambah audio sendiri bisa upload audio file format wav ke folder package res
+    * kalau mau insert ke URL nya bisa pakai "/sound/[nama file audio].wav
+     */
     public Sound(){
         soundURL[0] = getClass().getResource("/sound/red velvet - peek a boo (instrumental).wav");
     }
