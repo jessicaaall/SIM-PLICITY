@@ -1,12 +1,14 @@
 package entity;
 
+import java.util.ArrayList;
+
 public class World {
     private int width;
     private int height;
-//    private ArrayList<Rumah> daftarRumah;
+    private ArrayList<Rumah> daftarRumah;
     private int jumlahSim;
-//    private ArrayList<Sim> daftarSim;
-//    private Waktu waktu;
+    private ArrayList<Sim> daftarSim;
+    private Waktu waktu;
 
     //pembuatan world menggunakan design pattern Singleton
     public World(){
@@ -33,20 +35,14 @@ public class World {
         return jumlahSim;
     }
 
-   /* public ArrayList<Sim> getDaftarSim() {
+    public ArrayList<Sim> getDaftarSim() {
         return daftarSim;
-    }*/
-    /*public void tambahSim(Sim sim){
+    }
+    public void tambahSim(Sim sim){
         daftarSim.add(sim);
         jumlahSim++;
-    }*/
-    /*
+    }
     public Waktu getWaktu() {
         return waktu;
-    }*/
-    /*
-    public void increaseWaktu() throws InterruptedException {
-        waktu.setDetik(waktu.getDetik+1);
-        Thread.sleep(1000);
-    }*/
+    }
 }
