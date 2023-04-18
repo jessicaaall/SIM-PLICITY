@@ -47,6 +47,18 @@ public class World {
     }
 
     public void tambahRumah(Rumah rumah){
-        daftarRumah.add(rumah);
+        boolean ada = false;
+        for (Rumah r: daftarRumah){
+            if ((r.getLokasi().x == rumah.getLokasi().x) && (r.getLokasi().y == rumah.getLokasi().y)){
+                ada = true;
+                break;
+            };
+        }
+        if (ada){
+            System.out.println("Rumah dengan posisi "+ rumah.getLokasi().toString() + " sudah ada");
+        }
+        else {
+            daftarRumah.add(rumah);
+        }
     }
 }

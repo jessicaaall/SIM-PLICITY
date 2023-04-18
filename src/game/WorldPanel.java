@@ -16,7 +16,7 @@ import java.util.Objects;
 public class WorldPanel extends JPanel implements Runnable, MouseListener, MouseMotionListener, ActionListener {
     private World world;
     private MainPanel mp;
-    public WorldInfoPanel wip;
+    public WorldOptionPanel wop;
     private boolean isDragging = false;
     public final int UNIT_SIZE = 40;
     public int WORLD_WIDTH;
@@ -50,8 +50,8 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         addMouseMotionListener(this);
         setDoubleBuffered(true);
         playMusic(0);
-        wip = new WorldInfoPanel( this.mp, this);
-        mp.add(wip);
+        wop = new WorldOptionPanel( this.mp, this);
+        mp.add(wop);
     }
 
     Thread mainThread;
@@ -93,7 +93,6 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         int drawCount = 0;
 
         while (mainThread != null){
-//            System.out.println("Game loop is running");
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime)/drawInterval;
             timer += (currentTime - lastTime);

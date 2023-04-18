@@ -8,12 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 
-public class WorldInfoPanel extends JPanel implements ActionListener {
+public class WorldOptionPanel extends JPanel implements ActionListener {
     public JButton toMainMenuButton = new JButton("<html>Back to<br>Main Menu</html>");
     public JButton addHouseButton = new JButton("Add House");
     public MainPanel mp;
     public WorldPanel wp;
-    public WorldInfoPanel(MainPanel mainPanel, WorldPanel worldPanel){
+    public WorldOptionPanel(MainPanel mainPanel, WorldPanel worldPanel){
         mp = mainPanel; wp = worldPanel;
 //        this.setBounds(2,mp.getHeight()/4, (mp.getWidth() - wp.getWidth())/2 -4, mp.getHeight()/2);
         this.setPreferredSize(new Dimension((mp.getWidth() - wp.getWidth())/3 -4, mp.getHeight()/2));
@@ -35,7 +35,7 @@ public class WorldInfoPanel extends JPanel implements ActionListener {
         setLayout(layout);
         add(toMainMenuButton);
         add(addHouseButton);
-        wp.wip = this;
+        wp.wop = this;
     }
 
 
@@ -88,7 +88,7 @@ public class WorldInfoPanel extends JPanel implements ActionListener {
                 }
                 // Do something with x and y...
                 Rumah rumahBaru = new Rumah(x, y, color, wp.getWorld());
-                wp.getWorld().getDaftarRumah().add(rumahBaru);
+                wp.getWorld().tambahRumah(rumahBaru);
             }
         }
     }
