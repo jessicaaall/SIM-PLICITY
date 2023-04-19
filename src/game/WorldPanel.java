@@ -13,12 +13,12 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class WorldPanel extends JPanel implements Runnable, MouseListener, MouseMotionListener, ActionListener {
+public class WorldPanel extends JPanel implements Runnable, MouseListener, MouseMotionListener, ActionListener, MouseWheelListener {
     private World world;
     private MainPanel mp;
     public WorldOptionPanel wop;
     private boolean isDragging = false;
-    public final int UNIT_SIZE = 40;
+    public int UNIT_SIZE = 40;
     public int WORLD_WIDTH;
     public int WORLD_HEIGHT;
     private int mapX =0, mapY=0;
@@ -48,6 +48,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         setBounds(0, (mp.height-cameraHeight)/2, cameraWidth, cameraHeight);
         addMouseListener(this);
         addMouseMotionListener(this);
+        addMouseWheelListener(this);
         setDoubleBuffered(true);
         playMusic(0);
         wop = new WorldOptionPanel( this.mp, this);
@@ -172,7 +173,8 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
 
         // draw the current world position under the mouse cursor
         if (mouseHoverX >= 0 && mouseHoverX < WORLD_WIDTH && mouseHoverY >= 0 && mouseHoverY < WORLD_HEIGHT) {
-            String worldPosition = "(" + (mouseHoverX / UNIT_SIZE) + ", " + (mouseHoverY / UNIT_SIZE) + ")";
+            String worldPosition = "(" + (mouseHoverX / UNIT_SIZE) + ", " + (mouseHoverY / UNIT_SIZE) + ")" + ", " +
+                    "Unit Size: " + UNIT_SIZE;
             g2d.setColor(Color.WHITE);
             g2d.drawString(worldPosition,  mapX + 10, mapY + cameraHeight - 20);
         }
@@ -261,5 +263,23 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     @Override
     public void actionPerformed(ActionEvent e) {
 
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        int notches = e.getWheelRotation();
+        if (notches < 0){
+            UNIT_SIZE += 2;
+        }
+        else if (notches > 0){
+            UNIT_SIZE -= 2;
+        }
+
+        if (UNIT_SIZE < 10){
+            UNIT_SIZE = 10;
+        } else if (UNIT_SIZE > 160) {
+            UNIT_SIZE = 160;
+        }
+        repaint();
     }
 }
