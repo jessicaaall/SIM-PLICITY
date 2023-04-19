@@ -3,6 +3,8 @@ package game;
 import entity.Rumah;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,13 +13,17 @@ import java.lang.reflect.Field;
 public class WorldOptionPanel extends JPanel implements ActionListener {
     public JButton toMainMenuButton = new JButton("<html>Back to<br>Main Menu</html>");
     public JButton addHouseButton = new JButton("Add House");
+    public JSlider volumeSlider = new JSlider(500, 860, 800);
     public MainPanel mp;
     public WorldPanel wp;
     public WorldOptionPanel(MainPanel mainPanel, WorldPanel worldPanel){
         mp = mainPanel; wp = worldPanel;
 //        this.setBounds(2,mp.getHeight()/4, (mp.getWidth() - wp.getWidth())/2 -4, mp.getHeight()/2);
+        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
+        setLayout(layout);
         this.setPreferredSize(new Dimension((mp.getWidth() - wp.getWidth())/3 -4, mp.getHeight()/2));
         this.setBackground(Color.gray);
+        this.setLocation(5,5);
         toMainMenuButton.setFocusable(false);
         toMainMenuButton.setHorizontalTextPosition(JButton.CENTER);
         toMainMenuButton.setVerticalTextPosition(JButton.CENTER);
@@ -31,10 +37,26 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
         addHouseButton.setHorizontalTextPosition(JButton.CENTER);
         addHouseButton.setVerticalTextPosition(JButton.CENTER);
         addHouseButton.setFont(new Font("Comic Sans", Font.BOLD, 15));
-        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
-        setLayout(layout);
+
         add(toMainMenuButton);
         add(addHouseButton);
+        volumeSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                float volume = (float) volumeSlider.getValue()/10f;
+                if (!(volume < 61f)){
+                    wp.sound.setVolume(-80f+volume);
+                }
+                else{
+                    wp.sound.setVolume(-86f);
+                }
+
+            }
+        });
+        JLabel music = new JLabel("Music Volume");
+        music.setFont(new Font("Courier New", Font.BOLD, 10));
+        add(music);
+        add(volumeSlider);
         wp.wop = this;
     }
 
@@ -72,7 +94,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
             if (result == JOptionPane.OK_OPTION) {
                 int x = Integer.parseInt(xField.getText());
                 int y = Integer.parseInt(yField.getText());
-                String colorText = colorField.getText();
+                String colorText = colorField.getText().toLowerCase();
                 Field field;
                 try {
                     field = Color.class.getDeclaredField(colorText);

@@ -1,7 +1,5 @@
 package game;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 import java.net.URL;
 public class Sound {
     Clip clip;
@@ -32,5 +30,17 @@ public class Sound {
     }
     public void stop(){
         clip.stop();
+    }
+
+    public void setVolume(float amount){
+        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        float newVolume = amount;
+        if (newVolume < gainControl.getMinimum()) {
+            newVolume = gainControl.getMinimum();
+        }
+        else if (newVolume > gainControl.getMaximum()){
+            newVolume = gainControl.getMaximum();
+        }
+        gainControl.setValue(newVolume);
     }
 }

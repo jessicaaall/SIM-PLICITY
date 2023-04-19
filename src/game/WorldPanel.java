@@ -148,6 +148,17 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             roof.addPoint(location.x*UNIT_SIZE+UNIT_SIZE, location.y*UNIT_SIZE+UNIT_SIZE/2);
             g2d.setColor(new Color(0x964B00));
             g2d.fillPolygon(roof);
+            // check if mouse is in the house
+            if (mouseHoverX >= 0 && mouseHoverX < WORLD_WIDTH && mouseHoverY >= 0 && mouseHoverY < WORLD_HEIGHT){
+                int currentMouseX = mouseHoverX/UNIT_SIZE;
+                int currentMouseY = mouseHoverY/UNIT_SIZE;
+                Point mousePoint = new Point(currentMouseX, currentMouseY);
+                if (rumah.getLokasi().equals(mousePoint)){
+                    g2d.setColor(Color.white);
+                    g2d.setFont(new Font("Courier New", Font.PLAIN, 10));
+                    g2d.drawString("Click to Enter the house", location.x*UNIT_SIZE, location.y*UNIT_SIZE -UNIT_SIZE/8);
+                }
+            }
         }
 
         // calculate the position of the FPS text
@@ -166,10 +177,30 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             g2d.drawString(worldPosition,  mapX + 10, mapY + cameraHeight - 20);
         }
 
+
+
     }
 
+    private long startClickTime = 0;
+    private long currentClickTime;
     @Override
     public void mouseClicked(MouseEvent e) {
+        currentClickTime = System.currentTimeMillis();
+        if (mouseHoverX >= 0 && mouseHoverX < WORLD_WIDTH && mouseHoverY >= 0 && mouseHoverY < WORLD_HEIGHT){
+            int currentMouseX = mouseHoverX/UNIT_SIZE;
+            int currentMouseY = mouseHoverY/UNIT_SIZE;
+            Point mousePoint = new Point(currentMouseX, currentMouseY);
+            for (Rumah rumah : world.getDaftarRumah()){
+                if (rumah.getLokasi().equals(mousePoint)){
+                    if (currentClickTime - startClickTime >= 1000){
+                        System.out.println("You entered the house");
+                        startClickTime = currentClickTime;
+                    }
+                }
+            }
+        }
+        long startTime = System.currentTimeMillis();
+
 
     }
 
@@ -193,6 +224,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
 
     @Override
     public void mouseEntered(MouseEvent e) {
+
 
     }
 
