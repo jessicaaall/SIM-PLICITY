@@ -77,7 +77,7 @@ public class MainMenuPanel extends JPanel {
     public void paintComponent(Graphics g){
         Graphics2D g2D = (Graphics2D) g;
         g2D.setPaint(Color.black);
-        g2D.setFont(new Font("Comic Sans", Font.BOLD, 80));
+        g2D.setFont(new Font("Comic Sans MS", Font.BOLD, 80));
         g2D.drawString("Sim-Plicity", 32* mainPanel.width/100, 120);
 //        g2D.dispose();
     }

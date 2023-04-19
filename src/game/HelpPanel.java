@@ -20,7 +20,7 @@ public class HelpPanel extends JPanel implements ActionListener {
         backButton.setFocusable(false);
         backButton.setHorizontalTextPosition(JButton.CENTER);
         backButton.setVerticalTextPosition(JButton.CENTER);
-        backButton.setFont(new Font("Comic Sans", Font.BOLD, 20));
+        backButton.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
         backButton.setForeground(Color.black);
         backButton.addActionListener(this);
         add(backButton);
@@ -36,7 +36,7 @@ public class HelpPanel extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         String[] lines = caraBermain.split("\n");
         int y = 50;
-        g2d.setFont(new Font("Impact",Font.PLAIN,25));
+        g2d.setFont(new Font("Comic Sans MS",Font.PLAIN,25));
         g2d.setPaint(Color.black);
         for (String line:lines){
             g2d.drawString(line, 1*mp.width/5, y);

@@ -168,7 +168,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
 
         // draw the FPS text
         g2d.setColor(Color.WHITE);
-        g2d.setFont(new Font("Comic Sans", Font.PLAIN, 15));
+        g2d.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
         g2d.drawString("FPS = " + currentFPS, fpsX, fpsY);
 
         // draw the current world position under the mouse cursor

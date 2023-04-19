@@ -27,16 +27,16 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
         toMainMenuButton.setFocusable(false);
         toMainMenuButton.setHorizontalTextPosition(JButton.CENTER);
         toMainMenuButton.setVerticalTextPosition(JButton.CENTER);
-        toMainMenuButton.setFont(new Font("Comic Sans", Font.BOLD, 15));
+        toMainMenuButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
 
         toMainMenuButton.addActionListener(this);
         toMainMenuButton.setBackground(Color.yellow);
-        addHouseButton.setFont(new Font("Comic Sans", Font.BOLD, 15));
+        addHouseButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
         addHouseButton.addActionListener(this);
         addHouseButton.setFocusable(false);
         addHouseButton.setHorizontalTextPosition(JButton.CENTER);
         addHouseButton.setVerticalTextPosition(JButton.CENTER);
-        addHouseButton.setFont(new Font("Comic Sans", Font.BOLD, 15));
+        addHouseButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
 
         add(toMainMenuButton);
         add(addHouseButton);
