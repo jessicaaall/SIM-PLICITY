@@ -19,8 +19,6 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     public WorldOptionPanel wop;
     private boolean isDragging = false;
     public int UNIT_SIZE = 40;
-    public int WORLD_WIDTH;
-    public int WORLD_HEIGHT;
     private int mapX =0, mapY=0;
     private int cameraWidth;
     private int cameraHeight;
@@ -41,8 +39,6 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         mapX = 0;
         mapY = 0;
         this.world = world;
-        WORLD_WIDTH = world.getWidth()*UNIT_SIZE;
-        WORLD_HEIGHT= world.getHeight()*UNIT_SIZE;
         setPreferredSize(new Dimension(cameraWidth, cameraHeight));
         setLayout(null);
         setBounds(0, (mp.height-cameraHeight)/2, cameraWidth, cameraHeight);
@@ -150,7 +146,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             g2d.setColor(new Color(0x964B00));
             g2d.fillPolygon(roof);
             // check if mouse is in the house
-            if (mouseHoverX >= 0 && mouseHoverX < WORLD_WIDTH && mouseHoverY >= 0 && mouseHoverY < WORLD_HEIGHT){
+            if (mouseHoverX >= 0 && mouseHoverX < world.getWidth()*UNIT_SIZE && mouseHoverY >= 0 && mouseHoverY < world.getHeight()*UNIT_SIZE){
                 int currentMouseX = mouseHoverX/UNIT_SIZE;
                 int currentMouseY = mouseHoverY/UNIT_SIZE;
                 Point mousePoint = new Point(currentMouseX, currentMouseY);
@@ -172,7 +168,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         g2d.drawString("FPS = " + currentFPS, fpsX, fpsY);
 
         // draw the current world position under the mouse cursor
-        if (mouseHoverX >= 0 && mouseHoverX < WORLD_WIDTH && mouseHoverY >= 0 && mouseHoverY < WORLD_HEIGHT) {
+        if (mouseHoverX >= 0 && mouseHoverX < world.getWidth()*UNIT_SIZE && mouseHoverY >= 0 && mouseHoverY < world.getHeight()*UNIT_SIZE) {
             String worldPosition = "(" + (mouseHoverX / UNIT_SIZE) + ", " + (mouseHoverY / UNIT_SIZE) + ")" + ", " +
                     "Unit Size: " + UNIT_SIZE;
             g2d.setColor(Color.WHITE);
@@ -188,7 +184,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     @Override
     public void mouseClicked(MouseEvent e) {
         currentClickTime = System.currentTimeMillis();
-        if (mouseHoverX >= 0 && mouseHoverX < WORLD_WIDTH && mouseHoverY >= 0 && mouseHoverY < WORLD_HEIGHT){
+        if (mouseHoverX >= 0 && mouseHoverX < world.getWidth()*UNIT_SIZE && mouseHoverY >= 0 && mouseHoverY < world.getHeight()*UNIT_SIZE){
             int currentMouseX = mouseHoverX/UNIT_SIZE;
             int currentMouseY = mouseHoverY/UNIT_SIZE;
             Point mousePoint = new Point(currentMouseX, currentMouseY);
@@ -242,8 +238,8 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             if (isDragging) {
                 int dx = e.getX() - lastMouseX;
                 int dy = e.getY() - lastMouseY;
-                mapX = Math.max(0, Math.min(mapX + dx, WORLD_WIDTH - cameraWidth));
-                mapY = Math.max(0, Math.min(mapY + dy, WORLD_HEIGHT - cameraHeight));
+                mapX = Math.max(0, Math.min(mapX + dx, world.getWidth()*UNIT_SIZE - cameraWidth));
+                mapY = Math.max(0, Math.min(mapY + dy, world.getHeight()*UNIT_SIZE - cameraHeight));
 
                 lastMouseX = e.getX();
                 lastMouseY = e.getY();
