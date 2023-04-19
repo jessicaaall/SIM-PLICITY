@@ -9,6 +9,7 @@ public class MainMenuPanel extends JPanel {
     private MainPanel mainPanel;
     private HelpPanel helpPanel;
     private MainMenuPanel mmp = this;
+    public StartGamePanel startGamePanel;
     private class MenuPanel extends JPanel implements ActionListener {
 
         private MainMenuButton startButton;
@@ -41,7 +42,10 @@ public class MainMenuPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(startButton) ){
                 System.out.println("Starting game...");
-                mainPanel.showWorldPanel();
+                mainPanel.remove(mmp);
+                mainPanel.add(startGamePanel);
+                mainPanel.revalidate();
+                mainPanel.repaint();
             }
             else if (e.getSource().equals(helpButton) ) {
                 // TODO: implement help screen logic
@@ -60,14 +64,9 @@ public class MainMenuPanel extends JPanel {
     MainMenuPanel(MainPanel mainPanel){
         this.mainPanel = mainPanel;
         this.helpPanel = new HelpPanel(mainPanel);
+        this.startGamePanel = new StartGamePanel(mainPanel, this);
         helpPanel.mmp = this;
         setLayout(null);
-//        GridBagConstraints gbc = new GridBagConstraints();
-//        gbc.gridx=0;
-//        gbc.gridy=1;
-//        gbc.fill= GridBagConstraints.HORIZONTAL;
-//        gbc.anchor = GridBagConstraints.CENTER;
-//        gbc.insets = new Insets(50,0,0,0);
         MenuPanel menuPanel = new MenuPanel();
         this.add(menuPanel);
         setPreferredSize(new Dimension(mainPanel.width, mainPanel.height));

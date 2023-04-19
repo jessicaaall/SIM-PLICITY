@@ -18,12 +18,13 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
     public WorldPanel wp;
     public WorldOptionPanel(MainPanel mainPanel, WorldPanel worldPanel){
         mp = mainPanel; wp = worldPanel;
-//        this.setBounds(2,mp.getHeight()/4, (mp.getWidth() - wp.getWidth())/2 -4, mp.getHeight()/2);
-        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
-        setLayout(layout);
-        this.setPreferredSize(new Dimension((mp.getWidth() - wp.getWidth())/3 -4, mp.getHeight()/2));
-        this.setBackground(Color.gray);
-        this.setLocation(5,5);
+
+//        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
+        setLayout(null);
+        Dimension size = new Dimension((mp.getWidth() - 7*wp.getWidth()/5)/2 -4, mp.getHeight()/2);
+        this.setPreferredSize(size);
+        this.setBounds(0,mp.getHeight()/4, (mp.getWidth() - 7*wp.getWidth()/5)/2 -4, mp.getHeight()/2);
+        this.setBackground(Color.white);
         toMainMenuButton.setFocusable(false);
         toMainMenuButton.setHorizontalTextPosition(JButton.CENTER);
         toMainMenuButton.setVerticalTextPosition(JButton.CENTER);
@@ -31,13 +32,19 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
 
         toMainMenuButton.addActionListener(this);
         toMainMenuButton.setBackground(Color.yellow);
+        toMainMenuButton.setBounds(0, 0,
+                this.getWidth(),
+                toMainMenuButton.getFontMetrics(toMainMenuButton.getFont()).getHeight()*2+5);
         addHouseButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
         addHouseButton.addActionListener(this);
         addHouseButton.setFocusable(false);
         addHouseButton.setHorizontalTextPosition(JButton.CENTER);
         addHouseButton.setVerticalTextPosition(JButton.CENTER);
         addHouseButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
-
+        addHouseButton.setBounds(0,
+                toMainMenuButton.getFontMetrics(toMainMenuButton.getFont()).getHeight()*2,
+                this.getWidth(),
+                addHouseButton.getFontMetrics(addHouseButton.getFont()).getHeight()+5);
         add(toMainMenuButton);
         add(addHouseButton);
         volumeSlider.addChangeListener(new ChangeListener() {
@@ -55,7 +62,15 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
         });
         JLabel music = new JLabel("Music Volume");
         music.setFont(new Font("Courier New", Font.BOLD, 10));
+        music.setHorizontalTextPosition(SwingConstants.CENTER);
+        music.setBackground(Color.white);
+        music.setOpaque(true);
+        music.setBounds((this.getWidth()-music.getFontMetrics(music.getFont()).stringWidth(music.getText()))/2,
+                addHouseButton.getY()+addHouseButton.getHeight(),
+                this.getWidth(),
+                music.getFontMetrics(music.getFont()).getHeight()+3);
         add(music);
+        volumeSlider.setBounds(0, music.getY()+music.getHeight(), this.getWidth(), 15);
         add(volumeSlider);
         wp.wop = this;
     }

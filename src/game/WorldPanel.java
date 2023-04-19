@@ -17,6 +17,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     private World world;
     private MainPanel mp;
     public WorldOptionPanel wop;
+    public MainMenuPanel mmp;
     private boolean isDragging = false;
     public int UNIT_SIZE = 40;
     private int mapX =0, mapY=0;
@@ -24,15 +25,15 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     private int cameraHeight;
     private int lastMouseX, lastMouseY;
 //    private Rumah[][] koordinat;
-    public MainMenuPanel mmp;
     private int mouseHoverX = -1;
     private int mouseHoverY = -1;
 
 
     TileManager tileManager = new TileManager(this);
     Sound sound = new Sound();
-    public WorldPanel(World world, MainPanel mp) {
+    public WorldPanel(World world, MainPanel mp, MainMenuPanel mmp) {
         this.mp = mp;
+        this.mmp = mmp;
         cameraWidth = mp.height-50;
         cameraHeight = mp.height-50;
 
@@ -180,10 +181,10 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     }
 
     private long startClickTime = 0;
-    private long currentClickTime;
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        currentClickTime = System.currentTimeMillis();
+        long currentClickTime = System.currentTimeMillis();
         if (mouseHoverX >= 0 && mouseHoverX < world.getWidth()*UNIT_SIZE && mouseHoverY >= 0 && mouseHoverY < world.getHeight()*UNIT_SIZE){
             int currentMouseX = mouseHoverX/UNIT_SIZE;
             int currentMouseY = mouseHoverY/UNIT_SIZE;
