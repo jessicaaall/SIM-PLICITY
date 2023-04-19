@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
 public class WorldOptionPanel extends JPanel implements ActionListener {
     public JButton toMainMenuButton = new JButton("<html>Back to<br>Main Menu</html>");
     public JButton addHouseButton = new JButton("Add House");
-    public JSlider volumeSlider = new JSlider(500, 860, 800);
+    public JSlider volumeSlider = new JSlider(500, 860, 700);
     public MainPanel mp;
     public WorldPanel wp;
     public WorldOptionPanel(MainPanel mainPanel, WorldPanel worldPanel){
