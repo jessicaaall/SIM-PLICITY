@@ -1,5 +1,6 @@
 package game;
 
+import entity.Ruangan;
 import entity.Rumah;
 
 import javax.swing.*;
@@ -35,6 +36,10 @@ public class HousePanel extends JPanel {
         JPanel centerPanel = new JPanel(null);
         centerPanel.setPreferredSize(new Dimension(3*mainPanel.width/5, mainPanel.height));
         centerPanel.setBackground(Color.black);
+        for (Ruangan ruangan : rumah.getDaftarRuangan()){
+            RoomPanel rp = new RoomPanel(ruangan, this.rumah, this);
+            centerPanel.add(rp);
+        }
         this.add(eastPanel, BorderLayout.EAST);
         this.add(centerPanel, BorderLayout.CENTER);
         this.add(westPanel, BorderLayout.WEST);

@@ -116,7 +116,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
                 int x = Integer.parseInt(xField.getText());
                 int y = Integer.parseInt(yField.getText());
                 // Do something with x and y...
-                Rumah rumahBaru = new Rumah(x, y, color[0], wp.getWorld());
+                Rumah rumahBaru = new Rumah(x, y,null, color[0],wp.getWorld());
                 wp.getWorld().tambahRumah(rumahBaru);
             }
         }

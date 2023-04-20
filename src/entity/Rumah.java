@@ -11,7 +11,7 @@ public class Rumah  {
     World world;
     private Color color;
 
-    public Rumah(int x, int y, Sim sim, Color color,World world, Ruangan ruangan){
+    public Rumah(int x, int y, Sim sim, Color color,World world){
         this.world = world;
         if(x > world.getWidth() -1 || y > world.getHeight()-1){
             System.out.println("Titik diluar jangkauan");
@@ -21,7 +21,7 @@ public class Rumah  {
             lokasi.x = x;
             lokasi.y = y;
             this.color = color;
-            daftarRuangan.add(ruangan);
+            daftarRuangan.add(new Ruangan(this, new Point(0,0)));
         }
     }
 

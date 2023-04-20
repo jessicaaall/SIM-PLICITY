@@ -1,6 +1,7 @@
 package entity;
 
 import tiles.Tile;
+import tiles.TileManager;
 
 import java.awt.*;
 import java.util.*;
@@ -9,17 +10,7 @@ public class Ruangan {
     private Rumah infoRumah;
     private Point posisi;
     private ArrayList<Objek> daftarObjek;
-    private Tile tileRuangan;
     private Map<String, Boolean> samping;
-    public Tile getTileRuangan() {
-        return tileRuangan;
-    }
-
-    public void setTileRuangan(Tile tileRuangan) {
-        this.tileRuangan = tileRuangan;
-    }
-
-
 
     private Dimension dimensi;
     public Ruangan(Rumah infoRumah, Point posisi){
