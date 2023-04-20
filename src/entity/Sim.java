@@ -5,48 +5,42 @@ import java.util.*;
 public class Sim {
     // Deklarasi Variabel
     private String namaLengkap;
-    private Pekerjaan pekerjaan;
-    private int uang;
-    private Inventory<Objek> inventory;
     private int kekenyangan;
     private int mood;
     private int kesehatan;
-    private String status;
+    private int uang;
+    private Pekerjaan pekerjaan;
+    private StringBuffer status;
+    private Inventory<Objek> inventory;
     private Ruangan lokasi;
     private boolean isDuduk;
     private ArrayList<Rumah> kepemilikanRumah;
     private int waktuTidur;
 
+    // Objek untuk Konstruktor
+    Random randPekerjaanID = new Random();
+    
     // Konstruktor
     public Sim(String namaLengkap) {
-        // Berdasarkan parameter
         this.namaLengkap = namaLengkap;
-        
-        // Tidak berdasarkan parameter
-        this.kekenyangan = 80;
-        this.mood = 80;
-        this.kesehatan = 80;
-        this.uang = 100;
-        //this.pekerjaan = ;
-        this.status = "";
-        this.inventory = new Inventory<>();
-
-
+        kekenyangan = 80;
+        mood = 80;
+        kesehatan = 80;
+        uang = 100;
+        pekerjaan = new Pekerjaan(randPekerjaanID.nextInt(10));
+        status = new StringBuffer(50);
+        inventory = new Inventory<Objek>();
+        //lokasi = 
+        isDuduk = false;
+        //kepemilikanRumah = new ArrayList<Rumah>();
+        //inisiasi kepemilikan rumah
+        waktuTidur = 0;
     }
 
 
     // Method : Getter
     public String getNamaLengkap() {
         return namaLengkap;
-    }
-    public Pekerjaan getPekerjaan() {
-        return pekerjaan;
-    }
-    public int getUang() {
-        return uang;
-    }
-    public Inventory<Objek> getInventory() {
-        return inventory;
     }
     public int getKekenyangan() {
         return kekenyangan;
@@ -57,8 +51,17 @@ public class Sim {
     public int getKesehatan() {
         return kesehatan;
     }
-    public String getStatus() {
+    public int getUang() {
+        return uang;
+    }
+    public Pekerjaan getPekerjaan() {
+        return pekerjaan;
+    }
+    public StringBuffer getStatus() {
         return status;
+    }
+    public Inventory<Objek> getInventory() {
+        return inventory;
     }
     public Ruangan getLokasi() {
         return lokasi;
@@ -75,28 +78,46 @@ public class Sim {
 
     // Method : Setter
     public void setMood(int newMood) {
-        this.mood = newMood;
-        if (mood > 100) {
-            mood = 100;
+        if (newMood > 100) {
+            newMood = 100;
+        } else if (newMood < 0) {
+            newMood = 0;
+        }
+        mood = newMood;
+        if (mood == 0) {
+            mati();
         }
     }
     public void setKesehatan(int newKesehatan) {
-        this.kesehatan = newKesehatan;
-        if (kesehatan > 100) {
-            kesehatan = 100;
+        if (newKesehatan > 100) {
+            newKesehatan = 100;
+        } else if (newKesehatan < 0) {
+            newKesehatan = 0;
+        }
+        kesehatan = newKesehatan;
+        if (kesehatan == 0) {
+            mati();
         }
     }
     public void setKekenyangan(int newKekenyangan) {
-        this.kekenyangan = newKekenyangan;
-        if (kekenyangan > 100) {
-            kekenyangan = 100;
+        if (newKekenyangan > 100) {
+            newKekenyangan = 100;
+        } else if (newKekenyangan < 0) {
+            newKekenyangan = 0;
+        }
+        kekenyangan = newKekenyangan;
+        if (kekenyangan == 0) {
+            mati();
         }
     }
-    public void setUang(int uang) {
-        this.uang = uang;
+    public void setUang(int newUang) {
+        uang = newUang;
     }
     
     // Method : Terkait Sim (Nonaksi)
+    public void mati() {
+
+    }
 
     // Method : Terkait Sim (Aksi)
 
