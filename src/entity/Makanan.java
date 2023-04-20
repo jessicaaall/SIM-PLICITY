@@ -6,30 +6,30 @@ public class Makanan extends Objek implements BisaDimakan {
     private ArrayList<BahanMakanan> resep;
     private int poinKekenyangan;
     
-    public Makanan(String nama) {
-        super(nama);
+    public Makanan(int id) {
+        super(id);
         resep = new ArrayList<BahanMakanan>();
-        if (nama.equals("nasi ayam")) {
-            resep.add(new BahanMakanan("nasi"));
-            resep.add(new BahanMakanan("ayam"));
+        if (id == 19) {
+            resep.add(new BahanMakanan(11));
+            resep.add(new BahanMakanan(13));
             this.poinKekenyangan = 16;
-        } else if (nama.equals("nasi kari")) {
-            resep.add(new BahanMakanan("nasi"));
-            resep.add(new BahanMakanan("kentang"));
-            resep.add(new BahanMakanan("wortel"));
-            resep.add(new BahanMakanan("sapi"));
+        } else if (id == 20) {
+            resep.add(new BahanMakanan(11));
+            resep.add(new BahanMakanan(12));
+            resep.add(new BahanMakanan(15));
+            resep.add(new BahanMakanan(14));
             this.poinKekenyangan = 30;
-        } else if (nama.equals("susu kacang")) {
-            resep.add(new BahanMakanan("susu"));
-            resep.add(new BahanMakanan("kacang"));
+        } else if (id == 21) {
+            resep.add(new BahanMakanan(18));
+            resep.add(new BahanMakanan(17));
             this.poinKekenyangan = 5;
-        } else if (nama.equals("tumis sayur")) {
-            resep.add(new BahanMakanan("wortel"));
-            resep.add(new BahanMakanan("bayam"));
+        } else if (id == 22) {
+            resep.add(new BahanMakanan(15));
+            resep.add(new BahanMakanan(16));
             this.poinKekenyangan = 5;
-        } else if (nama.equals("bistik")) {
-            resep.add(new BahanMakanan("kentang"));
-            resep.add(new BahanMakanan("sapi"));
+        } else if (id == 23) {
+            resep.add(new BahanMakanan(12));
+            resep.add(new BahanMakanan(14));
             this.poinKekenyangan = 22;
         }
     }
