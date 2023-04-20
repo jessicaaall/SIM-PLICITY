@@ -75,8 +75,6 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
         wp.wop = this;
     }
 
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toMainMenuButton){
@@ -96,35 +94,29 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
             JLabel label = new JLabel("<html>Set the coordinate of your house:<br></html>");
             JTextField xField = new JTextField();
             JTextField yField = new JTextField();
-            JTextField colorField = new JTextField();
+            JButton colorButton = new JButton("Choose Color");
+            colorButton.setFocusable(false);
+            final Color[] color = new Color[1];
+            colorButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Color chosenColor = JColorChooser.showDialog(null, "Choose a color", Color.white);
+                    color[0] = chosenColor;
+                }
+            });
             panel.add(label);
             panel.add(new JLabel("<html>X Coordinate:<br></html>"));
             panel.add(xField);
             panel.add(new JLabel("<html>Y Coordinate:<br></html>"));
             panel.add(yField);
             panel.add(new JLabel("<html>Color:<br></html>"));
-            panel.add(colorField);
+            panel.add(colorButton);
             int result = JOptionPane.showConfirmDialog(null, panel, "Add House",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
                 int x = Integer.parseInt(xField.getText());
                 int y = Integer.parseInt(yField.getText());
-                String colorText = colorField.getText().toLowerCase();
-                Field field;
-                try {
-                    field = Color.class.getDeclaredField(colorText);
-                } catch (NoSuchFieldException ex) {
-                    throw new RuntimeException(ex);
-                }
-                field.setAccessible(true);
-                Color color;
-                try {
-                    color = (Color) field.get(new Color(0,0,0));
-                } catch (IllegalAccessException ex) {
-                    throw new RuntimeException(ex);
-                }
                 // Do something with x and y...
-                Rumah rumahBaru = new Rumah(x, y, color, wp.getWorld());
+                Rumah rumahBaru = new Rumah(x, y, color[0], wp.getWorld());
                 wp.getWorld().tambahRumah(rumahBaru);
             }
         }

@@ -15,7 +15,9 @@ import java.util.Objects;
 
 public class WorldPanel extends JPanel implements Runnable, MouseListener, MouseMotionListener, ActionListener, MouseWheelListener {
     private World world;
-    private MainPanel mp;
+
+
+    public MainPanel mp;
     public WorldOptionPanel wop;
     public MainMenuPanel mmp;
     private boolean isDragging = false;
@@ -193,12 +195,18 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
                 if (rumah.getLokasi().equals(mousePoint)){
                     if (currentClickTime - startClickTime >= 1000){
                         System.out.println("You entered the house");
+                        HousePanel hp = new HousePanel(this, rumah);
+                        mp.remove(wop);
+                        mp.remove(this);
+                        mp.add(hp);
+                        mp.revalidate();
+                        mp.repaint();
                         startClickTime = currentClickTime;
+                        stopMusic();
                     }
                 }
             }
         }
-        long startTime = System.currentTimeMillis();
 
 
     }

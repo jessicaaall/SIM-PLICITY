@@ -15,25 +15,31 @@ public class GameFrame extends JFrame {
         originalSize = mp.getPreferredSize();
 
         // Add a key listener to the frame
-/*        addKeyListener(new KeyAdapter() {
+        // Add a listener to the maximize button
+        addWindowStateListener(new WindowStateListener() {
+            @Override
+            public void windowStateChanged(WindowEvent e) {
+                if ((e.getNewState() & JFrame.MAXIMIZED_BOTH) == JFrame.MAXIMIZED_BOTH) {
+                    // If the window is maximized, set it to full screen
+                    GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+                    device.setFullScreenWindow(GameFrame.this);
+                }
+            }
+        });
+
+        // Add a key listener to the frame
+        addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 // If the escape key is pressed, restore the original size of the frame
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    setResizable(true);
-                    mp.setOriginalSize();
+                    GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+                    device.setFullScreenWindow(null);
+                    mp.setPreferredSize(originalSize);
+                    pack();
                 }
             }
-        });*/
+        });
 
-        // Set the frame to full screen when the expand icon is clicked
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        if (gd.isFullScreenSupported()) {
-            setUndecorated(true);
-            setResizable(false);
-            mp.setFullScreen();
-        } else {
-            mp.setOriginalSize();
-        }
     }
 }

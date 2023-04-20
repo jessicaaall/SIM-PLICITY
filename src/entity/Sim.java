@@ -7,7 +7,7 @@ public class Sim {
     private String namaLengkap;
     private Pekerjaan pekerjaan;
     private int uang;
-    private Inventory inventory;
+    private Inventory<Objek> inventory;
     private int kekenyangan;
     private int mood;
     private int kesehatan;
@@ -29,7 +29,7 @@ public class Sim {
         this.uang = 100;
         //this.pekerjaan = ;
         this.status = "";
-        //this.inventory = ;
+        this.inventory = new Inventory<>();
 
 
     }
