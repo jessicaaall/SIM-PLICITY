@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URI;
 
 public class StartGamePanel extends JPanel implements ActionListener {
     public MainPanel mp;
@@ -74,6 +75,12 @@ public class StartGamePanel extends JPanel implements ActionListener {
             mp.add(mmp);
             mp.revalidate();
             mp.repaint();
+        } else if (e.getSource() == loadWorldButton) {
+            try {
+                Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
