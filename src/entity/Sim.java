@@ -45,7 +45,7 @@ public class Sim {
     public int getUang() {
         return uang;
     }
-    public Inventory getInventory() {
+    public Inventory<Objek> getInventory() {
         return inventory;
     }
     public int getKekenyangan() {
@@ -76,12 +76,21 @@ public class Sim {
     // Method : Setter
     public void setMood(int newMood) {
         this.mood = newMood;
+        if (mood > 100) {
+            mood = 100;
+        }
     }
     public void setKesehatan(int newKesehatan) {
         this.kesehatan = newKesehatan;
+        if (kesehatan > 100) {
+            kesehatan = 100;
+        }
     }
     public void setKekenyangan(int newKekenyangan) {
         this.kekenyangan = newKekenyangan;
+        if (kekenyangan > 100) {
+            kekenyangan = 100;
+        }
     }
     public void setUang(int uang) {
         this.uang = uang;
