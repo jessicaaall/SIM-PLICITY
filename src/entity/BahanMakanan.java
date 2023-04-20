@@ -6,8 +6,8 @@ public class BahanMakanan extends Objek implements BisaDimakan, BisaDibeli {
     private int harga;
     private int poinKekenyangan;
 
-    public BahanMakanan(int id, String nama, String jenis, int harga, int poinKekenyangan) {
-        super(id, nama, jenis);
+    public BahanMakanan(String nama, int harga, int poinKekenyangan) {
+        super(nama);
         this.harga = harga;
         this.poinKekenyangan = poinKekenyangan;
     }
