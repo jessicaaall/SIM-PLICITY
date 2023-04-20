@@ -29,10 +29,10 @@ public class HousePanel extends JPanel {
         this.setBackground(Color.black);
         JPanel eastPanel = new JPanel(null);
         eastPanel.setPreferredSize(new Dimension(mainPanel.width/5, mainPanel.height));
-        eastPanel.setBackground(Color.white);
+        eastPanel.setBackground(Color.pink);
         JPanel westPanel = new JPanel(null);
         westPanel.setPreferredSize(new Dimension(mainPanel.width/5, mainPanel.height));
-        westPanel.setBackground(Color.white);
+        westPanel.setBackground(Color.pink);
         JPanel centerPanel = new JPanel(null);
         centerPanel.setPreferredSize(new Dimension(3*mainPanel.width/5, mainPanel.height));
         centerPanel.setBackground(Color.black);

@@ -30,7 +30,7 @@ public class RoomPanel extends JPanel {
         //draw the tile
         for (int x = 0; x <= ruangan.getDimensi().width; x++){
             for (int y = 0; y <= ruangan.getDimensi().height; y++){
-                tileManager.drawFloor(g2d, x*unitSize, y*unitSize);
+                tileManager.drawFloor(g2d, x*unitSize, y*unitSize, 2, unitSize);
             }
         }
     }
