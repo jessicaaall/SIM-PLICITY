@@ -6,10 +6,33 @@ public class BahanMakanan extends Objek implements BisaDimakan, BisaDibeli {
     private int harga;
     private int poinKekenyangan;
 
-    public BahanMakanan(String nama, int harga, int poinKekenyangan) {
+    public BahanMakanan(String nama) {
         super(nama);
-        this.harga = harga;
-        this.poinKekenyangan = poinKekenyangan;
+        if (nama.equals("nasi")) {
+            this.harga = 5;
+            this.poinKekenyangan = 5;
+        } else if (nama.equals("kentang")) {
+            this.harga = 3;
+            this.poinKekenyangan = 4;
+        } else if (nama.equals("ayam")) {
+            this.harga = 10;
+            this.poinKekenyangan = 8;
+        } else if (nama.equals("sapi")) {
+            this.harga = 12;
+            this.poinKekenyangan = 15;
+        } else if (nama.equals("wortel")) {
+            this.harga = 3;
+            this.poinKekenyangan = 2;
+        } else if (nama.equals("bayam")) {
+            this.harga = 3;
+            this.poinKekenyangan = 2;
+        } else if (nama.equals("kacang")) {
+            this.harga = 2;
+            this.poinKekenyangan = 2;
+        } else if (nama.equals("susu")) {
+            this.harga = 2;
+            this.poinKekenyangan = 1;
+        }
     }
 
     public int getHarga() {
