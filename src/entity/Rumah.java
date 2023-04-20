@@ -2,28 +2,48 @@ package entity;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
 
 public class Rumah  {
-    World world;
     private Point lokasi = new Point();
+    private ArrayList<Ruangan> daftarRuangan;
+    private Sim sim;
+    World world;
     private Color color;
-    public Rumah(int x, int y, Color color, World world){
+
+    public Rumah(int x, int y, Sim sim, Color color,World world, Ruangan ruangan){
         this.world = world;
-        if (x > world.getWidth() - 1 || y > world.getHeight()-1){
-            System.out.println("Out of boundary");
+        if(x > world.getWidth() -1 || y > world.getHeight()-1){
+            System.out.println("Titik diluar jangkauan");
         }
         else{
+            this.sim = sim;
             lokasi.x = x;
             lokasi.y = y;
             this.color = color;
+            daftarRuangan.add(ruangan);
         }
     }
 
-    public Point getLokasi() {
+    public Point getLokasi(){
         return lokasi;
     }
 
-    public Color getColor() {
+    public  ArrayList<Ruangan> getDaftarRuangan(){
+        return daftarRuangan;
+    }
+
+    public Sim getSim(){
+        return sim;
+    }
+
+    public Color getColor(){
         return color;
+    }
+
+    public void showDaftarRuangan(){
+        for(Ruangan ruangan : daftarRuangan){
+            System.out.println("nama ruangan");
+        }
     }
 }
