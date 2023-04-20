@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Rumah  {
     private Point lokasi = new Point();
-    private ArrayList<Ruangan> daftarRuangan;
+    private ArrayList<Ruangan> daftarRuangan = new ArrayList<>();
     private Sim sim;
     World world;
     private Color color;

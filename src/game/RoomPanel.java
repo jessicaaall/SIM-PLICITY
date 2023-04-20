@@ -19,9 +19,9 @@ public class RoomPanel extends JPanel {
         this.hp = hp;
         unitSize = hp.unitSize;
         setLayout(null);
-        setPreferredSize(ruangan.getDimensi());
+        setPreferredSize(new Dimension(ruangan.getDimensi().width*unitSize, ruangan.getDimensi().height*unitSize));
         setBounds(ruangan.getPosisi().x, ruangan.getPosisi().y
-                ,ruangan.getDimensi().width, ruangan.getDimensi().height);
+                ,ruangan.getDimensi().width*unitSize, ruangan.getDimensi().height*unitSize);
     }
 
     public void paintComponent(Graphics g){
