@@ -111,7 +111,6 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             }
 
         }
-
     }
 
     public void update(){
@@ -196,6 +195,8 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
                     if (currentClickTime - startClickTime >= 1000){
                         System.out.println("You entered the house");
                         HousePanel hp = new HousePanel(this, rumah);
+                        this.mainThread.interrupt();
+                        mainThread = null;
                         mp.remove(wop);
                         mp.remove(this);
                         mp.add(hp);

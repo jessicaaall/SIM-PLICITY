@@ -16,7 +16,7 @@ public class Main {
         frame.getContentPane().add(mainPanel);
         frame.pack();
         frame.setVisible(true);
-        frame.setResizable(true);
+        frame.setResizable(false);
         frame.setLocationRelativeTo(null);
 
         // game clock

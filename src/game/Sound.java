@@ -23,6 +23,7 @@ public class Sound {
         }
     }
     public void play(){
+        setVolume(-5f);
         clip.start();
     }
     public void loop(){

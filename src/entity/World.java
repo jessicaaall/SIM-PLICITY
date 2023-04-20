@@ -5,6 +5,31 @@ import java.util.ArrayList;
 public class World {
     private int width;
     private int height;
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setDaftarRumah(ArrayList<Rumah> daftarRumah) {
+        this.daftarRumah = daftarRumah;
+    }
+
+    public void setJumlahSim(int jumlahSim) {
+        this.jumlahSim = jumlahSim;
+    }
+
+    public void setDaftarSim(ArrayList<Sim> daftarSim) {
+        this.daftarSim = daftarSim;
+    }
+
+    public void setWaktu(Waktu waktu) {
+        this.waktu = waktu;
+    }
+
     private ArrayList<Rumah> daftarRumah;
     private int jumlahSim;
     private ArrayList<Sim> daftarSim;

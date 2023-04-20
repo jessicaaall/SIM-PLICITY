@@ -33,6 +33,13 @@ public class RoomPanel extends JPanel {
                 tileManager.drawFloor(g2d, x*unitSize, y*unitSize, 2, unitSize);
             }
         }
+
+        //draw every item on the house
+/*        for (Objek objek : ruangan.getDaftarObjek()){
+            if (objek instanceof Perabotan){
+
+            }
+        }*/
     }
 
 }
