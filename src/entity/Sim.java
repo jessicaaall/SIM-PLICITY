@@ -30,7 +30,6 @@ public class Sim {
     
     // Konstruktor
     public Sim(String namaLengkap, World theirWorld) {
-        this.namaLengkap = namaLengkap;
         this.theirWorld = theirWorld;
         for (Sim sim: theirWorld.getDaftarSim()){
             if (sim.getNamaLengkap().equals(namaLengkap)){
@@ -38,6 +37,7 @@ public class Sim {
                 return;
             }
         }
+        this.namaLengkap = namaLengkap;
         kekenyangan = 80;
         mood = 80;
         kesehatan = 80;
