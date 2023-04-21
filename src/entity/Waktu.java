@@ -24,30 +24,27 @@ public class Waktu {
         }
         return instanceWaktu;
     }
-    
 
     // Method
     public void jalankanWaktu(int lama) {
+        System.out.printf("Waktu berjalan");
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             int counter = sisaDetik;
             @Override
             public void run() {
-                if (counter > lama) {
-                    if (counter > 0) {
-                        System.out.println(counter + "Detik");
-                        counter--;
-                    } else {
-                        System.out.println("Kelar");
-                        timer.cancel();
-                    }
-                    setWaktu(getHariKe(), counter-lama);
+                if (counter > (sisaDetik - lama)) {
+                    System.out.printf(".");
+                    counter--;
                 } else {
-
+                    timer.cancel();
+                    setWaktu(getHariKe(), sisaDetik-lama);
+                    System.out.println("");
+                    tampilkanWaktu();
                 }
             }
         };  
-        timer.schedule(task, 0);
+        timer.scheduleAtFixedRate(task, 0, 1000);
     }
 
     // Method
@@ -67,8 +64,8 @@ public class Waktu {
         System.out.println("- Sisa detik : " + sisaDetik);
     }
 
-    public static void main(String args[]) {
-        Waktu.getInstanceWaktu();
-        jalankanWaktu(10);
+    public static void main(String[] args) {
+        Waktu waktu = Waktu.getInstanceWaktu();
+        waktu.jalankanWaktu(10);
     }
 }
