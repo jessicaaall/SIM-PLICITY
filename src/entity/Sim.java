@@ -5,6 +5,8 @@ import java.util.*;
 public class Sim {
     // Deklarasi Variabel
     private String namaLengkap;
+    private Ruangan locRuang;
+    private Perabotan locPerabot;
     private int kekenyangan;
     private int mood;
     private int kesehatan;
@@ -12,17 +14,18 @@ public class Sim {
     private Pekerjaan pekerjaan;
     private String status;
     private Inventory<Objek> inventory;
-    private Ruangan lokasi;
     private boolean isDuduk;
     private ArrayList<Rumah> kepemilikanRumah;
-    private int waktuTidur;
-
-    // Objek random untuk mengacak pekerjaan di konstruktor
+    private boolean isSudahTidur;
+    
+    // Objek random untuk random pekerjaan dan perabotan
     private Random randPekerjaanID = new Random();
     
     // Konstruktor
-    public Sim(String namaLengkap) {
+    public Sim(String namaLengkap, Ruangan locRuang, Perabotan locPerabot, Rumah rumah) {
         this.namaLengkap = namaLengkap;
+        this.locRuang = locRuang;
+        this.locPerabot = locPerabot;
         kekenyangan = 80;
         mood = 80;
         kesehatan = 80;
@@ -30,17 +33,22 @@ public class Sim {
         pekerjaan = new Pekerjaan(randPekerjaanID.nextInt(10));
         status = "";
         inventory = new Inventory<Objek>();
-        //lokasi = 
         isDuduk = false;
-        //kepemilikanRumah = new ArrayList<Rumah>();
-        //inisiasi kepemilikan rumah
-        waktuTidur = 0;
+        kepemilikanRumah = new ArrayList<Rumah>();
+        kepemilikanRumah.add(rumah);
+        isSudahTidur = false;
     }
 
 
     // Method : Getter
     public String getNamaLengkap() {
         return namaLengkap;
+    }
+    public Ruangan getLocRuang() {
+        return locRuang;
+    }
+    public Perabotan getLocPerabot() {
+        return locPerabot;
     }
     public int getKekenyangan() {
         return kekenyangan;
@@ -63,20 +71,23 @@ public class Sim {
     public Inventory<Objek> getInventory() {
         return inventory;
     }
-    public Ruangan getLokasi() {
-        return lokasi;
-    }
     public boolean getIsDuduk() {
         return isDuduk;
     }
     public ArrayList<Rumah> getKepemilikanRumah() {
         return kepemilikanRumah;
     }
-    public int getWaktuTidur() {
-        return waktuTidur;
+    public boolean getIsSudahTidur() {
+        return isSudahTidur;
     }
 
     // Method : Setter
+    public void setLocRuang(Ruangan newLocRuang) {
+        locRuang = newLocRuang;
+    }
+    public void setLocPerabot(Perabotan newLocPerabot) {
+        locPerabot = newLocPerabot;
+    }
     public void setKekenyangan(int newKekenyangan) {
         if (newKekenyangan > 100) {
             newKekenyangan = 100;
@@ -84,9 +95,6 @@ public class Sim {
             newKekenyangan = 0;
         }
         kekenyangan = newKekenyangan;
-        // if (kekenyangan == 0) {
-        //     mati();
-        // }
     }
     public void setMood(int newMood) {
         if (newMood > 100) {
@@ -95,9 +103,6 @@ public class Sim {
             newMood = 0;
         }
         mood = newMood;
-        // if (mood == 0) {
-        //     mati();
-        // }
     }
     public void setKesehatan(int newKesehatan) {
         if (newKesehatan > 100) {
@@ -106,9 +111,6 @@ public class Sim {
             newKesehatan = 0;
         }
         kesehatan = newKesehatan;
-        // if (kesehatan == 0) {
-        //     mati();
-        // }
     }
     public void setUang(int newUang) {
         uang = newUang;
@@ -116,15 +118,36 @@ public class Sim {
     public void setIsDuduk(boolean newIsDuduk) {
         isDuduk = newIsDuduk;
     }
-    public void setWaktuTidur(int newWaktuTidur) {
-        waktuTidur = newWaktuTidur;
+    public void setIsSudahTidur(boolean newIsSudahTidur) {
+        isSudahTidur = newIsSudahTidur;
     }
     
     // Method lain
     public void viewLokasi() {
-        System.out.println(namaLengkap + " sedang berada di ruangan " + lokasi.getNama());
+        System.out.println(namaLengkap + " sedang berada di ruangan " + locRuang.getNama());
     }
-    // public void mati() {
-        
-    // }
+    public void viewSimInfo() {
+        System.out.println("SIM INFO");
+        System.out.println("1. Nama : " + getNamaLengkap());
+        System.out.println("2. Berada di " + locPerabot.getNama() + " dalam ruangan " + locRuang.getNama());
+        System.out.println("3. Kekenyangan : " + getKekenyangan());
+        System.out.println("4. Mood : " + getMood());
+        System.out.println("5. Kesehatan : " + getKesehatan());
+        System.out.println("6. Uang : " + getUang());
+        System.out.println("7. Pekerjaan : " + pekerjaan.getNamaPekerjaan());
+        System.out.println("8. Status : " + getStatus());
+        System.out.println("9. Inventory : ");
+        inventory.showItem();
+        if (getIsDuduk()) {
+            System.out.println("10. Kondisi : duduk");
+        } else {
+            System.out.println("10. Kondisi : berdiri");
+        }
+        System.out.println("11. Kepemilikan rumah : " + getKepemilikanRumah());
+        if (getIsSudahTidur()) {
+            System.out.println("12. Selama 10 menit sudah tidur");
+        } else {
+            System.out.println("12. Selama 10 menit belum tidur");
+        }
+    }
 }
