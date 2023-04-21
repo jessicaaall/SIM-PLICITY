@@ -1,6 +1,7 @@
 package game;
 
 import entity.Rumah;
+import entity.Sim;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -9,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class WorldOptionPanel extends JPanel implements ActionListener {
     public JButton toMainMenuButton = new JButton("<html>Back to<br>Main Menu</html>");
@@ -75,6 +77,8 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
         wp.wop = this;
     }
 
+    private Sim chosenSim;
+    private String chosenSimName;
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toMainMenuButton){
@@ -89,6 +93,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
             mp.revalidate();
             mp.repaint();
         }
+
         else if (e.getSource() == addHouseButton){
             JPanel panel = new JPanel(new GridLayout(0, 1));
             JLabel label = new JLabel("<html>Set the coordinate of your house:<br></html>");
@@ -103,6 +108,28 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
                     color[0] = chosenColor;
                 }
             });
+            ArrayList<Sim> daftarSim = wp.getWorld().getDaftarSim();
+            String[] listNamaSim = new String[daftarSim.size()];
+            for (int i = 0; i < listNamaSim.length; i++){
+                listNamaSim[i] = daftarSim.get(i).getNamaLengkap();
+            }
+            JComboBox comboBox = new JComboBox(listNamaSim);
+
+            comboBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (e.getSource() == comboBox) {
+                        chosenSimName = (String) comboBox.getSelectedItem();
+                        for (Sim sim : daftarSim) {
+                            if (chosenSimName == sim.getNamaLengkap()) {
+                                chosenSim = sim;
+                            }
+                        }
+                    }
+                }
+            });
+            panel.add(new JLabel("<html>Pilih Sim<br></html>"));
+            panel.add(comboBox);
             panel.add(label);
             panel.add(new JLabel("<html>X Coordinate:<br></html>"));
             panel.add(xField);
@@ -116,7 +143,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
                 int x = Integer.parseInt(xField.getText());
                 int y = Integer.parseInt(yField.getText());
                 // Do something with x and y...
-                Rumah rumahBaru = new Rumah(x, y,null, color[0],wp.getWorld());
+                Rumah rumahBaru = new Rumah(x, y,chosenSim, color[0],wp.getWorld());
                 wp.getWorld().tambahRumah(rumahBaru);
             }
         }

@@ -5,6 +5,11 @@ import java.util.*;
 
 public class Perabotan extends Objek implements BisaDibeli {
     private Point kiriAtas;
+
+    public void setDimensi(Dimension dimensi) {
+        this.dimensi = dimensi;
+    }
+
     private Dimension dimensi;
     private int harga;
     private boolean dipakai;

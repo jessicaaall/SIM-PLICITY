@@ -1,5 +1,7 @@
 package game;
 
+import entity.Rumah;
+import entity.Sim;
 import entity.World;
 
 import javax.swing.*;
@@ -7,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URI;
+import java.util.Random;
 
 public class StartGamePanel extends JPanel implements ActionListener {
     public MainPanel mp;
@@ -15,6 +18,7 @@ public class StartGamePanel extends JPanel implements ActionListener {
     public JButton newWorldButton;
     public JButton loadWorldButton;
     public JButton backButton;
+
 
     public StartGamePanel(MainPanel mp,  MainMenuPanel mmp){
         this.mp = mp;
@@ -68,13 +72,32 @@ public class StartGamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == newWorldButton){
-            worldChoice = new World();
-            showWorldPanel();
+
+            JPanel newSimPanel = new JPanel(new GridLayout(0,1));
+            newSimPanel.setBackground(Color.pink);
+            JTextField namaSim = new JTextField();
+            JLabel message = new JLabel("<html> Masukkan nama Sim mu<br></hmtl>");
+            newSimPanel.add(message);
+            newSimPanel.add(namaSim);
+            int res = JOptionPane.showConfirmDialog(null, newSimPanel, "Create a New Sim",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (res == JOptionPane.OK_OPTION){
+                String stringNamaSim = namaSim.getText();
+                worldChoice = new World();
+                Sim addedSim = new Sim(stringNamaSim, worldChoice);
+                worldChoice.tambahSim(addedSim);
+                Random random = new Random();
+                Rumah rumahBaru = new Rumah(0,0, addedSim, new Color(random.nextInt(16777216)), worldChoice);
+                worldChoice.tambahRumah(rumahBaru);
+                showWorldPanel();
+            }
+
         } else if (e.getSource() == backButton) {
             mp.remove(this);
             mp.add(mmp);
             mp.revalidate();
             mp.repaint();
+
         } else if (e.getSource() == loadWorldButton) {
             try {
                 Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=dQw4w9WgXcQ"));

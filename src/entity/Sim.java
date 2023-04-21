@@ -4,6 +4,12 @@ import java.util.*;
 
 public class Sim {
     // Deklarasi Variabel
+    private World theirWorld;
+
+    public World getTheirWorld() {
+        return theirWorld;
+    }
+
     private String namaLengkap;
     private Ruangan locRuang;
     private Perabotan locPerabot;
@@ -22,10 +28,15 @@ public class Sim {
     private Random randPekerjaanID = new Random();
     
     // Konstruktor
-    public Sim(String namaLengkap, Ruangan locRuang, Perabotan locPerabot, Rumah rumah) {
+    public Sim(String namaLengkap, World theirWorld) {
+        this.theirWorld = theirWorld;
+        for (Sim sim: theirWorld.getDaftarSim()){
+            if (sim.getNamaLengkap().equals(namaLengkap)){
+                System.out.println("Nama sudah dipakai");
+                return;
+            }
+        }
         this.namaLengkap = namaLengkap;
-        this.locRuang = locRuang;
-        this.locPerabot = locPerabot;
         kekenyangan = 80;
         mood = 80;
         kesehatan = 80;
@@ -35,7 +46,6 @@ public class Sim {
         inventory = new Inventory<Objek>();
         isDuduk = false;
         kepemilikanRumah = new ArrayList<Rumah>();
-        kepemilikanRumah.add(rumah);
         isSudahTidur = false;
     }
 

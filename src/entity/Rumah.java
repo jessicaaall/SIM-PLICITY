@@ -22,9 +22,22 @@ public class Rumah  {
             lokasi.x = x;
             lokasi.y = y;
             daftarRuangan.add(new Ruangan("Ruangan 1",this,new Point(0,0)));
-            Perabotan sample = new Perabotan(1); //cuma sample buat uji coba, nanti bakal dihilangin
-            sample.setKiriAtas(new Point(1,1));//cuma sample buat uji coba, nanti bakal dihilangin
-            daftarRuangan.get(0).getDaftarObjek().add(sample); //cuma sample buat uji coba, nanti bakal dihilangin
+            Perabotan mejakursi = new Perabotan(1); //cuma sample buat uji coba, nanti bakal dihilangin
+            mejakursi.setKiriAtas(new Point(0,0));//cuma sample buat uji coba, nanti bakal dihilangin
+            Perabotan kasur = new Perabotan(5);
+            kasur.setKiriAtas(new Point(0, 3));
+            Perabotan jam = new Perabotan(10);
+            jam.setKiriAtas(new Point(0, 4));
+            Perabotan toilet = new Perabotan(4);
+            toilet.setKiriAtas(new Point(0, 5));
+            Perabotan komporgas = new Perabotan(2);
+            komporgas.setKiriAtas(new Point(4, 0));
+
+            daftarRuangan.get(0).getDaftarObjek().add(mejakursi); //cuma sample buat uji coba, nanti bakal dihilangin
+            daftarRuangan.get(0).getDaftarObjek().add(kasur);
+            daftarRuangan.get(0).getDaftarObjek().add(jam);
+            daftarRuangan.get(0).getDaftarObjek().add(toilet);
+            daftarRuangan.get(0).getDaftarObjek().add(komporgas);
         }
     }
 
