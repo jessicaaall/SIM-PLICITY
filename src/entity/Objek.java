@@ -1,9 +1,20 @@
 package entity;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Objects;
+
 public class Objek {
     private int id;
     private String nama;
     private String jenis;
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    private BufferedImage image;
 
     public Objek(String nama) {
         this.nama = nama;
@@ -55,6 +66,7 @@ public class Objek {
             this.id = 23;
         }
         this.jenis = tipeJenis(this.id);
+        image = generateImage(nama);
     }
 
     public Objek(int id) {
@@ -107,6 +119,7 @@ public class Objek {
         } else if (id == 23) {
             this.nama = "bistik";
         }
+        image = generateImage(this.nama);
     }
 
     public Objek(int id, String nama, String jenis) {
@@ -142,5 +155,14 @@ public class Objek {
     public boolean equals(Object obj) {
         Objek objek = (Objek) obj;
         return this.id == objek.getId();
+    }
+
+    private BufferedImage generateImage(String name){
+        try {
+            return ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/" + name + ".png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

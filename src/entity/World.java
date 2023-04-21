@@ -41,7 +41,7 @@ public class World {
         width = 65; //64 + 1, karena koordinat dari y =0 hingga x = 64 -> 65 kemungkinan ordinat
         daftarRumah = new ArrayList<Rumah>();
         daftarSim = new ArrayList<Sim>();
-        waktu = new Waktu();
+        waktu = Waktu.getInstanceWaktu();
     }
 
     public int getWidth() {

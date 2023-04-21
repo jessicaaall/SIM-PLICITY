@@ -11,16 +11,20 @@ public class Rumah  {
     World world;
     private Color color;
 
-    public Rumah(int x, int y, Sim sim,World world){
+    public Rumah(int x, int y, Sim sim, Color color, World world){
         this.world = world;
         if(x > world.getWidth() -1 || y > world.getHeight()-1){
             System.out.println("Titik diluar jangkauan");
         }
         else{
             this.sim = sim;
+            this.color = color;
             lokasi.x = x;
             lokasi.y = y;
-            daftarRuangan.add(new Ruangan("Ruangan 1",this,new Point(1,1)));
+            daftarRuangan.add(new Ruangan("Ruangan 1",this,new Point(0,0)));
+            Perabotan sample = new Perabotan(1); //cuma sample buat uji coba, nanti bakal dihilangin
+            sample.setKiriAtas(new Point(1,1));//cuma sample buat uji coba, nanti bakal dihilangin
+            daftarRuangan.get(0).getDaftarObjek().add(sample); //cuma sample buat uji coba, nanti bakal dihilangin
         }
     }
 

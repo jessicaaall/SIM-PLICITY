@@ -35,11 +35,16 @@ public class RoomPanel extends JPanel {
         }
 
         //draw every item on the house
-/*        for (Objek objek : ruangan.getDaftarObjek()){
+        for (Objek objek : ruangan.getDaftarObjek()){
             if (objek instanceof Perabotan){
-
+                g2d.drawImage(objek.getImage(),
+                        ((Perabotan) objek).getKiriAtas().x*unitSize,
+                        ((Perabotan) objek).getKiriAtas().y*unitSize,
+                        ((Perabotan) objek).getDimensi().width*unitSize,
+                        ((Perabotan) objek).getDimensi().height*unitSize,
+                        null);
             }
-        }*/
+        }
     }
 
 }
