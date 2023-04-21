@@ -77,15 +77,28 @@ public class Perabotan extends Objek implements BisaDibeli {
     @Override
     public void beli(Sim sim) {
         System.out.println("Masukkan kuantitas " + super.getNama() + " yang ingin dibeli.");
+        boolean valid = false;
         Scanner sc = new Scanner(System.in);
-        int kuantitas = sc.nextInt();
-        sc.close();
-        int totalHarga = kuantitas * getHarga();
-        if (sim.getUang() < totalHarga) {
-            System.out.println("Uang tidak cukup untuk membeli " + String.valueOf(kuantitas) + " " + super.getNama() + ".");
-        } else {
-            sim.setUang(sim.getUang() - totalHarga);
-            sim.getInventory().addItem(this);
+        while (!valid) {
+            try {
+                int kuantitas = Integer.parseInt(sc.nextLine());
+                if (kuantitas <= 0) {
+                    throw new IllegalArgumentException("Kuantitas harus lebih besar dari 0.");
+                }
+                valid = true;
+                int totalHarga = kuantitas * getHarga();
+                if (sim.getUang() < totalHarga) {
+                    System.out.println("Uang tidak cukup untuk membeli " + String.valueOf(kuantitas) + " " + super.getNama() + ".");
+                } else {
+                    sim.setUang(sim.getUang() - totalHarga);
+                    sim.getInventory().addItem(this);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Input tidak valid.");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
+        sc.close();
     }
 }
