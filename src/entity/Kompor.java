@@ -55,7 +55,7 @@ public class Kompor extends Perabotan {
                     }
                     sim.setMood(sim.getMood() + 10);
                     sim.getInventory().addItem(makanan);
-                    System.out.println("Makanan " + makanan.getNama() + " selesai dimasak.");
+                    System.out.println("Makanan " + makanan.getNama() + " selesai dimasak oleh " + sim.getNamaLengkap() + ".");
                 } else {
                     System.out.println("Masak " + makanan.getNama() + " gagal. Ada bahan makanan yang tidak dimiliki.");
                 }
