@@ -61,7 +61,7 @@ public class MainMenuPanel extends JPanel {
             }
         }
     }
-    MainMenuPanel(MainPanel mainPanel){
+    public MainMenuPanel(MainPanel mainPanel){
         this.mainPanel = mainPanel;
         this.helpPanel = new HelpPanel(mainPanel);
         this.startGamePanel = new StartGamePanel(mainPanel, this);
