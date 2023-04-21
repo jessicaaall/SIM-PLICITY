@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.*;
+import java.awt.*;
 
 public class Sim {
     // Deklarasi Variabel
@@ -12,7 +13,7 @@ public class Sim {
 
     private String namaLengkap;
     private Ruangan locRuang;
-    private Perabotan locPerabot;
+    private Point posisi;
     private int kekenyangan;
     private int mood;
     private int kesehatan;
@@ -24,11 +25,12 @@ public class Sim {
     private ArrayList<Rumah> kepemilikanRumah;
     private boolean isSudahTidur;
     
-    // Objek random untuk random pekerjaan dan perabotan
-    private Random randPekerjaanID = new Random();
+    // Objek random untuk random apapun yang dirandom wkwkwk
+    private Random rand = new Random();
     
     // Konstruktor
     public Sim(String namaLengkap, World theirWorld) {
+        this.namaLengkap = namaLengkap;
         this.theirWorld = theirWorld;
         for (Sim sim: theirWorld.getDaftarSim()){
             if (sim.getNamaLengkap().equals(namaLengkap)){
@@ -36,12 +38,12 @@ public class Sim {
                 return;
             }
         }
-        this.namaLengkap = namaLengkap;
+        locRuang = 
         kekenyangan = 80;
         mood = 80;
         kesehatan = 80;
         uang = 100;
-        pekerjaan = new Pekerjaan(randPekerjaanID.nextInt(10));
+        pekerjaan = new Pekerjaan(rand.nextInt(10));
         status = "";
         inventory = new Inventory<Objek>();
         isDuduk = false;
@@ -57,8 +59,8 @@ public class Sim {
     public Ruangan getLocRuang() {
         return locRuang;
     }
-    public Perabotan getLocPerabot() {
-        return locPerabot;
+    public Point getPosisi() {
+        return posisi;
     }
     public int getKekenyangan() {
         return kekenyangan;
@@ -95,8 +97,8 @@ public class Sim {
     public void setLocRuang(Ruangan newLocRuang) {
         locRuang = newLocRuang;
     }
-    public void setLocPerabot(Perabotan newLocPerabot) {
-        locPerabot = newLocPerabot;
+    public void setPosisi(Point newPosisi) {
+        posisi = newPosisi;
     }
     public void setKekenyangan(int newKekenyangan) {
         if (newKekenyangan > 100) {
@@ -139,7 +141,7 @@ public class Sim {
     public void viewSimInfo() {
         System.out.println("SIM INFO");
         System.out.println("1. Nama : " + getNamaLengkap());
-        System.out.println("2. Berada di " + locPerabot.getNama() + " dalam ruangan " + locRuang.getNama());
+        System.out.println("2. Berada di {" + posisi.getX() + "," + posisi.getY() + "}" + " dalam ruangan " + locRuang.getNama());
         System.out.println("3. Kekenyangan : " + getKekenyangan());
         System.out.println("4. Mood : " + getMood());
         System.out.println("5. Kesehatan : " + getKesehatan());
