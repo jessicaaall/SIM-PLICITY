@@ -22,6 +22,7 @@ public class Rumah  {
             lokasi.x = x;
             lokasi.y = y;
             daftarRuangan.add(new Ruangan("Ruangan 1",this,new Point(0,0)));
+            daftarRuangan.add(new Ruangan("Ruangan 2", this, new Point( 0, 6)));
             Perabotan mejakursi = new Perabotan(1); //cuma sample buat uji coba, nanti bakal dihilangin
             mejakursi.setKiriAtas(new Point(0,0));//cuma sample buat uji coba, nanti bakal dihilangin
             Perabotan kasur = new Perabotan(5);
@@ -38,6 +39,7 @@ public class Rumah  {
             daftarRuangan.get(0).getDaftarObjek().add(jam);
             daftarRuangan.get(0).getDaftarObjek().add(toilet);
             daftarRuangan.get(0).getDaftarObjek().add(komporgas);
+
         }
     }
 

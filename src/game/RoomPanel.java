@@ -5,12 +5,16 @@ import tiles.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class RoomPanel extends JPanel {
+public class RoomPanel extends JPanel{
     public HousePanel hp;
     public Ruangan ruangan;
     public Rumah rumah;
     public int unitSize;
+    public boolean isDragging = false;
+    public int dx, dy;
     private TileManager tileManager;
     public RoomPanel(Ruangan ruangan, Rumah rumah, HousePanel hp){
         tileManager = new TileManager(this);
@@ -19,8 +23,9 @@ public class RoomPanel extends JPanel {
         this.hp = hp;
         unitSize = hp.unitSize;
         setLayout(null);
+        setFocusable(false);
         setPreferredSize(new Dimension(ruangan.getDimensi().width*unitSize, ruangan.getDimensi().height*unitSize));
-        setBounds(ruangan.getPosisi().x, ruangan.getPosisi().y
+        setBounds(ruangan.getPosisi().x*unitSize, ruangan.getPosisi().y*unitSize
                 ,ruangan.getDimensi().width*unitSize, ruangan.getDimensi().height*unitSize);
     }
 
@@ -46,5 +51,4 @@ public class RoomPanel extends JPanel {
             }
         }
     }
-
 }

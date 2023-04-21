@@ -1,12 +1,13 @@
 package game;
 
+import entity.Objek;
+import entity.Perabotan;
 import entity.Ruangan;
 import entity.Rumah;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class HousePanel extends JPanel implements ActionListener, Runnable {
     public WorldPanel worldPanel;
@@ -14,54 +15,70 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
     public int unitSize = 40;
     public MainMenuPanel mainMenuPanel;
     public MainPanel mainPanel;
-    private boolean isDragging = false;
-    public int mapX = 0;
-    public int mapY = 0;
-    private int cameraWidth;
-    private int cameraHeight;
-    private int lastMouseX, lastMouseY;
-    private int mouseHoverX = -1;
-    private int mouseHoverY = -1;
+    public int cameraWidth;
+    public int cameraHeight;
     private Thread thread;
     private int FPS = 60;
     private int currentFPS;
+    KeyHandler keyHandler = new KeyHandler();
     JButton backToMainMenuButton = new JButton("To Main Menu");
     JButton backToWorldButton = new JButton("Keluar rumah");
+    JPanel eastPanel;
+    JPanel westPanel;
+    JPanel centerPanel;
+
+    JLabel currentFPSLabel;
     HousePanel(WorldPanel worldPanel, Rumah rumah){
         this.worldPanel = worldPanel;
         this.rumah = rumah;
         this.mainMenuPanel = worldPanel.mmp;
         this.mainPanel = worldPanel.mp;
+        mainPanel.setFocusable(false);
         this.setLayout(new BorderLayout());
         this.setBackground(Color.black);
-        backToMainMenuButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
+        this.addKeyListener(keyHandler);
+        this.setFocusable(true);
+        requestFocus();
+        System.out.println(isRequestFocusEnabled());
+
+
+        Font standardFont = new Font("Comic Sans MS", Font.PLAIN, 15);
+        backToMainMenuButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
         backToMainMenuButton.setBackground(Color.green);
         backToMainMenuButton.setForeground(Color.black);
         backToMainMenuButton.setFocusable(false);
         backToMainMenuButton.addActionListener(this);
-        backToWorldButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
+        backToWorldButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
         backToWorldButton.setBackground(Color.green);
         backToWorldButton.setForeground(Color.black);
         backToWorldButton.setFocusable(false);
         backToWorldButton.addActionListener(this);
-        JPanel eastPanel = new JPanel(null);
+        eastPanel = new JPanel(new FlowLayout());
         eastPanel.setPreferredSize(new Dimension(mainPanel.width/5, mainPanel.height));
         eastPanel.setBackground(Color.pink);
-        JPanel westPanel = new JPanel(new FlowLayout());
+        eastPanel.setFocusable(false);
+        currentFPSLabel = new JLabel("FPS = 0");
+        currentFPSLabel.setFont(standardFont);
+        eastPanel.add(currentFPSLabel);
+        westPanel = new JPanel(new FlowLayout());
         westPanel.setPreferredSize(new Dimension(mainPanel.width/5, mainPanel.height));
         westPanel.setBackground(Color.pink);
         westPanel.add(backToMainMenuButton);
         westPanel.add(backToWorldButton);
-        JPanel centerPanel = new JPanel(null);
+        westPanel.setFocusable(false);
+        centerPanel = new JPanel(null);
         centerPanel.setPreferredSize(new Dimension(3*mainPanel.width/5, mainPanel.height));
         centerPanel.setBackground(Color.black);
         for (Ruangan ruangan : rumah.getDaftarRuangan()){
             RoomPanel rp = new RoomPanel(ruangan, this.rumah, this);
             centerPanel.add(rp);
         }
+        centerPanel.setFocusable(false);
         this.add(eastPanel, BorderLayout.EAST);
         this.add(centerPanel, BorderLayout.CENTER);
         this.add(westPanel, BorderLayout.WEST);
+        cameraWidth = 3*mainPanel.width/5;
+        cameraHeight = mainPanel.height;
         startThread();
     }
 
@@ -103,20 +120,53 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             timer += (currentTime - lastTime);
             lastTime = currentTime;
             if (delta >= 1){
+                update();
                 repaint();
                 delta--;
                 drawCount++;
+
             }
             if (timer >= Math.pow(10, 9)){
                 currentFPS = drawCount;
                 drawCount = 0;
                 timer = 0;
+                currentFPSLabel.setText("FPS = " + currentFPS);
             }
-
         }
+
     }
     public void startThread(){
         thread = new Thread(this);
         thread.start();
     }
+
+    public void paintComponent(Graphics g){
+        Graphics2D g2d = (Graphics2D) g;
+
+        // draw fps
+    }
+
+
+    public void update() {
+        int speed = 5; // kecepatan pergerakan kamera
+        int mapX = centerPanel.getX();
+        int mapY = centerPanel.getY();
+        if(keyHandler.leftPressed){
+            System.out.println("Left");
+            centerPanel.setLocation(mapX + speed, mapY);
+        }
+        else if (keyHandler.rightPressed){
+            System.out.println("Right");
+            centerPanel.setLocation(mapX - speed, mapY);
+        }
+        else if (keyHandler.upPressed){
+            System.out.println("Up");
+            centerPanel.setLocation(mapX, mapY + speed);
+        }
+        else if (keyHandler.downPressed){
+            System.out.println("Down");
+            centerPanel.setLocation(mapX, mapY - speed);
+        }
+    }
+
 }
