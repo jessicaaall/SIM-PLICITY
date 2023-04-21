@@ -10,15 +10,15 @@ public class Sim {
     private int kesehatan;
     private int uang;
     private Pekerjaan pekerjaan;
-    private StringBuffer status;
+    private String status;
     private Inventory<Objek> inventory;
     private Ruangan lokasi;
     private boolean isDuduk;
     private ArrayList<Rumah> kepemilikanRumah;
     private int waktuTidur;
 
-    // Objek untuk Konstruktor
-    Random randPekerjaanID = new Random();
+    // Objek random untuk mengacak pekerjaan di konstruktor
+    private Random randPekerjaanID = new Random();
     
     // Konstruktor
     public Sim(String namaLengkap) {
@@ -28,7 +28,7 @@ public class Sim {
         kesehatan = 80;
         uang = 100;
         pekerjaan = new Pekerjaan(randPekerjaanID.nextInt(10));
-        status = new StringBuffer(50);
+        status = "";
         inventory = new Inventory<Objek>();
         //lokasi = 
         isDuduk = false;
@@ -57,7 +57,7 @@ public class Sim {
     public Pekerjaan getPekerjaan() {
         return pekerjaan;
     }
-    public StringBuffer getStatus() {
+    public String getStatus() {
         return status;
     }
     public Inventory<Objek> getInventory() {
@@ -77,6 +77,17 @@ public class Sim {
     }
 
     // Method : Setter
+    public void setKekenyangan(int newKekenyangan) {
+        if (newKekenyangan > 100) {
+            newKekenyangan = 100;
+        } else if (newKekenyangan < 0) {
+            newKekenyangan = 0;
+        }
+        kekenyangan = newKekenyangan;
+        // if (kekenyangan == 0) {
+        //     mati();
+        // }
+    }
     public void setMood(int newMood) {
         if (newMood > 100) {
             newMood = 100;
@@ -84,9 +95,9 @@ public class Sim {
             newMood = 0;
         }
         mood = newMood;
-        if (mood == 0) {
-            mati();
-        }
+        // if (mood == 0) {
+        //     mati();
+        // }
     }
     public void setKesehatan(int newKesehatan) {
         if (newKesehatan > 100) {
@@ -95,30 +106,25 @@ public class Sim {
             newKesehatan = 0;
         }
         kesehatan = newKesehatan;
-        if (kesehatan == 0) {
-            mati();
-        }
-    }
-    public void setKekenyangan(int newKekenyangan) {
-        if (newKekenyangan > 100) {
-            newKekenyangan = 100;
-        } else if (newKekenyangan < 0) {
-            newKekenyangan = 0;
-        }
-        kekenyangan = newKekenyangan;
-        if (kekenyangan == 0) {
-            mati();
-        }
+        // if (kesehatan == 0) {
+        //     mati();
+        // }
     }
     public void setUang(int newUang) {
         uang = newUang;
     }
-    
-    // Method : Terkait Sim (Nonaksi)
-    public void mati() {
-
+    public void setIsDuduk(boolean newIsDuduk) {
+        isDuduk = newIsDuduk;
     }
-
-    // Method : Terkait Sim (Aksi)
-
+    public void setWaktuTidur(int newWaktuTidur) {
+        waktuTidur = newWaktuTidur;
+    }
+    
+    // Method lain
+    public void viewLokasi() {
+        System.out.println(namaLengkap + " sedang berada di ruangan " + lokasi.getNama());
+    }
+    // public void mati() {
+        
+    // }
 }
