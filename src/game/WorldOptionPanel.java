@@ -20,6 +20,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
     public WorldPanel wp;
     public WorldOptionPanel(MainPanel mainPanel, WorldPanel worldPanel){
         mp = mainPanel; wp = worldPanel;
+        setFocusable(false);
 
 //        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
         setLayout(null);

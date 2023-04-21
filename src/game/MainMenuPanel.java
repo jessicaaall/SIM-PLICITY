@@ -22,6 +22,7 @@ public class MainMenuPanel extends JPanel {
             setBounds((mainPanel.width-400)/2,160, 400,240);
             setPreferredSize(new Dimension(400,240));
             setDoubleBuffered(true);
+            setFocusable(false);
             // create and add button
             startButton = new MainMenuButton("Start");
             helpButton = new MainMenuButton("Help");

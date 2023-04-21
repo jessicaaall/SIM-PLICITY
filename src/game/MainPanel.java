@@ -8,12 +8,19 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 public class MainPanel extends JPanel  {
+
+    GameFrame gf;
     int width = 1120;
     int height = 630;
-    public MainPanel(World world){
+    KeyHandler keyH = new KeyHandler();
+    public MainPanel(GameFrame gf){
+        this.gf = gf;
         this.setPreferredSize(new Dimension(width, height));
         this.setBackground(Color.pink);
         this.setDoubleBuffered(true);
+        setFocusable(true);
+        requestFocus();
+        addKeyListener(keyH);
     }
 
     public void setFullScreen(){

@@ -20,7 +20,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
     private Thread thread;
     private int FPS = 60;
     private int currentFPS;
-    KeyHandler keyHandler = new KeyHandler();
     JButton backToMainMenuButton = new JButton("To Main Menu");
     JButton backToWorldButton = new JButton("Keluar rumah");
     JPanel eastPanel;
@@ -33,13 +32,8 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         this.rumah = rumah;
         this.mainMenuPanel = worldPanel.mmp;
         this.mainPanel = worldPanel.mp;
-        mainPanel.setFocusable(false);
         this.setLayout(new BorderLayout());
         this.setBackground(Color.black);
-        this.addKeyListener(keyHandler);
-        this.setFocusable(true);
-        requestFocus();
-        System.out.println(isRequestFocusEnabled());
 
 
         Font standardFont = new Font("Comic Sans MS", Font.PLAIN, 15);
@@ -149,6 +143,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
 
     public void update() {
         int speed = 5; // kecepatan pergerakan kamera
+        KeyHandler keyHandler = mainPanel.keyH;
         int mapX = centerPanel.getX();
         int mapY = centerPanel.getY();
         if(keyHandler.leftPressed){
