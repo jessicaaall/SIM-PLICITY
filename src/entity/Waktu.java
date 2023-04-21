@@ -1,5 +1,8 @@
 package entity;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Waktu {
     // Deklarasi variabel
     private static Waktu instanceWaktu;
@@ -21,6 +24,20 @@ public class Waktu {
         }
         return instanceWaktu;
     }
+
+    Timer timer = new Timer();
+    TimerTask task = new TimerTask() {
+        int counter = sisaDetik;
+        @Override
+        public void run() {
+            if (counter > 0) {
+                counter--;
+            } else {
+                
+            }
+        }
+    };
+
 
     // Method lain
     public int getHariKe() {
