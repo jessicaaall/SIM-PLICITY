@@ -142,25 +142,56 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
 
 
     public void update() {
-        int speed = 5; // kecepatan pergerakan kamera
+        int speed = unitSize/4; // kecepatan pergerakan kamera
         KeyHandler keyHandler = mainPanel.keyH;
-        int mapX = centerPanel.getX();
-        int mapY = centerPanel.getY();
-        if(keyHandler.leftPressed){
-            System.out.println("Left");
-            centerPanel.setLocation(mapX + speed, mapY);
+//        int mapX = 0;
+//        int mapY = 0;
+        if(keyHandler.rightPressed){
+//            System.out.println("Right");
+//            centerPanel.setLocation(mapX + speed, mapY);
+//            mapX += speed;
+            for (Component component : centerPanel.getComponents()){
+                if (component instanceof RoomPanel){
+                    RoomPanel rp = (RoomPanel) component;
+
+                    rp.setBounds(rp.getX() + speed, rp.getY(), rp.getWidth(), rp.getHeight());
+                }
+            }
         }
-        else if (keyHandler.rightPressed){
-            System.out.println("Right");
-            centerPanel.setLocation(mapX - speed, mapY);
+        else if (keyHandler.leftPressed){
+//            System.out.println("Left");
+//            centerPanel.setLocation(mapX - speed, mapY);
+//            mapX -= speed;
+            for (Component component : centerPanel.getComponents()){
+                if (component instanceof RoomPanel){
+                    RoomPanel rp = (RoomPanel) component;
+
+                    rp.setBounds(rp.getX()-speed, rp.getY(), rp.getWidth(), rp.getHeight());
+                }
+            }
         }
         else if (keyHandler.upPressed){
-            System.out.println("Up");
-            centerPanel.setLocation(mapX, mapY + speed);
+//            System.out.println("Up");
+//            centerPanel.setLocation(mapX, mapY + speed);
+//            mapY += speed;
+            for (Component component : centerPanel.getComponents()){
+                if (component instanceof RoomPanel){
+                    RoomPanel rp = (RoomPanel) component;
+                    rp.setBounds(rp.getX(), rp.getY()-speed, rp.getWidth(), rp.getHeight());
+                }
+            }
         }
         else if (keyHandler.downPressed){
-            System.out.println("Down");
-            centerPanel.setLocation(mapX, mapY - speed);
+//            System.out.println("Down");
+//            centerPanel.setLocation(mapX, mapY - speed);
+//            mapY -= speed;
+            for (Component component : centerPanel.getComponents()){
+                if (component instanceof RoomPanel){
+                    RoomPanel rp = (RoomPanel) component;
+                    rp.setBounds(rp.getX(), rp.getY()+speed, rp.getWidth(), rp.getHeight());
+                }
+            }
+
         }
     }
 
