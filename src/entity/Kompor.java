@@ -49,14 +49,13 @@ public class Kompor extends Perabotan {
                         sim.getInventory().removeItem(bahan);
                     }
                     int waktuMasak = makanan.getPoinKekenyangan() * 1500;
-                    try {
-                        Thread.sleep(waktuMasak);
-                        sim.setMood(sim.getMood() + 10);
-                        sim.getInventory().addItem(makanan);
-                        System.out.println("Makanan " + makanan.getNama() + " selesai dimasak.");
-                    } catch (InterruptedException e) {
-                        System.out.println("Aksi masak terinterupsi.");
+                    long endTime = System.currentTimeMillis() + waktuMasak;
+                    while (System.currentTimeMillis() < endTime) {
+
                     }
+                    sim.setMood(sim.getMood() + 10);
+                    sim.getInventory().addItem(makanan);
+                    System.out.println("Makanan " + makanan.getNama() + " selesai dimasak.");
                 } else {
                     System.out.println("Masak " + makanan.getNama() + " gagal. Ada bahan makanan yang tidak dimiliki.");
                 }
