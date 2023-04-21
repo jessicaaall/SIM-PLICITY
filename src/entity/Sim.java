@@ -38,7 +38,6 @@ public class Sim {
                 return;
             }
         }
-        locRuang = 
         kekenyangan = 80;
         mood = 80;
         kesehatan = 80;
