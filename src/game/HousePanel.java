@@ -23,7 +23,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
     private int mouseHoverX = -1;
     private int mouseHoverY = -1;
     private Thread thread;
-    private int FPS;
+    private int FPS = 60;
     private int currentFPS;
     JButton backToMainMenuButton = new JButton("To Main Menu");
     JButton backToWorldButton = new JButton("Keluar rumah");
