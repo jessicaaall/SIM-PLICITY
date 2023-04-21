@@ -24,22 +24,33 @@ public class Waktu {
         }
         return instanceWaktu;
     }
+    
 
-    Timer timer = new Timer();
-    TimerTask task = new TimerTask() {
-        int counter = sisaDetik;
-        @Override
-        public void run() {
-            if (counter > 0) {
-                counter--;
-            } else {
-                
+    // Method
+    public void jalankanWaktu(int lama) {
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            int counter = sisaDetik;
+            @Override
+            public void run() {
+                if (counter > lama) {
+                    if (counter > 0) {
+                        System.out.println(counter + "Detik");
+                        counter--;
+                    } else {
+                        System.out.println("Kelar");
+                        timer.cancel();
+                    }
+                    setWaktu(getHariKe(), counter-lama);
+                } else {
+
+                }
             }
-        }
-    };
+        };  
+        timer.schedule(task, 0);
+    }
 
-
-    // Method lain
+    // Method
     public int getHariKe() {
         return hariKe;
     }
@@ -54,5 +65,10 @@ public class Waktu {
         System.out.println("Waktu dunia Sim-Plicity :");
         System.out.println("- Hari ke    : " + hariKe);
         System.out.println("- Sisa detik : " + sisaDetik);
+    }
+
+    public static void main(String args[]) {
+        Waktu.getInstanceWaktu();
+        jalankanWaktu(10);
     }
 }

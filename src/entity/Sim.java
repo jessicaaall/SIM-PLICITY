@@ -6,11 +6,6 @@ import java.awt.*;
 public class Sim {
     // Deklarasi Variabel
     private World theirWorld;
-
-    public World getTheirWorld() {
-        return theirWorld;
-    }
-
     private String namaLengkap;
     private Ruangan locRuang;
     private Point posisi;
@@ -24,13 +19,13 @@ public class Sim {
     private boolean isDuduk;
     private ArrayList<Rumah> kepemilikanRumah;
     private boolean isSudahTidur;
+    private int waktuKerja;
     
     // Objek random untuk random apapun yang dirandom wkwkwk
     private Random rand = new Random();
     
     // Konstruktor
     public Sim(String namaLengkap, World theirWorld) {
-        this.namaLengkap = namaLengkap;
         this.theirWorld = theirWorld;
         for (Sim sim: theirWorld.getDaftarSim()){
             if (sim.getNamaLengkap().equals(namaLengkap)){
@@ -38,6 +33,7 @@ public class Sim {
                 return;
             }
         }
+        this.namaLengkap = namaLengkap;
         kekenyangan = 80;
         mood = 80;
         kesehatan = 80;
@@ -48,10 +44,14 @@ public class Sim {
         isDuduk = false;
         kepemilikanRumah = new ArrayList<Rumah>();
         isSudahTidur = false;
+        waktuKerja = 0;
     }
-
-
+    
+    
     // Method : Getter
+    public World getTheirWorld() {
+        return theirWorld;
+    }
     public String getNamaLengkap() {
         return namaLengkap;
     }
@@ -88,7 +88,7 @@ public class Sim {
     public ArrayList<Rumah> getKepemilikanRumah() {
         return kepemilikanRumah;
     }
-    public boolean getIsSudahTidur() {
+    public boolean getIsSudahTidur() { 
         return isSudahTidur;
     }
 
@@ -132,11 +132,11 @@ public class Sim {
     public void setIsSudahTidur(boolean newIsSudahTidur) {
         isSudahTidur = newIsSudahTidur;
     }
+    public void setWaktuKerja(int newWaktuKerja) {
+        waktuKerja = newWaktuKerja;
+    }
     
     // Method lain
-    public void viewLokasi() {
-        System.out.println(namaLengkap + " sedang berada di ruangan " + locRuang.getNama());
-    }
     public void viewSimInfo() {
         System.out.println("SIM INFO");
         System.out.println("1. Nama : " + getNamaLengkap());
@@ -159,6 +159,39 @@ public class Sim {
             System.out.println("12. Selama 10 menit sudah tidur");
         } else {
             System.out.println("12. Selama 10 menit belum tidur");
+        }
+    }
+    public void kerja(int lama) {
+        // pekerjaan baru hanya bisa dilakuin sehari setelah pergantian pekerjaan
+    }
+    public void tidur(int lama) {
+        
+    }
+    public void olahraga(int lama) {
+
+    }
+    public void berkunjung() {
+
+    }
+    public void upgradeRuman(Rumah rumah) {
+
+    }
+    public void beliBarang(BisaDibeli barang) {
+
+    }
+    public void lihatInventory() {
+        inventory.showItem();
+    }
+    public void masangBarang(Perabotan barang, Ruangan locRuang, Point posisi) {
+        inventory.removeItem(barang);
+    }
+    public void gantiPekerjaan(Pekerjaan newPekerjaan) {
+        if (waktuKerja > 720) {
+            uang -= (1/2) * newPekerjaan.getGaji(); // Bayar 1/2 dari gaji pekerjaan baru
+            pekerjaan = newPekerjaan;
+            setWaktuKerja(0);
+        } else {
+            System.out.println("Kamu belum bekerja minimal 12 menit ngab");
         }
     }
 }
