@@ -44,12 +44,7 @@ public class Makanan extends Objek implements BisaDimakan {
 
     @Override
     public void dimakan(Sim sim) {
-        if (sim.getInventory().checkItem(this)) {
-            sim.setKekenyangan(sim.getKekenyangan() + poinKekenyangan);
-            sim.getInventory().removeItem(this);
-        } else {
-            System.out.println("Makanan belum dibuat oleh Sim sehingga tidak ditemukan pada Inventory");
-        }
+        sim.setKekenyangan(sim.getKekenyangan() + poinKekenyangan);
     }
 }
  
