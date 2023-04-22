@@ -75,6 +75,7 @@ public class Kasur extends Perabotan implements BisaDiduduki {
         sim.setIsDuduk(true);
     }
 
+    @Override
     public void berdiri(Sim sim) {
         sim.setIsDuduk(false);
     }
