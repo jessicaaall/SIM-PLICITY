@@ -9,6 +9,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.RoundRectangle2D;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -21,8 +22,9 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
     public WorldPanel wp;
     public WorldOptionPanel(MainPanel mainPanel, WorldPanel worldPanel){
         mp = mainPanel; wp = worldPanel;
+//        this.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         setFocusable(false);
-        timeLabel = new JLabel("<html>"+ wp.getWorld().getWaktu().tampilkanWaktu()[0] +"<br>" +
+        timeLabel = new JLabel("<html> "+ wp.getWorld().getWaktu().tampilkanWaktu()[0] +"<br>" +
                 wp.getWorld().getWaktu().tampilkanWaktu()[1] + "<br>" +
                 wp.getWorld().getWaktu().tampilkanWaktu()[2] + "</html>");
 //        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
@@ -190,5 +192,13 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
                 }
             }
         }
+    }
+
+    @Override
+    public void paintComponent(Graphics g){
+        Graphics2D g2d = (Graphics2D) g;
+        RoundRectangle2D shape = new RoundRectangle2D.Double(0,0, getWidth(), getHeight(), 10, 10);
+        g2d.setClip(shape);
+        super.paintComponent(g);
     }
 }
