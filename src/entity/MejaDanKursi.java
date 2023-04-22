@@ -45,6 +45,7 @@ public class MejaDanKursi extends Perabotan implements BisaDiduduki {
                         BahanMakanan bahanMakanan = (BahanMakanan) (inventoryMakanan.get(noMakanan - 1));
                         bahanMakanan.dimakan(sim);
                     }
+                    System.out.println("Sim " + sim.getNamaLengkap() + " selesai makan " + inventoryMakanan.get(noMakanan - 1).getNama() + ".");
                 } catch (NumberFormatException e) {
                     System.out.println("Input tidak valid.");
                 } catch (IllegalArgumentException e) {
