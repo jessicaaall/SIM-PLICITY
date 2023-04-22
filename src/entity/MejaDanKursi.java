@@ -8,6 +8,8 @@ public class MejaDanKursi extends Perabotan implements BisaDiduduki {
     }
 
     public void makan(Sim sim) {
+        duduk(sim);
+
         List<Objek> inventoryMakanan = new ArrayList<Objek>();
         for (Objek key : sim.getInventory().getContainer().keySet()) {
             if (key instanceof BisaDimakan) {
@@ -51,6 +53,8 @@ public class MejaDanKursi extends Perabotan implements BisaDiduduki {
             }
             sc.close();
         }
+
+        berdiri(sim);
     }
 
     @Override
