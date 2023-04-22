@@ -38,7 +38,7 @@ public class MejaDanKursi extends Perabotan implements BisaDiduduki {
                     while (System.currentTimeMillis() < endTime) {
 
                     }
-                    if (inventoryMakanan.get(noMakanan - 1) instanceof Makanan) {
+                    if (inventoryMakanan.get(noMakanan - 1).getJenis().equals("makanan")) {
                         Makanan makanan = (Makanan) (inventoryMakanan.get(noMakanan-1));
                         makanan.dimakan(sim);
                     } else {
