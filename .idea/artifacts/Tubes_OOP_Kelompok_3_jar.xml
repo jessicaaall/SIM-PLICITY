@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Tubes-OOP-Kelompok-3:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Tubes_OOP_Kelompok_3_jar</output-path>
+    <root id="archive" name="Tubes-OOP-Kelompok-3.jar">
+      <element id="module-output" name="Tubes-OOP-Kelompok-3" />
+    </root>
+  </artifact>
+</component>

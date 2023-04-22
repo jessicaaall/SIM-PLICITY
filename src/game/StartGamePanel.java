@@ -90,6 +90,7 @@ public class StartGamePanel extends JPanel implements ActionListener {
                 Rumah rumahBaru = new Rumah(0,0, addedSim, new Color(random.nextInt(16777216)), worldChoice);
                 addedSim.setLocRuang(rumahBaru.getDaftarRuangan().get(0));
                 worldChoice.tambahRumah(rumahBaru);
+                worldChoice.startThread();
                 showWorldPanel();
             }
 
@@ -119,4 +120,6 @@ public class StartGamePanel extends JPanel implements ActionListener {
         mp.revalidate(); // to update the layout
         mp.repaint(); // to repaint the panel
     }
+
+
 }

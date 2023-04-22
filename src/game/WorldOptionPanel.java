@@ -14,20 +14,29 @@ import java.util.ArrayList;
 
 public class WorldOptionPanel extends JPanel implements ActionListener {
     public JButton toMainMenuButton = new JButton("<html>Back to<br>Main Menu</html>");
-    public JButton addHouseButton = new JButton("Add House");
+    public JButton addHouseButton = new JButton("Add Sim");
     public JSlider volumeSlider = new JSlider(500, 860, 700);
+    public JLabel timeLabel;
     public MainPanel mp;
     public WorldPanel wp;
     public WorldOptionPanel(MainPanel mainPanel, WorldPanel worldPanel){
         mp = mainPanel; wp = worldPanel;
         setFocusable(false);
-
+        timeLabel = new JLabel("<html>"+ wp.getWorld().getWaktu().tampilkanWaktu()[0] +"<br>" +
+                wp.getWorld().getWaktu().tampilkanWaktu()[1] + "<br>" +
+                wp.getWorld().getWaktu().tampilkanWaktu()[2] + "</html>");
 //        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
         setLayout(null);
         Dimension size = new Dimension((mp.getWidth() - 7*wp.getWidth()/5)/2 -4, mp.getHeight()/2);
         this.setPreferredSize(size);
         this.setBounds(0,mp.getHeight()/4, (mp.getWidth() - 7*wp.getWidth()/5)/2 -4, mp.getHeight()/2);
         this.setBackground(Color.white);
+        timeLabel.setFocusable(false);
+//        timeLabel.setOpaque(true);
+        timeLabel.setVerticalTextPosition(SwingConstants.CENTER);
+        timeLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        timeLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 10));
+        timeLabel.setBounds(0,0, this.getWidth(), timeLabel.getFontMetrics(timeLabel.getFont()).getHeight()*2+15);
         toMainMenuButton.setFocusable(false);
         toMainMenuButton.setHorizontalTextPosition(JButton.CENTER);
         toMainMenuButton.setVerticalTextPosition(JButton.CENTER);
@@ -35,7 +44,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
 
         toMainMenuButton.addActionListener(this);
         toMainMenuButton.setBackground(Color.yellow);
-        toMainMenuButton.setBounds(0, 0,
+        toMainMenuButton.setBounds(0, timeLabel.getY()+timeLabel.getHeight(),
                 this.getWidth(),
                 toMainMenuButton.getFontMetrics(toMainMenuButton.getFont()).getHeight()*2+5);
         addHouseButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
@@ -45,9 +54,10 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
         addHouseButton.setVerticalTextPosition(JButton.CENTER);
         addHouseButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
         addHouseButton.setBounds(0,
-                toMainMenuButton.getFontMetrics(toMainMenuButton.getFont()).getHeight()*2,
+                toMainMenuButton.getY() + toMainMenuButton.getHeight(),
                 this.getWidth(),
                 addHouseButton.getFontMetrics(addHouseButton.getFont()).getHeight()+5);
+        add(timeLabel);
         add(toMainMenuButton);
         add(addHouseButton);
         volumeSlider.addChangeListener(new ChangeListener() {
@@ -114,8 +124,9 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
             for (int i = 0; i < listNamaSim.length; i++){
                 listNamaSim[i] = daftarSim.get(i).getNamaLengkap();
             }
-            JComboBox comboBox = new JComboBox(listNamaSim);
-
+            // masukan nama sim
+            JTextField namaSimField = new JTextField();
+/*            JComboBox comboBox = new JComboBox(listNamaSim);
             comboBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -130,7 +141,9 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
                 }
             });
             panel.add(new JLabel("<html>Pilih Sim<br></html>"));
-            panel.add(comboBox);
+            panel.add(comboBox);*/
+            panel.add(new JLabel("<html>Masukkan Nama Sim"));
+            panel.add(namaSimField);
             panel.add(label);
             panel.add(new JLabel("<html>X Coordinate:<br></html>"));
             panel.add(xField);
@@ -138,14 +151,43 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
             panel.add(yField);
             panel.add(new JLabel("<html>Color:<br></html>"));
             panel.add(colorButton);
-            int result = JOptionPane.showConfirmDialog(null, panel, "Add House",
+            int result = JOptionPane.showConfirmDialog(null, panel, "Tambah Sim",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
+                String namaSim = namaSimField.getText();
                 int x = Integer.parseInt(xField.getText());
                 int y = Integer.parseInt(yField.getText());
-                // Do something with x and y...
-                Rumah rumahBaru = new Rumah(x, y,chosenSim, color[0],wp.getWorld());
-                wp.getWorld().tambahRumah(rumahBaru);
+                // cek apakah nama sim, dan koordinat sudah dipakai sudah ada
+                boolean hasSim = false;
+                boolean occupied = false;
+                for (Sim sim: wp.getWorld().getDaftarSim()){
+                    if (sim.getNamaLengkap().equals(namaSim)){
+                        hasSim = true;
+                        break;
+                    }
+                }
+                for (Rumah rumah:wp.getWorld().getDaftarRumah()){
+                    if (rumah.getLokasi().equals(new Point(x,y))){
+                        occupied = true;
+                    }
+                }
+                if (hasSim){
+                    /* add popup that show message that the sim Name has already been taken */
+                    JOptionPane.showMessageDialog(null, "The Sim name has already been taken.");
+                }
+                else if (occupied){
+                    /* add popup that show message that the place is occupied */
+                    JOptionPane.showMessageDialog(null, "The position is already occupied.");
+                }
+                else if (wp.getWorld().isLimitSimCreation()){
+                    JOptionPane.showMessageDialog(null, "Anda hanya bisa membuat Sim 1 kali sehari");
+                }
+                else{
+                    Sim simBaru = new Sim(namaSim, wp.getWorld());
+                    Rumah rumahBaru = new Rumah(x, y,simBaru, color[0],wp.getWorld());
+                    wp.getWorld().tambahRumah(rumahBaru);
+                    wp.getWorld().tambahSim(simBaru);
+                }
             }
         }
     }

@@ -110,6 +110,11 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
                 timer = 0;
             }
 
+            //change the time
+            wop.timeLabel.setText("<html>"+ getWorld().getWaktu().tampilkanWaktu()[0] +"<br>" +
+                    getWorld().getWaktu().tampilkanWaktu()[1] + "<br>" +
+                    getWorld().getWaktu().tampilkanWaktu()[2] + "</html>");
+
         }
     }
 
@@ -176,6 +181,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             g2d.setColor(Color.WHITE);
             g2d.drawString(worldPosition,  mapX + 10, mapY + cameraHeight - 20);
         }
+
 
 
 

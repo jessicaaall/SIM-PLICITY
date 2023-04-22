@@ -2,7 +2,7 @@ package entity;
 
 import java.util.ArrayList;
 
-public class World {
+public class World  implements Runnable{
     private int width;
     private int height;
 
@@ -27,13 +27,16 @@ public class World {
     }
 
     public void setWaktu(Waktu waktu) {
-        this.waktu = waktu;
+        this.waktuSekarang = waktu;
     }
 
     private ArrayList<Rumah> daftarRumah;
     private int jumlahSim;
     private ArrayList<Sim> daftarSim;
-    private Waktu waktu;
+    private Waktu waktuSekarang;
+    private Waktu waktuAwal;
+    private int dailySimCreation = 1;
+    private Thread worldThread;
 
     //pembuatan world menggunakan design pattern Singleton
     public World(){
@@ -41,7 +44,7 @@ public class World {
         width = 65; //64 + 1, karena koordinat dari y =0 hingga x = 64 -> 65 kemungkinan ordinat
         daftarRumah = new ArrayList<Rumah>();
         daftarSim = new ArrayList<Sim>();
-        waktu = Waktu.getInstanceWaktu();
+        waktuAwal = Waktu.getInstanceWaktu();
     }
 
     public int getWidth() {
@@ -66,9 +69,11 @@ public class World {
     public void tambahSim(Sim sim){
         daftarSim.add(sim);
         jumlahSim++;
+        dailySimCreation--;
+
     }
     public Waktu getWaktu() {
-        return waktu;
+        return waktuSekarang;
     }
 
     public void tambahRumah(Rumah rumah){
@@ -84,6 +89,29 @@ public class World {
         }
         else {
             daftarRumah.add(rumah);
+        }
+    }
+
+    public boolean isLimitSimCreation(){
+        return dailySimCreation < 1;
+    }
+
+    @Override
+    public void run() {
+        while(worldThread != null){
+            cekWaktu();
+        }
+    }
+
+    public void startThread(){
+        worldThread = new Thread(this);
+        worldThread.start();
+    }
+
+    private void cekWaktu(){
+        waktuSekarang = Waktu.getInstanceWaktu();
+        if (waktuSekarang.getHariKe() > waktuAwal.getHariKe()){
+            waktuAwal = waktuSekarang;
         }
     }
 }

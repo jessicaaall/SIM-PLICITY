@@ -40,12 +40,13 @@ public class Waktu {
                     timer.cancel();
                     setWaktu(getHariKe(), sisaDetik-lama);
                     System.out.println("");
-                    tampilkanWaktu();
+                    String[] dummy = tampilkanWaktu();
                 }
             }
         };  
         timer.scheduleAtFixedRate(task, 0, 1000);
     }
+
 
     // Method
     public int getHariKe() {
@@ -58,10 +59,15 @@ public class Waktu {
         hariKe = newHariKe;
         sisaDetik = newSisaDetik;
     }
-    public void tampilkanWaktu() {
-        System.out.println("Waktu dunia Sim-Plicity :");
-        System.out.println("- Hari ke    : " + hariKe);
-        System.out.println("- Sisa detik : " + sisaDetik);
+    public String[] tampilkanWaktu() {
+//        System.out.println("Waktu dunia Sim-Plicity :");
+//        System.out.println("- Hari ke    : " + hariKe);
+//        System.out.println("- Sisa detik : " + sisaDetik);
+        String[] nilaiWaktu = new String[3];
+        nilaiWaktu[0] = "Waktu dunia Sim-Plicity :";
+        nilaiWaktu[1] = "- Hari ke    : " + hariKe;
+        nilaiWaktu[2] = "- Sisa detik : " + sisaDetik;
+        return nilaiWaktu;
     }
 
     public static void main(String[] args) {
