@@ -38,7 +38,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         this.mmp = mmp;
         cameraWidth = mp.height-50;
         cameraHeight = mp.height-50;
-
+        this.setFocusable(false);
         mapX = 0;
         mapY = 0;
         this.world = world;

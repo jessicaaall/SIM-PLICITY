@@ -66,6 +66,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         for (Ruangan ruangan : rumah.getDaftarRuangan()){
             RoomPanel rp = new RoomPanel(ruangan, this.rumah, this);
             centerPanel.add(rp);
+            centerPanel.repaint();
         }
         centerPanel.setFocusable(false);
         this.add(eastPanel, BorderLayout.EAST);
@@ -74,6 +75,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         cameraWidth = 3*mainPanel.width/5;
         cameraHeight = mainPanel.height;
         startThread();
+        repaint();
     }
 
     @Override
