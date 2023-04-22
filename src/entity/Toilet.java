@@ -8,6 +8,7 @@ public class Toilet extends Perabotan implements BisaDiduduki {
     }
     
     public void buangAir(Sim sim) {
+        duduk(sim);
         long startTime = System.currentTimeMillis();
         long endTime = startTime + (10*1000);
         while (System.currentTimeMillis() < endTime) {
@@ -16,6 +17,7 @@ public class Toilet extends Perabotan implements BisaDiduduki {
         sim.setKekenyangan(sim.getKekenyangan() - 20);
         sim.setMood(sim.getMood() + 10);
         System.out.println("Sim " + sim.getNamaLengkap() + " selesai buang air.");
+        berdiri(sim);
     }
 
     public void siramToilet(Sim sim) {
