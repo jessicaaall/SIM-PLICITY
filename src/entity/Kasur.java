@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.*;
+
 public class Kasur extends Perabotan implements BisaDiduduki {
     private String tipe;
 
@@ -20,6 +22,24 @@ public class Kasur extends Perabotan implements BisaDiduduki {
     
     public void tidur(Sim sim, int lama) {
         
+    }
+
+    public void membersihkanKasur(Sim sim) {
+        Random rand = new Random();
+        int durasi = rand.nextInt((90 - 20) + 1) + 20;
+        long startTime = System.currentTimeMillis();
+        long currentTime = startTime;
+        long endTime = startTime + (durasi*1000);
+        while (currentTime < endTime) {
+            if (currentTime - startTime >= 20000) {
+                startTime = currentTime;
+                sim.setMood(sim.getMood() - 2);
+                sim.setKekenyangan(sim.getKekenyangan() - 4);
+                sim.setKesehatan(sim.getKesehatan() + 2);
+            }
+            currentTime = System.currentTimeMillis();
+        }
+        System.out.println("Sim " + sim.getNamaLengkap() + " selesai membersihkan kasur.");
     }
 
     @Override
