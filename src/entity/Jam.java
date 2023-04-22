@@ -13,6 +13,6 @@ public class Jam extends Perabotan {
     }
 
     public void tampilkanJam(Sim sim) {
-
+        waktu.tampilkanWaktu();
     }
 }
