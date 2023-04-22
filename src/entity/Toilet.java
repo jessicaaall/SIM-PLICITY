@@ -8,11 +8,24 @@ public class Toilet extends Perabotan implements BisaDiduduki {
     }
     
     public void buangAir(Sim sim) {
+        long startTime = System.currentTimeMillis();
+        long endTime = startTime + (10*1000);
+        while (System.currentTimeMillis() < endTime) {
 
+        }
+        sim.setKekenyangan(sim.getKekenyangan() - 20);
+        sim.setMood(sim.getMood() + 10);
+        System.out.println("Sim " + sim.getNamaLengkap() + " selesai buang air.");
     }
 
     public void siramToilet(Sim sim) {
-        
+        long endTime = System.currentTimeMillis() + (3*1000);
+        while (System.currentTimeMillis() < endTime) {
+
+        }
+        sim.setMood(sim.getMood() + 1);
+        sim.setKesehatan(sim.getKesehatan() + 1);
+        System.out.println("Sim " + sim.getNamaLengkap() + " telah menyiram toilet.");
     }
 
     public void mandi(Sim sim) {
@@ -48,6 +61,23 @@ public class Toilet extends Perabotan implements BisaDiduduki {
         sc.close();
     }
 
+    public void sikatGigi(Sim sim) {
+        Random rand = new Random();
+        int durasi = rand.nextInt((60 - 10) + 1) + 10;
+        long startTime = System.currentTimeMillis();
+        long currentTime = startTime;
+        long endTime = startTime + (durasi*1000);
+        while (currentTime < endTime) {
+            if (currentTime - startTime >= 10000) {
+                startTime = currentTime;
+                sim.setMood(sim.getMood() + 3);
+                sim.setKesehatan(sim.getKesehatan() + 4);
+            }
+            currentTime = System.currentTimeMillis();
+        }
+        System.out.println("Sim " + sim.getNamaLengkap() + " selesai menggosok gigi.");
+    }
+
     public void cuciTangan(Sim sim) {
         Random rand = new Random();
         int durasi = rand.nextInt((20 - 5) + 1) + 5;
@@ -65,11 +95,13 @@ public class Toilet extends Perabotan implements BisaDiduduki {
         System.out.println("Sim " + sim.getNamaLengkap() + " selesai mencuci tangan.");
     }
 
+
     @Override
     public void duduk(Sim sim) {
         sim.setIsDuduk(true);
     }
 
+    @Override
     public void berdiri(Sim sim) {
         sim.setIsDuduk(false);
     }

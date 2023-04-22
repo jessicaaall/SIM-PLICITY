@@ -96,6 +96,13 @@ public class Perabotan extends Objek implements BisaDibeli {
                     System.out.println("Uang tidak cukup untuk membeli " + String.valueOf(kuantitas) + " " + super.getNama() + ".");
                 } else {
                     sim.setUang(sim.getUang() - totalHarga);
+                    Random rand = new Random();
+                    int durasi = rand.nextInt(5) + 1;
+                    long startTime = System.currentTimeMillis();
+                    long endTime = startTime + durasi;
+                    while (System.currentTimeMillis() < endTime) {
+                        
+                    }
                     sim.getInventory().addItem(this);
                 }
             } catch (NumberFormatException e) {
