@@ -109,62 +109,120 @@ public class Rumah  {
         }
     }
 
+    public Ruangan getRuanganbyPoint(Point posisi){
+        Boolean cek = false;
+        Ruangan ruang = null;
+        
+        for(Ruangan ruangs : daftarRuangan){
+            if(posisi.equals(ruangs.getPosisi())){
+                cek = true;
+                ruang = ruangs;
+            }
+        }
+         
+        if(cek){
+            return ruang;
+        }
+        else{
+            return null;
+        }
+    }
+
  
 
     public void upgrade(Sim sim){
         Scanner input = new Scanner(System.in);
         if(daftarRuangan.size()<2){
-            System.out.println("Masukan lokasi penambahan ruangan (Kanan/Kiri/Atas/Bawah)");
+            System.out.print("Masukan lokasi penambahan ruangan (Kanan/Kiri/Atas/Bawah): ");
             String locTambah = input.nextLine();
             Ruangan ruangacuan = daftarRuangan.get(0);
-            if(!(ruangacuan.getSamping(locTambah))){
-                System.out.println("Masukan nama ruangan baru");
+            if(ruangacuan.getSamping(locTambah) == null){
+                System.out.print("Masukan nama ruangan baru: ");
                 String ruangBaru = input.nextLine();
                 if(locTambah.equals("Kanan")){
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(1, 0),"Kiri"));
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(1, 0),ruangacuan,"Kiri"));
                     
                 }
                 else if(locTambah.equals("Kiri")){
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(-1, 0),"Kanan"));
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(-1, 0),ruangacuan,"Kanan"));
                 }
                 else if(locTambah.equals("Atas")){
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(0, 1),"Bawah"));
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(0, 1),ruangacuan,"Bawah"));
                 }
                 else{
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(0, -1),"Atas"));
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(0, -1),ruangacuan,"Atas"));
                 }
-                ruangacuan.setSamping(locTambah);
+                Ruangan newRomm = daftarRuangan.get(1);
+                ruangacuan.setSamping(locTambah,newRomm);
             }
             else{
                 System.out.println("Ruangan pada "+locTambah+" ruangan acuan sudah ada");
             }
         }
         else{
-            System.out.println("Pilih ruang acuan");
+            System.out.println("Pilih ruang acuan: ");
             this.showDaftarRuangan();
             String acuan1 = input.nextLine();
             Ruangan ruangacuan = getRuanganbyName(acuan1);
-            System.out.println("Masukan lokasi penambahan ruangan (Kanan/Kiri/Atas/Bawah)");
+            System.out.print("Masukan lokasi penambahan ruangan (Kanan/Kiri/Atas/Bawah): ");
             String locTambah = input.nextLine();
-            if(!(ruangacuan.getSamping(locTambah))){
-                System.out.println("Masukan nama ruangan baru");
-                String ruangBaru = input.next();
+            if(ruangacuan.getSamping(locTambah) == null){
+                System.out.print("Masukan nama ruangan baru: ");
+                String ruangBaru = input.nextLine();
                 int x = (int) ruangacuan.getPosisi().getX();
                 int y = (int) ruangacuan.getPosisi().getY();
                 if(locTambah.equals("Kanan")){
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x+1, y),"Kiri"));
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x+1, y),ruangacuan,"Kiri"));
                     
                 }
                 else if(locTambah.equals("Kiri")){
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x-1,y),"Kanan"));
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x-1, y),ruangacuan,"Kanan"));
                 }
                 else if(locTambah.equals("Atas")){
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x, y+1),"Bawah"));
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x, y+1),ruangacuan,"Bawah"));
                 }
                 else{
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x, y-1),"Atas"));
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x, y-1),ruangacuan,"Atas"));
                 }
-                ruangacuan.setSamping(locTambah);
+
+                Ruangan newRoom = daftarRuangan.get(daftarRuangan.size()-1);
+                ruangacuan.setSamping(locTambah,newRoom);
+                
+                
+                Point newRoomPoint = newRoom.getPosisi();
+                int nx = (int) newRoomPoint.getX();
+                int ny = (int) newRoomPoint.getY();
+
+                Point sampingKanan = new Point(nx+1, ny);
+                Point sampingKiri = new Point(nx-1, ny);
+                Point sampingAtas = new Point(nx, ny+1);
+                Point sampingBawah = new Point(nx, ny-1);
+
+                Ruangan ruangKanan = getRuanganbyPoint(sampingKanan);
+                Ruangan ruangKiri = getRuanganbyPoint(sampingKiri);
+                Ruangan ruangAtas = getRuanganbyPoint(sampingAtas);
+                Ruangan ruangBawah = getRuanganbyPoint(sampingBawah);
+
+                if(ruangKanan != null){
+                    ruangKanan.setSamping("Kiri",newRoom);
+                    newRoom.setSamping("Kanan",ruangKanan);
+                }
+
+                if(ruangKiri != null){
+                    ruangKiri.setSamping("Kanan",newRoom);
+                    newRoom.setSamping("Kiri",ruangKiri);
+                }
+
+                if(ruangAtas != null){
+                    ruangAtas.setSamping("Bawah",newRoom);
+                    newRoom.setSamping("Atas",ruangAtas);
+                }
+
+                if(ruangBawah != null){
+                    ruangBawah.setSamping("Atas",newRoom);
+                    newRoom.setSamping("Bawah",ruangBawah);
+                }
+
             }
             else{
                 System.out.println("Ruangan pada "+locTambah+" ruangan acuan sudah ada");
