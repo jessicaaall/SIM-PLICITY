@@ -3,7 +3,7 @@ package entity;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Inventory<T> {
+public class Inventory<T extends Objek> {
     // Deklarasi Atribut
     private Map<T, Integer> container;
 
@@ -45,7 +45,7 @@ public class Inventory<T> {
 
     public void showItem() {
         for (Map.Entry<T, Integer> pair : container.entrySet()) {
-            System.out.println("- " + pair.getKey() + " sejumlah " + pair.getValue() + " buah");
+            System.out.println("- " + pair.getKey().getNama() + " sejumlah " + pair.getValue() + " buah");
         }
     }
 }
