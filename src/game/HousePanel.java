@@ -5,6 +5,8 @@ import entity.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HousePanel extends JPanel implements ActionListener, Runnable {
     public WorldPanel worldPanel;
@@ -137,13 +139,58 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         else if (e.getSource() == beliItemButton){
             //cek list harga
             JPanel optionPanel = new JPanel(new GridLayout(0,1,0,5));
-            String[] StringItem = new String[BisaDibeli.listObjek.length];
-            JLabel ChooseItemLabel = new JLabel("Pilih item");
-            JComboBox<String> itemChooser = new JComboBox<>(StringItem);
-            JLabel amountLabel = new JLabel("Jumlah:");
+            List<Objek> item_item = new ArrayList<>();
+            int kuantitas;
+            int totalHarga;
+            Objek selectedItem = null;
 
+            for (int i = 0; i < Objek.getListObjek().length; i++){
+                if (Objek.getListObjek()[i] instanceof BisaDibeli){
+                    item_item.add(Objek.getListObjek()[i]);
+                }
 
+            }
+            String[] namaItem = new String[item_item.size()];
+            for(int i = 0; i < namaItem.length; i++){
+                namaItem[i] = item_item.get(i).getNama();
+            }
+            JLabel chooseItemLabel = new JLabel("Pilih item");
+            JComboBox<String> itemChooser = new JComboBox<>(namaItem);
+            JLabel kuantitasLabel = new JLabel("Jumlah:");
+            JLabel totalHargaLabel = new JLabel();
+            // add (-) (kuantitas) (+) button
+            SpinnerNumberModel numberModel = new SpinnerNumberModel(1,1,10,1);
+            JSpinner kuantitasSpinner = new JSpinner(numberModel);
+            // get kuantitas from the plus-minus button
+            optionPanel.add(chooseItemLabel);
+            optionPanel.add(itemChooser);
+            optionPanel.add(kuantitasLabel);
+            optionPanel.add(kuantitasSpinner);
+            optionPanel.add(totalHargaLabel);
+            selectedItem = item_item.get(itemChooser.getSelectedIndex());
+            kuantitas = (int) kuantitasSpinner.getValue();
+            totalHarga = selectedItem.getHarga()*kuantitas;
+            totalHargaLabel.setText("Total harga = " + totalHarga);
+            int option = JOptionPane.showConfirmDialog(this, optionPanel, "Beli Item",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (option == JOptionPane.OK_OPTION){
+                selectedItem = item_item.get(itemChooser.getSelectedIndex());
+                kuantitas  = (int) kuantitasSpinner.getValue();
+                totalHarga = selectedItem.getHarga()*kuantitas;
+                if (totalHarga > rumah.getSim().getUang()){
+                    JOptionPane.showMessageDialog(this, "Uang tidak cukup",
+                            "Pembelian Gagal", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
 
+            // kalau sudah benar dan oke, tinggal lakukan operasi
+            rumah.getSim().setUang(rumah.getSim().getUang()-totalHarga);
+            rumah.getSim().getInventory().addItem(selectedItem, kuantitas);
+
+            // update label saldo
+            saldoSimLabel.setText("<html>Total uang " + rumah.getSim().getNamaLengkap() + " :<br>" +
+                    rumah.getSim().getUang() + "</html>");
         }
     }
 
@@ -244,11 +291,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             }
 
         }
-/*        try {
-            Thread.sleep(1000/60);
-        } catch (InterruptedException e){
-
-        }*/
         repaint();
     }
 

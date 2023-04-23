@@ -3,7 +3,6 @@ package entity;
 import java.util.Scanner;
 
 public class BahanMakanan extends Objek implements BisaDimakan, BisaDibeli {
-    private int harga;
     private int poinKekenyangan;
 
     public BahanMakanan(int id) {

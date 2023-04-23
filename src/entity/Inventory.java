@@ -28,7 +28,14 @@ public class Inventory<T extends Objek> {
         } else {
             container.put(item, 1);
         }
+    }
 
+    public void addItem(T item, int jumlah) {
+        if (checkItem(item)) {
+            container.put(item, container.get(item) + jumlah);
+        } else {
+            container.put(item, jumlah);
+        }
     }
     
     public void removeItem(T item) {

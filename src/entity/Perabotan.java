@@ -11,7 +11,6 @@ public class Perabotan extends Objek implements BisaDibeli {
     }
 
     private Dimension dimensi;
-    private int harga;
     private boolean dipakai;
 
     public Perabotan(int id) {

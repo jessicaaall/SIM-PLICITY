@@ -6,9 +6,29 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Objek {
+    public static Objek[] getListObjek() {
+        return listObjek;
+    }
+
+    private static Objek[] listObjek = {
+            new MejaDanKursi(), new Kompor(2), new Kompor(3),
+            new Toilet(), new Kasur(5), new Kasur(6),
+            new Kasur(7), new TV(), new Komputer(),
+            new Jam(null), new BahanMakanan(11), new BahanMakanan(12),
+            new BahanMakanan(13), new BahanMakanan(14), new BahanMakanan(15),
+            new BahanMakanan(16), new BahanMakanan(17), new BahanMakanan(18),
+            new Makanan(19), new Makanan(20), new Makanan(21), new Makanan(22),
+            new Makanan(23)
+    };
     private int id;
     private String nama;
     private String jenis;
+
+    public int getHarga() {
+        return harga;
+    }
+
+    protected int harga;
 
     public BufferedImage getImage() {
         return image;
