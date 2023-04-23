@@ -45,19 +45,7 @@ public class Inventory<T> {
 
     public void showItem() {
         for (Map.Entry<T, Integer> pair : container.entrySet()) {
-            System.out.println(" - " + pair.getKey() + " sejumlah " + pair.getValue() + "buah");
+            System.out.println("- " + pair.getKey() + " sejumlah " + pair.getValue() + " buah");
         }
-    }
-
-    public static void  main (String[] args) {
-        Inventory<Objek> inventory = new Inventory<>();
-
-        Objek mejaKursi = new Objek("meja kursi");
-        Objek komporGas = new Objek("kompor gas");
-
-        inventory.addItem(mejaKursi);
-        inventory.addItem(komporGas);
-
-        inventory.showItem();
     }
 }
