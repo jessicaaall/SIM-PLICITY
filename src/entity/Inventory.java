@@ -3,18 +3,18 @@ package entity;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Inventory<T> {
+public class Inventory<T extends Objek> {
     // Deklarasi Atribut
     private Map<T, Integer> container;
 
     // Konstruktor
     public Inventory() {
-        container = new HashMap<>();
+        container = new HashMap<T, Integer>();
     }
 
     // Method
-    public Map<T, Integer> getContainer() {
-        return container;
+    public int getContainerCapacity() {
+        return container.size();
     }
 
     public void addItem(T item) {
@@ -43,9 +43,13 @@ public class Inventory<T> {
         return container.containsKey(item);
     }
 
-    public void showItem() {
+    public String[] showItem() {
+        String[] inventoryPrinter = new String[getContainerCapacity()];
+        int i = 0;
         for (Map.Entry<T, Integer> pair : container.entrySet()) {
-            System.out.println("- " + pair.getKey() + " sejumlah " + pair.getValue() + " buah");
+            inventoryPrinter[i] = pair.getKey().getNama() + " sejumlah " + pair.getValue() + " buah";
+            i++;
         }
+        return inventoryPrinter;
     }
 }

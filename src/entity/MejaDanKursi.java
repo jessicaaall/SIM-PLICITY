@@ -23,10 +23,10 @@ public class MejaDanKursi extends Perabotan implements BisaDiduduki {
             for (int i = 1; i <= inventoryMakanan.size(); i++) {
                 System.out.println(String.valueOf(i) + ". " + inventoryMakanan.get(i-1).getNama());
             }
-            System.out.println("Masukkan nomor makanan yang ingin dimakan.");
             Scanner sc = new Scanner(System.in);
             boolean valid = false;
             while (!valid) {
+                System.out.print("Masukkan nomor makanan yang ingin dimakan >> ");
                 try {
                     int noMakanan = Integer.parseInt(sc.nextLine());
                     if (noMakanan < 1 || noMakanan > inventoryMakanan.size()) {

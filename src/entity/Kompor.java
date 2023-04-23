@@ -26,10 +26,10 @@ public class Kompor extends Perabotan {
         System.out.println("4. Tumis Sayur");
         System.out.println("5. Bistik");
         System.out.println("===================");
-        System.out.println("Masukkan nomor menu makanan yang ingin dimasak.");
         Scanner sc = new Scanner(System.in);
         boolean valid = false;
         while (!valid) {
+            System.out.print("Masukkan nomor menu makanan yang ingin dimasak >> ");
             try {
                 int noMenu = Integer.parseInt(sc.nextLine());
                 if (noMenu < 1 || noMenu > 5) {

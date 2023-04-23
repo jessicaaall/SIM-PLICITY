@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Ruangan {
     private String nama;
-    private ArrayList<Objek> daftarObjek;
+    private ArrayList<Perabotan> daftarObjek;
     private ArrayList<Sim> daftarSim;
     private Rumah infoRumah;
     private Map<String, Ruangan> samping;
@@ -20,7 +20,7 @@ public class Ruangan {
         infoRumah = rumah;
         this.posisi = posisi;
         daftarSim = new ArrayList<Sim>();
-        daftarObjek = new ArrayList<Objek>();
+        daftarObjek = new ArrayList<Perabotan>();
         samping = new HashMap<String,Ruangan>();
         dimensi = new Dimension(6, 6);
         samping.put("Kanan",null);
@@ -34,7 +34,7 @@ public class Ruangan {
         infoRumah = rumah;
         this.posisi = posisi;
         daftarSim = new ArrayList<Sim>();
-        daftarObjek = new ArrayList<Objek>();
+        daftarObjek = new ArrayList<Perabotan>();
         samping = new HashMap<String,Ruangan>();
         dimensi = new Dimension(6, 6);
         samping.put("Kanan",null);
@@ -61,7 +61,7 @@ public class Ruangan {
         return posisi;
     }
 
-    public ArrayList<Objek> getDaftarObjek(){
+    public ArrayList<Perabotan> getDaftarObjek(){
         return daftarObjek;
     }
 
@@ -81,5 +81,72 @@ public class Ruangan {
         return samping;
     }
 
+    public Objek getObjek(int id){
+        Boolean found = false;
+        Objek objek = null;
 
+        for(Objek objeks : daftarObjek){
+            if(id == objeks.getId()){
+                found = true;
+                objek = objeks;
+            }
+        }
+
+        if(found){
+            return objek;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public void insertSim (Sim sim){
+        daftarSim.add(sim);
+    }
+
+    public void removeSim(Sim sim){
+        for(Sim sims : daftarSim){
+            if(sim.equals(sims)){
+                daftarSim.remove(sim);
+            }
+        }
+    }
+
+    public int luas(){
+        int widthRuang = (int)this.getDimensi().getWidth();
+        int heightRuang = (int)this.getDimensi().getHeight();
+        int luas = widthRuang * heightRuang;
+
+        for(Perabotan barang : daftarObjek){
+            int widthbarang = (int)barang.getDimensi().getWidth();
+            int heightbarang = (int)barang.getDimensi().getHeight();
+            int luasBarang = widthbarang * heightbarang;
+            luas = luas - luasBarang;
+
+        }
+
+        return luas;
+    }
+
+    public void taruh(Perabotan barang){
+        int luasruang = luas();
+        int widthbarang = (int)barang.getDimensi().getWidth();
+        int heightbarang = (int)barang.getDimensi().getHeight();
+        int luasBarang = heightbarang * widthbarang;
+
+        if(luasruang >= luasBarang){
+            daftarObjek.add(barang);
+        }
+        else{
+            System.out.println("Ruangan sudah penuh diisi perabotan");
+        }
+    }
+
+    public void hilangkan(Perabotan barang){
+        for(Perabotan perabotan: daftarObjek){
+            if(perabotan.equals(barang)){
+                daftarObjek.remove(barang);
+            }
+        }
+    }
 }

@@ -8,10 +8,10 @@ public class Komputer extends Perabotan {
     }
 
     public void mainGame(Sim sim) {
-        System.out.print("Masukkan durasi bermain game dalam satuan detik >> ");
         Scanner sc = new Scanner(System.in);
         boolean valid = false;
         while (!valid) {
+            System.out.print("Masukkan durasi bermain game dalam satuan detik >> ");
             try {
                 int durasi = Integer.parseInt(sc.nextLine());
                 if (durasi <= 0) {

@@ -81,10 +81,10 @@ public class Perabotan extends Objek implements BisaDibeli {
 
     @Override
     public void beli(Sim sim) {
-        System.out.println("Masukkan kuantitas " + super.getNama() + " yang ingin dibeli.");
         boolean valid = false;
         Scanner sc = new Scanner(System.in);
         while (!valid) {
+            System.out.print("Masukkan kuantitas " + super.getNama() + " yang ingin dibeli >> ");
             try {
                 int kuantitas = Integer.parseInt(sc.nextLine());
                 if (kuantitas <= 0) {
