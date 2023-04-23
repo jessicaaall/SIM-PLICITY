@@ -74,13 +74,36 @@ public class PerabotanLabel extends JLabel {
             //cek apakah sudah dioccupied
             for (Objek objek: roomPanel.ruangan.getDaftarObjek()){
                 if (objek instanceof Perabotan){
-                    boolean occupied = PerabotanLabel.this.getX() >= ((Perabotan) objek).getKiriAtas().getX()*roomPanel.unitSize &&
-                            PerabotanLabel.this.getX() < ((Perabotan) objek).getKiriAtas().getX()*roomPanel.unitSize + PerabotanLabel.this.getWidth() &&
+                    Perabotan perabotan1 = (Perabotan) objek;
+                    if (PerabotanLabel.this.getPerabotan().equals(perabotan1) && PerabotanLabel.this.getPerabotan().getKiriAtas().equals(perabotan1.getKiriAtas())){
+                        continue;
+                    }
+                    //cek untuk semua titik di labelnya
+                    for (int i = PerabotanLabel.this.getX(); i < PerabotanLabel.this.getX() + PerabotanLabel.this.getWidth(); i += roomPanel.unitSize){
+                        for (int j = PerabotanLabel.this.getY(); j < PerabotanLabel.this.getY() + PerabotanLabel.this.getHeight(); j += roomPanel.unitSize){
+                            for (int k = (int) (perabotan1.getKiriAtas().getX()*roomPanel.unitSize);
+                                 k < perabotan1.getKiriAtas().getX()*roomPanel.unitSize + perabotan1.getDimensi().getWidth()*roomPanel.unitSize;
+                                 k += roomPanel.unitSize){
+                                for (int l = (int) (perabotan1.getKiriAtas().getY()*roomPanel.unitSize);
+                                     l < perabotan1.getKiriAtas().getY()*roomPanel.unitSize + perabotan1.getDimensi().getHeight()*roomPanel.unitSize;
+                                     l += roomPanel.unitSize){
+                                    Point point1 = new Point(i, j);
+                                    Point point2 = new Point(k, l);
+                                    if (point1.equals(point2)){
+                                        isOccupied = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+/*                    boolean occupied = PerabotanLabel.this.getX() >= ((Perabotan) objek).getKiriAtas().getX()*roomPanel.unitSize &&
+                            PerabotanLabel.this.getX() < ((Perabotan) objek).getKiriAtas().getX()*roomPanel.unitSize + perabotan1.getDimensi().getWidth() &&
                             PerabotanLabel.this.getY() >= ((Perabotan) objek).getKiriAtas().getY()*roomPanel.unitSize &&
-                            PerabotanLabel.this.getY() < ((Perabotan) objek).getKiriAtas().getY()*roomPanel.unitSize + PerabotanLabel.this.getHeight();
+                            PerabotanLabel.this.getY() < ((Perabotan) objek).getKiriAtas().getY()*roomPanel.unitSize + perabotan1.getDimensi().getHeight();
                     if (occupied) {
                         isOccupied = true;
-                    }
+                    }*/
                 }
             }
             if (isOccupied){
@@ -112,7 +135,7 @@ public class PerabotanLabel extends JLabel {
         public void mouseDragged(MouseEvent e) {
 //            System.out.println("You dragged the label");
             Point currentPoint = e.getPoint();
-            if (currentPoint.getX() > roomPanel.getWidth()){
+/*            if (currentPoint.getX() > roomPanel.getWidth()){
                 currentPoint.x = roomPanel.getWidth()-1;
             }
             if (currentPoint.getX() < 0){
@@ -123,7 +146,7 @@ public class PerabotanLabel extends JLabel {
             }
             if (currentPoint.getY() < 0){
                 currentPoint.y = 0;
-            }
+            }*/
             int dx = (int) currentPoint.getX() - (int)prevPoint.getX();
             int dy =  (int)(currentPoint.getY()- prevPoint.getY());
 
