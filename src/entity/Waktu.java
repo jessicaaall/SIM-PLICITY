@@ -10,7 +10,7 @@ public class Waktu implements Serializable {
     private int sisaDetik;
 
     // Konstruktor
-    private Waktu() {
+    public Waktu() {
         this.hariKe = 1;
         this.sisaDetik = 720;
     }

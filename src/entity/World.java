@@ -46,7 +46,7 @@ public class World  implements Runnable{
         width = 65; //64 + 1, karena koordinat dari y =0 hingga x = 64 -> 65 kemungkinan ordinat
         daftarRumah = new ArrayList<Rumah>();
         daftarSim = new ArrayList<Sim>();
-        waktuAwal = Waktu.getInstanceWaktu();
+        waktuAwal = new Waktu();
     }
 
     public int getWidth() {
@@ -111,7 +111,7 @@ public class World  implements Runnable{
     }
 
     private void cekWaktu(){
-        waktuSekarang = Waktu.getInstanceWaktu();
+        waktuSekarang = new Waktu();
         if (waktuSekarang.getHariKe() > waktuAwal.getHariKe()){
             waktuAwal = waktuSekarang;
             dailySimCreation = 1;
