@@ -111,9 +111,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         int drawCount = 0;
 
         while (thread != null){
-            update();
-            repaint();
-  /*          currentTime = System.nanoTime();
+/*            currentTime = System.nanoTime();
             delta += (currentTime - lastTime)/drawInterval;
             timer += (currentTime - lastTime);
             lastTime = currentTime;
@@ -123,8 +121,10 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                 delta--;
                 drawCount++;
 
-            }
-            if (timer >= Math.pow(10, 9)){
+            }*/
+            update();
+            repaint();
+/*            if (timer >= Math.pow(10, 9)){
                 currentFPS = drawCount;
                 drawCount = 0;
                 timer = 0;
@@ -200,7 +200,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         try {
             Thread.sleep(1000/60);
         } catch (InterruptedException e){
-            e.printStackTrace();
+
         }
     }
 

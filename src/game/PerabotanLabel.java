@@ -75,6 +75,7 @@ public class PerabotanLabel extends JLabel {
         @Override
         public void mouseReleased(MouseEvent e) {
             boolean isOccupied = false;
+            boolean isOutOfBoundary = false;
             PerabotanLabel.this.setBounds(((int)PerabotanLabel.this.getX()/roomPanel.unitSize)*roomPanel.unitSize,
                     ((int)PerabotanLabel.this.getY()/roomPanel.unitSize)*roomPanel.unitSize,
                     PerabotanLabel.this.getWidth(),
@@ -112,6 +113,13 @@ public class PerabotanLabel extends JLabel {
                     if (occupied) {
                         isOccupied = true;
                     }*/
+
+                    //check boundary
+                    if (PerabotanLabel.this.getX()+PerabotanLabel.this.getWidth() > roomPanel.getWidth() ||
+                            PerabotanLabel.this.getY()+PerabotanLabel.this.getHeight() > roomPanel.getHeight()||
+                            PerabotanLabel.this.getX() < 0 || PerabotanLabel.this.getY() < 0) {
+                        isOutOfBoundary = true;
+                    }
                 }
             }
             if (isOccupied){
@@ -121,11 +129,18 @@ public class PerabotanLabel extends JLabel {
                         PerabotanLabel.this.getWidth(),
                         PerabotanLabel.this.getHeight());
             }
+            else if (isOutOfBoundary){
+                System.out.println("Di luar batas");
+                PerabotanLabel.this.setBounds((int) startDragPoint.getX()/roomPanel.unitSize*roomPanel.unitSize,
+                        (int) startDragPoint.getY()/roomPanel.unitSize*roomPanel.unitSize,
+                        PerabotanLabel.this.getWidth(),
+                        PerabotanLabel.this.getHeight());
+            }
             else {
                 PerabotanLabel.this.getPerabotan().setKiriAtas(new Point(PerabotanLabel.this.getX()/roomPanel.unitSize,
                         PerabotanLabel.this.getY()/roomPanel.unitSize));
             }
-            System.out.println("Mouse Released");
+//            System.out.println("Mouse Released");
             startDragPoint = null;
             repaint();
         }
