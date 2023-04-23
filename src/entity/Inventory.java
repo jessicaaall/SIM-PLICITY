@@ -18,11 +18,25 @@ public class Inventory<T> {
     }
 
     public void addItem(T item) {
+        if (checkItem(item)) {
+            container.put(item, container.get(item) + 1);
+        } else {
+            container.put(item, 1);
+        }
 
     }
     
     public void removeItem(T item) {
-
+        if (checkItem(item)) {
+            if (container.get(item) > 1) {
+                container.put(item, container.get(item) - 1);
+            } else {
+                container.remove(item);
+            }
+            container.remove(item);
+        } else {
+            System.out.println("Tidak ada item yang dimaksud");
+        }
     }
 
     public boolean checkItem(T item) {
@@ -31,7 +45,7 @@ public class Inventory<T> {
 
     public void showItem() {
         for (Map.Entry<T, Integer> pair : container.entrySet()) {
-            System.out.println(" - " + pair.getKey() + " sejumlah " + pair.getValue() + "buah");
+            System.out.println("- " + pair.getKey() + " sejumlah " + pair.getValue() + " buah");
         }
     }
 }
