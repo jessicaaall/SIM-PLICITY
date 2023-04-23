@@ -3,9 +3,11 @@ package game;
 import entity.Rumah;
 import entity.World;
 import tiles.TileManager;
+import data.SaveLoad;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
@@ -294,4 +296,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         }
         repaint();
     }
+
+    // SAVE & LOAD
+    SaveLoad saveLoad = new SaveLoad(this);
 }
