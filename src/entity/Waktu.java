@@ -9,7 +9,7 @@ public class Waktu {
     private int hariKe;
     private int sisaDetik;
 
-    // Konstruktor (memakai pattern singeton)
+    // Konstruktor (memakai pattern singleton)
     private Waktu() {
         this.hariKe = 1;
         this.sisaDetik = 720;
@@ -73,5 +73,9 @@ public class Waktu {
     public static void main(String[] args) {
         Waktu waktu = Waktu.getInstanceWaktu();
         waktu.jalankanWaktu(10);
+        // String[] dummy = waktu.tampilkanWaktu();
+        // System.out.println(dummy[0]);
+        // System.out.println(dummy[1]);
+        // System.out.println(dummy[2]);
     }
 }
