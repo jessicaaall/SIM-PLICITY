@@ -9,7 +9,7 @@ public class Inventory<T> {
 
     // Konstruktor
     public Inventory() {
-        container = new HashMap<>();
+        container = new HashMap<T, Integer>();
     }
 
     // Method
