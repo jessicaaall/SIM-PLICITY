@@ -22,11 +22,25 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
     private int currentFPS;
     JButton backToMainMenuButton = new JButton("To Main Menu");
     JButton backToWorldButton = new JButton("Keluar rumah");
+    HousePanelButton beliItemButton = new HousePanelButton("Beli Item");
     JPanel eastPanel;
     JPanel westPanel;
     JPanel centerPanel;
 
+    // information Label
     JLabel currentFPSLabel;
+    JLabel saldoSimLabel;
+
+    private class HousePanelButton extends JButton{
+        HousePanelButton(String text){
+            super(text);
+            this.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+            this.setBackground(Color.green);
+            this.setForeground(Color.black);
+            this.setFocusable(false);
+            this.addActionListener(HousePanel.this);
+        }
+    }
     HousePanel(WorldPanel worldPanel, Rumah rumah){
         this.worldPanel = worldPanel;
         this.rumah = rumah;
@@ -34,7 +48,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         this.mainPanel = worldPanel.mp;
         this.setLayout(new BorderLayout());
         this.setBackground(Color.black);
-
 
         Font standardFont = new Font("Comic Sans MS", Font.PLAIN, 15);
         backToMainMenuButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
@@ -47,19 +60,40 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         backToWorldButton.setForeground(Color.black);
         backToWorldButton.setFocusable(false);
         backToWorldButton.addActionListener(this);
-        eastPanel = new JPanel(new FlowLayout());
+        eastPanel = new JPanel(new GridLayout(0, 1, 0, 5));
         eastPanel.setPreferredSize(new Dimension(mainPanel.width/5, mainPanel.height));
         eastPanel.setBackground(Color.pink);
         eastPanel.setFocusable(false);
+
+        // set label untuk panel timur
         currentFPSLabel = new JLabel("FPS = 0");
         currentFPSLabel.setFont(standardFont);
+        currentFPSLabel.setFocusable(false);
+        currentFPSLabel.setHorizontalTextPosition(JLabel.CENTER);
+        currentFPSLabel.setVerticalTextPosition(JLabel.CENTER);
+
+        saldoSimLabel = new JLabel("<html>Total uang " + rumah.getSim().getNamaLengkap() + " :<br>0</html>");
+        saldoSimLabel.setFocusable(false);
+        saldoSimLabel.setFont(standardFont);
+//        saldoSimLabel.setBorder(BorderFactory.createDashedBorder(Color.black));
+/*        saldoSimLabel.setPreferredSize(new Dimension(saldoSimLabel.getFontMetrics(standardFont).stringWidth(saldoSimLabel.getText())+15,
+                saldoSimLabel.getFontMetrics(standardFont).getHeight() + 10));*/
+        saldoSimLabel.setHorizontalTextPosition(JLabel.CENTER);
+        saldoSimLabel.setVerticalTextPosition(JLabel.CENTER);
         eastPanel.add(currentFPSLabel);
+        eastPanel.add(saldoSimLabel);
+
+        // set panel barat
         westPanel = new JPanel(new FlowLayout());
         westPanel.setPreferredSize(new Dimension(mainPanel.width/5, mainPanel.height));
         westPanel.setBackground(Color.pink);
+        westPanel.setFocusable(false);
+
+        //add button to west panel
         westPanel.add(backToMainMenuButton);
         westPanel.add(backToWorldButton);
-        westPanel.setFocusable(false);
+        westPanel.add(beliItemButton);
+
         centerPanel = new JPanel(null);
         centerPanel.setPreferredSize(new Dimension(3*mainPanel.width/5, mainPanel.height));
         centerPanel.setBackground(Color.black);
@@ -99,6 +133,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             worldPanel.startMainThread();
             worldPanel.playMusic(0);
         }
+        else if (e.getSource() == beliItemButton){
+            //cek list harga
+        }
     }
 
     @Override
@@ -111,7 +148,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         int drawCount = 0;
 
         while (thread != null){
-/*            currentTime = System.nanoTime();
+            currentTime = System.nanoTime();
             delta += (currentTime - lastTime)/drawInterval;
             timer += (currentTime - lastTime);
             lastTime = currentTime;
@@ -121,15 +158,16 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                 delta--;
                 drawCount++;
 
-            }*/
-            update();
-            repaint();
-/*            if (timer >= Math.pow(10, 9)){
+            }
+            if (timer >= Math.pow(10, 9)){
                 currentFPS = drawCount;
                 drawCount = 0;
                 timer = 0;
                 currentFPSLabel.setText("FPS = " + currentFPS);
-            }*/
+                saldoSimLabel.setText("<html>Total uang " + rumah.getSim().getNamaLengkap()
+                        + " :<br>" + rumah.getSim().getUang() + "</html>");
+
+            }
         }
 
     }
@@ -146,7 +184,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
 
 
     public void update() {
-        int speed = unitSize/4; // kecepatan pergerakan kamera
+        int speed = 3*unitSize/16; // kecepatan pergerakan kamera
         KeyHandler keyHandler = mainPanel.keyH;
 //        int mapX = 0;
 //        int mapY = 0;
@@ -197,11 +235,12 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             }
 
         }
-        try {
+/*        try {
             Thread.sleep(1000/60);
         } catch (InterruptedException e){
 
-        }
+        }*/
+        repaint();
     }
 
 }

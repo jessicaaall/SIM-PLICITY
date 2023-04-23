@@ -16,6 +16,7 @@ public class HelpPanel extends JPanel implements ActionListener {
         setPreferredSize(mp.getPreferredSize());
         setBounds(0,0, mp.width, mp.height);
         setVisible(true);
+        setFocusable(false);
         backButton.setBounds((mp.width -200)/2, mp.height-150, 200, 100);
         backButton.setFocusable(false);
         backButton.setHorizontalTextPosition(JButton.CENTER);
