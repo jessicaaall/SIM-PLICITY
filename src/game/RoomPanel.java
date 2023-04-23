@@ -7,8 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-public class RoomPanel extends JPanel implements MouseListener{
+public class RoomPanel extends JPanel {
     public HousePanel hp;
     public Ruangan ruangan;
     public Rumah rumah;
@@ -16,6 +17,9 @@ public class RoomPanel extends JPanel implements MouseListener{
     public boolean isDragging = false;
     public int dx, dy;
     private TileManager tileManager;
+
+    private PerabotanLabel draggedPerabotan = null;
+    private Point startDragPoint;
     public RoomPanel(Ruangan ruangan, Rumah rumah, HousePanel hp){
         tileManager = new TileManager(this);
         this.ruangan = ruangan;
@@ -35,7 +39,6 @@ public class RoomPanel extends JPanel implements MouseListener{
 //                System.out.println("kode ini dirun");
                 Perabotan perabotan = (Perabotan) objek;
                 PerabotanLabel pl = new PerabotanLabel(perabotan, this);
-                pl.addMouseListener(this);
                 this.add(pl);
             }
         }
@@ -51,45 +54,6 @@ public class RoomPanel extends JPanel implements MouseListener{
             }
         }
 
-        //draw every item on the house
-/*        for (Objek objek : ruangan.getDaftarObjek()){
-            if (objek instanceof Perabotan){
-                g2d.drawImage(objek.getImage(),
-                        ((Perabotan) objek).getKiriAtas().x*unitSize,
-                        ((Perabotan) objek).getKiriAtas().y*unitSize,
-                        ((Perabotan) objek).getDimensi().width*unitSize,
-                        ((Perabotan) objek).getDimensi().height*unitSize,
-                        null);
-            }
-        }*/
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        if (e.getSource() instanceof PerabotanLabel){
-            PerabotanLabel clickedLabel = (PerabotanLabel) e.getSource();
-            Perabotan clickedPerabot = clickedLabel.getPerabotan();
-            System.out.println("Mengklik " + clickedPerabot.getNama());
-        }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
 }
