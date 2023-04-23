@@ -136,8 +136,13 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         }
         else if (e.getSource() == beliItemButton){
             //cek list harga
+            JPanel optionPanel = new JPanel(new GridLayout(0,1,0,5));
             String[] StringItem = new String[BisaDibeli.listObjek.length];
-            JComboBox<String> itemChooser = new JComboBox<>();
+            JLabel ChooseItemLabel = new JLabel("Pilih item");
+            JComboBox<String> itemChooser = new JComboBox<>(StringItem);
+            JLabel amountLabel = new JLabel("Jumlah:");
+
+
 
         }
     }

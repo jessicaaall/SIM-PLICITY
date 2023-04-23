@@ -36,7 +36,7 @@ public class TileManager {
         }
     }
     public void draw(Graphics2D g2d, int x, int y){
-        g2d.drawImage(tiles[0].image, x,y, wp.UNIT_SIZE, wp.UNIT_SIZE, null);
+        g2d.drawImage(tiles[0].image, x,y, wp.unitSize, wp.unitSize, null);
     }
     public void drawFloor(Graphics2D g2d, int x, int y, int tile, int unitSize){
         g2d.drawImage(tiles[tile].image, x, y, unitSize, unitSize, null);
