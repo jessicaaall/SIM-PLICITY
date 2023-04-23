@@ -24,6 +24,21 @@ public class Ruangan {
         samping = new HashMap<String,Boolean>();
         dimensi = new Dimension(6, 6);
     }
+
+    public Ruangan(String nama,Rumah rumah, Point posisi, String sampingRuang){
+        this.nama = nama;
+        infoRumah = rumah;
+        this.posisi = posisi;
+        daftarSim = new ArrayList<Sim>();
+        daftarObjek = new ArrayList<Objek>();
+        samping = new HashMap<String,Boolean>();
+        dimensi = new Dimension(6, 6);
+        samping.put("Kanan",false);
+        samping.put("Kiri",false);
+        samping.put("Atas",false);
+        samping.put("Bawah",false);
+        setSamping(sampingRuang);
+    }
     
     public String getNama(){
         return nama;
@@ -47,6 +62,18 @@ public class Ruangan {
 
     public ArrayList<Sim> getDaftarSim(){
         return daftarSim;
+    }
+
+    public Boolean getSamping(String sampingRuang){
+        return samping.get(sampingRuang);
+    }
+
+    public void setSamping(String sampingRuang){
+        samping.put(sampingRuang, true);
+    }
+
+    public Map getDaftarSamping(){
+        return samping;
     }
 
 }

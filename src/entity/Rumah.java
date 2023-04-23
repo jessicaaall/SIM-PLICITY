@@ -77,8 +77,100 @@ public class Rumah  {
     }
 
     public void showDaftarRuangan(){
-        for(Ruangan ruangan : daftarRuangan){
-            System.out.println(ruangan.getNama());
+        if(daftarRuangan.size() <= 0){
+            System.out.println("Tidak terdapat ruangan dalam rumah");
         }
+
+        int i = 1;
+        System.out.println("Berikut ruangakan yang terdapat pada rumah");
+        for(Ruangan ruangan : daftarRuangan){
+            System.out.println(i+". "+ruangan.getNama());
+            System.out.println(ruangan.getDaftarSamping());
+            i = i +1;
+        }
+    }
+
+    public Ruangan getRuanganbyName(String namaRuang){
+        Boolean cek = false;
+        Ruangan ruang = null;
+        
+        for(Ruangan ruangs : daftarRuangan){
+            if(namaRuang.equals(ruangs.getNama())){
+                cek = true;
+                ruang = ruangs;
+            }
+        }
+         
+        if(cek){
+            return ruang;
+        }
+        else{
+            return null;
+        }
+    }
+
+ 
+
+    public void upgrade(Sim sim){
+        Scanner input = new Scanner(System.in);
+        if(daftarRuangan.size()<2){
+            System.out.println("Masukan lokasi penambahan ruangan (Kanan/Kiri/Atas/Bawah)");
+            String locTambah = input.nextLine();
+            Ruangan ruangacuan = daftarRuangan.get(0);
+            if(!(ruangacuan.getSamping(locTambah))){
+                System.out.println("Masukan nama ruangan baru");
+                String ruangBaru = input.nextLine();
+                if(locTambah.equals("Kanan")){
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(1, 0),"Kiri"));
+                    
+                }
+                else if(locTambah.equals("Kiri")){
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(-1, 0),"Kanan"));
+                }
+                else if(locTambah.equals("Atas")){
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(0, 1),"Bawah"));
+                }
+                else{
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(0, -1),"Atas"));
+                }
+                ruangacuan.setSamping(locTambah);
+            }
+            else{
+                System.out.println("Ruangan pada "+locTambah+" ruangan acuan sudah ada");
+            }
+        }
+        else{
+            System.out.println("Pilih ruang acuan");
+            this.showDaftarRuangan();
+            String acuan1 = input.nextLine();
+            Ruangan ruangacuan = getRuanganbyName(acuan1);
+            System.out.println("Masukan lokasi penambahan ruangan (Kanan/Kiri/Atas/Bawah)");
+            String locTambah = input.nextLine();
+            if(!(ruangacuan.getSamping(locTambah))){
+                System.out.println("Masukan nama ruangan baru");
+                String ruangBaru = input.next();
+                int x = (int) ruangacuan.getPosisi().getX();
+                int y = (int) ruangacuan.getPosisi().getY();
+                if(locTambah.equals("Kanan")){
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x+1, y),"Kiri"));
+                    
+                }
+                else if(locTambah.equals("Kiri")){
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x-1,y),"Kanan"));
+                }
+                else if(locTambah.equals("Atas")){
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x, y+1),"Bawah"));
+                }
+                else{
+                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x, y-1),"Atas"));
+                }
+                ruangacuan.setSamping(locTambah);
+            }
+            else{
+                System.out.println("Ruangan pada "+locTambah+" ruangan acuan sudah ada");
+            }            
+
+        }
+
     }
 }
