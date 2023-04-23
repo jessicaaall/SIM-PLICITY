@@ -13,6 +13,10 @@ public class Inventory<T extends Objek> {
     }
 
     // Method
+    public Map<T, Integer> getContainer() {
+        return container;
+    }
+
     public int getContainerCapacity() {
         return container.size();
     }
