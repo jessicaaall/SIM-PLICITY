@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Inventory<T extends Objek> {
+
     // Deklarasi Atribut
     private Map<T, Integer> container;
 
