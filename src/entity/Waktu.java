@@ -2,28 +2,28 @@ package entity;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.io.Serializable;
 
-public class Waktu {
+public class Waktu implements Serializable {
     // Deklarasi variabel
-    private static Waktu instanceWaktu;
     private int hariKe;
     private int sisaDetik;
 
-    // Konstruktor (memakai pattern singleton)
+    // Konstruktor
     private Waktu() {
         this.hariKe = 1;
         this.sisaDetik = 720;
     }
-    public static Waktu getInstanceWaktu() {
-        if (instanceWaktu == null) {
-            synchronized (Waktu.class) {
-                if (instanceWaktu == null) {
-                    instanceWaktu = new Waktu();
-                }
-            }
-        }
-        return instanceWaktu;
-    }
+    // public static Waktu getInstanceWaktu() {
+    //     if (instanceWaktu == null) {
+    //         synchronized (Waktu.class) {
+    //             if (instanceWaktu == null) {
+    //                 instanceWaktu = new Waktu();
+    //             }
+    //         }
+    //     }
+    //     return instanceWaktu;
+    // }
 
     // Method
     public void jalankanWaktu(int lama) {
@@ -39,8 +39,6 @@ public class Waktu {
                 } else {
                     timer.cancel();
                     setWaktu(getHariKe(), sisaDetik-lama);
-                    System.out.println("");
-                    String[] dummy = tampilkanWaktu();
                 }
             }
         };  
@@ -60,9 +58,6 @@ public class Waktu {
         sisaDetik = newSisaDetik;
     }
     public String[] tampilkanWaktu() {
-//        System.out.println("Waktu dunia Sim-Plicity :");
-//        System.out.println("- Hari ke    : " + hariKe);
-//        System.out.println("- Sisa detik : " + sisaDetik);
         String[] nilaiWaktu = new String[3];
         nilaiWaktu[0] = "Waktu dunia Sim-Plicity :";
         nilaiWaktu[1] = "- Hari ke    : " + hariKe;
@@ -72,10 +67,12 @@ public class Waktu {
 
     public static void main(String[] args) {
         Waktu waktu = Waktu.getInstanceWaktu();
-        waktu.jalankanWaktu(10);
-        // String[] dummy = waktu.tampilkanWaktu();
-        // System.out.println(dummy[0]);
-        // System.out.println(dummy[1]);
-        // System.out.println(dummy[2]);
+        //waktu.jalankanWaktu(10);
+        waktu.setWaktu(waktu.getHariKe(), waktu.getSisaDetik());
+        String[] dummy = waktu.tampilkanWaktu();
+        System.out.println(dummy[0]);
+        System.out.println(dummy[1]);
+        System.out.println(dummy[2]);
+        // System.out.println(waktu.getSisaDetik());
     }
 }
