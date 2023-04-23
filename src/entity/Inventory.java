@@ -9,7 +9,7 @@ public class Inventory<T> {
 
     // Konstruktor
     public Inventory() {
-        container = new HashMap<T, Integer>();
+        container = new HashMap<>();
     }
 
     // Method
@@ -28,6 +28,11 @@ public class Inventory<T> {
     
     public void removeItem(T item) {
         if (checkItem(item)) {
+            if (container.get(item) > 1) {
+                container.put(item, container.get(item) - 1);
+            } else {
+                container.remove(item);
+            }
             container.remove(item);
         } else {
             System.out.println("Tidak ada item yang dimaksud");
@@ -45,7 +50,7 @@ public class Inventory<T> {
     }
 
     public static void  main (String[] args) {
-        Inventory<Objek> inventory = new Inventory<Objek>();
+        Inventory<Objek> inventory = new Inventory<>();
 
         Objek mejaKursi = new Objek("meja kursi");
         Objek komporGas = new Objek("kompor gas");
