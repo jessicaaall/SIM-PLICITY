@@ -4,6 +4,7 @@ import entity.Objek;
 import entity.Perabotan;
 
 import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -25,7 +26,6 @@ public class PerabotanLabel extends JLabel {
     private Point startDragPoint;
     private Point titikAwal;
     public PerabotanLabel(Perabotan perabotan, RoomPanel roomPanel){
-        ClickListener clickListener = new ClickListener();
         DragListener dragListener = new DragListener();
         this.perabotan = perabotan;
         this.roomPanel = roomPanel;
@@ -41,7 +41,8 @@ public class PerabotanLabel extends JLabel {
                 , perabotan.getDimensi().width*roomPanel.unitSize
                 , perabotan.getDimensi().height*roomPanel.unitSize);
         imageCorner = new Point(perabotan.getKiriAtas().x*roomPanel.unitSize, perabotan.getKiriAtas().y*roomPanel.unitSize);
-        this.addMouseListener(clickListener);
+
+        this.addMouseListener(dragListener);
         this.addMouseMotionListener(dragListener);
 //        this.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK));
     }
@@ -56,23 +57,30 @@ public class PerabotanLabel extends JLabel {
         }
         AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha);
         g2d.setComposite(alphaComposite);
-        image.paintIcon(this, g2d, (int) imageCorner.getX(), (int)imageCorner.getY());
+//        image.paintIcon(this, g2d, (int) imageCorner.getX(), (int)imageCorner.getY());
         g2d.dispose();
 
     }
-
-    private class ClickListener extends MouseAdapter{
+    private class DragListener extends MouseInputAdapter{
+        Point location;
+        MouseEvent pressed;
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            PerabotanLabel clickedLabel = (PerabotanLabel) e.getSource();
+            Perabotan clickedPerabot = clickedLabel.getPerabotan();
+            System.out.println("Mengklik " + clickedPerabot.getNama());
+        }
         @Override
         public void mousePressed(MouseEvent e) {
-//            System.out.println("You pressed the label");
-            PerabotanLabel pl = (PerabotanLabel) e.getSource();
-            prevPoint = e.getPoint();
+            System.out.println("You pressed the label");
+            pressed = e;
+/*            PerabotanLabel pl = (PerabotanLabel) e.getSource();
+            prevPoint = e.getPoint();*/
             startDragPoint = new Point(perabotan.getKiriAtas().x*roomPanel.unitSize,
                     perabotan.getKiriAtas().y*roomPanel.unitSize);
-            titikAwal = new Point(pl.getX(), pl.getY());
+//            titikAwal = new Point(pl.getX(), pl.getY());
 
         }
-
         @Override
         public void mouseReleased(MouseEvent e) {
             boolean isOccupied = false;
@@ -147,42 +155,24 @@ public class PerabotanLabel extends JLabel {
         }
 
         @Override
-        public void mouseClicked(MouseEvent e) {
-            PerabotanLabel clickedLabel = (PerabotanLabel) e.getSource();
-            Perabotan clickedPerabot = clickedLabel.getPerabotan();
-            System.out.println("Mengklik " + clickedPerabot.getNama());
-        }
-    }
-    private class DragListener extends MouseMotionAdapter{
-
-        @Override
         public void mouseDragged(MouseEvent e) {
-//            System.out.println("You dragged the label");
-            PerabotanLabel.this.setBackground(new Color(255,255,255, 128));
-            Point currentPoint = e.getPoint();
-/*            if (currentPoint.getX() > roomPanel.getWidth()){
-                currentPoint.x = roomPanel.getWidth()-1;
-            }
-            if (currentPoint.getX() < 0){
-                currentPoint.x = 0;
-            }
-            if (currentPoint.getY() > roomPanel.getHeight()){
-                currentPoint.y = roomPanel.getHeight();
-            }
-            if (currentPoint.getY() < 0){
-                currentPoint.y = 0;
-            }*/
-            double dx = currentPoint.getX() - prevPoint.getX();
-            double dy =  (currentPoint.getY()- prevPoint.getY());
+            System.out.println("You dragged the label");
+            Component component = e.getComponent();
+            location = component.getLocation();
+//            PerabotanLabel.this.setBackground(new Color(255,255,255, 128));
+//            Point currentPoint = e.getPoint();
+            int dx = location.x - pressed.getX() + e.getX();
+            int dy =  location.y - pressed.getY() + e.getY();
 
 /*            imageCorner.translate(
                     (int)(currentPoint.getX()-prevPoint.getX()),
                     (int)(currentPoint.getY()-prevPoint.getY())
             );*/
-            prevPoint = currentPoint;
+            component.setLocation(dx, dy);
+/*            prevPoint = currentPoint;
             PerabotanLabel.this.setBounds(titikAwal.x+(int)dx, titikAwal.y+(int)dy, PerabotanLabel.this.getWidth(),
                     PerabotanLabel.this.getHeight());
-            titikAwal = new Point(PerabotanLabel.this.getX(), PerabotanLabel.this.getY());
+            titikAwal = new Point(PerabotanLabel.this.getX(), PerabotanLabel.this.getY());*/
 //            PerabotanLabel.this.getPerabotan().setKiriAtas();
 /*            try {
                 Thread.sleep(1000/60);
