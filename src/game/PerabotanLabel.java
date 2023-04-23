@@ -138,7 +138,6 @@ public class PerabotanLabel extends JLabel {
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            System.out.println("You dragged the label");
             Component component = e.getComponent();
             location = component.getLocation();
             int dx = location.x - pressed.getX() + e.getX();

@@ -1,9 +1,6 @@
 package game;
 
-import entity.Objek;
-import entity.Perabotan;
-import entity.Ruangan;
-import entity.Rumah;
+import entity.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -71,10 +68,14 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         currentFPSLabel.setFocusable(false);
         currentFPSLabel.setHorizontalTextPosition(JLabel.CENTER);
         currentFPSLabel.setVerticalTextPosition(JLabel.CENTER);
+        currentFPSLabel.setPreferredSize(new Dimension(eastPanel.getWidth()
+                , getFontMetrics(currentFPSLabel.getFont()).getHeight()*3));
 
         saldoSimLabel = new JLabel("<html>Total uang " + rumah.getSim().getNamaLengkap() + " :<br>0</html>");
         saldoSimLabel.setFocusable(false);
         saldoSimLabel.setFont(standardFont);
+        saldoSimLabel.setPreferredSize(new Dimension(eastPanel.getWidth()
+                , getFontMetrics(saldoSimLabel.getFont()).getHeight()*3));
 //        saldoSimLabel.setBorder(BorderFactory.createDashedBorder(Color.black));
 /*        saldoSimLabel.setPreferredSize(new Dimension(saldoSimLabel.getFontMetrics(standardFont).stringWidth(saldoSimLabel.getText())+15,
                 saldoSimLabel.getFontMetrics(standardFont).getHeight() + 10));*/
@@ -135,6 +136,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         }
         else if (e.getSource() == beliItemButton){
             //cek list harga
+            String[] StringItem = new String[BisaDibeli.listObjek.length];
+            JComboBox<String> itemChooser = new JComboBox<>();
+
         }
     }
 
