@@ -57,6 +57,7 @@ public class PerabotanLabel extends JLabel {
         AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha);
         g2d.setComposite(alphaComposite);
         image.paintIcon(this, g2d, (int) imageCorner.getX(), (int)imageCorner.getY());
+        g2d.dispose();
 
     }
 
@@ -171,15 +172,15 @@ public class PerabotanLabel extends JLabel {
             if (currentPoint.getY() < 0){
                 currentPoint.y = 0;
             }*/
-            int dx = (int) currentPoint.getX() - (int)prevPoint.getX();
-            int dy =  (int)(currentPoint.getY()- prevPoint.getY());
+            double dx = currentPoint.getX() - prevPoint.getX();
+            double dy =  (currentPoint.getY()- prevPoint.getY());
 
 /*            imageCorner.translate(
                     (int)(currentPoint.getX()-prevPoint.getX()),
                     (int)(currentPoint.getY()-prevPoint.getY())
             );*/
             prevPoint = currentPoint;
-            PerabotanLabel.this.setBounds(titikAwal.x+dx, titikAwal.y+dy, PerabotanLabel.this.getWidth(),
+            PerabotanLabel.this.setBounds(titikAwal.x+(int)dx, titikAwal.y+(int)dy, PerabotanLabel.this.getWidth(),
                     PerabotanLabel.this.getHeight());
             titikAwal = new Point(PerabotanLabel.this.getX(), PerabotanLabel.this.getY());
 //            PerabotanLabel.this.getPerabotan().setKiriAtas();
