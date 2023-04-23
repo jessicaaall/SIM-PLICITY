@@ -66,7 +66,7 @@ public class Waktu implements Serializable {
     }
 
     public static void main(String[] args) {
-        Waktu waktu = Waktu.getInstanceWaktu();
+        Waktu waktu = new Waktu();
         //waktu.jalankanWaktu(10);
         waktu.setWaktu(waktu.getHariKe(), waktu.getSisaDetik());
         String[] dummy = waktu.tampilkanWaktu();
