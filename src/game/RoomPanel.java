@@ -32,7 +32,7 @@ public class RoomPanel extends JPanel {
         setBounds(ruangan.getPosisi().x*unitSize, ruangan.getPosisi().y*unitSize
                 ,ruangan.getDimensi().width*unitSize, ruangan.getDimensi().height*unitSize);
 
-        setBorder(BorderFactory.createLineBorder(Color.yellow, 3));
+//        setBorder(BorderFactory.createLineBorder(Color.yellow, 3));
         //set perabotan label untuk ruangan ini
         for (Objek objek: ruangan.getDaftarObjek()){
             if (objek instanceof Perabotan){
