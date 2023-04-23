@@ -1,25 +1,14 @@
 package entity;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
 public class Objek {
-    public static Objek[] getListObjek() {
-        return listObjek;
-    }
+    private BufferedImage image = generateDefaultImage();
 
-    private static Objek[] listObjek = {
-            new MejaDanKursi(), new Kompor(2), new Kompor(3),
-            new Toilet(), new Kasur(5), new Kasur(6),
-            new Kasur(7), new TV(), new Komputer(),
-            new Jam(null), new BahanMakanan(11), new BahanMakanan(12),
-            new BahanMakanan(13), new BahanMakanan(14), new BahanMakanan(15),
-            new BahanMakanan(16), new BahanMakanan(17), new BahanMakanan(18),
-            new Makanan(19), new Makanan(20), new Makanan(21), new Makanan(22),
-            new Makanan(23)
-    };
     private int id;
     private String nama;
     private String jenis;
@@ -34,20 +23,23 @@ public class Objek {
         return image;
     }
 
-    private BufferedImage image;
 
     public Objek(String nama) {
         this.nama = nama;
         if (nama.equals("meja kursi")) {
             this.id = 1;
+            generateImage(this.nama);
         } else if (nama.equals("kompor gas")) {
             this.id = 2;
+            generateImage(this.nama);
         } else if (nama.equals("kompor listrik")) {
             this.id = 3;
         } else if (nama.equals("toilet")) {
             this.id = 4;
+            generateImage(this.nama);
         } else if (nama.equals("single bed")) {
             this.id = 5;
+            generateImage(this.nama);
         } else if (nama.equals("queen size bed")) {
             this.id = 6;
         } else if (nama.equals("king size bed")) {
@@ -58,6 +50,7 @@ public class Objek {
             this.id = 9;
         } else if (nama.equals("jam")) {
             this.id = 10;
+            generateImage(this.nama);
         } else if (nama.equals("nasi")) {
             this.id = 11;
         } else if (nama.equals("kentang")) {
@@ -86,7 +79,6 @@ public class Objek {
             this.id = 23;
         }
         this.jenis = tipeJenis(this.id);
-        image = generateImage(nama);
     }
 
     public Objek(int id) {
@@ -94,14 +86,18 @@ public class Objek {
         this.jenis = tipeJenis(this.id);
         if (id == 1) {
             this.nama = "meja kursi";
+            generateImage(this.nama);
         } else if (id == 2) {
             this.nama = "kompor gas";
+            generateImage(this.nama);
         } else if (id == 3) {
             this.nama = "kompor listrik";
         } else if (id == 4) {
             this.nama = "toilet";
+            generateImage(this.nama);
         } else if (id == 5) {
             this.nama = "single bed";
+            generateImage(this.nama);
         } else if (id == 6) {
             this.nama = "queen size bed";
         } else if (id == 7) {
@@ -112,6 +108,7 @@ public class Objek {
             this.nama = "komputer";
         } else if (id == 10) {
             this.nama = "jam";
+            generateImage(this.nama);
         } else if (id == 11) {
             this.nama = "nasi";
         } else if (id == 12) {
@@ -139,7 +136,6 @@ public class Objek {
         } else if (id == 23) {
             this.nama = "bistik";
         }
-        image = generateImage(this.nama);
     }
 
     public Objek(int id, String nama, String jenis) {
@@ -177,12 +173,35 @@ public class Objek {
         return this.id == objek.getId();
     }
 
-    private BufferedImage generateImage(String name){
+    private void generateImage(String name) {
+        boolean enabled = true;
         try {
-            return ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/" + name + ".png")));
+            image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/" + name + ".png")));
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+//            e.printStackTrace();
+            enabled = false;
+
+        }
+        if(!enabled){
+            try {
+                image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/mystery box.png")));
+            }catch (IOException e){
+
+            }
         }
     }
+    private BufferedImage generateDefaultImage() {
+        // Menghasilkan gambar default atau placeholder
+        // Misalnya, sebuah gambar dengan warna solid dan pesan "Gambar tidak tersedia"
+        BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = image.createGraphics();
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(0, 0, 100, 100);
+        g2d.setColor(Color.BLACK);
+        g2d.drawString("Gambar tidak tersedia", 10, 50);
+        g2d.dispose();
+        return image;
+    }
 }
+
+

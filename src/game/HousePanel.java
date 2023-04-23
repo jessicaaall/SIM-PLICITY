@@ -3,6 +3,8 @@ package game;
 import entity.*;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -144,9 +146,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             int totalHarga;
             Objek selectedItem = null;
 
-            for (int i = 0; i < Objek.getListObjek().length; i++){
-                if (Objek.getListObjek()[i] instanceof BisaDibeli){
-                    item_item.add(Objek.getListObjek()[i]);
+            for (int i = 0; i < rumah.getSim().getTheirWorld().getListObjek().length; i++){
+                if (rumah.getSim().getTheirWorld().getListObjek()[i] instanceof BisaDibeli){
+                    item_item.add(rumah.getSim().getTheirWorld().getListObjek()[i]);
                 }
 
             }
@@ -162,15 +164,35 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             SpinnerNumberModel numberModel = new SpinnerNumberModel(1,1,10,1);
             JSpinner kuantitasSpinner = new JSpinner(numberModel);
             // get kuantitas from the plus-minus button
+
             optionPanel.add(chooseItemLabel);
             optionPanel.add(itemChooser);
             optionPanel.add(kuantitasLabel);
             optionPanel.add(kuantitasSpinner);
             optionPanel.add(totalHargaLabel);
             selectedItem = item_item.get(itemChooser.getSelectedIndex());
-            kuantitas = (int) kuantitasSpinner.getValue();
+            kuantitas  = (int) kuantitasSpinner.getValue();
             totalHarga = selectedItem.getHarga()*kuantitas;
             totalHargaLabel.setText("Total harga = " + totalHarga);
+            itemChooser.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Objek selectedItem1 = item_item.get(itemChooser.getSelectedIndex());
+                    int kuantitas1 = (int) kuantitasSpinner.getValue();
+                    int totalHarga1 = selectedItem1.getHarga()*kuantitas1;
+                    totalHargaLabel.setText("Total harga = " + totalHarga1);
+                }
+            });
+            kuantitasSpinner.addChangeListener(new ChangeListener() {
+                @Override
+                public void stateChanged(ChangeEvent e) {
+                    Objek selectedItem1 = item_item.get(itemChooser.getSelectedIndex());
+                    int kuantitas1 = (int) kuantitasSpinner.getValue();
+                    int totalHarga1 = selectedItem1.getHarga()*kuantitas1;
+                    totalHargaLabel.setText("Total harga = " + totalHarga1);
+                }
+            });
             int option = JOptionPane.showConfirmDialog(this, optionPanel, "Beli Item",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (option == JOptionPane.OK_OPTION){
@@ -182,15 +204,14 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                             "Pembelian Gagal", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                // kalau sudah benar dan oke, tinggal lakukan operasi
+                rumah.getSim().setUang(rumah.getSim().getUang()-totalHarga);
+                rumah.getSim().getInventory().addItem(selectedItem, kuantitas);
+
+                // update label saldo
+                saldoSimLabel.setText("<html>Total uang " + rumah.getSim().getNamaLengkap() + " :<br>" +
+                        rumah.getSim().getUang() + "</html>");
             }
-
-            // kalau sudah benar dan oke, tinggal lakukan operasi
-            rumah.getSim().setUang(rumah.getSim().getUang()-totalHarga);
-            rumah.getSim().getInventory().addItem(selectedItem, kuantitas);
-
-            // update label saldo
-            saldoSimLabel.setText("<html>Total uang " + rumah.getSim().getNamaLengkap() + " :<br>" +
-                    rumah.getSim().getUang() + "</html>");
         }
     }
 
