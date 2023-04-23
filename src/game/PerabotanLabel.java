@@ -34,6 +34,7 @@ public class PerabotanLabel extends JLabel {
         Image imagenya = perabotan.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT);
         image = new ImageIcon(imagenya);
         this.setIcon(image);
+        this.setOpaque(false);
         this.setPreferredSize(new Dimension(perabotan.getDimensi().width*roomPanel.unitSize, perabotan.getDimensi().height*roomPanel.unitSize));
         this.setBounds(perabotan.getKiriAtas().x*roomPanel.unitSize
                 , perabotan.getKiriAtas().y*roomPanel.unitSize
@@ -48,7 +49,14 @@ public class PerabotanLabel extends JLabel {
     @Override
     public void paintComponents(Graphics g) {
         super.paintComponents(g);
-        image.paintIcon(this, g, (int) imageCorner.getX(), (int)imageCorner.getY());
+        Graphics2D g2d= (Graphics2D) g;
+        float alpha = 1f;
+        if (this.getMousePosition() != null && !this.getMousePosition().equals(prevPoint)){
+            alpha = 0.5f;
+        }
+        AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha);
+        g2d.setComposite(alphaComposite);
+        image.paintIcon(this, g2d, (int) imageCorner.getX(), (int)imageCorner.getY());
 
     }
 
@@ -134,6 +142,7 @@ public class PerabotanLabel extends JLabel {
         @Override
         public void mouseDragged(MouseEvent e) {
 //            System.out.println("You dragged the label");
+            PerabotanLabel.this.setBackground(new Color(255,255,255, 128));
             Point currentPoint = e.getPoint();
 /*            if (currentPoint.getX() > roomPanel.getWidth()){
                 currentPoint.x = roomPanel.getWidth()-1;
@@ -164,6 +173,7 @@ public class PerabotanLabel extends JLabel {
             } catch (InterruptedException ex) {
                 throw new RuntimeException(ex);
             }*/
+            repaint();
         }
     }
 
