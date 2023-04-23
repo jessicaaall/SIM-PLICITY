@@ -13,8 +13,8 @@ public class Inventory<T extends Objek> {
     }
 
     // Method
-    public Map<T, Integer> getContainer() {
-        return container;
+    public int getContainerCapacity() {
+        return container.size();
     }
 
     public void addItem(T item) {
@@ -43,9 +43,13 @@ public class Inventory<T extends Objek> {
         return container.containsKey(item);
     }
 
-    public void showItem() {
+    public String[] showItem() {
+        String[] inventoryPrinter = new String[getContainerCapacity()];
+        int i = 0;
         for (Map.Entry<T, Integer> pair : container.entrySet()) {
-            System.out.println("- " + pair.getKey().getNama() + " sejumlah " + pair.getValue() + " buah");
+            inventoryPrinter[i] = pair.getKey().getNama() + " sejumlah " + pair.getValue() + " buah";
+            i++;
         }
+        return inventoryPrinter;
     }
 }
