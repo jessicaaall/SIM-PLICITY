@@ -40,7 +40,7 @@ public class Perabotan extends Objek implements BisaDibeli {
             dimensi = new Dimension(1, 1);
             harga = 10;
         } else if (id == 8) {
-            dimensi = new Dimension(3, 2);
+            dimensi = new Dimension(3, 1);
             harga = 70;
         } else if (id == 9) {
             dimensi = new Dimension(2, 1);
