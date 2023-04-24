@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 public class Main {
     public static void main(String[] args) {
+        SimplicityUIManager suim = new SimplicityUIManager();
         GameFrame frame = new GameFrame();
         MainPanel mainPanel = new MainPanel(frame);
         mainPanel.gf = frame;
