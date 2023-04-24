@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class HousePanel extends JPanel implements ActionListener, Runnable {
     public WorldPanel worldPanel;
@@ -24,9 +25,13 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
     JButton backToMainMenuButton = new JButton("To Main Menu");
     JButton backToWorldButton = new JButton("Keluar rumah");
     HousePanelButton beliItemButton = new HousePanelButton("Beli Item");
+    HousePanelButton lihatInventoryButton = new HousePanelButton("Lihat Inventory");
     JPanel eastPanel;
     JPanel westPanel;
     JPanel centerPanel;
+
+    private int slotCol = 0;
+    private int slotRow = 0;
 
     // information Label
     JLabel currentFPSLabel;
@@ -98,6 +103,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         westPanel.add(backToMainMenuButton);
         westPanel.add(backToWorldButton);
         westPanel.add(beliItemButton);
+        westPanel.add(lihatInventoryButton);
 
         centerPanel = new JPanel(null);
         centerPanel.setPreferredSize(new Dimension(3*mainPanel.width/5, mainPanel.height));
@@ -213,7 +219,65 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                         rumah.getSim().getUang() + "</html>");
             }
         }
+        if (e.getSource() == lihatInventoryButton){
+            JPanel inventoryPanel = new JPanel(new GridLayout(5,5, 10, 10));
+            inventoryPanel.setBackground(new Color(0,0,0));
+            inventoryPanel.setPreferredSize(new Dimension(5*unitSize + 50, 5*unitSize+50));
+            inventoryPanel.setBorder(BorderFactory.createLineBorder(Color.gray, 5));
+            inventoryPanel.setFocusable(false);
+
+            //masukan semua objek ke dalam panel tersebut
+            for (Map.Entry<Objek, Integer> objekEntry : rumah.getSim().getInventory().getContainer().entrySet()){
+                ObjekInventoryLabel oil = new ObjekInventoryLabel(objekEntry.getKey());
+                oil.setText(objekEntry.getValue().toString() + "x");
+                oil.setPreferredSize(new Dimension(unitSize, unitSize));
+                oil.setHorizontalTextPosition(JLabel.RIGHT);
+                oil.setVerticalTextPosition(JLabel.BOTTOM);
+                oil.setIcon(new ImageIcon(objekEntry.getKey().getImage().getScaledInstance(unitSize, unitSize, Image.SCALE_DEFAULT)));
+                inventoryPanel.add(oil);
+            }
+
+            //jadiin show message
+            JOptionPane.showMessageDialog(this,inventoryPanel ,"Inventory", JOptionPane.PLAIN_MESSAGE);
+
+        }
     }
+
+    public void drawMiniWindow(JPanel panel, int x, int y, int width, int height){
+        Graphics2D g2d = (Graphics2D) panel.getGraphics();
+        Color c = new Color(0,0,0, 180);;
+        g2d.setColor(c);
+        g2d.fillRoundRect(x,y,width,height,20,20);
+        c = Color.gray;
+        g2d.setStroke(new BasicStroke(2));
+        g2d.drawRoundRect(x+2, y+2, width-10, height-10, 10, 10);
+    }
+
+    public void drawInventory(){
+        Graphics2D g2d = (Graphics2D) centerPanel.getGraphics();
+        int frameX = unitSize*8;
+        int frameY = unitSize;
+        int frameWidth = unitSize*5;
+        int frameHeight = unitSize*8;
+        drawMiniWindow(centerPanel, frameX, frameY, frameWidth, frameHeight);
+
+        //slot
+        final int slotStartX = frameX + 10;
+        final int slotStartY = frameX + 10;
+        int slotX = slotStartX;
+        int slotY = slotStartY;
+
+        //cursor
+        int cursorX = slotStartX + (unitSize*slotCol);
+        int cursorY = slotStartY + (unitSize*slotRow);
+        int cursorWidth = unitSize;
+        int cursorHeight = unitSize;
+
+        //draw cursor
+        g2d.setColor(Color.lightGray);
+        g2d.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 5, 5);
+    }
+
 
     @Override
     public void run() {

@@ -28,18 +28,14 @@ public class Objek {
         this.nama = nama;
         if (nama.equals("meja kursi")) {
             this.id = 1;
-            generateImage(this.nama);
         } else if (nama.equals("kompor gas")) {
             this.id = 2;
-            generateImage(this.nama);
         } else if (nama.equals("kompor listrik")) {
             this.id = 3;
         } else if (nama.equals("toilet")) {
             this.id = 4;
-            generateImage(this.nama);
         } else if (nama.equals("single bed")) {
             this.id = 5;
-            generateImage(this.nama);
         } else if (nama.equals("queen size bed")) {
             this.id = 6;
         } else if (nama.equals("king size bed")) {
@@ -50,7 +46,6 @@ public class Objek {
             this.id = 9;
         } else if (nama.equals("jam")) {
             this.id = 10;
-            generateImage(this.nama);
         } else if (nama.equals("nasi")) {
             this.id = 11;
         } else if (nama.equals("kentang")) {
@@ -79,6 +74,7 @@ public class Objek {
             this.id = 23;
         }
         this.jenis = tipeJenis(this.id);
+        generateImage(this.nama);
     }
 
     public Objek(int id) {
@@ -86,18 +82,14 @@ public class Objek {
         this.jenis = tipeJenis(this.id);
         if (id == 1) {
             this.nama = "meja kursi";
-            generateImage(this.nama);
         } else if (id == 2) {
             this.nama = "kompor gas";
-            generateImage(this.nama);
         } else if (id == 3) {
             this.nama = "kompor listrik";
         } else if (id == 4) {
             this.nama = "toilet";
-            generateImage(this.nama);
         } else if (id == 5) {
             this.nama = "single bed";
-            generateImage(this.nama);
         } else if (id == 6) {
             this.nama = "queen size bed";
         } else if (id == 7) {
@@ -108,7 +100,6 @@ public class Objek {
             this.nama = "komputer";
         } else if (id == 10) {
             this.nama = "jam";
-            generateImage(this.nama);
         } else if (id == 11) {
             this.nama = "nasi";
         } else if (id == 12) {
@@ -136,6 +127,7 @@ public class Objek {
         } else if (id == 23) {
             this.nama = "bistik";
         }
+        generateImage(this.nama);
     }
 
     public Objek(int id, String nama, String jenis) {
@@ -174,21 +166,18 @@ public class Objek {
     }
 
     private void generateImage(String name) {
-        boolean enabled = true;
         try {
             image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/" + name + ".png")));
-        } catch (IOException e) {
+        } catch (Exception e) {
 //            e.printStackTrace();
-            enabled = false;
-
-        }
-        if(!enabled){
+            image = generateDefaultImage();
             try {
-                image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/mystery box.png")));
-            }catch (IOException e){
-
+                image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/mystery box.png")));
+            } catch (Exception ed) {
+                image = generateDefaultImage();
             }
         }
+
     }
     private BufferedImage generateDefaultImage() {
         // Menghasilkan gambar default atau placeholder
