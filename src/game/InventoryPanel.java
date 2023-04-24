@@ -13,9 +13,9 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
     JButton closeButton;
     public InventoryPanel(HousePanel hp){
         this.hp = hp;
-        setBounds(getWidth()/4, getHeight()/4, 10*hp.unitSize,10*hp.unitSize);
+        setBounds(hp.centerPanel.getWidth()/4, hp.centerPanel.getHeight()/4, 10*hp.unitSize,10*hp.unitSize);
         setPreferredSize(new Dimension(10*hp.unitSize, 10*hp.unitSize));
-        setLocation(hp.getWidth()/4, hp.getHeight()/4);
+        setLocation(hp.centerPanel.getWidth()/4, hp.centerPanel.getHeight()/4);
         setLayout(null);
         setDoubleBuffered(true);
         setBorder(new LineBorder(Color.BLACK, 5, true));
