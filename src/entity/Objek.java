@@ -12,12 +12,11 @@ public class Objek {
     private int id;
     private String nama;
     private String jenis;
+    protected int harga;
 
     public int getHarga() {
         return harga;
     }
-
-    protected int harga;
 
     public BufferedImage getImage() {
         return image;
@@ -72,6 +71,10 @@ public class Objek {
             this.id = 22;
         } else if (nama.equals("bistik")) {
             this.id = 23;
+        } else if (nama.equals("bak mandi")) {
+            this.id = 35;
+        } else if (nama.equals("wastafel")) {
+            this.id = 36;
         }
         this.jenis = tipeJenis(this.id);
         generateImage(this.nama);
@@ -126,6 +129,10 @@ public class Objek {
             this.nama = "tumis sayur";
         } else if (id == 23) {
             this.nama = "bistik";
+        } else if (id == 35) {
+            this.nama = "bak mandi";
+        } else if (id == 36) {
+            this.nama = "wastafel";
         }
         generateImage(this.nama);
     }
@@ -149,7 +156,7 @@ public class Objek {
     }
 
     public String tipeJenis(int id) {
-        if (id >= 1 && id <= 10) {
+        if ((id >= 1 && id <= 10) || id == 35 || id == 36) {
             return "perabotan";
         } else if (id >= 11 && id <= 18) {
             return "bahan makanan";
