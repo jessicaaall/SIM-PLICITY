@@ -5,6 +5,8 @@ import entity.Objek;
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 
@@ -12,6 +14,7 @@ public class ObjekInventoryLabel extends JLabel {
     public Map.Entry<Objek, Integer> getObjek() {
         return objek;
     }
+    ObjekInventoryLabel label;
 
     private Map.Entry<Objek, Integer> objek;
     public InventorySlotPanel ip;
@@ -26,15 +29,35 @@ public class ObjekInventoryLabel extends JLabel {
         this.setOpaque(true);
         MouseListener ml = new MouseListener();
         this.addMouseListener(ml);
-//        this.setToolTipText(objek.getKey().getNama());
         repaint();
 
     }
 
     private class MouseListener extends MouseInputAdapter{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            //akan men-summon panel baru relatif dari objek inventory
+            JPanel taruhBarangPanel = new JPanel(new FlowLayout());
+            JButton tombolTaruh = new JButton("Taruh");
+            JButton tombolBatal = new JButton("Batal");
+            tombolTaruh.setFocusable(false);
+            tombolTaruh.setBackground(Color.white);
+            tombolTaruh.setForeground(new Color(51, 102, 0));
+            taruhBarangPanel.setLocation(e.getPoint());
+//            ip.ip.add(taruhBarangPanel, 0);
+            tombolTaruh.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    //menu inventory akan otomatis tertutup dan akan menjadi draggable panel
+
+                }
+            });
+        }
+
         @Override
         public void mouseEntered(MouseEvent e) {
-            ObjekInventoryLabel label = (ObjekInventoryLabel) e.getComponent();
+            label = (ObjekInventoryLabel) e.getComponent();
             if(label.getObjek() != null){
                 label.setToolTipText(label.getObjek().getKey().getNama());
             }
@@ -42,8 +65,8 @@ public class ObjekInventoryLabel extends JLabel {
 
         @Override
         public void mouseExited(MouseEvent e) {
-            ObjekInventoryLabel label = (ObjekInventoryLabel) e.getComponent();
             label.setToolTipText(null);
+            label = null;
         }
     }
 
@@ -56,7 +79,7 @@ public class ObjekInventoryLabel extends JLabel {
         g2d.setStroke(new BasicStroke(5));
         g2d.drawRoundRect(0,0, getWidth(), getHeight(), 10, 10);
         g2d.setFont(new Font("Comic Sans MS", Font.BOLD, 10));
-        g2d.setColor(Color.red);
+        g2d.setColor(Color.black);
         g2d.drawString(objek.getValue()+"x", 3*getWidth()/4, 3*getHeight()/4 + getHeight()/8);
         g2d.dispose();
     }

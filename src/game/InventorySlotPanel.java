@@ -12,10 +12,11 @@ import java.util.Map;
 public class InventorySlotPanel extends JPanel {
     HousePanel hp;
     int slot = 25;
+    InventoryPanel ip;
 
     Point location;
     MouseEvent pressed;
-    InventorySlotPanel(HousePanel hp){
+    InventorySlotPanel(HousePanel hp, InventoryPanel ip){
 
         super(new GridLayout(5,5, 0, 0));
         this.hp = hp;
