@@ -45,6 +45,12 @@ public class Perabotan extends Objek implements BisaDibeli {
         } else if (id == 9) {
             dimensi = new Dimension(2, 1);
             harga = 90;
+        } else if (id == 35) {
+            dimensi = new Dimension(2, 1);
+            harga = 50;
+        } else if (id == 36) {
+            dimensi = new Dimension(1, 1);
+            harga = 20;
         }
         kiriAtas = null;
         dipakai = false;
