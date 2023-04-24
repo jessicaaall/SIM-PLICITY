@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class HousePanel extends JPanel implements ActionListener, Runnable {
     public WorldPanel worldPanel;
@@ -220,26 +219,19 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             }
         }
         if (e.getSource() == lihatInventoryButton){
-            JPanel inventoryPanel = new JPanel(new GridLayout(5,5, 10, 10));
-            inventoryPanel.setBackground(new Color(0,0,0));
-            inventoryPanel.setPreferredSize(new Dimension(5*unitSize + 50, 5*unitSize+50));
-            inventoryPanel.setBorder(BorderFactory.createLineBorder(Color.gray, 5));
-            inventoryPanel.setFocusable(false);
-
-            //masukan semua objek ke dalam panel tersebut
-            for (Map.Entry<Objek, Integer> objekEntry : rumah.getSim().getInventory().getContainer().entrySet()){
-                ObjekInventoryLabel oil = new ObjekInventoryLabel(objekEntry.getKey());
-                oil.setText(objekEntry.getValue().toString() + "x");
-                oil.setPreferredSize(new Dimension(unitSize, unitSize));
-                oil.setHorizontalTextPosition(JLabel.RIGHT);
-                oil.setVerticalTextPosition(JLabel.BOTTOM);
-                oil.setIcon(new ImageIcon(objekEntry.getKey().getImage().getScaledInstance(unitSize, unitSize, Image.SCALE_DEFAULT)));
-                inventoryPanel.add(oil);
+            InventoryPanel inventoryPanel = new InventoryPanel(this);
+            //cek kalau sudah ada komponen inventoryPanel
+            for (Component component: centerPanel.getComponents()){
+                if (component instanceof InventoryPanel){
+                    centerPanel.remove(component);
+                }
             }
-
-            //jadiin show message
-            JOptionPane.showMessageDialog(this,inventoryPanel ,"Inventory", JOptionPane.PLAIN_MESSAGE);
-
+            centerPanel.add(inventoryPanel, 0);
+            centerPanel.revalidate();
+            centerPanel.repaint();
+            revalidate();
+            repaint();
+//            JOptionPane.showMessageDialog(new SimplicityDialog("Inventory"), inventoryPanel);
         }
     }
 
@@ -277,6 +269,8 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         g2d.setColor(Color.lightGray);
         g2d.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 5, 5);
     }
+
+
 
 
     @Override

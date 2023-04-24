@@ -3,27 +3,61 @@ package game;
 import entity.Objek;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.util.Map;
 
 public class ObjekInventoryLabel extends JLabel {
-    private Objek objek;
-    ObjekInventoryLabel(Objek objek){
+    public Map.Entry<Objek, Integer> getObjek() {
+        return objek;
+    }
+
+    private Map.Entry<Objek, Integer> objek;
+    public InventorySlotPanel ip;
+    ObjekInventoryLabel(Map.Entry<Objek, Integer> objek, InventorySlotPanel ip){
         super();
         this.objek = objek;
+        this.ip = ip;
         this.setFont(new Font("Comic Sans MS", Font.ITALIC, 10));
-        this.setBorder(new LineBorder(Color.lightGray, 2, true));
+//        this.setBorder(new LineBorder(Color.lightGray, 2, true));
         this.setOpaque(true);
         this.setFocusable(false);
+        this.setOpaque(true);
+        MouseListener ml = new MouseListener();
+        this.addMouseListener(ml);
+//        this.setToolTipText(objek.getKey().getNama());
+        repaint();
 
     }
 
     private class MouseListener extends MouseInputAdapter{
         @Override
         public void mouseEntered(MouseEvent e) {
-
+            ObjekInventoryLabel label = (ObjekInventoryLabel) e.getComponent();
+            if(label.getObjek() != null){
+                label.setToolTipText(label.getObjek().getKey().getNama());
+            }
         }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            ObjekInventoryLabel label = (ObjekInventoryLabel) e.getComponent();
+            label.setToolTipText(null);
+        }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        //g2d.drawImage(objek.getKey().getImage(), 2,2, getWidth()-4, getHeight()-4, null);
+        g2d.setColor(Color.lightGray);
+        g2d.setStroke(new BasicStroke(5));
+        g2d.drawRoundRect(0,0, getWidth(), getHeight(), 10, 10);
+        g2d.setFont(new Font("Comic Sans MS", Font.BOLD, 10));
+        g2d.setColor(Color.red);
+        g2d.drawString(objek.getValue()+"x", 3*getWidth()/4, 3*getHeight()/4 + getHeight()/8);
+        g2d.dispose();
     }
 }
