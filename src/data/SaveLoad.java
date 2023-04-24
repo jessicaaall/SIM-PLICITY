@@ -25,7 +25,7 @@ public class SaveLoad {
         } 
     }
 
-    public void laod() {
+    public void load() {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("save.dat")));
 
