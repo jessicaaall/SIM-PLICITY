@@ -29,7 +29,6 @@ public class Waktu {
                     System.out.printf(".");
                     counter--;
                 } else {
-                    if (world.)
                     timer.cancel();
                     if (sisaDetik < 0) {
                         hariKe = (Math.abs(sisaDetik) / 720) + 1;
@@ -69,7 +68,7 @@ public class Waktu {
     }
 
     public static void main(String[] args) {
-        Waktu waktu = new Waktu();
+        Waktu waktu = new Waktu(new World());
         waktu.jalankanWaktu(5);
         // String[] dummy = waktu.tampilkanWaktu();
         // System.out.println(dummy[0]);

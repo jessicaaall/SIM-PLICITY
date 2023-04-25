@@ -2,6 +2,7 @@ package game;
 
 import entity.Objek;
 import entity.Perabotan;
+import entity.Ruangan;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
@@ -172,6 +173,7 @@ public class PerabotanLabel extends JLabel {
             if (put){
                 return;
             }
+
             pressed = e;
             startDragPoint = new Point(perabotan.getKiriAtas().x*housePanel.unitSize,
                     perabotan.getKiriAtas().y*roomPanel.unitSize);
@@ -198,6 +200,18 @@ public class PerabotanLabel extends JLabel {
         public void mouseReleased(MouseEvent e) {
             if (put){
                 return;
+            }
+            RoomPanel ruangAcuan = null;
+            //cek ruangan dengan x = 0 dan y = 0 untuk acuan koordinat
+            for (Component component : housePanel.centerPanel.getComponents()){
+                if (component instanceof RoomPanel){
+                    //cek ruangan
+                    RoomPanel rp = (RoomPanel) component;
+                    Point posisiRuangan = rp.ruangan.getPosisi();
+                    if (posisiRuangan.equals(new Point(0,0))){
+                        ruangAcuan = rp;
+                    }
+                }
             }
             boolean isOccupied = false;
             boolean isOutOfBoundary = false;
@@ -272,21 +286,21 @@ public class PerabotanLabel extends JLabel {
             }
             if (isOccupied){
                 System.out.println("Tempat sudah dipakai");
-                PerabotanLabel.this.setBounds((int) startDragPoint.getX()/housePanel.unitSize*housePanel.unitSize,
-                        (int) startDragPoint.getY()/housePanel.unitSize*housePanel.unitSize,
+                PerabotanLabel.this.setBounds((int) (startDragPoint.getX()-ruangAcuan.getX())/housePanel.unitSize*housePanel.unitSize,
+                        (int) (startDragPoint.getY()-ruangAcuan.getY())/housePanel.unitSize*housePanel.unitSize,
                         PerabotanLabel.this.getWidth(),
                         PerabotanLabel.this.getHeight());
             }
             else if (isOutOfBoundary){
                 System.out.println("Di luar batas");
-                PerabotanLabel.this.setBounds((int) startDragPoint.getX()/housePanel.unitSize*housePanel.unitSize,
-                        (int) startDragPoint.getY()/housePanel.unitSize*housePanel.unitSize,
+                PerabotanLabel.this.setBounds((int) (startDragPoint.getX()-ruangAcuan.getX())/housePanel.unitSize*housePanel.unitSize,
+                        (int) (startDragPoint.getY()-ruangAcuan.getY())/housePanel.unitSize*housePanel.unitSize,
                         PerabotanLabel.this.getWidth(),
                         PerabotanLabel.this.getHeight());
             }
             else {
-                PerabotanLabel.this.getPerabotan().setKiriAtas(new Point(PerabotanLabel.this.getX()/housePanel.unitSize,
-                        PerabotanLabel.this.getY()/housePanel.unitSize));
+                PerabotanLabel.this.getPerabotan().setKiriAtas(new Point((PerabotanLabel.this.getX()-ruangAcuan.getX())/housePanel.unitSize,
+                        (PerabotanLabel.this.getY()-ruangAcuan.getY())/housePanel.unitSize));
                 PerabotanLabel.this.roomPanel = ruanganAcuan;
             }
             startDragPoint = null;
