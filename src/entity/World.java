@@ -43,14 +43,15 @@ public class World  implements Runnable{
     }
 
     public void setWaktu(Waktu waktu) {
-        this.waktuSekarang = waktu;
+        this.waktu = waktu;
     }
 
     private ArrayList<Rumah> daftarRumah;
     private int jumlahSim;
     private ArrayList<Sim> daftarSim;
-    private Waktu waktuSekarang;
-    private Waktu waktuAwal;
+
+    int harike;
+    private Waktu waktu;
     private int dailySimCreation;
     private Thread worldThread;
     private ArrayList<ThreadAksi> listThreadAksi;
@@ -63,8 +64,10 @@ public class World  implements Runnable{
         width = 65; //64 + 1, karena koordinat dari y =0 hingga x = 64 -> 65 kemungkinan ordinat
         daftarRumah = new ArrayList<Rumah>();
         daftarSim = new ArrayList<Sim>();
-        waktuAwal = new Waktu(this);
+        waktu = new Waktu(this);
+        harike = waktu.getHariKe();
         listThreadAksi = new ArrayList<>();
+        waktu.startThread();
     }
     
     public ArrayList<ThreadAksi> getListThreadAksi() {
@@ -100,7 +103,7 @@ public class World  implements Runnable{
 
     }
     public Waktu getWaktu() {
-        return waktuSekarang;
+        return waktu;
     }
 
     public void tambahRumah(Rumah rumah){
@@ -136,9 +139,8 @@ public class World  implements Runnable{
     }
 
     private void cekWaktu(){
-        waktuSekarang = new Waktu(this);
-        if (waktuSekarang.getHariKe() > waktuAwal.getHariKe()){
-            waktuAwal = waktuSekarang;
+        if (waktu.getHariKe() > harike){
+            harike = waktu.getHariKe();
             dailySimCreation = 1;
         }
     }

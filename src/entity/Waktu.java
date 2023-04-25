@@ -6,6 +6,8 @@ public class Waktu implements Runnable {
     private int hariKe;
     private int sisaDetik;
 
+    private Thread waktuThread;
+
     // Konstruktor
     public Waktu(World world) {
         this.hariKe = 1;
@@ -13,11 +15,16 @@ public class Waktu implements Runnable {
         this.world = world;
     }
 
+    public void startThread(){
+        waktuThread = new Thread(this);
+        waktuThread.start();
+    }
+
     // Method
     @Override
     public void run() {
         // TODO Auto-generated method stub
-        if (world.getListThreadAksi().size() != 0) {
+        while (world.getListThreadAksi().size() != 0) {
             sisaDetik--;
             try {
                 Thread.sleep(1000);

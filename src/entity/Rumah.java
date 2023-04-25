@@ -10,6 +10,7 @@ public class Rumah  {
     private Sim sim;
     World world;
     private Color color;
+    Ruangan ruanganAcuan;
 
     public Rumah(int x, int y, Sim sim, Color color, World world){
         this.world = world;
@@ -22,6 +23,7 @@ public class Rumah  {
             lokasi.x = x;
             lokasi.y = y;
             Ruangan ruangan1 = new Ruangan("Ruangan 1",this,new Point(0,0));
+            ruanganAcuan = ruangan1;
             daftarRuangan.add(ruangan1);
 //            daftarRuangan.add(new Ruangan("Ruangan 2", this, new Point( 0, 6)));
             Perabotan mejakursi = new MejaDanKursi(ruangan1); //cuma sample buat uji coba, nanti bakal dihilangin

@@ -1,12 +1,14 @@
 package game;
 
 import entity.*;
+import thread.ThreadAksi;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
     // information Label
     JLabel currentFPSLabel;
     JLabel saldoSimLabel;
+    DaftarThreadPane daftarThreadPane;
 
     private class HousePanelButton extends JButton{
         HousePanelButton(String text){
@@ -215,11 +218,18 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
 //                rumah.getSim().setUang(rumah.getSim().getUang()-totalHarga);
 //                rumah.getSim().getInventory().addItem(selectedItem, kuantitas);
                 BisaDibeli buyed = (BisaDibeli) selectedItem;
-                buyed.beli(rumah.getSim(), totalHarga);
-
-                // update label saldo
-                saldoSimLabel.setText("<html>Total uang " + rumah.getSim().getNamaLengkap() + " :<br>" +
-                        rumah.getSim().getUang() + "</html>");
+                Object[] parameters = {rumah.getSim(), totalHarga};
+                Class<?>[] paramTypes = {Sim.class, int.class};
+                Method method;
+                try {
+                    method = buyed.getClass().getMethod("beli", Sim.class, int.class);
+                } catch (NoSuchMethodException ex) {
+                    throw new RuntimeException(ex);
+                }
+                ThreadAksi threadAksi = new ThreadAksi("beli " + selectedItem.getNama(),
+                        60, method, parameters, buyed, rumah.getSim().getTheirWorld());
+                rumah.getSim().getTheirWorld().getListThreadAksi().add(threadAksi);
+                threadAksi.start();
             }
         }
         if (e.getSource() == lihatInventoryButton){
@@ -312,6 +322,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                 currentFPSLabel.setText("FPS = " + currentFPS);
                 saldoSimLabel.setText("<html>Total uang " + rumah.getSim().getNamaLengkap()
                         + " :<br>" + rumah.getSim().getUang() + "</html>");
+                // update label saldo
+                saldoSimLabel.setText("<html>Total uang " + rumah.getSim().getNamaLengkap() + " :<br>" +
+                        rumah.getSim().getUang() + "</html>");
 
             }
         }
