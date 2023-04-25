@@ -56,10 +56,20 @@ public class ObjekInventoryLabel extends JLabel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //menu inventory akan otomatis tertutup dan akan menjadi draggable panel
+                    Component source = (Component) e.getSource();
+                    System.out.println(source);
                     ip.ip.remove(taruhBarangPanel);
                     ip.ip.setVisible(false);
-                    if (objek instanceof Perabotan){
+                    if (objek.getKey() instanceof Perabotan){
+                        Perabotan choosedPerabotan = (Perabotan) objek.getKey();
+                        choosedPerabotan.setKiriAtas(new Point(source.getX(), source.getY()));
                         PerabotanLabel newPerabot = new PerabotanLabel((Perabotan) objek.getKey(), ip.hp, null);
+                        newPerabot.clickedPoint = source.getLocation();
+                        newPerabot.setBounds(source.getX()+ip.getX(), source.getY()+ip.getY(), newPerabot.getWidth(), newPerabot.getHeight());
+                        System.out.println("ukuran perabot = " + newPerabot.getSize().toString());
+                        newPerabot.setPut(true);
+                        ip.hp.centerPanel.add(newPerabot, 0);
+                        ip.hp.centerPanel.repaint();
                     }
 
 

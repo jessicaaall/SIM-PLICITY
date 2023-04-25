@@ -62,9 +62,11 @@ public class PerabotanLabel extends JLabel {
         g2d.dispose();
 
     }
+    Point clickedPoint;
     private class DragListener extends MouseInputAdapter{
         Point location;
         MouseEvent pressed;
+
         @Override
         public void mouseClicked(MouseEvent e) {
             PerabotanLabel clickedLabel = (PerabotanLabel) e.getSource();
@@ -87,12 +89,9 @@ public class PerabotanLabel extends JLabel {
                         for (Objek objek : currentRoom.ruangan.getDaftarObjek()) {
                             if (objek instanceof Perabotan) {
                                 Perabotan perabotan1 = (Perabotan) objek;
-                                if (PerabotanLabel.this.getPerabotan().equals(perabotan1) && PerabotanLabel.this.getPerabotan().getKiriAtas().equals(perabotan1.getKiriAtas())) {
-                                    continue;
-                                }
                                 //cek untuk semua titik di labelnya
-                                for (int i = PerabotanLabel.this.getX(); i < PerabotanLabel.this.getX() + PerabotanLabel.this.getWidth(); i += roomPanel.unitSize) {
-                                    for (int j = PerabotanLabel.this.getY(); j < PerabotanLabel.this.getY() + PerabotanLabel.this.getHeight(); j += roomPanel.unitSize) {
+                                for (int i = PerabotanLabel.this.getX(); i < PerabotanLabel.this.getX() + PerabotanLabel.this.getWidth(); i += housePanel.unitSize) {
+                                    for (int j = PerabotanLabel.this.getY(); j < PerabotanLabel.this.getY() + PerabotanLabel.this.getHeight(); j += housePanel.unitSize) {
                                         for (int k = (int) (perabotan1.getKiriAtas().getX() * housePanel.unitSize);
                                              k < perabotan1.getKiriAtas().getX() * housePanel.unitSize + perabotan1.getDimensi().getWidth() * housePanel.unitSize;
                                              k += housePanel.unitSize) {
@@ -143,14 +142,17 @@ public class PerabotanLabel extends JLabel {
                 if (isOccupied) {
                     System.out.println("Tempat sudah dipakai");
                     //dimasukin lagi ke inventory
-                    roomPanel.hp.centerPanel.remove(PerabotanLabel.this);
+                    PerabotanLabel.this.perabotan.setKiriAtas(null);
+                    housePanel.centerPanel.remove(PerabotanLabel.this);
+
                 } else if (isOutOfBoundary) {
                     System.out.println("Di luar batas");
-                    roomPanel.hp.centerPanel.remove(PerabotanLabel.this);
+                    PerabotanLabel.this.perabotan.setKiriAtas(null);
+                    housePanel.centerPanel.remove(PerabotanLabel.this);
 
                 } else {
-                    PerabotanLabel.this.getPerabotan().setKiriAtas(new Point(PerabotanLabel.this.getX() / roomPanel.unitSize,
-                            PerabotanLabel.this.getY() / roomPanel.unitSize));
+                    PerabotanLabel.this.getPerabotan().setKiriAtas(new Point(PerabotanLabel.this.getX() / housePanel.unitSize,
+                            PerabotanLabel.this.getY() / housePanel.unitSize));
                     housePanel.rumah.getSim().getInventory().removeItem(PerabotanLabel.this.getPerabotan());
                     PerabotanLabel.this.roomPanel = ruanganAcuan;
                 }
@@ -160,8 +162,11 @@ public class PerabotanLabel extends JLabel {
         }
         @Override
         public void mousePressed(MouseEvent e) {
+            if (put){
+                return;
+            }
             pressed = e;
-            startDragPoint = new Point(perabotan.getKiriAtas().x*roomPanel.unitSize,
+            startDragPoint = new Point(perabotan.getKiriAtas().x*housePanel.unitSize,
                     perabotan.getKiriAtas().y*roomPanel.unitSize);
 
         }
@@ -175,7 +180,8 @@ public class PerabotanLabel extends JLabel {
                 Component component = e.getComponent();
                 Point p = e.getPoint();
                 location = component.getLocation();
-                location.translate(p.x-location.x, p.y-location.y);
+                location.translate(-clickedPoint.x+e.getX()-component.getWidth()/2
+                        , -clickedPoint.y+e.getY()-component.getHeight()/2);
                 component.setLocation(location);
                 repaint();
             }
@@ -183,6 +189,9 @@ public class PerabotanLabel extends JLabel {
 
         @Override
         public void mouseReleased(MouseEvent e) {
+            if (put){
+                return;
+            }
             boolean isOccupied = false;
             boolean isOutOfBoundary = false;
             PerabotanLabel.this.setBounds(((int)PerabotanLabel.this.getX()/housePanel.unitSize)*housePanel.unitSize,
@@ -203,8 +212,8 @@ public class PerabotanLabel extends JLabel {
                                 continue;
                             }
                             //cek untuk semua titik di labelnya
-                            for (int i = PerabotanLabel.this.getX(); i < PerabotanLabel.this.getX() + PerabotanLabel.this.getWidth(); i += roomPanel.unitSize) {
-                                for (int j = PerabotanLabel.this.getY(); j < PerabotanLabel.this.getY() + PerabotanLabel.this.getHeight(); j += roomPanel.unitSize) {
+                            for (int i = PerabotanLabel.this.getX(); i < PerabotanLabel.this.getX() + PerabotanLabel.this.getWidth(); i += housePanel.unitSize) {
+                                for (int j = PerabotanLabel.this.getY(); j < PerabotanLabel.this.getY() + PerabotanLabel.this.getHeight(); j += housePanel.unitSize) {
                                     for (int k = (int) (perabotan1.getKiriAtas().getX() * housePanel.unitSize);
                                          k < perabotan1.getKiriAtas().getX() * housePanel.unitSize + perabotan1.getDimensi().getWidth() * housePanel.unitSize;
                                          k += housePanel.unitSize) {
@@ -256,21 +265,21 @@ public class PerabotanLabel extends JLabel {
             }
             if (isOccupied){
                 System.out.println("Tempat sudah dipakai");
-                PerabotanLabel.this.setBounds((int) startDragPoint.getX()/roomPanel.unitSize*roomPanel.unitSize,
-                        (int) startDragPoint.getY()/roomPanel.unitSize*roomPanel.unitSize,
+                PerabotanLabel.this.setBounds((int) startDragPoint.getX()/housePanel.unitSize*housePanel.unitSize,
+                        (int) startDragPoint.getY()/housePanel.unitSize*housePanel.unitSize,
                         PerabotanLabel.this.getWidth(),
                         PerabotanLabel.this.getHeight());
             }
             else if (isOutOfBoundary){
                 System.out.println("Di luar batas");
-                PerabotanLabel.this.setBounds((int) startDragPoint.getX()/roomPanel.unitSize*roomPanel.unitSize,
-                        (int) startDragPoint.getY()/roomPanel.unitSize*roomPanel.unitSize,
+                PerabotanLabel.this.setBounds((int) startDragPoint.getX()/housePanel.unitSize*housePanel.unitSize,
+                        (int) startDragPoint.getY()/housePanel.unitSize*housePanel.unitSize,
                         PerabotanLabel.this.getWidth(),
                         PerabotanLabel.this.getHeight());
             }
             else {
-                PerabotanLabel.this.getPerabotan().setKiriAtas(new Point(PerabotanLabel.this.getX()/roomPanel.unitSize,
-                        PerabotanLabel.this.getY()/roomPanel.unitSize));
+                PerabotanLabel.this.getPerabotan().setKiriAtas(new Point(PerabotanLabel.this.getX()/housePanel.unitSize,
+                        PerabotanLabel.this.getY()/housePanel.unitSize));
                 PerabotanLabel.this.roomPanel = ruanganAcuan;
             }
             startDragPoint = null;
@@ -279,6 +288,9 @@ public class PerabotanLabel extends JLabel {
 
         @Override
         public void mouseDragged(MouseEvent e) {
+            if (put){
+                return;
+            }
             Component component = e.getComponent();
             location = component.getLocation();
             int dx = location.x - pressed.getX() + e.getX();
