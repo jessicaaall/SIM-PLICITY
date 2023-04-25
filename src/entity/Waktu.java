@@ -5,13 +5,15 @@ import java.util.TimerTask;
 
 public class Waktu {
     // Deklarasi variabel
+    private World world;
     private int hariKe;
     private int sisaDetik;
 
     // Konstruktor
-    public Waktu() {
+    public Waktu(World world) {
         this.hariKe = 1;
-        this.sisaDetik = 720;
+        this.sisaDetik = 10;
+        this.world = world;
     }
 
     // Method
@@ -22,11 +24,16 @@ public class Waktu {
             int counter = sisaDetik;
             @Override
             public void run() {
+
                 if (counter > (sisaDetik - lama)) {
                     System.out.printf(".");
                     counter--;
                 } else {
+                    if (world.)
                     timer.cancel();
+                    if (sisaDetik < 0) {
+                        hariKe = (Math.abs(sisaDetik) / 720) + 1;
+                    }
                     setWaktu(getHariKe(), sisaDetik-lama);
                 }
             }
@@ -53,15 +60,20 @@ public class Waktu {
         nilaiWaktu[2] = "- Sisa detik : " + sisaDetik;
         return nilaiWaktu;
     }
+    public World getWorld() {
+        return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
+    }
 
     public static void main(String[] args) {
         Waktu waktu = new Waktu();
-        //waktu.jalankanWaktu(10);
-        waktu.setWaktu(waktu.getHariKe(), waktu.getSisaDetik());
-        String[] dummy = waktu.tampilkanWaktu();
-        System.out.println(dummy[0]);
-        System.out.println(dummy[1]);
-        System.out.println(dummy[2]);
-        // System.out.println(waktu.getSisaDetik());
+        waktu.jalankanWaktu(5);
+        // String[] dummy = waktu.tampilkanWaktu();
+        // System.out.println(dummy[0]);
+        // System.out.println(dummy[1]);
+        // System.out.println(dummy[2]);
     }
 }

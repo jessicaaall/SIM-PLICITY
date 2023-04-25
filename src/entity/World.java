@@ -53,6 +53,14 @@ public class World  implements Runnable{
     private Thread worldThread;
     private Thread actionsThread; //thread untuk segala aksi aktif yang ada
 
+    public Thread getActionsThread() {
+        return actionsThread;
+    }
+
+    public void setActionsThread(Thread actionsThread) {
+        this.actionsThread = actionsThread;
+    }
+
     //pembuatan world menggunakan design pattern Singleton
     public World(){
         dailySimCreation = 1;
@@ -60,7 +68,7 @@ public class World  implements Runnable{
         width = 65; //64 + 1, karena koordinat dari y =0 hingga x = 64 -> 65 kemungkinan ordinat
         daftarRumah = new ArrayList<Rumah>();
         daftarSim = new ArrayList<Sim>();
-        waktuAwal = new Waktu();
+        waktuAwal = new Waktu(this);
     }
 
     public int getWidth() {
@@ -125,7 +133,7 @@ public class World  implements Runnable{
     }
 
     private void cekWaktu(){
-        waktuSekarang = new Waktu();
+        waktuSekarang = new Waktu(this);
         if (waktuSekarang.getHariKe() > waktuAwal.getHariKe()){
             waktuAwal = waktuSekarang;
             dailySimCreation = 1;
