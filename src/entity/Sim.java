@@ -173,10 +173,7 @@ public class Sim {
     public void berkunjung() {
 
     }
-    public void upgradeRuman(Rumah rumah) {
-
-    }
-    public void beliBarang(BisaDibeli barang) {
+    public void upgradeRuman(Ruangan ruangan) {
 
     }
     public void lihatInventory() {

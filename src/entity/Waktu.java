@@ -2,9 +2,8 @@ package entity;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.io.Serializable;
 
-public class Waktu implements Serializable {
+public class Waktu {
     // Deklarasi variabel
     private int hariKe;
     private int sisaDetik;
@@ -14,16 +13,6 @@ public class Waktu implements Serializable {
         this.hariKe = 1;
         this.sisaDetik = 720;
     }
-    // public static Waktu getInstanceWaktu() {
-    //     if (instanceWaktu == null) {
-    //         synchronized (Waktu.class) {
-    //             if (instanceWaktu == null) {
-    //                 instanceWaktu = new Waktu();
-    //             }
-    //         }
-    //     }
-    //     return instanceWaktu;
-    // }
 
     // Method
     public void jalankanWaktu(int lama) {
