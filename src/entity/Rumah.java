@@ -8,7 +8,7 @@ public class Rumah  {
     private Point lokasi = new Point();
     private ArrayList<Ruangan> daftarRuangan = new ArrayList<Ruangan>();
     private Sim sim;
-    World world;
+    public World world;
     private Color color;
     Ruangan ruanganAcuan;
 

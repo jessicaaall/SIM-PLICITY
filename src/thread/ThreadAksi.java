@@ -20,6 +20,7 @@ public class ThreadAksi extends Thread {
         this.world = world;
         this.object = object;
         this.parameters = parameters;
+        world.getListThreadAksi().add(this);
     }
 
     // Method

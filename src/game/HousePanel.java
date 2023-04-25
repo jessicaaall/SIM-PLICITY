@@ -227,8 +227,8 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                     throw new RuntimeException(ex);
                 }
                 ThreadAksi threadAksi = new ThreadAksi("beli " + selectedItem.getNama(),
-                        60, method, parameters, buyed, rumah.getSim().getTheirWorld());
-                rumah.getSim().getTheirWorld().getListThreadAksi().add(threadAksi);
+                        60, method, parameters, buyed, rumah.world);
+                System.out.println(rumah.world.getListThreadAksi());
                 threadAksi.start();
             }
         }

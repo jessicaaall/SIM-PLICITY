@@ -128,22 +128,6 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
             }
             // masukan nama sim
             JTextField namaSimField = new JTextField();
-/*            JComboBox comboBox = new JComboBox(listNamaSim);
-            comboBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (e.getSource() == comboBox) {
-                        chosenSimName = (String) comboBox.getSelectedItem();
-                        for (Sim sim : daftarSim) {
-                            if (chosenSimName == sim.getNamaLengkap()) {
-                                chosenSim = sim;
-                            }
-                        }
-                    }
-                }
-            });
-            panel.add(new JLabel("<html>Pilih Sim<br></html>"));
-            panel.add(comboBox);*/
             panel.add(new JLabel("<html>Masukkan Nama Sim"));
             panel.add(namaSimField);
             panel.add(label);

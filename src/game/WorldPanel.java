@@ -111,11 +111,14 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
                 drawCount = 0;
                 timer = 0;
             }
-
             //change the time
             wop.timeLabel.setText("<html>"+ getWorld().getWaktu().tampilkanWaktu()[0] +"<br>" +
                     getWorld().getWaktu().tampilkanWaktu()[1] + "<br>" +
                     getWorld().getWaktu().tampilkanWaktu()[2] + "</html>");
+            wop.timeLabel.revalidate();
+            wop.timeLabel.repaint();
+            wop.revalidate();
+            wop.repaint();
 
         }
     }

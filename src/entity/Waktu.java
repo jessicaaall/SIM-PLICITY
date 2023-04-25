@@ -23,19 +23,25 @@ public class Waktu implements Runnable {
     // Method
     @Override
     public void run() {
-        // TODO Auto-generated method stub
-        while (world.getListThreadAksi().size() != 0) {
-            sisaDetik--;
+        System.out.println("waktu started");
+        while (waktuThread != null){
+            if (world.getListThreadAksi().size() > 0) {
+                sisaDetik--;
+            }
+            else{
+
+            }
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                
+
             }
-        } 
-        if (sisaDetik < 0) {
-            hariKe++;
-            sisaDetik = 720;
+            if (sisaDetik < 0) {
+                hariKe++;
+                sisaDetik = 720;
+            }
         }
+
     }
 
     // Method
