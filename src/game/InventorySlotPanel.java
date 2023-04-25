@@ -48,5 +48,23 @@ public class InventorySlotPanel extends JPanel {
 
     }
 
+    /* add item after failed to be placed */
+    public void removeItem(Objek objek){
+        //cek apakah item ada
+        boolean exist = false;
+        for (Component component : this.getComponents()){
+            if (component instanceof ObjekInventoryLabel){
+                //cek apakah itu objeknya
+                ObjekInventoryLabel oil = (ObjekInventoryLabel) component;
+                if (oil.getObjek().equals(objek)){
+                    exist = true;
+                }
+            }
+        }
+        if (exist){
+            ip.hp.rumah.getSim().getInventory().removeItem(objek);
+        }
+    }
+
 
 }

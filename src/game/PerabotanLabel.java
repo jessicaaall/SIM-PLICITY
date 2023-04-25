@@ -9,7 +9,13 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class PerabotanLabel extends JLabel {
+    HousePanel housePanel;
     RoomPanel roomPanel;
+    public void setPut(boolean put) {
+        this.put = put;
+    }
+
+    private boolean put = false;
     public Perabotan getPerabotan() {
         return perabotan;
     }
@@ -22,21 +28,22 @@ public class PerabotanLabel extends JLabel {
 
     private ImageIcon image;
     private Point startDragPoint;
-    public PerabotanLabel(Perabotan perabotan, RoomPanel roomPanel){
+    public PerabotanLabel(Perabotan perabotan, HousePanel housePanel, RoomPanel roomPanel){
         DragListener dragListener = new DragListener();
         this.perabotan = perabotan;
+        this.housePanel = housePanel;
         this.roomPanel = roomPanel;
-        int width = perabotan.getDimensi().width*roomPanel.unitSize;
-        int height = perabotan.getDimensi().height*roomPanel.unitSize;
+        int width = perabotan.getDimensi().width*PerabotanLabel.this.housePanel.unitSize;
+        int height = perabotan.getDimensi().height*PerabotanLabel.this.housePanel.unitSize;
         Image imagenya = perabotan.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT);
         image = new ImageIcon(imagenya);
         this.setIcon(image);
         this.setOpaque(false);
-        this.setPreferredSize(new Dimension(perabotan.getDimensi().width*roomPanel.unitSize, perabotan.getDimensi().height*roomPanel.unitSize));
-        this.setBounds(perabotan.getKiriAtas().x*roomPanel.unitSize
-                , perabotan.getKiriAtas().y*roomPanel.unitSize
-                , perabotan.getDimensi().width*roomPanel.unitSize
-                , perabotan.getDimensi().height*roomPanel.unitSize);
+        this.setPreferredSize(new Dimension(perabotan.getDimensi().width*PerabotanLabel.this.housePanel.unitSize, perabotan.getDimensi().height*PerabotanLabel.this.housePanel.unitSize));
+        this.setBounds(perabotan.getKiriAtas().x*PerabotanLabel.this.housePanel.unitSize
+                , perabotan.getKiriAtas().y*PerabotanLabel.this.housePanel.unitSize
+                , perabotan.getDimensi().width*PerabotanLabel.this.housePanel.unitSize
+                , perabotan.getDimensi().height*PerabotanLabel.this.housePanel.unitSize);
         this.addMouseListener(dragListener);
         this.addMouseMotionListener(dragListener);
 //        this.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK));
@@ -63,6 +70,92 @@ public class PerabotanLabel extends JLabel {
             PerabotanLabel clickedLabel = (PerabotanLabel) e.getSource();
             Perabotan clickedPerabot = clickedLabel.getPerabotan();
             System.out.println("Mengklik " + clickedPerabot.getNama());
+            if (put) {
+                boolean isOccupied = false;
+                boolean isOutOfBoundary = false;
+                PerabotanLabel.this.setBounds(((int) PerabotanLabel.this.getX() / housePanel.unitSize) * housePanel.unitSize,
+                        ((int) PerabotanLabel.this.getY() / housePanel.unitSize) * housePanel.unitSize,
+                        PerabotanLabel.this.getWidth(),
+                        PerabotanLabel.this.getHeight());
+
+                for (Component component: housePanel.centerPanel.getComponents()){
+                    if (component instanceof RoomPanel){
+                        RoomPanel currentRoom = (RoomPanel) component;
+
+                        //cek apakah sudah dioccupied
+                        for (Objek objek : currentRoom.ruangan.getDaftarObjek()) {
+                            if (objek instanceof Perabotan) {
+                                Perabotan perabotan1 = (Perabotan) objek;
+                                if (PerabotanLabel.this.getPerabotan().equals(perabotan1) && PerabotanLabel.this.getPerabotan().getKiriAtas().equals(perabotan1.getKiriAtas())) {
+                                    continue;
+                                }
+                                //cek untuk semua titik di labelnya
+                                for (int i = PerabotanLabel.this.getX(); i < PerabotanLabel.this.getX() + PerabotanLabel.this.getWidth(); i += roomPanel.unitSize) {
+                                    for (int j = PerabotanLabel.this.getY(); j < PerabotanLabel.this.getY() + PerabotanLabel.this.getHeight(); j += roomPanel.unitSize) {
+                                        for (int k = (int) (perabotan1.getKiriAtas().getX() * housePanel.unitSize);
+                                             k < perabotan1.getKiriAtas().getX() * housePanel.unitSize + perabotan1.getDimensi().getWidth() * housePanel.unitSize;
+                                             k += housePanel.unitSize) {
+                                            for (int l = (int) (perabotan1.getKiriAtas().getY() * housePanel.unitSize);
+                                                 l < perabotan1.getKiriAtas().getY() * housePanel.unitSize + perabotan1.getDimensi().getHeight() * housePanel.unitSize;
+                                                 l += housePanel.unitSize) {
+                                                Point point1 = new Point(i, j);
+                                                Point point2 = new Point(k, l);
+                                                if (point1.equals(point2)) {
+                                                    isOccupied = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    //check boundary
+                    // 1. cek semua ruangan di house panel, dan cari di mana letak perabotan label berada di ruangan mana
+                    RoomPanel ruanganAcuan = null;
+                    for (Component komponen : housePanel.centerPanel.getComponents()){
+                        if (komponen instanceof RoomPanel){
+                            RoomPanel targetPanel = (RoomPanel) komponen;
+                            // cek apakah titik lokasi dari label berada di antara
+                            if (
+                                    PerabotanLabel.this.getX() >= targetPanel.getX() && PerabotanLabel.this.getX()
+                                            <  targetPanel.getX() + targetPanel.getWidth()
+                                            &&  PerabotanLabel.this.getY() >= targetPanel.getY() && PerabotanLabel.this.getY()
+                                            <  targetPanel.getY() + targetPanel.getHeight()
+                            ){
+                                ruanganAcuan = targetPanel;
+                            }
+                        }
+                    }
+
+                    if (ruanganAcuan == null){
+                        isOutOfBoundary = true;
+
+                    }
+                    else{
+                        if (PerabotanLabel.this.getX() + PerabotanLabel.this.getWidth() > ruanganAcuan.getX() + ruanganAcuan.getWidth() ||
+                                PerabotanLabel.this.getY() + PerabotanLabel.this.getHeight() > ruanganAcuan.getY() + ruanganAcuan.getHeight()) {
+                            isOutOfBoundary = true;
+                        }
+                    }
+                }
+                if (isOccupied) {
+                    System.out.println("Tempat sudah dipakai");
+                    //dimasukin lagi ke inventory
+                    roomPanel.hp.centerPanel.remove(PerabotanLabel.this);
+                } else if (isOutOfBoundary) {
+                    System.out.println("Di luar batas");
+                    roomPanel.hp.centerPanel.remove(PerabotanLabel.this);
+
+                } else {
+                    PerabotanLabel.this.getPerabotan().setKiriAtas(new Point(PerabotanLabel.this.getX() / roomPanel.unitSize,
+                            PerabotanLabel.this.getY() / roomPanel.unitSize));
+                    housePanel.rumah.getSim().getInventory().removeItem(PerabotanLabel.this.getPerabotan());
+                }
+                put = false;
+                repaint();
+            }
         }
         @Override
         public void mousePressed(MouseEvent e) {
@@ -71,45 +164,89 @@ public class PerabotanLabel extends JLabel {
                     perabotan.getKiriAtas().y*roomPanel.unitSize);
 
         }
+
+
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            if (put){
+                //item follow the mouse
+                Component component = e.getComponent();
+                Point p = e.getPoint();
+                location = component.getLocation();
+                location.translate(p.x-location.x, p.y-location.y);
+                component.setLocation(location);
+                repaint();
+            }
+        }
+
         @Override
         public void mouseReleased(MouseEvent e) {
             boolean isOccupied = false;
             boolean isOutOfBoundary = false;
-            PerabotanLabel.this.setBounds(((int)PerabotanLabel.this.getX()/roomPanel.unitSize)*roomPanel.unitSize,
-                    ((int)PerabotanLabel.this.getY()/roomPanel.unitSize)*roomPanel.unitSize,
+            PerabotanLabel.this.setBounds(((int)PerabotanLabel.this.getX()/housePanel.unitSize)*housePanel.unitSize,
+                    ((int)PerabotanLabel.this.getY()/housePanel.unitSize)*housePanel.unitSize,
                     PerabotanLabel.this.getWidth(),
                     PerabotanLabel.this.getHeight());
             //cek apakah sudah dioccupied
-            for (Objek objek: roomPanel.ruangan.getDaftarObjek()){
-                if (objek instanceof Perabotan){
-                    Perabotan perabotan1 = (Perabotan) objek;
-                    if (PerabotanLabel.this.getPerabotan().equals(perabotan1) && PerabotanLabel.this.getPerabotan().getKiriAtas().equals(perabotan1.getKiriAtas())){
-                        continue;
-                    }
-                    //cek untuk semua titik di labelnya
-                    for (int i = PerabotanLabel.this.getX(); i < PerabotanLabel.this.getX() + PerabotanLabel.this.getWidth(); i += roomPanel.unitSize){
-                        for (int j = PerabotanLabel.this.getY(); j < PerabotanLabel.this.getY() + PerabotanLabel.this.getHeight(); j += roomPanel.unitSize){
-                            for (int k = (int) (perabotan1.getKiriAtas().getX()*roomPanel.unitSize);
-                                 k < perabotan1.getKiriAtas().getX()*roomPanel.unitSize + perabotan1.getDimensi().getWidth()*roomPanel.unitSize;
-                                 k += roomPanel.unitSize){
-                                for (int l = (int) (perabotan1.getKiriAtas().getY()*roomPanel.unitSize);
-                                     l < perabotan1.getKiriAtas().getY()*roomPanel.unitSize + perabotan1.getDimensi().getHeight()*roomPanel.unitSize;
-                                     l += roomPanel.unitSize){
-                                    Point point1 = new Point(i, j);
-                                    Point point2 = new Point(k, l);
-                                    if (point1.equals(point2)){
-                                        isOccupied = true;
-                                        break;
+            for (Component component: housePanel.centerPanel.getComponents()){
+                if (component instanceof RoomPanel){
+                    RoomPanel currentRoom = (RoomPanel) component;
+
+                    //cek apakah sudah dioccupied
+                    for (Objek objek : currentRoom.ruangan.getDaftarObjek()) {
+                        if (objek instanceof Perabotan) {
+                            Perabotan perabotan1 = (Perabotan) objek;
+                            if (PerabotanLabel.this.getPerabotan().equals(perabotan1) && PerabotanLabel.this.getPerabotan().getKiriAtas().equals(perabotan1.getKiriAtas())) {
+                                continue;
+                            }
+                            //cek untuk semua titik di labelnya
+                            for (int i = PerabotanLabel.this.getX(); i < PerabotanLabel.this.getX() + PerabotanLabel.this.getWidth(); i += roomPanel.unitSize) {
+                                for (int j = PerabotanLabel.this.getY(); j < PerabotanLabel.this.getY() + PerabotanLabel.this.getHeight(); j += roomPanel.unitSize) {
+                                    for (int k = (int) (perabotan1.getKiriAtas().getX() * housePanel.unitSize);
+                                         k < perabotan1.getKiriAtas().getX() * housePanel.unitSize + perabotan1.getDimensi().getWidth() * housePanel.unitSize;
+                                         k += housePanel.unitSize) {
+                                        for (int l = (int) (perabotan1.getKiriAtas().getY() * housePanel.unitSize);
+                                             l < perabotan1.getKiriAtas().getY() * housePanel.unitSize + perabotan1.getDimensi().getHeight() * housePanel.unitSize;
+                                             l += housePanel.unitSize) {
+                                            Point point1 = new Point(i, j);
+                                            Point point2 = new Point(k, l);
+                                            if (point1.equals(point2)) {
+                                                isOccupied = true;
+                                                break;
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+                }
+                //check boundary
+                // 1. cek semua ruangan di house panel, dan cari di mana letak perabotan label berada di ruangan mana
+                RoomPanel ruanganAcuan = null;
+                for (Component komponen : housePanel.centerPanel.getComponents()){
+                    if (komponen instanceof RoomPanel){
+                        RoomPanel targetPanel = (RoomPanel) komponen;
+                        // cek apakah titik lokasi dari label berada di antara
+                        if (
+                                PerabotanLabel.this.getX() >= targetPanel.getX() && PerabotanLabel.this.getX()
+                                        <  targetPanel.getX() + targetPanel.getWidth()
+                                        &&  PerabotanLabel.this.getY() >= targetPanel.getY() && PerabotanLabel.this.getY()
+                                        <  targetPanel.getY() + targetPanel.getHeight()
+                        ){
+                            ruanganAcuan = targetPanel;
+                        }
+                    }
+                }
 
-                    //check boundary
-                    if (PerabotanLabel.this.getX()+PerabotanLabel.this.getWidth() > roomPanel.getWidth() ||
-                            PerabotanLabel.this.getY()+PerabotanLabel.this.getHeight() > roomPanel.getHeight()||
-                            PerabotanLabel.this.getX() < 0 || PerabotanLabel.this.getY() < 0) {
+                if (ruanganAcuan == null){
+                    isOutOfBoundary = true;
+
+                }
+                else{
+                    if (PerabotanLabel.this.getX() + PerabotanLabel.this.getWidth() > ruanganAcuan.getX() + ruanganAcuan.getWidth() ||
+                            PerabotanLabel.this.getY() + PerabotanLabel.this.getHeight() > ruanganAcuan.getY() + ruanganAcuan.getHeight()) {
                         isOutOfBoundary = true;
                     }
                 }

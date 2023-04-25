@@ -6,6 +6,9 @@ public class Komputer extends Perabotan {
     public Komputer() {
         super(9);
     }
+    public Komputer(Ruangan ruangan){
+        super(9, ruangan);
+    }
 
     public void mainGame(Sim sim) {
         Scanner sc = new Scanner(System.in);

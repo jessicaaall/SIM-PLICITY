@@ -21,17 +21,18 @@ public class Rumah  {
             this.color = color;
             lokasi.x = x;
             lokasi.y = y;
-            daftarRuangan.add(new Ruangan("Ruangan 1",this,new Point(0,0)));
+            Ruangan ruangan1 = new Ruangan("Ruangan 1",this,new Point(0,0));
+            daftarRuangan.add(ruangan1);
 //            daftarRuangan.add(new Ruangan("Ruangan 2", this, new Point( 0, 6)));
-            Perabotan mejakursi = new Perabotan(1); //cuma sample buat uji coba, nanti bakal dihilangin
+            Perabotan mejakursi = new MejaDanKursi(ruangan1); //cuma sample buat uji coba, nanti bakal dihilangin
             mejakursi.setKiriAtas(new Point(0,0));//cuma sample buat uji coba, nanti bakal dihilangin
-            Perabotan kasur = new Perabotan(5);
+            Perabotan kasur = new Kasur(5, ruangan1);
             kasur.setKiriAtas(new Point(0, 3));
-            Perabotan jam = new Perabotan(10);
+            Perabotan jam = new Jam(world,ruangan1);
             jam.setKiriAtas(new Point(0, 4));
-            Perabotan toilet = new Perabotan(4);
+            Perabotan toilet = new Toilet(ruangan1);
             toilet.setKiriAtas(new Point(0, 5));
-            Perabotan komporgas = new Perabotan(2);
+            Perabotan komporgas = new Kompor(2, ruangan1);
             komporgas.setKiriAtas(new Point(4, 0));
 
             daftarRuangan.get(0).getDaftarObjek().add(mejakursi); //cuma sample buat uji coba, nanti bakal dihilangin

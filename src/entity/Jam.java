@@ -7,6 +7,10 @@ public class Jam extends Perabotan {
         super(10);
         waktu = world.getWaktu();
     }
+    public Jam(World world, Ruangan ruangan){
+        super(10, ruangan);
+        waktu = world.getWaktu();
+    }
 
     public Waktu getWaktu() {
         return waktu;

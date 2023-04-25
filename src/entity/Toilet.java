@@ -6,7 +6,9 @@ public class Toilet extends Perabotan implements BisaDiduduki {
     public Toilet() {
         super(4);
     }
-    
+    public Toilet(Ruangan ruangan){
+        super(4, ruangan);
+    }
     public void buangAir(Sim sim) {
         duduk(sim);
         long startTime = System.currentTimeMillis();

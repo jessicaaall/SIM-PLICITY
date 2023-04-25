@@ -13,6 +13,10 @@ public class Kompor extends Perabotan {
             tipe = "listrik";
         }
     }
+    public Kompor(int id, Ruangan ruangan){
+        this(id);
+        this.setRuangan(ruangan);
+    }
 
     public String getTipe() {
         return tipe;

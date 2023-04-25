@@ -6,6 +6,16 @@ import java.util.*;
 public class Perabotan extends Objek implements BisaDibeli {
     private Point kiriAtas;
 
+    public Ruangan getRuangan() {
+        return ruangan;
+    }
+
+    public void setRuangan(Ruangan ruangan) {
+        this.ruangan = ruangan;
+    }
+
+    private Ruangan ruangan;
+
     public void setDimensi(Dimension dimensi) {
         this.dimensi = dimensi;
     }
@@ -55,6 +65,10 @@ public class Perabotan extends Objek implements BisaDibeli {
         kiriAtas = null;
         dipakai = false;
     }
+    public Perabotan(int id, Ruangan ruangan){
+        this(id);
+        this.ruangan = ruangan;
+    }
 
     public Point getKiriAtas() {
         return kiriAtas;
@@ -85,37 +99,39 @@ public class Perabotan extends Objek implements BisaDibeli {
     }
 
     @Override
-    public void beli(Sim sim) {
-        boolean valid = false;
-        Scanner sc = new Scanner(System.in);
-        while (!valid) {
-            System.out.print("Masukkan kuantitas " + super.getNama() + " yang ingin dibeli >> ");
-            try {
-                int kuantitas = Integer.parseInt(sc.nextLine());
-                if (kuantitas <= 0) {
-                    throw new IllegalArgumentException("Kuantitas harus lebih besar dari 0.");
-                }
-                valid = true;
-                int totalHarga = kuantitas * getHarga();
-                if (sim.getUang() < totalHarga) {
-                    System.out.println("Uang tidak cukup untuk membeli " + String.valueOf(kuantitas) + " " + super.getNama() + ".");
-                } else {
-                    sim.setUang(sim.getUang() - totalHarga);
-                    Random rand = new Random();
-                    int durasi = rand.nextInt(5) + 1;
-                    long startTime = System.currentTimeMillis();
-                    long endTime = startTime + durasi;
-                    while (System.currentTimeMillis() < endTime) {
-                        
-                    }
-                    sim.getInventory().addItem(this);
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Input tidak valid.");
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        sc.close();
+    public void beli(Sim sim, int totalHarga) {
+        sim.setUang(sim.getUang()-totalHarga);
+        sim.getInventory().addItem(this, totalHarga/harga);
+//        boolean valid = false;
+//        Scanner sc = new Scanner(System.in);
+//        while (!valid) {
+////            System.out.print("Masukkan kuantitas " + super.getNama() + " yang ingin dibeli >> ");
+//            try {
+//                int kuantitas = Integer.parseInt(sc.nextLine());
+//                if (kuantitas <= 0) {
+//                    throw new IllegalArgumentException("Kuantitas harus lebih besar dari 0.");
+//                }
+//                valid = true;
+//                int totalHarga = kuantitas * getHarga();
+//                if (sim.getUang() < totalHarga) {
+//                    System.out.println("Uang tidak cukup untuk membeli " + String.valueOf(kuantitas) + " " + super.getNama() + ".");
+//                } else {
+//                    sim.setUang(sim.getUang() - totalHarga);
+//                    Random rand = new Random();
+//                    int durasi = rand.nextInt(5) + 1;
+//                    long startTime = System.currentTimeMillis();
+//                    long endTime = startTime + durasi;
+//                    while (System.currentTimeMillis() < endTime) {
+//
+//                    }
+//                    sim.getInventory().addItem(this);
+//                }
+//            } catch (NumberFormatException e) {
+//                System.out.println("Input tidak valid.");
+//            } catch (IllegalArgumentException e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
+//        sc.close();
     }
 }

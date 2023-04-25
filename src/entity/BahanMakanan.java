@@ -43,17 +43,9 @@ public class BahanMakanan extends Objek implements BisaDimakan, BisaDibeli {
     }
 
     @Override
-    public void beli(Sim sim) {
-        Scanner scanner = new Scanner(System.in);
-        int kuantitas = Integer.parseInt(scanner.nextLine());
-        int hargaTotal = kuantitas*this.getHarga();
-        if (sim.getUang() < hargaTotal) {
-            System.out.println("Uang tidak cukup");
-        } else {
-            sim.setUang(sim.getUang()-hargaTotal);
-            sim.getInventory().addItem(this);            
-        }
-        scanner.close();
+    public void beli(Sim sim, int totalHarga) {
+        sim.setUang(sim.getUang()-totalHarga);
+        sim.getInventory().addItem(this, totalHarga/harga);
     }
 
     @Override

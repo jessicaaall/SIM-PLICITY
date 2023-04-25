@@ -1,6 +1,7 @@
 package game;
 
 import entity.Objek;
+import entity.Perabotan;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
@@ -50,9 +51,20 @@ public class ObjekInventoryLabel extends JLabel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //menu inventory akan otomatis tertutup dan akan menjadi draggable panel
+                    ip.ip.setVisible(false);
+                    if (objek instanceof Perabotan){
+                        PerabotanLabel newPerabot = new PerabotanLabel((Perabotan) objek.getKey(), ip.hp, null);
+                    }
+
 
                 }
             });
+            if (ObjekInventoryLabel.this.objek instanceof Perabotan){
+                tombolTaruh.setEnabled(true);
+            }
+            else{
+                tombolTaruh.setEnabled(false);
+            }
         }
 
         @Override

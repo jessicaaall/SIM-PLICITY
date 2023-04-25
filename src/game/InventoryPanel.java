@@ -58,6 +58,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
         add(inventorySlot);
         add(closeButton);
         setOpaque(true);
+        setVisible(true);
     }
 
     @Override

@@ -6,6 +6,9 @@ public class TV extends Perabotan {
     public TV() {
         super(8);
     }
+    public TV(Ruangan ruangan){
+        super(8, ruangan);
+    }
 
     public void nontonTV(Sim sim) {
         Scanner sc = new Scanner(System.in);

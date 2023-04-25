@@ -6,6 +6,6 @@ import java.util.Set;
 
 public interface BisaDibeli {
 
-    public void beli(Sim sim);
+    void beli(Sim sim, int totalHarga);
 
 }

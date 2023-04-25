@@ -6,6 +6,9 @@ public class MejaDanKursi extends Perabotan implements BisaDiduduki {
     public MejaDanKursi() {
         super(1);
     }
+    public MejaDanKursi(Ruangan ruangan){
+        super(1, ruangan);
+    }
 
     public void makan(Sim sim) {
         duduk(sim);

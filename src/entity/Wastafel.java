@@ -6,6 +6,9 @@ public class Wastafel extends Perabotan {
     public Wastafel() {
         super(36);
     }
+    public Wastafel(Ruangan ruangan){
+        super(36, ruangan);
+    }
 
     public void sikatGigi(Sim sim) {
         Random rand = new Random();

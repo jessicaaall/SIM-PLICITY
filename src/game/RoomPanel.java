@@ -38,8 +38,8 @@ public class RoomPanel extends JPanel {
             if (objek instanceof Perabotan){
 //                System.out.println("kode ini dirun");
                 Perabotan perabotan = (Perabotan) objek;
-                PerabotanLabel pl = new PerabotanLabel(perabotan, this);
-                this.add(pl);
+                PerabotanLabel pl = new PerabotanLabel(perabotan,hp ,this);
+                this.hp.centerPanel.add(pl);
             }
         }
     }

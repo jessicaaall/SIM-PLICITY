@@ -6,6 +6,9 @@ public class BakMandi extends Perabotan {
     public BakMandi() {
         super(35);
     }
+    public BakMandi(Ruangan ruangan){
+        super(35, ruangan);
+    }
 
     public void mandi(Sim sim) {
         Scanner sc = new Scanner(System.in);

@@ -16,6 +16,11 @@ public class Kasur extends Perabotan implements BisaDiduduki {
         }
     }
 
+    public Kasur(int id, Ruangan ruangan){
+        this(id);
+        this.setRuangan(ruangan);
+    }
+
     public String getTipe() {
         return tipe;
     }

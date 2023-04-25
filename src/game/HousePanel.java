@@ -16,6 +16,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
     public int unitSize = 40;
     public MainMenuPanel mainMenuPanel;
     public MainPanel mainPanel;
+    public InventoryPanel inventoryPanel;
     public int cameraWidth;
     public int cameraHeight;
     private Thread thread;
@@ -210,8 +211,10 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                     return;
                 }
                 // kalau sudah benar dan oke, tinggal lakukan operasi
-                rumah.getSim().setUang(rumah.getSim().getUang()-totalHarga);
-                rumah.getSim().getInventory().addItem(selectedItem, kuantitas);
+//                rumah.getSim().setUang(rumah.getSim().getUang()-totalHarga);
+//                rumah.getSim().getInventory().addItem(selectedItem, kuantitas);
+                BisaDibeli buyed = (BisaDibeli) selectedItem;
+                buyed.beli(rumah.getSim(), totalHarga);
 
                 // update label saldo
                 saldoSimLabel.setText("<html>Total uang " + rumah.getSim().getNamaLengkap() + " :<br>" +
@@ -219,7 +222,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             }
         }
         if (e.getSource() == lihatInventoryButton){
-            InventoryPanel inventoryPanel = new InventoryPanel(this);
+            inventoryPanel = new InventoryPanel(this);
             //cek kalau sudah ada komponen inventoryPanel
             for (Component component: centerPanel.getComponents()){
                 if (component instanceof InventoryPanel){
@@ -231,7 +234,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             centerPanel.repaint();
             revalidate();
             repaint();
-//            JOptionPane.showMessageDialog(new SimplicityDialog("Inventory"), inventoryPanel);
         }
     }
 
