@@ -153,8 +153,9 @@ public class PerabotanLabel extends JLabel {
                 } else {
                     PerabotanLabel.this.getPerabotan().setKiriAtas(new Point(PerabotanLabel.this.getX() / housePanel.unitSize,
                             PerabotanLabel.this.getY() / housePanel.unitSize));
-                    housePanel.rumah.getSim().getInventory().removeItem(PerabotanLabel.this.getPerabotan());
                     PerabotanLabel.this.roomPanel = ruanganAcuan;
+                    housePanel.inventoryPanel.inventorySlot.removeItem(PerabotanLabel.this.getPerabotan());
+                    housePanel.remove(housePanel.inventoryPanel);
                 }
                 put = false;
                 repaint();

@@ -167,8 +167,8 @@ public class Objek {
         }
     } 
     
-    public boolean equals(Object obj) {
-        Objek objek = (Objek) obj;
+    public boolean equals(Objek obj) {
+        Objek objek = obj;
         return this.id == objek.getId();
     }
 

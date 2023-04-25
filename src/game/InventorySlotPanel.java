@@ -53,17 +53,33 @@ public class InventorySlotPanel extends JPanel {
     public void removeItem(Objek objek){
         //cek apakah item ada
         boolean exist = false;
+        boolean onlyOne = false;
+        if (ip.hp.rumah.getSim().getInventory().getContainer().get(objek) == 1){
+            onlyOne = true;
+        }
         for (Component component : this.getComponents()){
             if (component instanceof ObjekInventoryLabel){
                 //cek apakah itu objeknya
                 ObjekInventoryLabel oil = (ObjekInventoryLabel) component;
-                if (oil.getObjek().equals(objek)){
+                if (oil.getObjek().getKey().equals(objek)){
+                    System.out.println("exist");
                     exist = true;
                 }
             }
         }
         if (exist){
             ip.hp.rumah.getSim().getInventory().removeItem(objek);
+            if (onlyOne){
+                for (Component component : this.getComponents()){
+                    if (component instanceof ObjekInventoryLabel){
+                        //cek apakah itu objeknya
+                        ObjekInventoryLabel oil = (ObjekInventoryLabel) component;
+                        if (oil.getObjek().getKey().equals(objek)){
+                            this.remove(oil);
+                        }
+                    }
+                }
+            }
         }
     }
 
