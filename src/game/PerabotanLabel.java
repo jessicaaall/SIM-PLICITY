@@ -155,10 +155,13 @@ public class PerabotanLabel extends JLabel {
                             PerabotanLabel.this.getY() / housePanel.unitSize));
                     PerabotanLabel.this.roomPanel = ruanganAcuan;
                     housePanel.inventoryPanel.inventorySlot.removeItem(PerabotanLabel.this.getPerabotan());
-                    housePanel.remove(housePanel.inventoryPanel);
+                    housePanel.centerPanel.remove(housePanel.inventoryPanel);
                 }
                 put = false;
-                repaint();
+                housePanel.centerPanel.revalidate();
+                housePanel.centerPanel.repaint();
+                housePanel.revalidate();
+                housePanel.repaint();
             }
             else {
                 /* Masukkan panel untuk memasukkan ke inventory*/
