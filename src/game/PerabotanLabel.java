@@ -78,6 +78,7 @@ public class PerabotanLabel extends JLabel {
                         PerabotanLabel.this.getWidth(),
                         PerabotanLabel.this.getHeight());
 
+                RoomPanel ruanganAcuan = null;
                 for (Component component: housePanel.centerPanel.getComponents()){
                     if (component instanceof RoomPanel){
                         RoomPanel currentRoom = (RoomPanel) component;
@@ -113,7 +114,6 @@ public class PerabotanLabel extends JLabel {
                     }
                     //check boundary
                     // 1. cek semua ruangan di house panel, dan cari di mana letak perabotan label berada di ruangan mana
-                    RoomPanel ruanganAcuan = null;
                     for (Component komponen : housePanel.centerPanel.getComponents()){
                         if (komponen instanceof RoomPanel){
                             RoomPanel targetPanel = (RoomPanel) komponen;
@@ -152,6 +152,7 @@ public class PerabotanLabel extends JLabel {
                     PerabotanLabel.this.getPerabotan().setKiriAtas(new Point(PerabotanLabel.this.getX() / roomPanel.unitSize,
                             PerabotanLabel.this.getY() / roomPanel.unitSize));
                     housePanel.rumah.getSim().getInventory().removeItem(PerabotanLabel.this.getPerabotan());
+                    PerabotanLabel.this.roomPanel = ruanganAcuan;
                 }
                 put = false;
                 repaint();
@@ -188,7 +189,8 @@ public class PerabotanLabel extends JLabel {
                     ((int)PerabotanLabel.this.getY()/housePanel.unitSize)*housePanel.unitSize,
                     PerabotanLabel.this.getWidth(),
                     PerabotanLabel.this.getHeight());
-            //cek apakah sudah dioccupied
+            RoomPanel ruanganAcuan = null;
+            //cek availability
             for (Component component: housePanel.centerPanel.getComponents()){
                 if (component instanceof RoomPanel){
                     RoomPanel currentRoom = (RoomPanel) component;
@@ -224,7 +226,6 @@ public class PerabotanLabel extends JLabel {
                 }
                 //check boundary
                 // 1. cek semua ruangan di house panel, dan cari di mana letak perabotan label berada di ruangan mana
-                RoomPanel ruanganAcuan = null;
                 for (Component komponen : housePanel.centerPanel.getComponents()){
                     if (komponen instanceof RoomPanel){
                         RoomPanel targetPanel = (RoomPanel) komponen;
@@ -240,11 +241,13 @@ public class PerabotanLabel extends JLabel {
                     }
                 }
 
+                //cek apakaha ada, kalau tidak ada, maka nanti ruangan acuan akan bernilai null
                 if (ruanganAcuan == null){
                     isOutOfBoundary = true;
 
                 }
                 else{
+                    // cek apakah dia tembok ruangan
                     if (PerabotanLabel.this.getX() + PerabotanLabel.this.getWidth() > ruanganAcuan.getX() + ruanganAcuan.getWidth() ||
                             PerabotanLabel.this.getY() + PerabotanLabel.this.getHeight() > ruanganAcuan.getY() + ruanganAcuan.getHeight()) {
                         isOutOfBoundary = true;
@@ -268,6 +271,7 @@ public class PerabotanLabel extends JLabel {
             else {
                 PerabotanLabel.this.getPerabotan().setKiriAtas(new Point(PerabotanLabel.this.getX()/roomPanel.unitSize,
                         PerabotanLabel.this.getY()/roomPanel.unitSize));
+                PerabotanLabel.this.roomPanel = ruanganAcuan;
             }
             startDragPoint = null;
             repaint();

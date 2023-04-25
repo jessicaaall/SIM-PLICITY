@@ -54,6 +54,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         this.mainPanel = worldPanel.mp;
         this.setLayout(new BorderLayout());
         this.setBackground(Color.black);
+        unitSize = 40;
 
         Font standardFont = new Font("Comic Sans MS", Font.PLAIN, 15);
         backToMainMenuButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
@@ -223,17 +224,25 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         }
         if (e.getSource() == lihatInventoryButton){
             inventoryPanel = new InventoryPanel(this);
+            boolean exist = false;
             //cek kalau sudah ada komponen inventoryPanel
             for (Component component: centerPanel.getComponents()){
                 if (component instanceof InventoryPanel){
-                    centerPanel.remove(component);
+                    inventoryPanel = (InventoryPanel) component;
+                    exist = true;
                 }
             }
-            centerPanel.add(inventoryPanel, 0);
-            centerPanel.revalidate();
-            centerPanel.repaint();
-            revalidate();
-            repaint();
+            if (exist){
+                inventoryPanel.setVisible(true);
+            }
+            else {
+                centerPanel.add(inventoryPanel, 0);
+                centerPanel.revalidate();
+                centerPanel.repaint();
+                revalidate();
+                repaint();
+            }
+
         }
     }
 
@@ -332,8 +341,11 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             for (Component component : centerPanel.getComponents()){
                 if (component instanceof RoomPanel){
                     RoomPanel rp = (RoomPanel) component;
-
                     rp.setBounds(rp.getX() + speed, rp.getY(), rp.getWidth(), rp.getHeight());
+                }
+                if (component instanceof  PerabotanLabel){
+                    PerabotanLabel pl = (PerabotanLabel) component;
+                    pl.setBounds(pl.getX() + speed, pl.getY(), pl.getWidth(), pl.getHeight());
                 }
             }
         }
@@ -347,6 +359,10 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
 
                     rp.setBounds(rp.getX()-speed, rp.getY(), rp.getWidth(), rp.getHeight());
                 }
+                if (component instanceof  PerabotanLabel){
+                    PerabotanLabel pl = (PerabotanLabel) component;
+                    pl.setBounds(pl.getX() - speed, pl.getY(), pl.getWidth(), pl.getHeight());
+                }
             }
         }
         else if (keyHandler.upPressed){
@@ -358,6 +374,10 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                     RoomPanel rp = (RoomPanel) component;
                     rp.setBounds(rp.getX(), rp.getY()-speed, rp.getWidth(), rp.getHeight());
                 }
+                if (component instanceof  PerabotanLabel){
+                    PerabotanLabel pl = (PerabotanLabel) component;
+                    pl.setBounds(pl.getX(), pl.getY()-speed, pl.getWidth(), pl.getHeight());
+                }
             }
         }
         else if (keyHandler.downPressed){
@@ -368,6 +388,10 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                 if (component instanceof RoomPanel){
                     RoomPanel rp = (RoomPanel) component;
                     rp.setBounds(rp.getX(), rp.getY()+speed, rp.getWidth(), rp.getHeight());
+                }
+                if (component instanceof  PerabotanLabel){
+                    PerabotanLabel pl = (PerabotanLabel) component;
+                    pl.setBounds(pl.getX(), pl.getY()+speed, pl.getWidth(), pl.getHeight());
                 }
             }
 

@@ -20,6 +20,7 @@ public class InventorySlotPanel extends JPanel {
 
         super(new GridLayout(5,5, 0, 0));
         this.hp = hp;
+        this.ip = ip;
 //        this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         setBackground(new Color(255,255,255));
         setPreferredSize(new Dimension(5*hp.unitSize + 50, 5*hp.unitSize+50));

@@ -39,18 +39,24 @@ public class ObjekInventoryLabel extends JLabel {
         @Override
         public void mouseClicked(MouseEvent e) {
             //akan men-summon panel baru relatif dari objek inventory
-            JPanel taruhBarangPanel = new JPanel(new FlowLayout());
+            System.out.println("objek clicked");
+            TaruhBarangPanel taruhBarangPanel = new TaruhBarangPanel(new FlowLayout(FlowLayout.CENTER));
+            taruhBarangPanel.setPreferredSize(new Dimension(2*ip.hp.unitSize, 2*ip.hp.unitSize));
+            taruhBarangPanel.setSize(new Dimension(2*ip.hp.unitSize, 2*ip.hp.unitSize));
             JButton tombolTaruh = new JButton("Taruh");
             JButton tombolBatal = new JButton("Batal");
             tombolTaruh.setFocusable(false);
             tombolTaruh.setBackground(Color.white);
             tombolTaruh.setForeground(new Color(51, 102, 0));
-            taruhBarangPanel.setLocation(e.getPoint());
-//            ip.ip.add(taruhBarangPanel, 0);
+            tombolTaruh.setBounds(0,0, 2*ip.hp.unitSize, ip.hp.unitSize);
+            tombolBatal.setBounds(0,ip.hp.unitSize, 2*ip.hp.unitSize, ip.hp.unitSize);
+            taruhBarangPanel.setBounds((int)e.getX(), (int)e.getY(), taruhBarangPanel.getPreferredSize().width, taruhBarangPanel.getPreferredSize().height);
+            taruhBarangPanel.setBackground(Color.red);
             tombolTaruh.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //menu inventory akan otomatis tertutup dan akan menjadi draggable panel
+                    ip.ip.remove(taruhBarangPanel);
                     ip.ip.setVisible(false);
                     if (objek instanceof Perabotan){
                         PerabotanLabel newPerabot = new PerabotanLabel((Perabotan) objek.getKey(), ip.hp, null);
@@ -59,11 +65,30 @@ public class ObjekInventoryLabel extends JLabel {
 
                 }
             });
-            if (ObjekInventoryLabel.this.objek instanceof Perabotan){
+            if (ObjekInventoryLabel.this.objek.getKey() instanceof Perabotan){
                 tombolTaruh.setEnabled(true);
             }
             else{
                 tombolTaruh.setEnabled(false);
+            }
+            tombolBatal.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ip.ip.remove(taruhBarangPanel);
+                }
+            });
+            taruhBarangPanel.add(tombolTaruh);
+            taruhBarangPanel.add(tombolBatal);
+            //cek apakah sudah ada di dalam Inventory Panel
+            boolean taruhBarangPanelExist = false;
+            for (Component component : ip.ip.getComponents()){
+                if (component instanceof TaruhBarangPanel){
+                    taruhBarangPanelExist = true;
+                }
+            }
+            if (!taruhBarangPanelExist){
+                ip.ip.add(taruhBarangPanel, 0);
+                ip.ip.setComponentZOrder(taruhBarangPanel, 0);
             }
         }
 
@@ -94,5 +119,11 @@ public class ObjekInventoryLabel extends JLabel {
         g2d.setColor(Color.black);
         g2d.drawString(objek.getValue()+"x", 3*getWidth()/4, 3*getHeight()/4 + getHeight()/8);
         g2d.dispose();
+    }
+
+    private class TaruhBarangPanel extends JPanel{
+        public TaruhBarangPanel(LayoutManager mgr){
+            super(mgr);
+        }
     }
 }
