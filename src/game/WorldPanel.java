@@ -38,22 +38,22 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     public WorldPanel(World world, MainPanel mp, MainMenuPanel mmp) {
         this.mp = mp;
         this.mmp = mmp;
-        cameraWidth = mp.height-50;
-        cameraHeight = mp.height-50;
+        cameraWidth = mp.width;
+        cameraHeight = mp.height;
         this.setFocusable(false);
         mapX = 0;
         mapY = 0;
         this.world = world;
         setPreferredSize(new Dimension(cameraWidth, cameraHeight));
         setLayout(null);
-        setBounds(0, (mp.height-cameraHeight)/2, cameraWidth, cameraHeight);
+        setBounds(0, 0, cameraWidth, cameraHeight);
         addMouseListener(this);
         addMouseMotionListener(this);
         addMouseWheelListener(this);
         setDoubleBuffered(true);
         playMusic(0);
         wop = new WorldOptionPanel( this.mp, this);
-        mp.add(wop);
+        this.add(wop);
     }
 
     Thread mainThread;
@@ -119,6 +119,8 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             wop.timeLabel.repaint();
             wop.revalidate();
             wop.repaint();
+
+            wop.setLocation(mapX + getWidth() - wop.getWidth() - 10, mapY + 10);
 
         }
     }

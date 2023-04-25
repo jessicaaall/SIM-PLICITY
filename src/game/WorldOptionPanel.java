@@ -28,10 +28,11 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
                 wp.getWorld().getWaktu().tampilkanWaktu()[1] + "<br>" +
                 wp.getWorld().getWaktu().tampilkanWaktu()[2] + "</html>");
 //        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
-        setLayout(null);
-        Dimension size = new Dimension((mp.getWidth() - 7*wp.getWidth()/5)/2 -4, mp.getHeight()/2);
+        setLayout(new GridLayout(0,1));
+        Dimension size = new Dimension(160, wp.getHeight()/3);
+        this.setSize(size);
         this.setPreferredSize(size);
-        this.setBounds(0,mp.getHeight()/4, (mp.getWidth() - 7*wp.getWidth()/5)/2 -4, mp.getHeight()/2);
+        this.setBounds(wp.getWidth() - this.getWidth() - 10,10, 160, wp.getHeight()/3);
         this.setBackground(Color.white);
         timeLabel.setFocusable(false);
 //        timeLabel.setOpaque(true);

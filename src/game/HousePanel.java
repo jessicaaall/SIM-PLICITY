@@ -11,6 +11,7 @@ import java.awt.event.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class HousePanel extends JPanel implements ActionListener, Runnable {
     public WorldPanel worldPanel;
@@ -139,7 +140,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         }
         else if (e.getSource() == backToWorldButton){
             mainPanel.remove(this);
-            mainPanel.add(worldPanel.wop);
+            worldPanel.add(worldPanel.wop);
             mainPanel.add(worldPanel);
             thread.interrupt();
             thread = null;
@@ -227,8 +228,8 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                     throw new RuntimeException(ex);
                 }
                 ThreadAksi threadAksi = new ThreadAksi("beli " + selectedItem.getNama(),
-                        60, method, parameters, buyed, rumah.world);
-                System.out.println(rumah.world.getListThreadAksi());
+                        (new Random().nextInt(5)+1)*30, method, parameters, buyed, rumah.world);
+                rumah.world.getListThreadAksi().add(threadAksi);
                 threadAksi.start();
             }
         }

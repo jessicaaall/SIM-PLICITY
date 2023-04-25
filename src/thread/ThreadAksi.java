@@ -20,35 +20,32 @@ public class ThreadAksi extends Thread {
         this.world = world;
         this.object = object;
         this.parameters = parameters;
-        world.getListThreadAksi().add(this);
     }
 
     // Method
     @Override
     public void run() {
         System.out.println("start");
-        while (sisaWaktu >= 0){
+        while (sisaWaktu > 0){
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
 
             }
-            System.out.print(sisaWaktu + " ");
+//            System.out.print(sisaWaktu + " ");
             sisaWaktu--;
         }
-        if (sisaWaktu < 0) {
-            try {
-                invoke();
-            } catch (InvocationTargetException e) {
-                System.out.println(e.getMessage());
+        try {
+            invoke();
+        } catch (InvocationTargetException e) {
+            System.out.println(e.getMessage());
 
-            } catch (IllegalAccessException e) {
-                System.out.println(e.getMessage());
-            }
-            //delete thread dari daftar thread
-            world.getListThreadAksi().remove(this);
-            System.out.println(this.getNama() + " deleted");
+        } catch (IllegalAccessException e) {
+            System.out.println(e.getMessage());
         }
+        //delete thread dari daftar thread
+        world.getListThreadAksi().remove(this);
+        System.out.println(this.getNama() + " deleted");
     }
     public Object invoke() throws InvocationTargetException, IllegalAccessException {
         return method.invoke(object, parameters);
