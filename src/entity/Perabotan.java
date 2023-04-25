@@ -100,7 +100,6 @@ public class Perabotan extends Objek implements BisaDibeli {
 
     @Override
     public void beli(Sim sim, int totalHarga) {
-        sim.setUang(sim.getUang()-totalHarga);
         sim.getInventory().addItem(this, totalHarga/harga);
 //        boolean valid = false;
 //        Scanner sc = new Scanner(System.in);

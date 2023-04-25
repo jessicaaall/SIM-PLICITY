@@ -216,7 +216,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                     return;
                 }
                 // kalau sudah benar dan oke, tinggal lakukan operasi
-//                rumah.getSim().setUang(rumah.getSim().getUang()-totalHarga);
+                rumah.getSim().setUang(rumah.getSim().getUang()-totalHarga);
 //                rumah.getSim().getInventory().addItem(selectedItem, kuantitas);
                 BisaDibeli buyed = (BisaDibeli) selectedItem;
                 Object[] parameters = {rumah.getSim(), totalHarga};

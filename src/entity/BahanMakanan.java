@@ -44,7 +44,6 @@ public class BahanMakanan extends Objek implements BisaDimakan, BisaDibeli {
 
     @Override
     public void beli(Sim sim, int totalHarga) {
-        sim.setUang(sim.getUang()-totalHarga);
         sim.getInventory().addItem(this, totalHarga/harga);
     }
 
