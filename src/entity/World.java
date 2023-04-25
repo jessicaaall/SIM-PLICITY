@@ -2,6 +2,8 @@ package entity;
 
 import java.util.ArrayList;
 
+import thread.ThreadAksi;
+
 public class World  implements Runnable{
     public Objek[] getListObjek() {
         return listObjek;
@@ -51,16 +53,9 @@ public class World  implements Runnable{
     private Waktu waktuAwal;
     private int dailySimCreation;
     private Thread worldThread;
-    private Thread actionsThread; //thread untuk segala aksi aktif yang ada
+    private ArrayList<ThreadAksi> listThreadAksi;
 
-    public Thread getActionsThread() {
-        return actionsThread;
-    }
-
-    public void setActionsThread(Thread actionsThread) {
-        this.actionsThread = actionsThread;
-    }
-
+    
     //pembuatan world menggunakan design pattern Singleton
     public World(){
         dailySimCreation = 1;
@@ -69,8 +64,16 @@ public class World  implements Runnable{
         daftarRumah = new ArrayList<Rumah>();
         daftarSim = new ArrayList<Sim>();
         waktuAwal = new Waktu(this);
+        listThreadAksi = new ArrayList<>();
+    }
+    
+    public ArrayList<ThreadAksi> getListThreadAksi() {
+        return listThreadAksi;
     }
 
+    public void setListThreadAksi(ArrayList<ThreadAksi> listThreadAksi) {
+        this.listThreadAksi = listThreadAksi;
+    }
     public int getWidth() {
         return width;
     }

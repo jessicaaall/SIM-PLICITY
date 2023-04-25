@@ -1,9 +1,6 @@
 package entity;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-public class Waktu {
+public class Waktu implements Runnable {
     // Deklarasi variabel
     private World world;
     private int hariKe;
@@ -12,34 +9,27 @@ public class Waktu {
     // Konstruktor
     public Waktu(World world) {
         this.hariKe = 1;
-        this.sisaDetik = 10;
+        this.sisaDetik = 720;
         this.world = world;
     }
 
     // Method
-    public void jalankanWaktu(int lama) {
-        System.out.printf("Waktu berjalan");
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            int counter = sisaDetik;
-            @Override
-            public void run() {
-
-                if (counter > (sisaDetik - lama)) {
-                    System.out.printf(".");
-                    counter--;
-                } else {
-                    timer.cancel();
-                    if (sisaDetik < 0) {
-                        hariKe = (Math.abs(sisaDetik) / 720) + 1;
-                    }
-                    setWaktu(getHariKe(), sisaDetik-lama);
-                }
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+        if (world.getListThreadAksi().size() != 0) {
+            sisaDetik--;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                
             }
-        };  
-        timer.scheduleAtFixedRate(task, 0, 1000);
+        } 
+        if (sisaDetik < 0) {
+            hariKe++;
+            sisaDetik = 720;
+        }
     }
-
 
     // Method
     public int getHariKe() {
@@ -47,10 +37,6 @@ public class Waktu {
     }
     public int getSisaDetik() {
         return sisaDetik;
-    }
-    public void setWaktu(int newHariKe, int newSisaDetik) {
-        hariKe = newHariKe;
-        sisaDetik = newSisaDetik;
     }
     public String[] tampilkanWaktu() {
         String[] nilaiWaktu = new String[3];
@@ -65,14 +51,5 @@ public class Waktu {
 
     public void setWorld(World world) {
         this.world = world;
-    }
-
-    public static void main(String[] args) {
-        Waktu waktu = new Waktu(new World());
-        waktu.jalankanWaktu(5);
-        // String[] dummy = waktu.tampilkanWaktu();
-        // System.out.println(dummy[0]);
-        // System.out.println(dummy[1]);
-        // System.out.println(dummy[2]);
     }
 }
