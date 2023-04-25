@@ -159,6 +159,9 @@ public class PerabotanLabel extends JLabel {
                 put = false;
                 repaint();
             }
+            else {
+                /* Masukkan panel untuk memasukkan ke inventory*/
+            }
         }
         @Override
         public void mousePressed(MouseEvent e) {
