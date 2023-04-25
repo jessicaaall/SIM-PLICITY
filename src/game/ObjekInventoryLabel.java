@@ -51,7 +51,6 @@ public class ObjekInventoryLabel extends JLabel {
             tombolTaruh.setBounds(0,0, 2*ip.hp.unitSize, ip.hp.unitSize);
             tombolBatal.setBounds(0,ip.hp.unitSize, 2*ip.hp.unitSize, ip.hp.unitSize);
             taruhBarangPanel.setBounds((int)e.getX(), (int)e.getY(), taruhBarangPanel.getPreferredSize().width, taruhBarangPanel.getPreferredSize().height);
-            taruhBarangPanel.setBackground(Color.red);
             tombolTaruh.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
