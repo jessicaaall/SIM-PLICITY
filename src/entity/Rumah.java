@@ -10,7 +10,7 @@ public class Rumah  {
     private Sim sim;
     public World world;
     private Color color;
-
+    public boolean busyUpgrading = false;
     public Ruangan getRuanganAcuan() {
         return ruanganAcuan;
     }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class HousePanel extends JPanel implements ActionListener, Runnable {
+public class HousePanel extends JPanel implements ActionListener, Runnable, MouseWheelListener {
     public WorldPanel worldPanel;
     public Rumah rumah;
     public int unitSize = 40;
@@ -46,6 +46,23 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
     DaftarThreadPane daftarThreadPane;
     private boolean isUpgradeRumah = false;
     private boolean validSectionForUpgrade = false;
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+//        int notches = e.getWheelRotation();
+//        if (notches < 0){
+//            unitSize += 2;
+//        }
+//        else if (notches > 0){
+//            unitSize -= 2;
+//        }
+//
+//        if (unitSize < 10){
+//            unitSize = 10;
+//        } else if (unitSize > 160) {
+//            unitSize = 160;
+//        }
+//        repaint();
+    }
 
     private class HousePanelButton extends JButton{
         HousePanelButton(String text){
@@ -198,22 +215,18 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             public void mouseClicked(MouseEvent e) {
                 if (isUpgradeRumah){
                     isUpgradeRumah = false;
-                    if (validSectionForUpgrade){
-                        Ruangan ruanganBaru = new Ruangan("Ruangan " + rumah.getDaftarRuangan().size()
-                                , rumah,new Point((highlightedRoom.getX()-ruanganAcuanPanel.getX())/unitSize,
-                                (highlightedRoom.getY()-ruanganAcuanPanel.getY())/unitSize));
-                        rumah.addRuangan(ruanganBaru);
-                        RoomPanel newRoomPanel = new RoomPanel(ruanganBaru, rumah, HousePanel.this);
-                        centerPanel.add(newRoomPanel,0);
-                        centerPanel.revalidate();
-                        centerPanel.repaint();
+                    Method method;
+                    try {
+                        method = HousePanel.this.getClass().getMethod("upgradeRumah");
+                    } catch (NoSuchMethodException ex) {
+                        throw new RuntimeException(ex);
                     }
-                    for (Component component : centerPanel.getComponents()){
-                        if (component instanceof HighlightedPanel){
-                            centerPanel.remove(component);
-                        }
-                    }
+                    rumah.busyUpgrading = true;
+                    ThreadAksi threadAksi = new ThreadAksi("Upgrade Rumah", 30, method, HousePanel.this, rumah.world);
+                    rumah.world.getListThreadAksi().add(threadAksi);
+                    threadAksi.start();
                 }
+
             }
 
             @Override
@@ -252,6 +265,29 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         cameraHeight = mainPanel.height;
         startThread();
         repaint();
+    }
+
+    public void upgradeRumah(){
+        if (isUpgradeRumah) {
+            isUpgradeRumah = false;
+        }
+        if (validSectionForUpgrade){
+            Ruangan ruanganBaru = new Ruangan("Ruangan " + rumah.getDaftarRuangan().size()
+                    , rumah,new Point((highlightedRoom.getX()-ruanganAcuanPanel.getX())/unitSize,
+                    (highlightedRoom.getY()-ruanganAcuanPanel.getY())/unitSize));
+            rumah.addRuangan(ruanganBaru);
+            RoomPanel newRoomPanel = new RoomPanel(ruanganBaru, rumah, HousePanel.this);
+            centerPanel.add(newRoomPanel,0);
+            centerPanel.revalidate();
+            centerPanel.repaint();
+        }
+        for (Component component : centerPanel.getComponents()){
+            if (component instanceof HighlightedPanel){
+                centerPanel.remove(component);
+            }
+        }
+        rumah.busyUpgrading = false;
+
     }
 
     @Override
@@ -385,44 +421,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         }
     }
 
-    public void drawMiniWindow(JPanel panel, int x, int y, int width, int height){
-        Graphics2D g2d = (Graphics2D) panel.getGraphics();
-        Color c = new Color(0,0,0, 180);;
-        g2d.setColor(c);
-        g2d.fillRoundRect(x,y,width,height,20,20);
-        c = Color.gray;
-        g2d.setStroke(new BasicStroke(2));
-        g2d.drawRoundRect(x+2, y+2, width-10, height-10, 10, 10);
-    }
-
-    public void drawInventory(){
-        Graphics2D g2d = (Graphics2D) centerPanel.getGraphics();
-        int frameX = unitSize*8;
-        int frameY = unitSize;
-        int frameWidth = unitSize*5;
-        int frameHeight = unitSize*8;
-        drawMiniWindow(centerPanel, frameX, frameY, frameWidth, frameHeight);
-
-        //slot
-        final int slotStartX = frameX + 10;
-        final int slotStartY = frameX + 10;
-        int slotX = slotStartX;
-        int slotY = slotStartY;
-
-        //cursor
-        int cursorX = slotStartX + (unitSize*slotCol);
-        int cursorY = slotStartY + (unitSize*slotRow);
-        int cursorWidth = unitSize;
-        int cursorHeight = unitSize;
-
-        //draw cursor
-        g2d.setColor(Color.lightGray);
-        g2d.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 5, 5);
-    }
-
-
-
-
     @Override
     public void run() {
         double drawInterval = 1000000000/FPS;
@@ -454,6 +452,13 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                 // update label saldo
                 saldoSimLabel.setText("<html>Total uang " + rumah.getSim().getNamaLengkap() + " :<br>" +
                         rumah.getSim().getUang() + "</html>");
+
+                if(rumah.busyUpgrading){
+                    upgradeRumahButton.setEnabled(false);
+                }
+                else{
+                    upgradeRumahButton.setEnabled(true);
+                }
 
             }
         }

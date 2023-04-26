@@ -21,11 +21,20 @@ public class ThreadAksi extends Thread {
         this.object = object;
         this.parameters = parameters;
     }
+    public ThreadAksi(String nama, int sisaWaktu, Method method, Object object, World world) {
+        this.nama = nama;
+        this.sisaWaktu = sisaWaktu;
+        this.method = method;
+        this.world = world;
+        this.object = object;
+        this.parameters = new Object[0];
+    }
 
     // Method
     @Override
     public void run() {
         System.out.println("start");
+
         while (sisaWaktu > 0){
             try {
                 Thread.sleep(1000);
@@ -35,6 +44,9 @@ public class ThreadAksi extends Thread {
 //            System.out.print(sisaWaktu + " ");
             sisaWaktu--;
         }
+        //delete thread dari daftar thread
+        world.getListThreadAksi().remove(this);
+        System.out.println(this.getNama() + " deleted");
         try {
             invoke();
         } catch (InvocationTargetException e) {
@@ -43,9 +55,6 @@ public class ThreadAksi extends Thread {
         } catch (IllegalAccessException e) {
             System.out.println(e.getMessage());
         }
-        //delete thread dari daftar thread
-        world.getListThreadAksi().remove(this);
-        System.out.println(this.getNama() + " deleted");
     }
     public Object invoke() throws InvocationTargetException, IllegalAccessException {
         return method.invoke(object, parameters);

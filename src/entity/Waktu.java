@@ -25,21 +25,20 @@ public class Waktu implements Runnable {
     public void run() {
         System.out.println("waktu started");
         while (waktuThread != null){
-            if (world.getListThreadAksi().size() > 0) {
-                sisaDetik--;
-            }
-            else{
-
-            }
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
+
+            }
+            if (world.getListThreadAksi().size() > 0) {
+                sisaDetik--;
 
             }
             if (sisaDetik < 0) {
                 hariKe++;
                 sisaDetik = 720;
             }
+
         }
 
     }
