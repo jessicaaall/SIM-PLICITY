@@ -44,6 +44,7 @@ public class MainMenuPanel extends JPanel {
             if (e.getSource().equals(startButton) ){
                 System.out.println("Starting game...");
                 mainPanel.remove(mmp);
+                startGamePanel.setLocation(startGamePanel.getX(), (mainPanel.height-startGamePanel.getHeight())/2);
                 mainPanel.add(startGamePanel);
                 mainPanel.revalidate();
                 mainPanel.repaint();

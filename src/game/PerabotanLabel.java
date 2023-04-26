@@ -77,8 +77,8 @@ public class PerabotanLabel extends JLabel {
             if (put) {
                 boolean isOccupied = false;
                 boolean isOutOfBoundary = false;
-                PerabotanLabel.this.setBounds(((PerabotanLabel.this.getX()-housePanel.ruanganAcuanPanel.getX())/housePanel.unitSize)*housePanel.unitSize+housePanel.ruanganAcuanPanel.getX(),
-                        ((PerabotanLabel.this.getY()-housePanel.ruanganAcuanPanel.getY())/housePanel.unitSize)*housePanel.unitSize + housePanel.ruanganAcuanPanel.getY(),
+                PerabotanLabel.this.setBounds((Math.floorDiv(PerabotanLabel.this.getX()-housePanel.ruanganAcuanPanel.getX(),housePanel.unitSize))*housePanel.unitSize+housePanel.ruanganAcuanPanel.getX(),
+                        (Math.floorDiv(PerabotanLabel.this.getY()-housePanel.ruanganAcuanPanel.getY(),housePanel.unitSize))*housePanel.unitSize + housePanel.ruanganAcuanPanel.getY(),
                         PerabotanLabel.this.getWidth(),
                         PerabotanLabel.this.getHeight());
 
@@ -230,8 +230,8 @@ public class PerabotanLabel extends JLabel {
             }
             boolean isOccupied = false;
             boolean isOutOfBoundary = false;
-            PerabotanLabel.this.setBounds(((PerabotanLabel.this.getX()-housePanel.ruanganAcuanPanel.getX())/housePanel.unitSize)*housePanel.unitSize+housePanel.ruanganAcuanPanel.getX(),
-                    ((PerabotanLabel.this.getY()-housePanel.ruanganAcuanPanel.getY())/housePanel.unitSize)*housePanel.unitSize + housePanel.ruanganAcuanPanel.getY(),
+            PerabotanLabel.this.setBounds((Math.floorDiv(PerabotanLabel.this.getX()-housePanel.ruanganAcuanPanel.getX(),housePanel.unitSize))*housePanel.unitSize+housePanel.ruanganAcuanPanel.getX(),
+                    (Math.floorDiv(PerabotanLabel.this.getY()-housePanel.ruanganAcuanPanel.getY(),housePanel.unitSize))*housePanel.unitSize + housePanel.ruanganAcuanPanel.getY(),
                     PerabotanLabel.this.getWidth(),
                     PerabotanLabel.this.getHeight());
             RoomPanel ruanganAcuan = null;
