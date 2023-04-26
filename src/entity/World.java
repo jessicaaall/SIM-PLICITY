@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import thread.ThreadAksi;
 
 public class World  implements Runnable{
+    /**
+     * menambahkan objek-objek apa saja yang ada di dunia
+     * @return array dari Objek-objek tersebut
+     */
     public Objek[] getListObjek() {
         return listObjek;
     }
@@ -17,7 +21,7 @@ public class World  implements Runnable{
             new BahanMakanan(13), new BahanMakanan(14), new BahanMakanan(15),
             new BahanMakanan(16), new BahanMakanan(17), new BahanMakanan(18),
             new Makanan(19), new Makanan(20), new Makanan(21), new Makanan(22),
-            new Makanan(23)
+            new Makanan(23), new BakMandi(), new Wastafel()
     };
     private int width;
     private int height;
@@ -76,7 +80,7 @@ public class World  implements Runnable{
     public ArrayList<ThreadAksi> getListThreadAksi() {
         return listThreadAksi;
     }
-    
+
     public int getWidth() {
         return width;
     }
@@ -96,6 +100,12 @@ public class World  implements Runnable{
     public ArrayList<Sim> getDaftarSim() {
         return daftarSim;
     }
+
+    /**
+     * menambahkan Sim pada dunia, sekali membuat
+     * sim maka dailySimCreation akan berkurang
+     * @param sim Sim yang ingin ditambahkan
+     */
     public void tambahSim(Sim sim){
         daftarSim.add(sim);
         jumlahSim++;
@@ -106,6 +116,11 @@ public class World  implements Runnable{
         return waktu;
     }
 
+    /**
+     * menambahkan rumah pada dunia, juga mengecek apakah rumah tersebut sudah berada di dunia atau tidak
+     * kalau sudah ada, maka penambahan tidak akan dilakukan.
+     * @param rumah rumah yang ingin ditambahkan
+     */
     public void tambahRumah(Rumah rumah){
         boolean ada = false;
         for (Rumah r: daftarRumah){
@@ -122,6 +137,10 @@ public class World  implements Runnable{
         }
     }
 
+    /**
+     * Mengecek ketersediaan jatah untuk penambahan Sim
+     * @return apakah sudah mencapai batas atau tidak
+     */
     public boolean isLimitSimCreation(){
         return dailySimCreation < 1;
     }
@@ -133,11 +152,19 @@ public class World  implements Runnable{
         }
     }
 
+    /**
+     * memanggil method ini akan menjalankan thread untuk Objek ini
+     */
     public void startThread(){
         worldThread = new Thread(this);
         worldThread.start();
     }
 
+    /**
+     * memperbaharui jumlah pembuatan sim dengan mengecek keadaan waktunya.
+     * jika waktu sudah berganti hari, maka dailySimCreation direset kembali
+     * menjadi 1
+     */
     private void cekWaktu(){
         if (waktu.getHariKe() > harike){
             harike = waktu.getHariKe();

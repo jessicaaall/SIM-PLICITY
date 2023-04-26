@@ -580,16 +580,86 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     }
 
     private class UpgradeRumahPanel extends JPanel implements ActionListener{
+        HousePanelButton OKButton;
+        HousePanelButton cancelButton;
+        ButtonContainer buttonContainer;
 
+        UpgradeRumahPanel(){
+            OKButton = new HousePanelButton("OK");
+            cancelButton = new HousePanelButton("Batal");
+            OKButton.setFocusable(false);
+            cancelButton.setFocusable(false);
+            setLayout(null);
+            setSize(8*unitSize, 8*unitSize);
+            setBounds(centerPanel.getWidth()/4, centerPanel.getHeight()/4, 8*unitSize, 8*unitSize);
+            setOpaque(true);
+            setBackground(new Color(150, 178, 102, 200));
+            buttonContainer = new ButtonContainer();
+            buttonContainer.add(OKButton);
+            buttonContainer.add(cancelButton);
+            buttonContainer.setBounds((getWidth()- buttonContainer.getWidth())/2
+                    ,(getHeight()- buttonContainer.getHeight())/2
+                    , buttonContainer.getWidth(), buttonContainer.getHeight());
+            add(buttonContainer);
+            revalidate();
+            repaint();
+
+        }
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == OKButton){
+                isUpgradeRumah = true;
+                centerPanel.remove(this);
+            }
+            else if(e.getSource() == cancelButton){
+                isUpgradeRumah = false;
+                centerPanel.remove(this);
+            }
+        }
 
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2d = (Graphics2D) g;
+            //tulis tulisan untuk message
+            String text1 = "Biaya yang dibutuhkan = 1500";
+            Font font1 = new Font("Comic Sans MS", Font.BOLD, 15);
+            int fontHeight1 = getFontMetrics(font1).getHeight();
+            int fontWidth1 = getFontMetrics(font1).stringWidth(text1);
+            int drawStringX = (getWidth()-fontWidth1)/2;
+            int drawStringY = 5+fontHeight1;
+            g2d.setFont(font1);
+            g2d.setColor(Color.black);
+            g2d.drawString(text1, drawStringX,drawStringY);
+            Font font2 = new Font("Comic Sans MS", Font.PLAIN, 15);
+            String text2 = "Yakin untuk melanjutkan?";
+            int fontHeight2 = getFontMetrics(font1).getHeight();
+            int fontWidth2 = getFontMetrics(font1).stringWidth(text2);
+            int drawStringX2 = (getWidth()-fontWidth1)/2;
+            int drawStringY2 = 5+fontHeight1+fontHeight2;
+            g2d.setFont(font2);
+            g2d.drawString(text2, drawStringX2,drawStringY2);
+        }
+
+        private class ButtonContainer extends JPanel{
+            ButtonContainer(){
+                super(new GridLayout(1,0, 15, 0));
+                setFocusable(false);
+                setOpaque(false);
+                setSize(2*unitSize, unitSize);
+            }
         }
     }
 
     private class HighlightedPanel extends JPanel{
         HighlightedPanel(LayoutManager mgr){
             super(mgr);
+        }
+    }
+
+    private class WarningMessage extends JPanel{
+        WarningMessage(){
+            super(new FlowLayout());
+            setBackground(new Color(150, 178, 102));
         }
     }
 }
