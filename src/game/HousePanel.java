@@ -62,6 +62,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         this.rumah = rumah;
         this.mainMenuPanel = worldPanel.mmp;
         this.mainPanel = worldPanel.mp;
+        mainPanel.requestFocusInWindow();
         this.setLayout(new BorderLayout());
         this.setBackground(Color.black);
         unitSize = 40;
