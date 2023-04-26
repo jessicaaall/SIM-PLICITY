@@ -10,6 +10,11 @@ public class Rumah  {
     private Sim sim;
     public World world;
     private Color color;
+
+    public Ruangan getRuanganAcuan() {
+        return ruanganAcuan;
+    }
+
     Ruangan ruanganAcuan;
 
     public Rumah(int x, int y, Sim sim, Color color, World world){

@@ -28,7 +28,7 @@ public class PerabotanLabel extends JLabel {
     private Perabotan perabotan;
 
     private ImageIcon image;
-    private Point startDragPoint;
+    public Point startDragPoint;
     public PerabotanLabel(Perabotan perabotan, HousePanel housePanel, RoomPanel roomPanel){
         DragListener dragListener = new DragListener();
         this.perabotan = perabotan;
@@ -93,11 +93,11 @@ public class PerabotanLabel extends JLabel {
                                 //cek untuk semua titik di labelnya
                                 for (int i = PerabotanLabel.this.getX(); i < PerabotanLabel.this.getX() + PerabotanLabel.this.getWidth(); i += housePanel.unitSize) {
                                     for (int j = PerabotanLabel.this.getY(); j < PerabotanLabel.this.getY() + PerabotanLabel.this.getHeight(); j += housePanel.unitSize) {
-                                        for (int k = (int) (perabotan1.getKiriAtas().getX() * housePanel.unitSize);
-                                             k < perabotan1.getKiriAtas().getX() * housePanel.unitSize + perabotan1.getDimensi().getWidth() * housePanel.unitSize;
+                                        for (int k = (int) (perabotan1.getKiriAtas().getX() * housePanel.unitSize + housePanel.ruanganAcuanPanel.getX());
+                                             k < housePanel.ruanganAcuanPanel.getX() + perabotan1.getKiriAtas().getX() * housePanel.unitSize + perabotan1.getDimensi().getWidth() * housePanel.unitSize;
                                              k += housePanel.unitSize) {
-                                            for (int l = (int) (perabotan1.getKiriAtas().getY() * housePanel.unitSize);
-                                                 l < perabotan1.getKiriAtas().getY() * housePanel.unitSize + perabotan1.getDimensi().getHeight() * housePanel.unitSize;
+                                            for (int l = (int) (housePanel.ruanganAcuanPanel.getY() + perabotan1.getKiriAtas().getY() * housePanel.unitSize);
+                                                 l < housePanel.ruanganAcuanPanel.getY() + perabotan1.getKiriAtas().getY() * housePanel.unitSize + perabotan1.getDimensi().getHeight() * housePanel.unitSize;
                                                  l += housePanel.unitSize) {
                                                 Point point1 = new Point(i, j);
                                                 Point point2 = new Point(k, l);
@@ -152,8 +152,8 @@ public class PerabotanLabel extends JLabel {
                     housePanel.centerPanel.remove(PerabotanLabel.this);
 
                 } else {
-                    PerabotanLabel.this.getPerabotan().setKiriAtas(new Point(PerabotanLabel.this.getX() / housePanel.unitSize,
-                            PerabotanLabel.this.getY() / housePanel.unitSize));
+                    PerabotanLabel.this.getPerabotan().setKiriAtas(new Point((PerabotanLabel.this.getX()-housePanel.ruanganAcuanPanel.getX()) / housePanel.unitSize,
+                            (PerabotanLabel.this.getY()-housePanel.ruanganAcuanPanel.getY()) / housePanel.unitSize));
                     PerabotanLabel.this.roomPanel = ruanganAcuan;
                     housePanel.inventoryPanel.inventorySlot.removeItem(PerabotanLabel.this.getPerabotan());
                     housePanel.centerPanel.remove(housePanel.inventoryPanel);
@@ -175,8 +175,8 @@ public class PerabotanLabel extends JLabel {
             }
 
             pressed = e;
-            startDragPoint = new Point(perabotan.getKiriAtas().x*housePanel.unitSize,
-                    perabotan.getKiriAtas().y*roomPanel.unitSize);
+            startDragPoint = new Point(housePanel.ruanganAcuanPanel.getX() + perabotan.getKiriAtas().x*housePanel.unitSize,
+                    housePanel.ruanganAcuanPanel.getY() + perabotan.getKiriAtas().y*housePanel.unitSize);
 
         }
 
@@ -215,8 +215,8 @@ public class PerabotanLabel extends JLabel {
             }
             boolean isOccupied = false;
             boolean isOutOfBoundary = false;
-            PerabotanLabel.this.setBounds(((int)PerabotanLabel.this.getX()/housePanel.unitSize)*housePanel.unitSize,
-                    ((int)PerabotanLabel.this.getY()/housePanel.unitSize)*housePanel.unitSize,
+            PerabotanLabel.this.setBounds(((PerabotanLabel.this.getX()-housePanel.ruanganAcuanPanel.getX())/housePanel.unitSize)*housePanel.unitSize+housePanel.ruanganAcuanPanel.getX(),
+                    ((PerabotanLabel.this.getY()-housePanel.ruanganAcuanPanel.getY())/housePanel.unitSize)*housePanel.unitSize + housePanel.ruanganAcuanPanel.getY(),
                     PerabotanLabel.this.getWidth(),
                     PerabotanLabel.this.getHeight());
             RoomPanel ruanganAcuan = null;
@@ -235,11 +235,11 @@ public class PerabotanLabel extends JLabel {
                             //cek untuk semua titik di labelnya
                             for (int i = PerabotanLabel.this.getX(); i < PerabotanLabel.this.getX() + PerabotanLabel.this.getWidth(); i += housePanel.unitSize) {
                                 for (int j = PerabotanLabel.this.getY(); j < PerabotanLabel.this.getY() + PerabotanLabel.this.getHeight(); j += housePanel.unitSize) {
-                                    for (int k = (int) (perabotan1.getKiriAtas().getX() * housePanel.unitSize);
-                                         k < perabotan1.getKiriAtas().getX() * housePanel.unitSize + perabotan1.getDimensi().getWidth() * housePanel.unitSize;
+                                    for (int k = (int) (housePanel.ruanganAcuanPanel.getX() + perabotan1.getKiriAtas().getX() * housePanel.unitSize);
+                                         k < housePanel.ruanganAcuanPanel.getX() + perabotan1.getKiriAtas().getX() * housePanel.unitSize + perabotan1.getDimensi().getWidth() * housePanel.unitSize;
                                          k += housePanel.unitSize) {
-                                        for (int l = (int) (perabotan1.getKiriAtas().getY() * housePanel.unitSize);
-                                             l < perabotan1.getKiriAtas().getY() * housePanel.unitSize + perabotan1.getDimensi().getHeight() * housePanel.unitSize;
+                                        for (int l = (int) (housePanel.ruanganAcuanPanel.getY() + perabotan1.getKiriAtas().getY() * housePanel.unitSize);
+                                             l < housePanel.ruanganAcuanPanel.getY() + perabotan1.getKiriAtas().getY() * housePanel.unitSize + perabotan1.getDimensi().getHeight() * housePanel.unitSize;
                                              l += housePanel.unitSize) {
                                             Point point1 = new Point(i, j);
                                             Point point2 = new Point(k, l);
@@ -286,21 +286,21 @@ public class PerabotanLabel extends JLabel {
             }
             if (isOccupied){
                 System.out.println("Tempat sudah dipakai");
-                PerabotanLabel.this.setBounds((int) (startDragPoint.getX()-ruangAcuan.getX())/housePanel.unitSize*housePanel.unitSize,
-                        (int) (startDragPoint.getY()-ruangAcuan.getY())/housePanel.unitSize*housePanel.unitSize,
+                PerabotanLabel.this.setBounds((int) (startDragPoint.getX()),
+                        (int) (startDragPoint.getY()),
                         PerabotanLabel.this.getWidth(),
                         PerabotanLabel.this.getHeight());
             }
             else if (isOutOfBoundary){
                 System.out.println("Di luar batas");
-                PerabotanLabel.this.setBounds((int) (startDragPoint.getX()-ruangAcuan.getX())/housePanel.unitSize*housePanel.unitSize,
-                        (int) (startDragPoint.getY()-ruangAcuan.getY())/housePanel.unitSize*housePanel.unitSize,
+                PerabotanLabel.this.setBounds((int) (startDragPoint.getX()),
+                        (int) (startDragPoint.getY()),
                         PerabotanLabel.this.getWidth(),
                         PerabotanLabel.this.getHeight());
             }
             else {
-                PerabotanLabel.this.getPerabotan().setKiriAtas(new Point((PerabotanLabel.this.getX()-ruangAcuan.getX())/housePanel.unitSize,
-                        (PerabotanLabel.this.getY()-ruangAcuan.getY())/housePanel.unitSize));
+                PerabotanLabel.this.getPerabotan().setKiriAtas(new Point((PerabotanLabel.this.getX()- housePanel.ruanganAcuanPanel.getX())/housePanel.unitSize ,
+                        (PerabotanLabel.this.getY()- housePanel.ruanganAcuanPanel.getY())/housePanel.unitSize));
                 PerabotanLabel.this.roomPanel = ruanganAcuan;
             }
             startDragPoint = null;

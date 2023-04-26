@@ -33,6 +33,8 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
     JPanel westPanel;
     JPanel centerPanel;
 
+    RoomPanel ruanganAcuanPanel;
+
     private int slotCol = 0;
     private int slotRow = 0;
 
@@ -115,6 +117,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         centerPanel.setBackground(Color.black);
         for (Ruangan ruangan : rumah.getDaftarRuangan()){
             RoomPanel rp = new RoomPanel(ruangan, this.rumah, this);
+            if (rp.ruangan.getPosisi().equals(new Point(0,0))){
+                ruanganAcuanPanel = rp;
+            }
             centerPanel.add(rp);
             centerPanel.repaint();
         }
@@ -344,7 +349,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
 
 
     public void update() {
-        int speed = 3*unitSize/16; // kecepatan pergerakan kamera
+        int speed = 4*unitSize/16; // kecepatan pergerakan kamera
         KeyHandler keyHandler = mainPanel.keyH;
 //        int mapX = 0;
 //        int mapY = 0;
@@ -360,6 +365,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                 if (component instanceof  PerabotanLabel){
                     PerabotanLabel pl = (PerabotanLabel) component;
                     pl.setBounds(pl.getX() + speed, pl.getY(), pl.getWidth(), pl.getHeight());
+                    if (pl.startDragPoint != null){
+                        pl.startDragPoint.translate(speed, 0);
+                    }
                 }
             }
         }
@@ -370,12 +378,14 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             for (Component component : centerPanel.getComponents()){
                 if (component instanceof RoomPanel){
                     RoomPanel rp = (RoomPanel) component;
-
                     rp.setBounds(rp.getX()-speed, rp.getY(), rp.getWidth(), rp.getHeight());
                 }
                 if (component instanceof  PerabotanLabel){
                     PerabotanLabel pl = (PerabotanLabel) component;
                     pl.setBounds(pl.getX() - speed, pl.getY(), pl.getWidth(), pl.getHeight());
+                    if (pl.startDragPoint != null){
+                        pl.startDragPoint.translate(-speed, 0);
+                    }
                 }
             }
         }
@@ -391,6 +401,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                 if (component instanceof  PerabotanLabel){
                     PerabotanLabel pl = (PerabotanLabel) component;
                     pl.setBounds(pl.getX(), pl.getY()-speed, pl.getWidth(), pl.getHeight());
+                    if (pl.startDragPoint != null){
+                        pl.startDragPoint.translate(0, -speed);
+                    }
                 }
             }
         }
@@ -406,6 +419,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                 if (component instanceof  PerabotanLabel){
                     PerabotanLabel pl = (PerabotanLabel) component;
                     pl.setBounds(pl.getX(), pl.getY()+speed, pl.getWidth(), pl.getHeight());
+                    if (pl.startDragPoint != null){
+                        pl.startDragPoint.translate(0, speed);
+                    }
                 }
             }
 
