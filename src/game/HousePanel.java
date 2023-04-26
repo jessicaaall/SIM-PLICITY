@@ -215,16 +215,24 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
             public void mouseClicked(MouseEvent e) {
                 if (isUpgradeRumah){
                     isUpgradeRumah = false;
-                    Method method;
-                    try {
-                        method = HousePanel.this.getClass().getMethod("upgradeRumah");
-                    } catch (NoSuchMethodException ex) {
-                        throw new RuntimeException(ex);
+                    if (validSectionForUpgrade){
+                        Method method;
+                        try {
+                            method = HousePanel.this.getClass().getMethod("upgradeRumah");
+                        } catch (NoSuchMethodException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        rumah.busyUpgrading = true;
+                        ThreadAksi threadAksi = new ThreadAksi("Upgrade Rumah", 30, method, HousePanel.this, rumah.world);
+                        rumah.world.getListThreadAksi().add(threadAksi);
+                        threadAksi.start();
                     }
-                    rumah.busyUpgrading = true;
-                    ThreadAksi threadAksi = new ThreadAksi("Upgrade Rumah", 30, method, HousePanel.this, rumah.world);
-                    rumah.world.getListThreadAksi().add(threadAksi);
-                    threadAksi.start();
+
+                }
+                for (Component component : centerPanel.getComponents()){
+                    if (component instanceof HighlightedPanel){
+                        centerPanel.remove(component);
+                    }
                 }
 
             }
@@ -271,21 +279,14 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         if (isUpgradeRumah) {
             isUpgradeRumah = false;
         }
-        if (validSectionForUpgrade){
-            Ruangan ruanganBaru = new Ruangan("Ruangan " + rumah.getDaftarRuangan().size()
-                    , rumah,new Point((highlightedRoom.getX()-ruanganAcuanPanel.getX())/unitSize,
-                    (highlightedRoom.getY()-ruanganAcuanPanel.getY())/unitSize));
-            rumah.addRuangan(ruanganBaru);
-            RoomPanel newRoomPanel = new RoomPanel(ruanganBaru, rumah, HousePanel.this);
-            centerPanel.add(newRoomPanel,0);
-            centerPanel.revalidate();
-            centerPanel.repaint();
-        }
-        for (Component component : centerPanel.getComponents()){
-            if (component instanceof HighlightedPanel){
-                centerPanel.remove(component);
-            }
-        }
+        Ruangan ruanganBaru = new Ruangan("Ruangan " + rumah.getDaftarRuangan().size()
+                , rumah,new Point((highlightedRoom.getX()-ruanganAcuanPanel.getX())/unitSize,
+                (highlightedRoom.getY()-ruanganAcuanPanel.getY())/unitSize));
+        rumah.addRuangan(ruanganBaru);
+        RoomPanel newRoomPanel = new RoomPanel(ruanganBaru, rumah, HousePanel.this);
+        centerPanel.add(newRoomPanel,0);
+        centerPanel.revalidate();
+        centerPanel.repaint();
         rumah.busyUpgrading = false;
 
     }
