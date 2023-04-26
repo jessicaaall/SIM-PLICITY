@@ -4,6 +4,7 @@ import entity.*;
 import thread.ThreadAksi;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
@@ -29,12 +30,13 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
     JButton backToWorldButton = new JButton("Keluar rumah");
     HousePanelButton beliItemButton = new HousePanelButton("Beli Item");
     HousePanelButton lihatInventoryButton = new HousePanelButton("Lihat Inventory");
+    HousePanelButton upgradeRumahButton = new HousePanelButton("Upgrade Rumah");
     JPanel eastPanel;
     JPanel westPanel;
     JPanel centerPanel;
 
     RoomPanel ruanganAcuanPanel;
-
+    HighlightedPanel highlightedRoom;
     private int slotCol = 0;
     private int slotRow = 0;
 
@@ -42,6 +44,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
     JLabel currentFPSLabel;
     JLabel saldoSimLabel;
     DaftarThreadPane daftarThreadPane;
+    private boolean isUpgradeRumah = false;
 
     private class HousePanelButton extends JButton{
         HousePanelButton(String text){
@@ -111,10 +114,119 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         westPanel.add(backToWorldButton);
         westPanel.add(beliItemButton);
         westPanel.add(lihatInventoryButton);
+        westPanel.add(upgradeRumahButton);
 
         centerPanel = new JPanel(null);
         centerPanel.setPreferredSize(new Dimension(3*mainPanel.width/5, mainPanel.height));
         centerPanel.setBackground(Color.black);
+        centerPanel.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                if (isUpgradeRumah){
+                    Ruangan ruanganAcuan = null;
+                    boolean occupied = false;
+                    boolean inReach = false;
+                    //only highlighted the available space
+                    HighlightedPanel selectedSection = new HighlightedPanel(null);
+                    selectedSection.setBounds((e.getX()-ruanganAcuanPanel.getX())/(6*unitSize)*(6*unitSize) + ruanganAcuanPanel.getX()
+                            , (e.getY()-ruanganAcuanPanel.getY())/(6*unitSize)*(6*unitSize) + ruanganAcuanPanel.getY()
+                            , 6*unitSize, 6*unitSize);
+                    selectedSection.setOpaque(false);
+                    for (Component component : centerPanel.getComponents()){
+                        if (component instanceof HighlightedPanel){
+                            centerPanel.remove(component);
+                        }
+                    }
+                    if (highlightedRoom == null){
+                        highlightedRoom = selectedSection;
+                    }
+                    //cek apakah si panel ini udah tepat lokasi nya
+                    for(Component component : centerPanel.getComponents()){
+                        if (component instanceof RoomPanel){
+                            //cek kalau dia di dalam, ya gak bisa
+                            RoomPanel rp = (RoomPanel) component;
+                            if (selectedSection.getLocation().equals(rp.getLocation())){
+                                occupied = true;
+                                break;
+                            }
+                            //cek kalau dia di jangkauan ruangan yamg bisa
+                            //untuk sisi atas
+                            if (selectedSection.getX() == rp.getBounds().x && selectedSection.getBounds().y == rp.getY()-6*unitSize){
+                                inReach = true;
+                                break;
+                            }
+                            //untuk sisi kiri
+                            if (selectedSection.getX() == rp.getBounds().x - 6*unitSize && selectedSection.getBounds().y == rp.getY()){
+                                inReach = true;
+                                break;
+                            }
+                            //untuk sisi bawah
+                            if (selectedSection.getLocation().x == rp.getX() && selectedSection.getY() == rp.getY()+6*unitSize){
+                                inReach = true;
+                                break;
+                            }
+                            //untuk sisi kanan
+                            if (selectedSection.getX() == rp.getX()+6*unitSize && selectedSection.getY() == rp.getY()){
+                                inReach = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (occupied){
+                        selectedSection.setBorder(new LineBorder(Color.red, 5, true));
+                        centerPanel.add(selectedSection, 0);
+                        highlightedRoom = selectedSection;
+                        selectedSection.repaint();
+                        return;
+                    }
+                    if (inReach){
+                        selectedSection.setBorder(new LineBorder(Color.yellow, 5, true));
+                        centerPanel.add(selectedSection, 0);
+                        highlightedRoom = selectedSection;
+                        selectedSection.repaint();
+                        return;
+                    }
+                }
+            }
+        });
+        centerPanel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (isUpgradeRumah){
+                    isUpgradeRumah = false;
+                    for (Component component : centerPanel.getComponents()){
+                        if (component instanceof HighlightedPanel){
+                            centerPanel.remove(component);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         for (Ruangan ruangan : rumah.getDaftarRuangan()){
             RoomPanel rp = new RoomPanel(ruangan, this.rumah, this);
             if (rp.ruangan.getPosisi().equals(new Point(0,0))){
@@ -258,7 +370,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                 revalidate();
                 repaint();
             }
-
+        }
+        if (e.getSource() == upgradeRumahButton){
+            isUpgradeRumah = true;
         }
     }
 
@@ -351,16 +465,10 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
     public void update() {
         int speed = 4*unitSize/16; // kecepatan pergerakan kamera
         KeyHandler keyHandler = mainPanel.keyH;
-//        int mapX = 0;
-//        int mapY = 0;
         if(keyHandler.rightPressed){
-//            System.out.println("Right");
-//            centerPanel.setLocation(mapX + speed, mapY);
-//            mapX += speed;
             for (Component component : centerPanel.getComponents()){
-                if (component instanceof RoomPanel){
-                    RoomPanel rp = (RoomPanel) component;
-                    rp.setBounds(rp.getX() + speed, rp.getY(), rp.getWidth(), rp.getHeight());
+                if (component instanceof RoomPanel || component instanceof HighlightedPanel ){
+                    component.setBounds(component.getX() + speed, component.getY(), component.getWidth(), component.getHeight());
                 }
                 if (component instanceof  PerabotanLabel){
                     PerabotanLabel pl = (PerabotanLabel) component;
@@ -372,13 +480,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             }
         }
         else if (keyHandler.leftPressed){
-//            System.out.println("Left");
-//            centerPanel.setLocation(mapX - speed, mapY);
-//            mapX -= speed;
             for (Component component : centerPanel.getComponents()){
-                if (component instanceof RoomPanel){
-                    RoomPanel rp = (RoomPanel) component;
-                    rp.setBounds(rp.getX()-speed, rp.getY(), rp.getWidth(), rp.getHeight());
+                if (component instanceof RoomPanel|| component instanceof HighlightedPanel){
+                    component.setBounds(component.getX()-speed, component.getY(), component.getWidth(), component.getHeight());
                 }
                 if (component instanceof  PerabotanLabel){
                     PerabotanLabel pl = (PerabotanLabel) component;
@@ -390,13 +494,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             }
         }
         else if (keyHandler.upPressed){
-//            System.out.println("Up");
-//            centerPanel.setLocation(mapX, mapY + speed);
-//            mapY += speed;
             for (Component component : centerPanel.getComponents()){
-                if (component instanceof RoomPanel){
-                    RoomPanel rp = (RoomPanel) component;
-                    rp.setBounds(rp.getX(), rp.getY()-speed, rp.getWidth(), rp.getHeight());
+                if (component instanceof RoomPanel|| component instanceof HighlightedPanel){
+                    component.setBounds(component.getX(), component.getY()-speed, component.getWidth(), component.getHeight());
                 }
                 if (component instanceof  PerabotanLabel){
                     PerabotanLabel pl = (PerabotanLabel) component;
@@ -408,13 +508,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             }
         }
         else if (keyHandler.downPressed){
-//            System.out.println("Down");
-//            centerPanel.setLocation(mapX, mapY - speed);
-//            mapY -= speed;
             for (Component component : centerPanel.getComponents()){
-                if (component instanceof RoomPanel){
-                    RoomPanel rp = (RoomPanel) component;
-                    rp.setBounds(rp.getX(), rp.getY()+speed, rp.getWidth(), rp.getHeight());
+                if (component instanceof RoomPanel|| component instanceof HighlightedPanel){
+                    component.setBounds(component.getX(), component.getY()+speed, component.getWidth(), component.getHeight());
                 }
                 if (component instanceof  PerabotanLabel){
                     PerabotanLabel pl = (PerabotanLabel) component;
@@ -468,4 +564,17 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
         }
     }
 
+    private class UpgradeRumahPanel extends JPanel implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+    private class HighlightedPanel extends JPanel{
+        HighlightedPanel(LayoutManager mgr){
+            super(mgr);
+        }
+    }
 }
