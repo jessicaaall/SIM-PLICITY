@@ -333,6 +333,7 @@ public class PerabotanLabel extends JLabel {
             int dx = location.x - pressed.getX() + e.getX();
             int dy =  location.y - pressed.getY() + e.getY();
             component.setLocation(dx, dy);
+            housePanel.centerPanel.setComponentZOrder(component, 0);
             repaint();
         }
 
