@@ -26,6 +26,7 @@ public class PerabotanLabel extends JLabel {
     }
 
     private Perabotan perabotan;
+    private boolean isDragging = false;
 
     private ImageIcon image;
     public Point startDragPoint;
@@ -76,8 +77,8 @@ public class PerabotanLabel extends JLabel {
             if (put) {
                 boolean isOccupied = false;
                 boolean isOutOfBoundary = false;
-                PerabotanLabel.this.setBounds(((int) PerabotanLabel.this.getX() / housePanel.unitSize) * housePanel.unitSize,
-                        ((int) PerabotanLabel.this.getY() / housePanel.unitSize) * housePanel.unitSize,
+                PerabotanLabel.this.setBounds(((PerabotanLabel.this.getX()-housePanel.ruanganAcuanPanel.getX())/housePanel.unitSize)*housePanel.unitSize+housePanel.ruanganAcuanPanel.getX(),
+                        ((PerabotanLabel.this.getY()-housePanel.ruanganAcuanPanel.getY())/housePanel.unitSize)*housePanel.unitSize + housePanel.ruanganAcuanPanel.getY(),
                         PerabotanLabel.this.getWidth(),
                         PerabotanLabel.this.getHeight());
 
@@ -152,8 +153,8 @@ public class PerabotanLabel extends JLabel {
                     housePanel.centerPanel.remove(PerabotanLabel.this);
 
                 } else {
-                    PerabotanLabel.this.getPerabotan().setKiriAtas(new Point((PerabotanLabel.this.getX()-housePanel.ruanganAcuanPanel.getX()) / housePanel.unitSize,
-                            (PerabotanLabel.this.getY()-housePanel.ruanganAcuanPanel.getY()) / housePanel.unitSize));
+                    PerabotanLabel.this.getPerabotan().setKiriAtas(new Point((PerabotanLabel.this.getX()- housePanel.ruanganAcuanPanel.getX())/housePanel.unitSize ,
+                            (PerabotanLabel.this.getY()- housePanel.ruanganAcuanPanel.getY())/housePanel.unitSize));
                     PerabotanLabel.this.roomPanel = ruanganAcuan;
                     housePanel.inventoryPanel.inventorySlot.removeItem(PerabotanLabel.this.getPerabotan());
                     housePanel.centerPanel.remove(housePanel.inventoryPanel);
@@ -165,7 +166,19 @@ public class PerabotanLabel extends JLabel {
                 housePanel.repaint();
             }
             else {
+                if (isDragging){
+                    return;
+                }
                 /* Masukkan panel untuk memasukkan ke inventory*/
+                for (Component component : housePanel.centerPanel.getComponents()){
+                    if (component instanceof SimpanPanel){
+                        housePanel.centerPanel.remove(component);
+                    }
+                }
+                SimpanPanel simpanPanel = new SimpanPanel(e);
+                housePanel.centerPanel.add(simpanPanel, 0);
+                housePanel.centerPanel.revalidate();
+                housePanel.centerPanel.repaint();
             }
         }
         @Override
@@ -177,6 +190,7 @@ public class PerabotanLabel extends JLabel {
             pressed = e;
             startDragPoint = new Point(housePanel.ruanganAcuanPanel.getX() + perabotan.getKiriAtas().x*housePanel.unitSize,
                     housePanel.ruanganAcuanPanel.getY() + perabotan.getKiriAtas().y*housePanel.unitSize);
+            isDragging = true;
 
         }
 
@@ -304,6 +318,7 @@ public class PerabotanLabel extends JLabel {
                 PerabotanLabel.this.roomPanel = ruanganAcuan;
             }
             startDragPoint = null;
+            isDragging = false;
             repaint();
         }
 
@@ -318,6 +333,44 @@ public class PerabotanLabel extends JLabel {
             int dy =  location.y - pressed.getY() + e.getY();
             component.setLocation(dx, dy);
             repaint();
+        }
+
+        private class SimpanPanel extends JPanel{
+            SimpanPanel(MouseEvent e){
+                super(new GridLayout(0,1));
+                PerabotanLabel clickedLabel = (PerabotanLabel) e.getSource();
+                Perabotan clickedPerabot = clickedLabel.getPerabotan();
+                this.setPreferredSize(new Dimension(3*housePanel.unitSize, 3*housePanel.unitSize));
+                JButton simpanButton = new JButton("Simpan");
+                simpanButton.setSize(new Dimension((int) (2*housePanel.unitSize), housePanel.unitSize));
+                JButton batalButton = new JButton("Batal");
+                batalButton.setSize(new Dimension((int) (2*housePanel.unitSize), housePanel.unitSize));
+                simpanButton.setFocusable(false);
+                batalButton.setFocusable(false);
+                this.add(simpanButton);
+                this.add(batalButton);
+                this.setBounds(clickedLabel.getX(), clickedLabel.getY()-housePanel.unitSize, 3*housePanel.unitSize, 2*housePanel.unitSize);
+                simpanButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        housePanel.rumah.getSim().getInventory().addItem(clickedPerabot,1);
+
+                        housePanel.centerPanel.remove(PerabotanLabel.this);
+                        housePanel.centerPanel.remove(SimpanPanel.this);
+                        housePanel.centerPanel.revalidate();
+                        housePanel.centerPanel.repaint();
+                    }
+                });
+                batalButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        housePanel.centerPanel.remove(0);
+                        housePanel.centerPanel.remove(SimpanPanel.this);
+                        housePanel.centerPanel.revalidate();
+                        housePanel.centerPanel.repaint();
+                    }
+                });
+            }
         }
     }
 
