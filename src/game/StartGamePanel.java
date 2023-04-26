@@ -24,57 +24,22 @@ public class StartGamePanel extends JPanel implements ActionListener {
         this.mp = mp;
         this.mmp = mmp;
         mmp.startGamePanel = this;
-        setLayout(new GridLayout(0, 1));
-        setPreferredSize(new Dimension(mp.width/2, mp.height/2));
+        setLayout(null);
+        setPreferredSize(new Dimension(mp.width, mp.height));
+        setBounds(0,0, mp.width, mp.height);
+        setOpaque(false);
         setDoubleBuffered(true);
-        newWorldButton = new JButton("New World");
-        loadWorldButton = new JButton("Load World");
-        backButton = new JButton("To Main Menu");
-        Font thisFont = new Font("Comic Sans MS", Font.BOLD, 25);
-        newWorldButton.setFont(thisFont);
-        loadWorldButton.setFont(thisFont);
-        backButton.setFont(thisFont);
-        newWorldButton.setFocusable(false);
-        loadWorldButton.setFocusable(false);
-        backButton.setFocusable(false);
-        newWorldButton.setHorizontalAlignment(JButton.CENTER);
-        newWorldButton.setVerticalAlignment(JButton.CENTER);
-//        newWorldButton.setBounds((mp.getWidth()-mp.getWidth()/4)/2,
-//                mp.getHeight()/10,
-//                mp.getWidth()/4,
-//                100);
-        newWorldButton.addActionListener(this);
-        newWorldButton.setBackground(Color.lightGray);
-
-        //create load button
-        loadWorldButton.setHorizontalAlignment(JButton.CENTER);
-        loadWorldButton.setVerticalAlignment(JButton.CENTER);
-//        loadWorldButton.setBounds((mp.getWidth()-mp.getWidth()/4)/2,
-//                newWorldButton.getY()+newWorldButton.getHeight(),
-//                mp.getWidth()/4,
-//                100);
-        loadWorldButton.addActionListener(this);
-        loadWorldButton.setBackground(Color.lightGray);
-
-        //create back button
-        backButton.setHorizontalAlignment(JButton.CENTER);
-        backButton.setVerticalAlignment(JButton.CENTER);
-//        backButton.setBounds((mp.getWidth()-mp.getWidth()/4)/2,
-//                loadWorldButton.getY()+loadWorldButton.getHeight(),
-//                mp.getWidth()/4,
-//                100);
-        backButton.addActionListener(this);
-        backButton.setBackground(Color.lightGray);
-        add(newWorldButton);
-        add(loadWorldButton);
-        add(backButton);
+        setLocation(getX(), (mp.getHeight()-getWidth())/2);
+        StartGameButton sgb = new StartGameButton();
+        sgb.setBounds((mp.width-400)/2, (mp.height -400)/2, 400, 400);
+        this.add(sgb);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == newWorldButton){
 
             JPanel newSimPanel = new JPanel(new GridLayout(0,1));
-            newSimPanel.setBackground(Color.pink);
+            newSimPanel.setBackground(Color.white);
             JTextField namaSim = new JTextField();
             JLabel message = new JLabel("<html> Masukkan nama Sim mu<br></hmtl>");
             newSimPanel.add(message);
@@ -121,5 +86,41 @@ public class StartGamePanel extends JPanel implements ActionListener {
         mp.repaint(); // to repaint the panel
     }
 
+    private class StartGameButton extends JPanel{
+        StartGameButton(){
+            super(new GridLayout(0,1));
+            setSize(400,400);
+            newWorldButton = new JButton("New World");
+            loadWorldButton = new JButton("Load World");
+            backButton = new JButton("To Main Menu");
+            Font thisFont = new Font("Comic Sans MS", Font.BOLD, 25);
+            newWorldButton.setFont(thisFont);
+            loadWorldButton.setFont(thisFont);
+            backButton.setFont(thisFont);
+            newWorldButton.setFocusable(false);
+            loadWorldButton.setFocusable(false);
+            backButton.setFocusable(false);
+            newWorldButton.setHorizontalAlignment(JButton.CENTER);
+            newWorldButton.setVerticalAlignment(JButton.CENTER);
+            newWorldButton.addActionListener(StartGamePanel.this);
+            newWorldButton.setBackground(Color.white);
+
+            //create load button
+            loadWorldButton.setHorizontalAlignment(JButton.CENTER);
+            loadWorldButton.setVerticalAlignment(JButton.CENTER);
+
+            loadWorldButton.addActionListener(StartGamePanel.this);
+            loadWorldButton.setBackground(Color.white);
+
+            //create back button
+            backButton.setHorizontalAlignment(JButton.CENTER);
+            backButton.setVerticalAlignment(JButton.CENTER);
+            backButton.addActionListener(StartGamePanel.this);
+            backButton.setBackground(Color.white);
+            add(newWorldButton);
+            add(loadWorldButton);
+            add(backButton);
+        }
+    }
 
 }
