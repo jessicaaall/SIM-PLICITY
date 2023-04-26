@@ -137,6 +137,22 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                     selectedSection.setBounds((e.getX()-ruanganAcuanPanel.getX())/(6*unitSize)*(6*unitSize) + ruanganAcuanPanel.getX()
                             , (e.getY()-ruanganAcuanPanel.getY())/(6*unitSize)*(6*unitSize) + ruanganAcuanPanel.getY()
                             , 6*unitSize, 6*unitSize);
+                    if (e.getX()-ruanganAcuanPanel.getX() < 0){
+                        selectedSection.setLocation(Math.ceilDiv(e.getX()-ruanganAcuanPanel.getX(),6*unitSize)*(6*unitSize) + ruanganAcuanPanel.getX()
+                                , (e.getY()-ruanganAcuanPanel.getY())/(6*unitSize)*(6*unitSize) + ruanganAcuanPanel.getY());
+                    }
+                    else if (e.getY()-ruanganAcuanPanel.getY() < 0){
+                        selectedSection.setLocation((e.getX()-ruanganAcuanPanel.getX())/(6*unitSize)*(6*unitSize) + ruanganAcuanPanel.getX()
+                                ,Math.ceilDiv(e.getY()-ruanganAcuanPanel.getY(),6*unitSize)*(6*unitSize) + ruanganAcuanPanel.getY());
+                    }
+                    else if (e.getY()-ruanganAcuanPanel.getY() < 0 && e.getX()-ruanganAcuanPanel.getX() < 0){
+                        selectedSection.setLocation(Math.ceilDiv(e.getX()-ruanganAcuanPanel.getX(),6*unitSize)*(6*unitSize) + ruanganAcuanPanel.getX()
+                                ,Math.ceilDiv(e.getY()-ruanganAcuanPanel.getY(),6*unitSize)*(6*unitSize) + ruanganAcuanPanel.getY());
+                    }
+                    else {
+                        selectedSection.setLocation((e.getX()-ruanganAcuanPanel.getX())/(6*unitSize)*(6*unitSize) + ruanganAcuanPanel.getX()
+                                , (e.getY()-ruanganAcuanPanel.getY())/(6*unitSize)*(6*unitSize) + ruanganAcuanPanel.getY());
+                    }
                     selectedSection.setOpaque(false);
                     for (Component component : centerPanel.getComponents()){
                         if (component instanceof HighlightedPanel){
