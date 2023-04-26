@@ -10,6 +10,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainPanel extends JPanel  {
 
@@ -23,12 +24,12 @@ public class MainPanel extends JPanel  {
         this.setPreferredSize(new Dimension(width, height));
         this.setDoubleBuffered(true);
         setFocusable(true);
-        setOpaque(true);
+        setOpaque(false);
         requestFocus();
         addKeyListener(keyH);
         repaint();
         try {
-            image = ImageIO.read(new File("res/background.jpg"));
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/background.jpg")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -47,6 +48,6 @@ public class MainPanel extends JPanel  {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
-        g2D.drawImage(new ImageIcon("res/background.jpg").getImage(), 0,0, width,height, null);
+        g2D.drawImage(new ImageIcon(image).getImage(), 0,0, width,height, null);
     }
 }
