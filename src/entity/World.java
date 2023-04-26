@@ -56,8 +56,11 @@ public class World  implements Runnable{
     private Thread worldThread;
     private ArrayList<ThreadAksi> listThreadAksi;
 
-    
-    //pembuatan world menggunakan design pattern Singleton
+
+    /** Konstuktor
+     * Konstruktor tipe World dengan default world size 65 x 65
+     *
+     */
     public World(){
         dailySimCreation = 1;
         height = 65; //64 + 1, karena koordinat dari x =0 hingga x = 64 -> 65 kemungkinan absis
@@ -73,10 +76,7 @@ public class World  implements Runnable{
     public ArrayList<ThreadAksi> getListThreadAksi() {
         return listThreadAksi;
     }
-
-    public void setListThreadAksi(ArrayList<ThreadAksi> listThreadAksi) {
-        this.listThreadAksi = listThreadAksi;
-    }
+    
     public int getWidth() {
         return width;
     }

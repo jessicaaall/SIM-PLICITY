@@ -143,9 +143,9 @@ public class Ruangan {
     }
 
     /**
-    * Menghilangkan barang dari dalam ruangan ini
-     * @param barang : barang yang ingin dihilangkan
+    * Menghilangkan barang dari dalam ruangan ini.
      * catatan: method ini menghapus barang saja dan tidak menyimpannya ke dalam inventory
+     * @param barang : barang yang ingin dihilangkan
     * */
     public void hilangkan(Perabotan barang){
         for(Perabotan perabotan: daftarObjek){
