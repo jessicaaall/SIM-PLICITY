@@ -4,6 +4,7 @@ import entity.*;
 import tiles.TileManager;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -37,6 +38,7 @@ public class RoomPanel extends JPanel {
             setBounds(ruangan.getPosisi().x*unitSize, ruangan.getPosisi().y*unitSize
                     ,ruangan.getDimensi().width*unitSize, ruangan.getDimensi().height*unitSize);
         }
+        setBorder(new LineBorder(new Color(210,105,30), 4, false));
 
 //        setBorder(BorderFactory.createLineBorder(Color.yellow, 3));
         //set perabotan label untuk ruangan ini
