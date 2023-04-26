@@ -64,7 +64,7 @@ public class ObjekInventoryLabel extends JLabel {
                         choosedPerabotan.setKiriAtas(new Point(source.getX(), source.getY()));
                         PerabotanLabel newPerabot = new PerabotanLabel((Perabotan) objek.getKey(), ip.hp, null);
                         newPerabot.clickedPoint = source.getLocation();
-                        newPerabot.setBounds(source.getX()+ip.getX(), source.getY()+ip.getY(), newPerabot.getWidth(), newPerabot.getHeight());
+                        newPerabot.setBounds(source.getX()+2*ip.getX(), source.getY()+2*ip.getY(), newPerabot.getWidth(), newPerabot.getHeight());
                         System.out.println("ukuran perabot = " + newPerabot.getSize().toString());
                         newPerabot.setPut(true);
                         ip.hp.centerPanel.add(newPerabot, 0);
