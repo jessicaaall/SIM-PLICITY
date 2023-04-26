@@ -45,6 +45,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
     JLabel saldoSimLabel;
     DaftarThreadPane daftarThreadPane;
     private boolean isUpgradeRumah = false;
+    private boolean validSectionForUpgrade = false;
 
     private class HousePanelButton extends JButton{
         HousePanelButton(String text){
@@ -142,39 +143,34 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                             centerPanel.remove(component);
                         }
                     }
-                    if (highlightedRoom == null){
-                        highlightedRoom = selectedSection;
-                    }
                     //cek apakah si panel ini udah tepat lokasi nya
                     for(Component component : centerPanel.getComponents()){
                         if (component instanceof RoomPanel){
                             //cek kalau dia di dalam, ya gak bisa
                             RoomPanel rp = (RoomPanel) component;
-                            if (selectedSection.getLocation().equals(rp.getLocation())){
+                            if (selectedSection.getLocation().x == component.getX() && selectedSection.getY() == component.getY()){
                                 occupied = true;
-                                break;
                             }
-                            //cek kalau dia di jangkauan ruangan yamg bisa
-                            //untuk sisi atas
-                            if (selectedSection.getX() == rp.getBounds().x && selectedSection.getBounds().y == rp.getY()-6*unitSize){
-                                inReach = true;
-                                break;
+                            else{
+                                //cek kalau dia di jangkauan ruangan yamg bisa
+                                //untuk sisi atas
+                                if (selectedSection.getX() == rp.getBounds().x && selectedSection.getBounds().y == rp.getY()-6*unitSize){
+                                    inReach = true;
+                                }
+                                //untuk sisi kiri
+                                if (selectedSection.getX() == rp.getBounds().x - 6*unitSize && selectedSection.getBounds().y == rp.getY()){
+                                    inReach = true;
+                                }
+                                //untuk sisi bawah
+                                if (selectedSection.getLocation().x == rp.getX() && selectedSection.getY() == rp.getY()+6*unitSize){
+                                    inReach = true;
+                                }
+                                //untuk sisi kanan
+                                if (selectedSection.getX() == rp.getX()+6*unitSize && selectedSection.getY() == rp.getY()){
+                                    inReach = true;
+                                }
                             }
-                            //untuk sisi kiri
-                            if (selectedSection.getX() == rp.getBounds().x - 6*unitSize && selectedSection.getBounds().y == rp.getY()){
-                                inReach = true;
-                                break;
-                            }
-                            //untuk sisi bawah
-                            if (selectedSection.getLocation().x == rp.getX() && selectedSection.getY() == rp.getY()+6*unitSize){
-                                inReach = true;
-                                break;
-                            }
-                            //untuk sisi kanan
-                            if (selectedSection.getX() == rp.getX()+6*unitSize && selectedSection.getY() == rp.getY()){
-                                inReach = true;
-                                break;
-                            }
+
                         }
                     }
                     if (occupied){
@@ -182,13 +178,15 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
                         centerPanel.add(selectedSection, 0);
                         highlightedRoom = selectedSection;
                         selectedSection.repaint();
+                        validSectionForUpgrade = false;
                         return;
                     }
-                    if (inReach){
+                    else if (inReach){
                         selectedSection.setBorder(new LineBorder(Color.yellow, 5, true));
                         centerPanel.add(selectedSection, 0);
                         highlightedRoom = selectedSection;
                         selectedSection.repaint();
+                        validSectionForUpgrade = true;
                         return;
                     }
                 }
@@ -199,6 +197,16 @@ public class HousePanel extends JPanel implements ActionListener, Runnable {
             public void mouseClicked(MouseEvent e) {
                 if (isUpgradeRumah){
                     isUpgradeRumah = false;
+                    if (validSectionForUpgrade){
+                        Ruangan ruanganBaru = new Ruangan("Ruangan " + rumah.getDaftarRuangan().size()
+                                , rumah,new Point((highlightedRoom.getX()-ruanganAcuanPanel.getX())/unitSize,
+                                (highlightedRoom.getY()-ruanganAcuanPanel.getY())/unitSize));
+                        rumah.addRuangan(ruanganBaru);
+                        RoomPanel newRoomPanel = new RoomPanel(ruanganBaru, rumah, HousePanel.this);
+                        centerPanel.add(newRoomPanel,0);
+                        centerPanel.revalidate();
+                        centerPanel.repaint();
+                    }
                     for (Component component : centerPanel.getComponents()){
                         if (component instanceof HighlightedPanel){
                             centerPanel.remove(component);

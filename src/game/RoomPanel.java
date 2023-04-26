@@ -29,8 +29,14 @@ public class RoomPanel extends JPanel {
         setLayout(null);
         setFocusable(false);
         setPreferredSize(new Dimension(ruangan.getDimensi().width*unitSize, ruangan.getDimensi().height*unitSize));
-        setBounds(ruangan.getPosisi().x*unitSize, ruangan.getPosisi().y*unitSize
-                ,ruangan.getDimensi().width*unitSize, ruangan.getDimensi().height*unitSize);
+        if (hp.ruanganAcuanPanel != null){
+            setBounds(hp.ruanganAcuanPanel.getX()+ ruangan.getPosisi().x*unitSize, hp.ruanganAcuanPanel.getY()+ruangan.getPosisi().y*unitSize
+                    ,ruangan.getDimensi().width*unitSize, ruangan.getDimensi().height*unitSize);
+        }
+        else{
+            setBounds(ruangan.getPosisi().x*unitSize, ruangan.getPosisi().y*unitSize
+                    ,ruangan.getDimensi().width*unitSize, ruangan.getDimensi().height*unitSize);
+        }
 
 //        setBorder(BorderFactory.createLineBorder(Color.yellow, 3));
         //set perabotan label untuk ruangan ini
