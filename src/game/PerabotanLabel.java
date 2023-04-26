@@ -356,7 +356,6 @@ public class PerabotanLabel extends JLabel {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         housePanel.rumah.getSim().getInventory().addItem(clickedPerabot,1);
-
                         housePanel.centerPanel.remove(PerabotanLabel.this);
                         housePanel.centerPanel.remove(SimpanPanel.this);
                         clickedPerabot.getRuangan().hilangkan(clickedPerabot);
