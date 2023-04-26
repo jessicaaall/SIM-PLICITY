@@ -359,9 +359,10 @@ public class PerabotanLabel extends JLabel {
 
                         housePanel.centerPanel.remove(PerabotanLabel.this);
                         housePanel.centerPanel.remove(SimpanPanel.this);
+                        clickedPerabot.getRuangan().hilangkan(clickedPerabot);
                         housePanel.centerPanel.revalidate();
                         housePanel.centerPanel.repaint();
-                        clickedPerabot.getRuangan().getDaftarObjek().remove(clickedPerabot);
+
                     }
                 });
                 batalButton.addActionListener(new ActionListener() {
