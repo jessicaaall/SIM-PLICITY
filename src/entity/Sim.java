@@ -197,10 +197,10 @@ public class Sim {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                isSibuk = true;
                 int siklus = 1;
                 int periodeSiklus = 30;
                 int sisaWaktu = waktu;
-                isSibuk = true;
                 while (sisaWaktu >= 0) {
                     sisaWaktu--;
                     waktuKerja++;
