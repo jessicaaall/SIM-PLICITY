@@ -25,6 +25,8 @@ public class Sim {
     private boolean isSibuk;
     private int waktuSetelahGantiKerja;
     private boolean isPernahGantiKerja;
+    private boolean isSudahBuangAir;
+    private long waktuTerakhirMakan;
     
     // Objek random untuk random apapun yang dirandom wkwkwk
     private Random rand = new Random();
@@ -54,6 +56,8 @@ public class Sim {
         isSibuk = false;
         waktuSetelahGantiKerja = 0;
         isPernahGantiKerja = false;
+        isSudahBuangAir = false;
+        waktuTerakhirMakan = 0;
     }
     
     
@@ -109,6 +113,12 @@ public class Sim {
     public int getWaktuSetelahGantiKerja() {
         return waktuSetelahGantiKerja;
     }
+    public boolean getIsSudahBuangAir() {
+        return isSudahBuangAir;
+    }
+    public long getWaktuTerakhirMakan() {
+        return waktuTerakhirMakan;
+    }
 
     // Method : Setter
     public void setLocRuang(Ruangan newLocRuang) {
@@ -160,6 +170,12 @@ public class Sim {
     public void setKepemilikanRumah(Rumah rumah) { this.kepemilikanRumah = rumah; }
     public void setWaktuSetelahGantiKerja(int waktuSetelahGantiKerja) {
         this.waktuSetelahGantiKerja = waktuSetelahGantiKerja;
+    }
+    public void setIsSudahBuangAir(boolean isSudahBuangAir) {
+        this.isSudahBuangAir = isSudahBuangAir;
+    }
+    public void setWaktuTerakhirMakan(long waktuTerakhirMakan) {
+        this.waktuTerakhirMakan = waktuTerakhirMakan;
     }
     
     // Method lain
@@ -274,6 +290,7 @@ public class Sim {
             startTime = null;
         }
     }
+
     public void olahraga(int waktu) {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -348,6 +365,21 @@ public class Sim {
             isPernahGantiKerja = true;
         } else {
             System.out.println("Kamu belum bekerja minimal 12 menit ngab");
+        }
+    }
+
+    public void trackBuangAirSetelahMakan() {
+        if (waktuTerakhirMakan != 0) {
+            long endTrack = waktuTerakhirMakan + (4*60*1000);
+            while ((System.currentTimeMillis() < endTrack) && (!isSudahBuangAir)) {
+
+            }
+            if (!isSudahBuangAir) {
+                kesehatan -= 5;
+                mood -= 5;
+            }
+            waktuTerakhirMakan = 0;
+            isSudahBuangAir = false;
         }
     }
 }

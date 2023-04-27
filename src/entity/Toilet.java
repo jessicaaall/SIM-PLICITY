@@ -1,6 +1,5 @@
 package entity;
 
-import java.util.*;
 
 public class Toilet extends Perabotan implements BisaDiduduki {
     public Toilet() {
@@ -20,6 +19,7 @@ public class Toilet extends Perabotan implements BisaDiduduki {
         sim.setMood(sim.getMood() + 10);
         System.out.println("Sim " + sim.getNamaLengkap() + " selesai buang air.");
         berdiri(sim);
+        sim.setIsSudahBuangAir(true);
     }
 
     public void siramToilet(Sim sim) {
