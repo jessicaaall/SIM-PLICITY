@@ -443,6 +443,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
             }
             if (exist){
                 theComponent.setVisible(true);
+                centerPanel.setComponentZOrder(theComponent, 0);
             }
             else{
                 upgradeRumahPanel = new UpgradeRumahPanel();
