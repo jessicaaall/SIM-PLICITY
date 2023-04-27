@@ -20,6 +20,8 @@ public class Sim {
     private ArrayList<Rumah> kepemilikanRumah;
     private boolean isSudahTidur;
     private int waktuKerja;
+    private int waktuTidur;
+    private int waktuTidakTidur;
     
     // Objek random untuk random apapun yang dirandom wkwkwk
     private Random rand = new Random();
@@ -45,6 +47,8 @@ public class Sim {
         kepemilikanRumah = new ArrayList<Rumah>();
         isSudahTidur = false;
         waktuKerja = 0;
+        waktuTidur = 0;
+        waktuTidakTidur = 0;
     }
     
     
@@ -91,6 +95,12 @@ public class Sim {
     public boolean getIsSudahTidur() { 
         return isSudahTidur;
     }
+    public int getWaktuTidur() {
+        return waktuTidur;
+    }
+    public int getWaktuTidakTidur() {
+        return waktuTidakTidur;
+    }
 
     // Method : Setter
     public void setLocRuang(Ruangan newLocRuang) {
@@ -134,6 +144,12 @@ public class Sim {
     }
     public void setWaktuKerja(int newWaktuKerja) {
         waktuKerja = newWaktuKerja;
+    }
+    public void setWaktuTidur(int waktuTidur) {
+        this.waktuTidur = waktuTidur;
+    }
+    public void setWaktuTidakTidur(int waktuTidakTidur) {
+        this.waktuTidakTidur = waktuTidakTidur;
     }
     
     // Method lain
