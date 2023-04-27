@@ -156,6 +156,7 @@ public class PerabotanLabel extends JLabel {
                     PerabotanLabel.this.getPerabotan().setKiriAtas(new Point((PerabotanLabel.this.getX()- housePanel.ruanganAcuanPanel.getX())/housePanel.unitSize ,
                             (PerabotanLabel.this.getY()- housePanel.ruanganAcuanPanel.getY())/housePanel.unitSize));
                     PerabotanLabel.this.roomPanel = ruanganAcuan;
+                    PerabotanLabel.this.perabotan.setRuangan(ruanganAcuan.ruangan);
                     ruanganAcuan.ruangan.getDaftarObjek().add(PerabotanLabel.this.perabotan);
                     housePanel.inventoryPanel.inventorySlot.removeItem(PerabotanLabel.this.getPerabotan());
                     housePanel.centerPanel.remove(housePanel.inventoryPanel);
@@ -317,6 +318,9 @@ public class PerabotanLabel extends JLabel {
                 PerabotanLabel.this.getPerabotan().setKiriAtas(new Point((PerabotanLabel.this.getX()- housePanel.ruanganAcuanPanel.getX())/housePanel.unitSize ,
                         (PerabotanLabel.this.getY()- housePanel.ruanganAcuanPanel.getY())/housePanel.unitSize));
                 PerabotanLabel.this.roomPanel = ruanganAcuan;
+                PerabotanLabel.this.perabotan.getRuangan().getDaftarObjek().remove(PerabotanLabel.this.perabotan);
+                PerabotanLabel.this.perabotan.setRuangan(ruanganAcuan.ruangan);
+                ruanganAcuan.ruangan.getDaftarObjek().add(PerabotanLabel.this.perabotan);
             }
             startDragPoint = null;
             isDragging = false;
