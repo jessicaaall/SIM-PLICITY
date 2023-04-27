@@ -64,21 +64,21 @@ public class Pekerjaan {
         return id;
     }
 
-    public void lakukanKerja(Sim sim)  throws Exception{
-        Scanner input = new Scanner(System.in);
-        System.out.print("Masukan durasi tidur (satuan detik): ");
+    public void lakukanKerja(int waktu, Sim sim)  throws Exception{
+        //Scanner input = new Scanner(System.in);
+        //System.out.print("Masukan durasi tidur (satuan detik): ");
         Boolean found = false;
 
         while(!found){
             try{
-                int time = Integer.parseInt(input.nextLine());
-                if(time % 120 != 0){
+                //int time = Integer.parseInt(input.nextLine());
+                if(waktu % 120 != 0){
                     throw new Exception("Lama pekerjaan lakukan harus kelipatan 120!");
                 }
                 found = true;
                 long begin = System.currentTimeMillis();
                 long now = begin;
-                long finish = begin + (time*1000);
+                long finish = begin + (waktu*1000);
 
                 while(now < finish){
                     long runtime = now - begin;
@@ -90,6 +90,7 @@ public class Pekerjaan {
                         sim.setUang(sim.getUang()+this.getGaji());
                     }
                     now = System.currentTimeMillis();
+                    sim.setWaktuKerja(sim.getWaktuKerja() + 1);
                     
                 }
                 System.out.println("sim "+sim.getNamaLengkap()+" selesai bekerja!");
@@ -99,6 +100,6 @@ public class Pekerjaan {
                 System.out.println(e.getMessage());
             }
         }
-        input.close();
+        //input.close();
     }
 }
