@@ -17,7 +17,6 @@ public class Sim {
     private String status;
     private Inventory<Objek> inventory;
     private boolean isDuduk;
-    private ArrayList<Rumah> kepemilikanRumah;
     private boolean isSudahTidur;
     private int waktuKerja;
     private int waktuTidur;
@@ -44,7 +43,6 @@ public class Sim {
         status = "";
         inventory = new Inventory<Objek>();
         isDuduk = false;
-        kepemilikanRumah = new ArrayList<Rumah>();
         isSudahTidur = false;
         waktuKerja = 0;
         waktuTidur = 0;
@@ -88,9 +86,6 @@ public class Sim {
     }
     public boolean getIsDuduk() {
         return isDuduk;
-    }
-    public ArrayList<Rumah> getKepemilikanRumah() {
-        return kepemilikanRumah;
     }
     public boolean getIsSudahTidur() { 
         return isSudahTidur;
@@ -170,11 +165,10 @@ public class Sim {
         } else {
             System.out.println("10. Kondisi : berdiri");
         }
-        System.out.println("11. Kepemilikan rumah : " + getKepemilikanRumah());
         if (getIsSudahTidur()) {
-            System.out.println("12. Selama 10 menit sudah tidur");
+            System.out.println("11. Selama 10 menit sudah tidur");
         } else {
-            System.out.println("12. Selama 10 menit belum tidur");
+            System.out.println("11. Selama 10 menit belum tidur");
         }
     }
     public void kerja(int lama) {
