@@ -110,6 +110,10 @@ public class Sim {
         return waktuSetelahGantiKerja;
     }
 
+    public int getWaktuKerja(){
+        return waktuKerja;
+    }
+
     // Method : Setter
     public void setLocRuang(Ruangan newLocRuang) {
         locRuang = newLocRuang;

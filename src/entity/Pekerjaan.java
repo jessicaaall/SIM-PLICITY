@@ -90,6 +90,7 @@ public class Pekerjaan {
                         sim.setUang(sim.getUang()+this.getGaji());
                     }
                     now = System.currentTimeMillis();
+                    sim.setWaktuKerja(sim.getWaktuKerja() + 1);
                     
                 }
                 System.out.println("sim "+sim.getNamaLengkap()+" selesai bekerja!");
