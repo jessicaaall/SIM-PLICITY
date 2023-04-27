@@ -509,7 +509,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         KeyHandler keyHandler = mainPanel.keyH;
         if(keyHandler.rightPressed){
             for (Component component : centerPanel.getComponents()){
-                if (component instanceof RoomPanel || component instanceof HighlightedPanel ){
+                if (component instanceof RoomPanel || component instanceof HighlightedPanel ||component instanceof SimLabel){
                     component.setBounds(component.getX() + speed, component.getY(), component.getWidth(), component.getHeight());
                 }
                 if (component instanceof  PerabotanLabel){
@@ -523,7 +523,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         }
         else if (keyHandler.leftPressed){
             for (Component component : centerPanel.getComponents()){
-                if (component instanceof RoomPanel|| component instanceof HighlightedPanel){
+                if (component instanceof RoomPanel|| component instanceof HighlightedPanel||component instanceof SimLabel){
                     component.setBounds(component.getX()-speed, component.getY(), component.getWidth(), component.getHeight());
                 }
                 if (component instanceof  PerabotanLabel){
@@ -537,8 +537,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         }
         else if (keyHandler.upPressed){
             for (Component component : centerPanel.getComponents()){
-                if (component instanceof RoomPanel|| component instanceof HighlightedPanel){
+                if (component instanceof RoomPanel|| component instanceof HighlightedPanel||component instanceof SimLabel){
                     component.setBounds(component.getX(), component.getY()-speed, component.getWidth(), component.getHeight());
+
                 }
                 if (component instanceof  PerabotanLabel){
                     PerabotanLabel pl = (PerabotanLabel) component;
@@ -551,7 +552,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         }
         else if (keyHandler.downPressed){
             for (Component component : centerPanel.getComponents()){
-                if (component instanceof RoomPanel|| component instanceof HighlightedPanel){
+                if (component instanceof RoomPanel|| component instanceof HighlightedPanel||component instanceof SimLabel){
                     component.setBounds(component.getX(), component.getY()+speed, component.getWidth(), component.getHeight());
                 }
                 if (component instanceof  PerabotanLabel){
