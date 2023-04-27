@@ -12,7 +12,7 @@ public class Sim {
     private int kekenyangan;
     private int mood;
     private int kesehatan;
-    private int uang;
+    private float uang;
     private Pekerjaan pekerjaan;
     private String status;
     private Inventory<Objek> inventory;
@@ -25,6 +25,9 @@ public class Sim {
     private boolean isSibuk;
     private int waktuSetelahGantiKerja;
     private boolean isPernahGantiKerja;
+    private Kasur kasur;
+    private boolean isSudahBuangAir;
+    private long waktuTerakhirMakan;
     
     // Objek random untuk random apapun yang dirandom wkwkwk
     private Random rand = new Random();
@@ -54,6 +57,9 @@ public class Sim {
         isSibuk = false;
         waktuSetelahGantiKerja = 0;
         isPernahGantiKerja = false;
+        kasur = null;
+        isSudahBuangAir = false;
+        waktuTerakhirMakan = 0;
     }
     
     
@@ -79,7 +85,7 @@ public class Sim {
     public int getKesehatan() {
         return kesehatan;
     }
-    public int getUang() {
+    public float getUang() {
         return uang;
     }
     public Pekerjaan getPekerjaan() {
@@ -108,6 +114,12 @@ public class Sim {
     }
     public int getWaktuSetelahGantiKerja() {
         return waktuSetelahGantiKerja;
+    }
+    public boolean getIsSudahBuangAir() {
+        return isSudahBuangAir;
+    }
+    public long getWaktuTerakhirMakan() {
+        return waktuTerakhirMakan;
     }
 
     public int getWaktuKerja(){
@@ -146,7 +158,7 @@ public class Sim {
         }
         kesehatan = newKesehatan;
     }
-    public void setUang(int newUang) {
+    public void setUang(float newUang) {
         uang = newUang;
     }
     public void setIsDuduk(boolean newIsDuduk) {
@@ -165,6 +177,15 @@ public class Sim {
     public void setKepemilikanRumah(Rumah rumah) { this.kepemilikanRumah = rumah; }
     public void setWaktuSetelahGantiKerja(int waktuSetelahGantiKerja) {
         this.waktuSetelahGantiKerja = waktuSetelahGantiKerja;
+    }
+    public void setKasur(Kasur kasur) {
+        this.kasur = kasur;
+    }
+    public void setIsSudahBuangAir(boolean isSudahBuangAir) {
+        this.isSudahBuangAir = isSudahBuangAir;
+    }
+    public void setWaktuTerakhirMakan(long waktuTerakhirMakan) {
+        this.waktuTerakhirMakan = waktuTerakhirMakan;
     }
     
     // Method lain
@@ -233,28 +254,30 @@ public class Sim {
         });
         thread.start();
     }
-    public void tidur(int waktu) {
+    public void tidur(int durasi, Kasur kasur) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                int siklus = 1;
-                int periodeSiklus = 240;
-                int sisaWaktu = waktu;
                 isSibuk = true;
-                while (sisaWaktu >= 0) {
-                    sisaWaktu--;
-                    waktuTidur++;
-                    if (sisaWaktu == (waktu - (periodeSiklus * siklus))) {
-                        kesehatan += 20;
-                        mood += 30;
-                        siklus++;
-                    }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
+                setKasur(kasur);
+                kasur.tidur(durasi, Sim.this);
+//                int siklus = 1;
+//                int periodeSiklus = 240;
+//                int sisaWaktu = waktu;
+//                while (sisaWaktu >= 0) {
+//                    sisaWaktu--;
+//                    waktuTidur++;
+//                    if (sisaWaktu == (waktu - (periodeSiklus * siklus))) {
+//                        kesehatan += 20;
+//                        mood += 30;
+//                        siklus++;
+//                    }
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
                 isSibuk = false;
             }
         });
@@ -284,6 +307,7 @@ public class Sim {
             startTime = null;
         }
     }
+
     public void olahraga(int waktu) {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -358,6 +382,21 @@ public class Sim {
             isPernahGantiKerja = true;
         } else {
             System.out.println("Kamu belum bekerja minimal 12 menit ngab");
+        }
+    }
+
+    public void trackBuangAirSetelahMakan() {
+        if (waktuTerakhirMakan != 0) {
+            long endTrack = waktuTerakhirMakan + (4*60*1000);
+            while ((System.currentTimeMillis() < endTrack) && (!isSudahBuangAir)) {
+
+            }
+            if (!isSudahBuangAir) {
+                kesehatan -= 5;
+                mood -= 5;
+            }
+            waktuTerakhirMakan = 0;
+            isSudahBuangAir = false;
         }
     }
 }
