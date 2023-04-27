@@ -34,7 +34,7 @@ public class Rumah  {
             Perabotan mejakursi = new MejaDanKursi(ruangan1); //cuma sample buat uji coba, nanti bakal dihilangin
             mejakursi.setKiriAtas(new Point(0,0));//cuma sample buat uji coba, nanti bakal dihilangin
             Perabotan kasur = new Kasur(5, ruangan1);
-            kasur.setKiriAtas(new Point(0, 3));
+            kasur.setKiriAtas(new Point(2, 5));
             Perabotan jam = new Jam(world,ruangan1);
             jam.setKiriAtas(new Point(0, 4));
             Perabotan toilet = new Toilet(ruangan1);

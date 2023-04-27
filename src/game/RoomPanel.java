@@ -50,6 +50,10 @@ public class RoomPanel extends JPanel {
                 this.hp.centerPanel.add(pl);
             }
         }
+        for (Sim sim:ruangan.getDaftarSim()){
+            SimLabel simLabel = new SimLabel(sim, hp);
+            hp.centerPanel.add(simLabel, 0);
+        }
     }
 
     public void paintComponent(Graphics g){
