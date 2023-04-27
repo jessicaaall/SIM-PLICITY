@@ -187,10 +187,7 @@ public class Sim {
 
     }
     public void berkunjung() {
-
-    }
-    public void upgradeRuman(Ruangan ruangan) {
-
+        System.out.println("Pilih rumah yang ingin");
     }
     public void lihatInventory() {
         inventory.showItem();
