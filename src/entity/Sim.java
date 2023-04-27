@@ -187,7 +187,7 @@ public class Sim {
             System.out.println("12. Selama 10 menit belum tidur");
         }
     }
-    public void kerja(int waktu) {
+    public void kerja() {
         // pekerjaan baru hanya bisa dilakuin sehari setelah pergantian pekerjaan
         // Asumsi ganti hari itu acuannya hari, bukan detik
         if (isPernahGantiKerja && waktuSetelahGantiKerja < 1) {
@@ -198,26 +198,27 @@ public class Sim {
             @Override
             public void run() {
                 isSibuk = true;
-                int siklus = 1;
-                int periodeSiklus = 30;
-                int sisaWaktu = waktu;
-                while (sisaWaktu >= 0) {
-                    sisaWaktu--;
-                    waktuKerja++;
-                    if (sisaWaktu == (waktu - (periodeSiklus * siklus))) {
-                        kekenyangan -= 10;
-                        mood -= 10;
-                        siklus++;
-                    }
-                    if (waktuKerja == 240) {
-                        uang += pekerjaan.getGaji();
-                    }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
+                pekerjaan.lakukanKerja();
+//                int siklus = 1;
+//                int periodeSiklus = 30;
+//                int sisaWaktu = waktu;
+//                while (sisaWaktu >= 0) {
+//                    sisaWaktu--;
+//                    waktuKerja++;
+//                    if (sisaWaktu == (waktu - (periodeSiklus * siklus))) {
+//                        kekenyangan -= 10;
+//                        mood -= 10;
+//                        siklus++;
+//                    }
+//                    if (waktuKerja == 240) {
+//                        uang += pekerjaan.getGaji();
+//                    }
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
                 isSibuk = false;
             }
         });
