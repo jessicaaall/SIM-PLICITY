@@ -35,6 +35,14 @@ public class ThreadAksi extends Thread {
     public void run() {
         System.out.println("start");
 
+        try {
+            invoke();
+        } catch (InvocationTargetException e) {
+            System.out.println(e.getMessage());
+
+        } catch (IllegalAccessException e) {
+            System.out.println(e.getMessage());
+        }
         while (sisaWaktu > 0){
             try {
                 Thread.sleep(1000);
@@ -47,14 +55,6 @@ public class ThreadAksi extends Thread {
         //delete thread dari daftar thread
         world.getListThreadAksi().remove(this);
         System.out.println(this.getNama() + " deleted");
-        try {
-            invoke();
-        } catch (InvocationTargetException e) {
-            System.out.println(e.getMessage());
-
-        } catch (IllegalAccessException e) {
-            System.out.println(e.getMessage());
-        }
     }
     public Object invoke() throws InvocationTargetException, IllegalAccessException {
         return method.invoke(object, parameters);

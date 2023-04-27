@@ -17,10 +17,14 @@ public class Sim {
     private String status;
     private Inventory<Objek> inventory;
     private boolean isDuduk;
+    private Rumah kepemilikanRumah;
     private boolean isSudahTidur;
     private int waktuKerja;
     private int waktuTidur;
     private int waktuTidakTidur;
+    private boolean isSibuk;
+    private int waktuSetelahGantiKerja;
+    private boolean isPernahGantiKerja;
     
     // Objek random untuk random apapun yang dirandom wkwkwk
     private Random rand = new Random();
@@ -47,6 +51,9 @@ public class Sim {
         waktuKerja = 0;
         waktuTidur = 0;
         waktuTidakTidur = 0;
+        isSibuk = false;
+        waktuSetelahGantiKerja = 0;
+        isPernahGantiKerja = false;
     }
     
     
@@ -87,6 +94,9 @@ public class Sim {
     public boolean getIsDuduk() {
         return isDuduk;
     }
+    public Rumah getKepemilikanRumah() {
+        return kepemilikanRumah;
+    }
     public boolean getIsSudahTidur() { 
         return isSudahTidur;
     }
@@ -95,6 +105,9 @@ public class Sim {
     }
     public int getWaktuTidakTidur() {
         return waktuTidakTidur;
+    }
+    public int getWaktuSetelahGantiKerja() {
+        return waktuSetelahGantiKerja;
     }
 
     // Method : Setter
@@ -143,8 +156,10 @@ public class Sim {
     public void setWaktuTidur(int waktuTidur) {
         this.waktuTidur = waktuTidur;
     }
-    public void setWaktuTidakTidur(int waktuTidakTidur) {
-        this.waktuTidakTidur = waktuTidakTidur;
+    public void setWaktuTidakTidur(int waktuTidakTidur) { this.waktuTidakTidur = waktuTidakTidur; }
+    public void setKepemilikanRumah(Rumah rumah) { this.kepemilikanRumah = rumah; }
+    public void setWaktuSetelahGantiKerja(int waktuSetelahGantiKerja) {
+        this.waktuSetelahGantiKerja = waktuSetelahGantiKerja;
     }
     
     // Method lain
@@ -165,23 +180,158 @@ public class Sim {
         } else {
             System.out.println("10. Kondisi : berdiri");
         }
+        System.out.println("11. Kepemilikan rumah : " + getKepemilikanRumah());
         if (getIsSudahTidur()) {
-            System.out.println("11. Selama 10 menit sudah tidur");
+            System.out.println("12. Selama 10 menit sudah tidur");
         } else {
-            System.out.println("11. Selama 10 menit belum tidur");
+            System.out.println("12. Selama 10 menit belum tidur");
         }
     }
-    public void kerja(int lama) {
+    public void kerja(int waktu) {
         // pekerjaan baru hanya bisa dilakuin sehari setelah pergantian pekerjaan
+        // Asumsi ganti hari itu acuannya hari, bukan detik
+        if (isPernahGantiKerja && waktuSetelahGantiKerja < 1) {
+            System.out.println("Belum bisa ganti kerja ngab");
+            return;
+        }
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int siklus = 1;
+                int periodeSiklus = 30;
+                int sisaWaktu = waktu;
+                isSibuk = true;
+                while (sisaWaktu >= 0) {
+                    sisaWaktu--;
+                    waktuKerja++;
+                    if (sisaWaktu == (waktu - (periodeSiklus * siklus))) {
+                        kekenyangan -= 10;
+                        mood -= 10;
+                        siklus++;
+                    }
+                    if (waktuKerja == 240) {
+                        uang += pekerjaan.getGaji();
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                isSibuk = false;
+            }
+        });
+        thread.start();
     }
-    public void tidur(int lama) {
-        
+    public void tidur(int waktu) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int siklus = 1;
+                int periodeSiklus = 240;
+                int sisaWaktu = waktu;
+                isSibuk = true;
+                while (sisaWaktu >= 0) {
+                    sisaWaktu--;
+                    waktuTidur++;
+                    if (sisaWaktu == (waktu - (periodeSiklus * siklus))) {
+                        kesehatan += 20;
+                        mood += 30;
+                        siklus++;
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                isSibuk = false;
+            }
+        });
+        thread.start();
     }
-    public void olahraga(int lama) {
 
+    public void efekTidakTidur() {
+        if (waktuTidakTidur % 600 == 0) {
+            kesehatan -= 5;
+            mood -= 5;
+        }
     }
-    public void berkunjung() {
-        System.out.println("Pilih rumah yang ingin");
+
+    private Long startTime;
+    public void updateKondisiSim() {
+        if (!getIsSudahTidur()) {
+            if (startTime == null) {
+                startTime = System.currentTimeMillis();
+            }
+            Long currentTime = System.currentTimeMillis();
+            if (currentTime - startTime >= 1000) {
+                waktuTidakTidur++;
+                startTime = currentTime;
+            }
+            efekTidakTidur();
+        } else {
+            startTime = null;
+        }
+    }
+    public void olahraga(int waktu) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int siklus = 1;
+                int periodeSiklus = 20;
+                int sisaWaktu = waktu;
+                isSibuk = true;
+                while (sisaWaktu >= 0) {
+                    sisaWaktu--;
+                    if (sisaWaktu == (waktu - (periodeSiklus * siklus))) {
+                        kesehatan += 5;
+                        mood += 10;
+                        kekenyangan -= 5;
+                        siklus++;
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                isSibuk = false;
+            }
+        });
+        thread.start();
+    }
+
+    /**
+     *
+     * @param sim sim yang akan dikunjungi
+     */
+    public void berkunjung(Sim sim, int waktu) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                setLocRuang(sim.getKepemilikanRumah().getRuanganAcuan());
+                int siklus = 1;
+                int periodeSiklus = 30;
+                int sisaWaktu = waktu;
+                isSibuk = true;
+                while (sisaWaktu >= 0) {
+                    sisaWaktu--;
+                    if (sisaWaktu == (waktu - (periodeSiklus * siklus))) {
+                        mood += 10;
+                        kekenyangan -= 10;
+                        siklus++;
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                isSibuk = false;
+            }
+        });
+        thread.start();
     }
     public void lihatInventory() {
         inventory.showItem();
@@ -194,6 +344,8 @@ public class Sim {
             uang -= (1/2) * newPekerjaan.getGaji(); // Bayar 1/2 dari gaji pekerjaan baru
             pekerjaan = newPekerjaan;
             setWaktuKerja(0);
+            waktuSetelahGantiKerja = 0;
+            isPernahGantiKerja = true;
         } else {
             System.out.println("Kamu belum bekerja minimal 12 menit ngab");
         }

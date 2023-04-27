@@ -157,6 +157,9 @@ public class World  implements Runnable{
     public void run() {
         while(worldThread != null){
             cekWaktu();
+            for (Sim sim : getDaftarSim()) {
+                sim.updateKondisiSim();
+            }
         }
     }
 
@@ -177,6 +180,13 @@ public class World  implements Runnable{
         if (waktu.getHariKe() > harike){
             harike = waktu.getHariKe();
             dailySimCreation = 1;
+            for (Sim sim : getDaftarSim()) {
+                sim.setWaktuSetelahGantiKerja(sim.getWaktuSetelahGantiKerja() + 1);
+                if (sim.getWaktuTidur() < 180) {
+                    sim.setIsSudahTidur(false);
+                }
+                sim.setWaktuTidur(0);
+            }
         }
     }
 }
