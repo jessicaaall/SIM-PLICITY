@@ -3,6 +3,7 @@ package entity;
 import java.util.ArrayList;
 
 import thread.ThreadAksi;
+import thread.ThreadAksiPasif;
 
 public class World  implements Runnable{
     /**
@@ -60,6 +61,12 @@ public class World  implements Runnable{
     private Thread worldThread;
     private ArrayList<ThreadAksi> listThreadAksi;
 
+    public ArrayList<ThreadAksiPasif> getListThreadAksiPasif() {
+        return listThreadAksiPasif;
+    }
+
+    private ArrayList<ThreadAksiPasif> listThreadAksiPasif;
+
 
     /** Konstuktor
      * Konstruktor tipe World dengan default world size 65 x 65
@@ -74,6 +81,7 @@ public class World  implements Runnable{
         waktu = new Waktu(this);
         harike = waktu.getHariKe();
         listThreadAksi = new ArrayList<>();
+        listThreadAksiPasif = new ArrayList<>();
         waktu.startThread();
     }
     

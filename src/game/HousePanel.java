@@ -2,6 +2,7 @@ package game;
 
 import entity.*;
 import thread.ThreadAksi;
+import thread.ThreadAksiPasif;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -224,9 +225,12 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                             throw new RuntimeException(ex);
                         }
                         rumah.busyUpgrading = true;
-                        ThreadAksi threadAksi = new ThreadAksi("Upgrade Rumah", 30, method, HousePanel.this, rumah.world);
-                        rumah.world.getListThreadAksi().add(threadAksi);
-                        threadAksi.start();
+                        ThreadAksiPasif threadAksiPasif = new ThreadAksiPasif("Upgrade Rumah", 1080, method, HousePanel.this, rumah.world);
+                        rumah.world.getListThreadAksiPasif().add(threadAksiPasif);
+                        threadAksiPasif.start();
+//                        ThreadAksi threadAksi = new ThreadAksi("Upgrade Rumah", 1080, method, HousePanel.this, rumah.world);
+//                        rumah.world.getListThreadAksi().add(threadAksi);
+//                        threadAksi.start();
                     }
                     else{
                         rumah.busyUpgrading = false;
@@ -395,10 +399,14 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 } catch (NoSuchMethodException ex) {
                     throw new RuntimeException(ex);
                 }
-                ThreadAksi threadAksi = new ThreadAksi("beli " + selectedItem.getNama(),
+//                ThreadAksi threadAksi = new ThreadAksi("beli " + selectedItem.getNama(),
+//                        (new Random().nextInt(5)+1)*30, method, parameters, buyed, rumah.world);
+//                rumah.world.getListThreadAksi().add(threadAksi);
+//                threadAksi.start();
+                ThreadAksiPasif threadAksiPasif = new ThreadAksiPasif("beli " + selectedItem.getNama(),
                         (new Random().nextInt(5)+1)*30, method, parameters, buyed, rumah.world);
-                rumah.world.getListThreadAksi().add(threadAksi);
-                threadAksi.start();
+                rumah.world.getListThreadAksiPasif().add((threadAksiPasif));
+                threadAksiPasif.start();
             }
         }
         if (e.getSource() == lihatInventoryButton){
@@ -638,6 +646,11 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == OKButton){
+                if (1500 > rumah.getSim().getUang()){
+                    JOptionPane.showMessageDialog(this, "Uang tidak cukup",
+                            "Peningkatan Rumah Gagal", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 isUpgradeRumah = true;
                 setVisible(false);
                 rumah.busyUpgrading = true;
