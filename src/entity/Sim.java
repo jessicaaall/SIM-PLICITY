@@ -1,5 +1,8 @@
 package entity;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.*;
 import java.awt.*;
 
@@ -28,6 +31,12 @@ public class Sim {
     private Kasur kasur;
     private boolean isSudahBuangAir;
     private long waktuTerakhirMakan;
+
+    public BufferedImage getSimImage() {
+        return simImage;
+    }
+
+    private BufferedImage simImage;
     
     // Objek random untuk random apapun yang dirandom wkwkwk
     private Random rand = new Random();
@@ -60,6 +69,11 @@ public class Sim {
         kasur = null;
         isSudahBuangAir = false;
         waktuTerakhirMakan = 0;
+        try {
+            simImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/sim"+(new Random().nextInt(4)+1)+".png")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     
     

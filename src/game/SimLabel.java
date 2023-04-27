@@ -22,11 +22,7 @@ public class SimLabel extends JLabel {
         this.housePanel = housePanel;
         width = unitSize;
         height = unitSize;
-        try {
-            simLabelImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/sim"+(new Random().nextInt(4)+1)+".png"))).getScaledInstance(width,height, Image.SCALE_DEFAULT);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        simLabelImage = sim.getSimImage().getScaledInstance(width,height, Image.SCALE_DEFAULT);
         setPreferredSize(new Dimension(unitSize, unitSize));
         setSize(unitSize, unitSize);
         setIcon(new ImageIcon(simLabelImage));

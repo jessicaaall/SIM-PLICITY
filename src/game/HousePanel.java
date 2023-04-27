@@ -32,6 +32,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     HousePanelButton beliItemButton = new HousePanelButton("Beli Item");
     HousePanelButton lihatInventoryButton = new HousePanelButton("Lihat Inventory");
     HousePanelButton upgradeRumahButton = new HousePanelButton("Upgrade Rumah");
+    HousePanelButton statusSimButton = new HousePanelButton("Status Sim");
     UpgradeRumahPanel upgradeRumahPanel;
     JPanel eastPanel;
     JPanel westPanel;
@@ -136,6 +137,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         westPanel.add(beliItemButton);
         westPanel.add(lihatInventoryButton);
         westPanel.add(upgradeRumahButton);
+        westPanel.add(statusSimButton);
 
         centerPanel = new JPanel(null);
         centerPanel.setPreferredSize(new Dimension(3*mainPanel.width/5, mainPanel.height));
