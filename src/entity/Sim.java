@@ -157,7 +157,7 @@ public class Sim {
         }
         kesehatan = newKesehatan;
     }
-    public void setUang(int newUang) {
+    public void setUang(float newUang) {
         uang = newUang;
     }
     public void setIsDuduk(boolean newIsDuduk) {
