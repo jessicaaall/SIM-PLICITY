@@ -191,7 +191,7 @@ public class Sim {
             System.out.println("12. Selama 10 menit belum tidur");
         }
     }
-    public void kerja() {
+    public void kerja(int waktu) {
         // pekerjaan baru hanya bisa dilakuin sehari setelah pergantian pekerjaan
         // Asumsi ganti hari itu acuannya hari, bukan detik
         if (isPernahGantiKerja && waktuSetelahGantiKerja < 1) {
@@ -202,7 +202,11 @@ public class Sim {
             @Override
             public void run() {
                 isSibuk = true;
-                pekerjaan.lakukanKerja();
+                try {
+                    pekerjaan.lakukanKerja(waktu, Sim.this);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
 //                int siklus = 1;
 //                int periodeSiklus = 30;
 //                int sisaWaktu = waktu;
