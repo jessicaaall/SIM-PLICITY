@@ -117,6 +117,7 @@ public class Sim {
     // Method : Setter
     public void setLocRuang(Ruangan newLocRuang) {
         locRuang = newLocRuang;
+        newLocRuang.getDaftarSim().add(this);
     }
     public void setPosisi(Point newPosisi) {
         posisi = newPosisi;

@@ -48,6 +48,7 @@ public class Rumah  {
             daftarRuangan.get(0).getDaftarObjek().add(toilet);
             daftarRuangan.get(0).getDaftarObjek().add(komporgas);
 
+            sim.setPosisi(new Point(3,3));
         }
     }
 
