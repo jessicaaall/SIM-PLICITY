@@ -2,6 +2,7 @@ package game;
 
 import entity.*;
 import thread.ThreadAksi;
+import thread.ThreadAksiPasif;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -31,6 +32,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     HousePanelButton beliItemButton = new HousePanelButton("Beli Item");
     HousePanelButton lihatInventoryButton = new HousePanelButton("Lihat Inventory");
     HousePanelButton upgradeRumahButton = new HousePanelButton("Upgrade Rumah");
+    UpgradeRumahPanel upgradeRumahPanel;
     JPanel eastPanel;
     JPanel westPanel;
     JPanel centerPanel;
@@ -223,9 +225,15 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                             throw new RuntimeException(ex);
                         }
                         rumah.busyUpgrading = true;
-                        ThreadAksi threadAksi = new ThreadAksi("Upgrade Rumah", 30, method, HousePanel.this, rumah.world);
-                        rumah.world.getListThreadAksi().add(threadAksi);
-                        threadAksi.start();
+                        ThreadAksiPasif threadAksiPasif = new ThreadAksiPasif("Upgrade Rumah", 1080, method, HousePanel.this, rumah.world);
+                        rumah.world.getListThreadAksiPasif().add(threadAksiPasif);
+                        threadAksiPasif.start();
+//                        ThreadAksi threadAksi = new ThreadAksi("Upgrade Rumah", 1080, method, HousePanel.this, rumah.world);
+//                        rumah.world.getListThreadAksi().add(threadAksi);
+//                        threadAksi.start();
+                    }
+                    else{
+                        rumah.busyUpgrading = false;
                     }
 
                 }
@@ -271,6 +279,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         this.add(westPanel, BorderLayout.WEST);
         cameraWidth = 3*mainPanel.width/5;
         cameraHeight = mainPanel.height;
+        upgradeRumahPanel = new UpgradeRumahPanel();
         startThread();
         repaint();
     }
@@ -390,10 +399,14 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 } catch (NoSuchMethodException ex) {
                     throw new RuntimeException(ex);
                 }
-                ThreadAksi threadAksi = new ThreadAksi("beli " + selectedItem.getNama(),
+//                ThreadAksi threadAksi = new ThreadAksi("beli " + selectedItem.getNama(),
+//                        (new Random().nextInt(5)+1)*30, method, parameters, buyed, rumah.world);
+//                rumah.world.getListThreadAksi().add(threadAksi);
+//                threadAksi.start();
+                ThreadAksiPasif threadAksiPasif = new ThreadAksiPasif("beli " + selectedItem.getNama(),
                         (new Random().nextInt(5)+1)*30, method, parameters, buyed, rumah.world);
-                rumah.world.getListThreadAksi().add(threadAksi);
-                threadAksi.start();
+                rumah.world.getListThreadAksiPasif().add((threadAksiPasif));
+                threadAksiPasif.start();
             }
         }
         if (e.getSource() == lihatInventoryButton){
@@ -418,7 +431,21 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
             }
         }
         if (e.getSource() == upgradeRumahButton){
-            isUpgradeRumah = true;
+            boolean exist = false;
+            Component theComponent = null;
+            for (Component component : centerPanel.getComponents()){
+                if (component instanceof UpgradeRumahPanel){
+                    exist = true;
+                    theComponent = component;
+                }
+            }
+            if (exist){
+                theComponent.setVisible(true);
+            }
+            else{
+                upgradeRumahPanel = new UpgradeRumahPanel();
+                centerPanel.add(upgradeRumahPanel, 0);
+            }
         }
     }
 
@@ -580,8 +607,8 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     }
 
     private class UpgradeRumahPanel extends JPanel implements ActionListener{
-        HousePanelButton OKButton;
-        HousePanelButton cancelButton;
+        HousePanelButton OKButton = new HousePanelButton("OK");
+        HousePanelButton cancelButton = new HousePanelButton("Batal");
         ButtonContainer buttonContainer;
 
         UpgradeRumahPanel(){
@@ -589,40 +616,59 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
             cancelButton = new HousePanelButton("Batal");
             OKButton.setFocusable(false);
             cancelButton.setFocusable(false);
+            OKButton.setBounds(0,0, 10*unitSize/4, unitSize);
+            cancelButton.setBounds(5*unitSize/2,0, 10*unitSize/4, unitSize);
+            OKButton.setVisible(true);
+            cancelButton.setVisible(true);
+            OKButton.setOpaque(true);
+            cancelButton.setOpaque(true);
             setLayout(null);
+            setPreferredSize(new Dimension(8*unitSize, 6*unitSize));
             setSize(8*unitSize, 8*unitSize);
-            setBounds(centerPanel.getWidth()/4, centerPanel.getHeight()/4, 8*unitSize, 8*unitSize);
+            setBounds(centerPanel.getWidth()/4, centerPanel.getHeight()/4, 8*unitSize, 6*unitSize);
+            setBorder(new LineBorder(Color.BLACK, 5, true));
             setOpaque(true);
-            setBackground(new Color(150, 178, 102, 200));
+            setBackground(new Color(150, 178, 102, 255));
+            setVisible(true);
             buttonContainer = new ButtonContainer();
+            buttonContainer.setBounds((getWidth()-6*unitSize)/2
+                    ,3*unitSize
+                    , 6*unitSize, unitSize);
+            repaint();
             buttonContainer.add(OKButton);
             buttonContainer.add(cancelButton);
-            buttonContainer.setBounds((getWidth()- buttonContainer.getWidth())/2
-                    ,(getHeight()- buttonContainer.getHeight())/2
-                    , buttonContainer.getWidth(), buttonContainer.getHeight());
+            OKButton.addActionListener(this);
+            cancelButton.addActionListener(this);
             add(buttonContainer);
             revalidate();
-            repaint();
 
         }
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == OKButton){
+                if (1500 > rumah.getSim().getUang()){
+                    JOptionPane.showMessageDialog(this, "Uang tidak cukup",
+                            "Peningkatan Rumah Gagal", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 isUpgradeRumah = true;
-                centerPanel.remove(this);
+                setVisible(false);
+                rumah.busyUpgrading = true;
             }
             else if(e.getSource() == cancelButton){
                 isUpgradeRumah = false;
-                centerPanel.remove(this);
+                setVisible(false);
             }
         }
 
         @Override
         protected void paintComponent(Graphics g) {
             Graphics2D g2d = (Graphics2D) g;
+            g2d.setColor(new Color(150, 178, 102, 255));
+            g2d.fillRect(0,0, 8*unitSize, 8*unitSize);
             //tulis tulisan untuk message
             String text1 = "Biaya yang dibutuhkan = 1500";
-            Font font1 = new Font("Comic Sans MS", Font.BOLD, 15);
+            Font font1 = new Font("Comic Sans MS", Font.BOLD, 16);
             int fontHeight1 = getFontMetrics(font1).getHeight();
             int fontWidth1 = getFontMetrics(font1).stringWidth(text1);
             int drawStringX = (getWidth()-fontWidth1)/2;
@@ -630,7 +676,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
             g2d.setFont(font1);
             g2d.setColor(Color.black);
             g2d.drawString(text1, drawStringX,drawStringY);
-            Font font2 = new Font("Comic Sans MS", Font.PLAIN, 15);
+            Font font2 = new Font("Comic Sans MS", Font.PLAIN, 16);
             String text2 = "Yakin untuk melanjutkan?";
             int fontHeight2 = getFontMetrics(font1).getHeight();
             int fontWidth2 = getFontMetrics(font1).stringWidth(text2);
@@ -642,10 +688,13 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 
         private class ButtonContainer extends JPanel{
             ButtonContainer(){
-                super(new GridLayout(1,0, 15, 0));
+//                super(new GridLayout(1,0, 10, 0));
+                super(new FlowLayout());
                 setFocusable(false);
-                setOpaque(false);
-                setSize(2*unitSize, unitSize);
+                setBackground(new Color(150,178,102));
+                setOpaque(true);
+                setPreferredSize(new Dimension(6*unitSize, unitSize));
+                setBounds(10, unitSize+10, 6*unitSize, unitSize);
             }
         }
     }
