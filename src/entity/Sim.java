@@ -26,6 +26,8 @@ public class Sim {
     private int waktuSetelahGantiKerja;
     private boolean isPernahGantiKerja;
     private Kasur kasur;
+    private boolean isSudahBuangAir;
+    private long waktuTerakhirMakan;
     
     // Objek random untuk random apapun yang dirandom wkwkwk
     private Random rand = new Random();
@@ -56,6 +58,8 @@ public class Sim {
         waktuSetelahGantiKerja = 0;
         isPernahGantiKerja = false;
         kasur = null;
+        isSudahBuangAir = false;
+        waktuTerakhirMakan = 0;
     }
     
     
@@ -110,6 +114,12 @@ public class Sim {
     }
     public int getWaktuSetelahGantiKerja() {
         return waktuSetelahGantiKerja;
+    }
+    public boolean getIsSudahBuangAir() {
+        return isSudahBuangAir;
+    }
+    public long getWaktuTerakhirMakan() {
+        return waktuTerakhirMakan;
     }
 
     public int getWaktuKerja(){
@@ -169,6 +179,12 @@ public class Sim {
     }
     public void setKasur(Kasur kasur) {
         this.kasur = kasur;
+    }
+    public void setIsSudahBuangAir(boolean isSudahBuangAir) {
+        this.isSudahBuangAir = isSudahBuangAir;
+    }
+    public void setWaktuTerakhirMakan(long waktuTerakhirMakan) {
+        this.waktuTerakhirMakan = waktuTerakhirMakan;
     }
     
     // Method lain
@@ -290,6 +306,7 @@ public class Sim {
             startTime = null;
         }
     }
+
     public void olahraga(int waktu) {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -364,6 +381,21 @@ public class Sim {
             isPernahGantiKerja = true;
         } else {
             System.out.println("Kamu belum bekerja minimal 12 menit ngab");
+        }
+    }
+
+    public void trackBuangAirSetelahMakan() {
+        if (waktuTerakhirMakan != 0) {
+            long endTrack = waktuTerakhirMakan + (4*60*1000);
+            while ((System.currentTimeMillis() < endTrack) && (!isSudahBuangAir)) {
+
+            }
+            if (!isSudahBuangAir) {
+                kesehatan -= 5;
+                mood -= 5;
+            }
+            waktuTerakhirMakan = 0;
+            isSudahBuangAir = false;
         }
     }
 }
