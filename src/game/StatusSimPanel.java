@@ -73,6 +73,10 @@ public class StatusSimPanel extends JPanel implements MouseListener, MouseMotion
         add(statusPanel, BorderLayout.WEST);
         add(infoPanel, BorderLayout.CENTER);
         closeButton.setPreferredSize(new Dimension(160, 40));
+        closeButton.setFocusable(false);
+        setFocusable(false);
+        infoPanel.setFocusable(false);
+        statusPanel.setFocusable(false);
         setBounds(0,0, 640, 320);
         addMouseListener(this);
         addMouseMotionListener(this);
