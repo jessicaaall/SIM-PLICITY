@@ -354,11 +354,12 @@ public class Sim {
      *
      * @param sim sim yang akan dikunjungi
      */
-    public void berkunjung(Sim sim, int waktu) {
+    public void berkunjung(Sim sim) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 setLocRuang(sim.getKepemilikanRumah().getRuanganAcuan());
+                int waktu = (int)Math.sqrt(Math.pow((sim.getKepemilikanRumah().getLokasi().getX() - Sim.this.getKepemilikanRumah().getLokasi().getX()), 2) + Math.pow((sim.getKepemilikanRumah().getLokasi().getY() - Sim.this.getKepemilikanRumah().getLokasi().getY()), 2));
                 int siklus = 1;
                 int periodeSiklus = 30;
                 int sisaWaktu = waktu;
@@ -380,6 +381,9 @@ public class Sim {
             }
         });
         thread.start();
+    }
+    public void pulang() {
+        setLocRuang(Sim.this.getKepemilikanRumah().getRuanganAcuan());
     }
     public void lihatInventory() {
         inventory.showItem();
