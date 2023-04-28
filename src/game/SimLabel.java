@@ -26,7 +26,7 @@ public class SimLabel extends JLabel implements MouseListener {
     public SimLabel(Sim sim, HousePanel housePanel){
         this.sim = sim;
         this.housePanel = housePanel;
-        width = 20;
+        width = 22;
         height = unitSize;
         simLabelImage = sim.getSimImage().getScaledInstance(width,height, Image.SCALE_DEFAULT);
         setPreferredSize(new Dimension(width, height));

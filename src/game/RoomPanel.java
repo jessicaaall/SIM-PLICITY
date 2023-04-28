@@ -38,7 +38,7 @@ public class RoomPanel extends JPanel {
             setBounds(ruangan.getPosisi().x*unitSize, ruangan.getPosisi().y*unitSize
                     ,ruangan.getDimensi().width*unitSize, ruangan.getDimensi().height*unitSize);
         }
-        setBorder(new LineBorder(new Color(210,105,30), 4, false));
+        setBorder(new LineBorder(new Color(255,255,255), 4, false));
 
 //        setBorder(BorderFactory.createLineBorder(Color.yellow, 3));
         //set perabotan label untuk ruangan ini
