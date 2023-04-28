@@ -30,7 +30,7 @@ public class Sim {
     private boolean isPernahGantiKerja;
     private Kasur kasur;
     private boolean isSudahBuangAir;
-    private long waktuTerakhirMakan;
+    private Waktu waktuTerakhirMakan;
 
     public BufferedImage getSimImage() {
         return simImage;
@@ -68,7 +68,7 @@ public class Sim {
         isPernahGantiKerja = false;
         kasur = null;
         isSudahBuangAir = false;
-        waktuTerakhirMakan = 0;
+        waktuTerakhirMakan = null;
         try {
             simImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/sim"+(new Random().nextInt(4)+1)+".png")));
         } catch (IOException e) {
@@ -132,7 +132,7 @@ public class Sim {
     public boolean getIsSudahBuangAir() {
         return isSudahBuangAir;
     }
-    public long getWaktuTerakhirMakan() {
+    public Waktu getWaktuTerakhirMakan() {
         return waktuTerakhirMakan;
     }
 
@@ -198,7 +198,7 @@ public class Sim {
     public void setIsSudahBuangAir(boolean isSudahBuangAir) {
         this.isSudahBuangAir = isSudahBuangAir;
     }
-    public void setWaktuTerakhirMakan(long waktuTerakhirMakan) {
+    public void setWaktuTerakhirMakan(Waktu waktuTerakhirMakan) {
         this.waktuTerakhirMakan = waktuTerakhirMakan;
     }
     
@@ -400,17 +400,22 @@ public class Sim {
     }
 
     public void trackBuangAirSetelahMakan() {
-        if (waktuTerakhirMakan != 0) {
-            long endTrack = waktuTerakhirMakan + (4*60*1000);
-            while ((System.currentTimeMillis() < endTrack) && (!isSudahBuangAir)) {
+        if (waktuTerakhirMakan != null) {
+            while ((selisihWaktu(theirWorld.getWaktu(), waktuTerakhirMakan) < 240) && (!isSudahBuangAir)) {
 
             }
             if (!isSudahBuangAir) {
                 kesehatan -= 5;
                 mood -= 5;
             }
-            waktuTerakhirMakan = 0;
+            waktuTerakhirMakan = null;
             isSudahBuangAir = false;
         }
+    }
+
+    public int selisihWaktu(Waktu waktu1, Waktu waktu2) {
+        int detik1 = waktu1.getHariKe() * 720 + waktu1.getSisaDetik();
+        int detik2 = waktu2.getHariKe() * 720 + waktu2.getSisaDetik();
+        return (Math.abs(detik1 - detik2));
     }
 }
