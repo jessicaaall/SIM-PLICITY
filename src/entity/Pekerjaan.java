@@ -1,5 +1,5 @@
 package entity;
-import java.util.*;
+
 
 public class Pekerjaan {
     private String namaPekerjaan;
@@ -65,8 +65,9 @@ public class Pekerjaan {
     }
 
     public void lakukanKerja(int waktu, Sim sim)  throws Exception{
-        //Scanner input = new Scanner(System.in);
-        //System.out.print("Masukan durasi tidur (satuan detik): ");
+        /*
+        Scanner input = new Scanner(System.in);
+        System.out.print("Masukan durasi tidur (satuan detik): ");
         Boolean found = false;
 
         while(!found){
@@ -100,6 +101,33 @@ public class Pekerjaan {
                 System.out.println(e.getMessage());
             }
         }
-        //input.close();
+        input.close();
+        */
+
+        try{
+            if(waktu % 120 != 0){
+                throw new IllegalArgumentException("Lama pekerjaan lakukan harus kelipatan 120!");
+            }
+            long begin = System.currentTimeMillis();
+            long now = begin;
+            long finish = begin + (waktu*1000);
+
+            while(now < finish){
+                long runtime = now - begin;
+                if(runtime % 30000 == 0){
+                    sim.setMood(sim.getMood()-10);
+                    sim.setKekenyangan(sim.getKekenyangan()-10);
+                }
+                if(runtime % 240000 == 0){
+                    sim.setUang(sim.getUang()+this.getGaji());
+                }
+                now = System.currentTimeMillis();
+                sim.setWaktuKerja(sim.getWaktuKerja() + 1);
+                
+            }
+            System.out.println("sim "+sim.getNamaLengkap()+" selesai bekerja!");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
