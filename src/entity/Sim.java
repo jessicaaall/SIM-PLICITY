@@ -60,7 +60,7 @@ public class Sim {
         status = "";
         inventory = new Inventory<Objek>();
         isDuduk = false;
-        isSudahTidur = false;
+        isSudahTidur = true;
         waktuKerja = 0;
         waktuTidur = 0;
         waktuTidakTidur = 0;
@@ -299,11 +299,13 @@ public class Sim {
         thread.start();
     }
 
-    public void efekTidakTidur() throws InterruptedException {
-        if (waktuTidakTidur % 600 == 0 && (waktuTidakTidur > 0)) {
+    public void efekTidakTidur() {
+        if (waktuTidakTidur == 0){
+            return;
+        }
+        if (waktuTidakTidur % 600 == 0) {
             kesehatan -= 5;
             mood -= 5;
-            Thread.sleep(1000);
         }
     }
 
@@ -318,11 +320,7 @@ public class Sim {
                 waktuTidakTidur++;
                 startTime = currentTime;
             }
-            try {
-                efekTidakTidur();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            efekTidakTidur();
         } else {
             startTime = null;
         }
