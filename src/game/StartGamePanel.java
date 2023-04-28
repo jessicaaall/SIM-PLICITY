@@ -50,12 +50,17 @@ public class StartGamePanel extends JPanel implements ActionListener {
                 String stringNamaSim = namaSim.getText();
                 worldChoice = new World();
                 Sim addedSim = new Sim(stringNamaSim, worldChoice);
-                worldChoice.tambahSim(addedSim);
+                System.out.println(addedSim.getKekenyangan());
+                System.out.println(addedSim.getKesehatan());
+                System.out.println(addedSim.getMood());
+                System.out.println(addedSim.getPekerjaan().getNamaPekerjaan());
                 Random random = new Random();
                 Rumah rumahBaru = new Rumah(0,0, addedSim, new Color(random.nextInt(16777216)), worldChoice);
+                Sim sim = rumahBaru.getSim();
                 addedSim.setLocRuang(rumahBaru.getDaftarRuangan().get(0));
                 addedSim.setKepemilikanRumah(rumahBaru);
                 worldChoice.tambahRumah(rumahBaru);
+                worldChoice.tambahSim(rumahBaru.getSim());
                 worldChoice.startThread();
                 showWorldPanel();
             }

@@ -19,37 +19,32 @@ public class Rumah  {
 
     public Rumah(int x, int y, Sim sim, Color color, World world){
         this.world = world;
-        if(x > world.getWidth() -1 || y > world.getHeight()-1){
-            System.out.println("Titik diluar jangkauan");
-        }
-        else{
-            this.sim = sim;
-            this.color = color;
-            lokasi.x = x;
-            lokasi.y = y;
-            Ruangan ruangan1 = new Ruangan("Ruangan 1",this,new Point(0,0));
-            ruanganAcuan = ruangan1;
-            daftarRuangan.add(ruangan1);
+        this.sim = sim;
+        this.color = color;
+        lokasi.x = x;
+        lokasi.y = y;
+        Ruangan ruangan1 = new Ruangan("Ruangan 1",this,new Point(0,0));
+        ruanganAcuan = ruangan1;
+        daftarRuangan.add(ruangan1);
 //            daftarRuangan.add(new Ruangan("Ruangan 2", this, new Point( 0, 6)));
-            Perabotan mejakursi = new MejaDanKursi(ruangan1); //cuma sample buat uji coba, nanti bakal dihilangin
-            mejakursi.setKiriAtas(new Point(0,0));//cuma sample buat uji coba, nanti bakal dihilangin
-            Perabotan kasur = new Kasur(5, ruangan1);
-            kasur.setKiriAtas(new Point(2, 5));
-            Perabotan jam = new Jam(world,ruangan1);
-            jam.setKiriAtas(new Point(0, 4));
-            Perabotan toilet = new Toilet(ruangan1);
-            toilet.setKiriAtas(new Point(0, 5));
-            Perabotan komporgas = new Kompor(2, ruangan1);
-            komporgas.setKiriAtas(new Point(4, 0));
+        Perabotan mejakursi = new MejaDanKursi(ruangan1); //cuma sample buat uji coba, nanti bakal dihilangin
+        mejakursi.setKiriAtas(new Point(0,0));//cuma sample buat uji coba, nanti bakal dihilangin
+        Perabotan kasur = new Kasur(5, ruangan1);
+        kasur.setKiriAtas(new Point(2, 5));
+        Perabotan jam = new Jam(world,ruangan1);
+        jam.setKiriAtas(new Point(0, 4));
+        Perabotan toilet = new Toilet(ruangan1);
+        toilet.setKiriAtas(new Point(0, 5));
+        Perabotan komporgas = new Kompor(2, ruangan1);
+        komporgas.setKiriAtas(new Point(4, 0));
 
-            daftarRuangan.get(0).getDaftarObjek().add(mejakursi); //cuma sample buat uji coba, nanti bakal dihilangin
-            daftarRuangan.get(0).getDaftarObjek().add(kasur);
-            daftarRuangan.get(0).getDaftarObjek().add(jam);
-            daftarRuangan.get(0).getDaftarObjek().add(toilet);
-            daftarRuangan.get(0).getDaftarObjek().add(komporgas);
+        daftarRuangan.get(0).getDaftarObjek().add(mejakursi); //cuma sample buat uji coba, nanti bakal dihilangin
+        daftarRuangan.get(0).getDaftarObjek().add(kasur);
+        daftarRuangan.get(0).getDaftarObjek().add(jam);
+        daftarRuangan.get(0).getDaftarObjek().add(toilet);
+        daftarRuangan.get(0).getDaftarObjek().add(komporgas);
 
-            sim.setPosisi(new Point(3,3));
-        }
+        sim.setPosisi(new Point(3,3));
     }
 
     public Point getLokasi(){

@@ -38,6 +38,9 @@ public class Waktu implements Runnable {
                 hariKe++;
                 sisaDetik = 720;
             }
+            for (Sim sim : world.getDaftarSim()) {
+                sim.updateKondisiSim();
+            }
 
         }
 

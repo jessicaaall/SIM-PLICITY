@@ -13,9 +13,9 @@ public class Sim {
     private Ruangan locRuang;
     private Point posisi;
     private int kekenyangan;
-    private int mood;
-    private int kesehatan;
-    private float uang;
+    private int mood= 80;;
+    private int kesehatan= 80;
+    private float uang = 100;
     private Pekerjaan pekerjaan;
     private String status;
     private Inventory<Objek> inventory;
@@ -44,22 +44,23 @@ public class Sim {
     // Konstruktor
     public Sim(String namaLengkap, World theirWorld) {
         this.theirWorld = theirWorld;
-        for (Sim sim: theirWorld.getDaftarSim()){
-            if (sim.getNamaLengkap().equals(namaLengkap)){
-                System.out.println("Nama sudah dipakai");
-                return;
-            }
-        }
+//        for (Sim sim: theirWorld.getDaftarSim()){
+//            if (sim.getNamaLengkap().equals(namaLengkap)){
+//                System.out.println("Nama sudah dipakai");
+//                return;
+//            }
+//        }
         this.namaLengkap = namaLengkap;
         kekenyangan = 80;
         mood = 80;
         kesehatan = 80;
         uang = 100;
-        pekerjaan = new Pekerjaan(rand.nextInt(10));
+        rand = new Random();
+        pekerjaan = new Pekerjaan(rand.nextInt(24,35));
         status = "";
         inventory = new Inventory<Objek>();
         isDuduk = false;
-        isSudahTidur = false;
+        isSudahTidur = true;
         waktuKerja = 0;
         waktuTidur = 0;
         waktuTidakTidur = 0;
@@ -299,6 +300,9 @@ public class Sim {
     }
 
     public void efekTidakTidur() {
+        if (waktuTidakTidur == 0){
+            return;
+        }
         if (waktuTidakTidur % 600 == 0) {
             kesehatan -= 5;
             mood -= 5;
@@ -354,11 +358,12 @@ public class Sim {
      *
      * @param sim sim yang akan dikunjungi
      */
-    public void berkunjung(Sim sim, int waktu) {
+    public void berkunjung(Sim sim) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 setLocRuang(sim.getKepemilikanRumah().getRuanganAcuan());
+                int waktu = (int)Math.sqrt(Math.pow((sim.getKepemilikanRumah().getLokasi().getX() - Sim.this.getKepemilikanRumah().getLokasi().getX()), 2) + Math.pow((sim.getKepemilikanRumah().getLokasi().getY() - Sim.this.getKepemilikanRumah().getLokasi().getY()), 2));
                 int siklus = 1;
                 int periodeSiklus = 30;
                 int sisaWaktu = waktu;
@@ -380,6 +385,9 @@ public class Sim {
             }
         });
         thread.start();
+    }
+    public void pulang() {
+        setLocRuang(Sim.this.getKepemilikanRumah().getRuanganAcuan());
     }
     public void lihatInventory() {
         inventory.showItem();

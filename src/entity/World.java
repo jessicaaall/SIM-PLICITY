@@ -157,9 +157,6 @@ public class World  implements Runnable{
     public void run() {
         while(worldThread != null){
             cekWaktu();
-            for (Sim sim : getDaftarSim()) {
-                sim.updateKondisiSim();
-            }
         }
     }
 
