@@ -26,7 +26,8 @@ public class Kasur extends Perabotan implements BisaDiduduki {
     }
     
     public void tidur(int durasi, Sim sim) {
-        //Scanner sc = new Scanner(System.in);
+        /*
+        Scanner sc = new Scanner(System.in);
         boolean valid = false;
         while (!valid) {
             //System.out.print("Masukkan durasi tidur dalam satuan detik >> ");
@@ -55,7 +56,29 @@ public class Kasur extends Perabotan implements BisaDiduduki {
                 System.out.println(e.getMessage());
             }
         }
-        //sc.close();
+        sc.close();
+        */
+
+        try {
+            if (durasi <= 0) {
+                throw new IllegalArgumentException("Durasi tidur harus lebih besar dari 0 detik.");
+            }
+            long startTime = System.currentTimeMillis();
+            long currentTime = startTime;
+            long endTime = startTime + (durasi*1000);
+            while (currentTime < endTime) {
+                if (currentTime - startTime >= 240000) {
+                    startTime = currentTime;
+                    sim.setMood(sim.getMood() + 30);
+                    sim.setKesehatan(sim.getKesehatan() + 20);
+                }
+                currentTime = System.currentTimeMillis();
+                sim.setWaktuTidur(sim.getWaktuTidakTidur() + 1);
+            }
+            System.out.println("Sim " + sim.getNamaLengkap() + " selesai tidur.");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void membersihkanKasur(Sim sim) {
