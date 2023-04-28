@@ -300,7 +300,7 @@ public class Sim {
     }
 
     public void efekTidakTidur() throws InterruptedException {
-        if (waktuTidakTidur % 600 == 0 && (waktuTidakTidur != 0)) {
+        if (waktuTidakTidur % 600 == 0 && (waktuTidakTidur > 0)) {
             kesehatan -= 5;
             mood -= 5;
             Thread.sleep(1000);
