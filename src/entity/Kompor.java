@@ -22,7 +22,8 @@ public class Kompor extends Perabotan {
         return tipe;
     }
 
-    public void masak(Sim sim) {
+    public void masak(Sim sim, int noMenu) {
+        /*
         System.out.println("===== M E N U =====");
         System.out.println("1. Nasi Ayam");
         System.out.println("2. Nasi Kari");
@@ -70,5 +71,30 @@ public class Kompor extends Perabotan {
             }
         }
         sc.close();
+        */
+
+        Makanan makanan = new Makanan(noMenu + 18);
+        boolean hasAll = true;
+        for (BahanMakanan bahan : makanan.getResep()) {
+            if (!sim.getInventory().checkItem(bahan)) {
+                hasAll = false;
+                break;
+            }
+        }
+        if (hasAll) {
+            for (BahanMakanan bahan : makanan.getResep()) {
+                sim.getInventory().removeItem(bahan);
+            }
+            int waktuMasak = makanan.getPoinKekenyangan() * 1500;
+            long endTime = System.currentTimeMillis() + waktuMasak;
+            while (System.currentTimeMillis() < endTime) {
+
+            }
+            sim.setMood(sim.getMood() + 10);
+            sim.getInventory().addItem(makanan);
+            System.out.println("Makanan " + makanan.getNama() + " selesai dimasak oleh " + sim.getNamaLengkap() + ".");
+        } else {
+            System.out.println("Masak " + makanan.getNama() + " gagal. Ada bahan makanan yang tidak dimiliki.");
+        }
     }
 }

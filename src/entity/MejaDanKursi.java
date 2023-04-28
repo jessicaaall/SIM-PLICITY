@@ -10,9 +10,8 @@ public class MejaDanKursi extends Perabotan implements BisaDiduduki {
         super(1, ruangan);
     }
 
-    public void makan(Sim sim) {
-        duduk(sim);
-
+    public void makan(Sim sim, BisaDimakan makanan) {
+        /*
         List<Objek> inventoryMakanan = new ArrayList<Objek>();
         for (Objek key : sim.getInventory().getContainer().keySet()) {
             if (key instanceof BisaDimakan) {
@@ -53,6 +52,23 @@ public class MejaDanKursi extends Perabotan implements BisaDiduduki {
                 }
             }
             sc.close();
+        }
+        */
+        duduk(sim);
+
+        Objek food = (Objek) makanan;
+        if (sim.getInventory().checkItem(food)) {
+            sim.getInventory().removeItem(food);
+            long endTime = System.currentTimeMillis() + (30 * 1000);
+            while (System.currentTimeMillis() < endTime) {
+
+            }
+            makanan.dimakan(sim);
+            sim.setWaktuTerakhirMakan(sim.getTheirWorld().getWaktu());
+            sim.setIsSudahBuangAir(false);
+            System.out.println("Sim " + sim.getNamaLengkap() + " selesai makan " + food.getNama() + ".");
+        } else {
+            System.out.println("Makanan " + food.getNama() + " tidak ada pada Inventory Sim " + sim.getNamaLengkap() + ".");
         }
 
         berdiri(sim);

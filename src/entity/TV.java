@@ -10,7 +10,8 @@ public class TV extends Perabotan {
         super(8, ruangan);
     }
 
-    public void nontonTV(Sim sim) {
+    public void nontonTV(Sim sim, int durasi) {
+        /*
         Scanner sc = new Scanner(System.in);
         boolean valid = false;
         while (!valid) {
@@ -40,5 +41,19 @@ public class TV extends Perabotan {
             }
         }
         sc.close();
+        */
+
+        long startTime = System.currentTimeMillis();
+        long currentTime = startTime;
+        long endTime = startTime + (durasi*1000);
+        while (currentTime < endTime) {
+            if (currentTime - startTime >= 30000) {
+                startTime = currentTime;
+                sim.setMood(sim.getMood() + 5);
+                sim.setKekenyangan(sim.getKekenyangan() - 2);
+            }
+            currentTime = System.currentTimeMillis();
+        }
+        System.out.println("Sim " + sim.getNamaLengkap() + " selesai menonton TV.");
     }
 }
