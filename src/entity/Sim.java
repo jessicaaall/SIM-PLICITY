@@ -299,10 +299,11 @@ public class Sim {
         thread.start();
     }
 
-    public void efekTidakTidur() {
+    public void efekTidakTidur() throws InterruptedException {
         if (waktuTidakTidur % 600 == 0 && (waktuTidakTidur != 0)) {
             kesehatan -= 5;
             mood -= 5;
+            Thread.sleep(1000);
         }
     }
 
@@ -317,7 +318,11 @@ public class Sim {
                 waktuTidakTidur++;
                 startTime = currentTime;
             }
-            efekTidakTidur();
+            try {
+                efekTidakTidur();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             startTime = null;
         }

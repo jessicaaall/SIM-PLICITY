@@ -61,18 +61,18 @@ public class StatusSimPanel extends JPanel implements MouseListener, MouseMotion
         statusPanel.add(uangLabel);
         statusPanel.add(pekerjaanLabel);
 
-        JButton button = new JButton("Close");
+        JButton closeButton = new JButton("Close");
 
-        button.addActionListener(new ActionListener() {
+        closeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
             }
         });
-        infoPanel.add(button);
+        infoPanel.add(closeButton);
         add(statusPanel, BorderLayout.WEST);
         add(infoPanel, BorderLayout.CENTER);
-        button.setPreferredSize(new Dimension(160, 40));
+        closeButton.setPreferredSize(new Dimension(160, 40));
         setBounds(0,0, 640, 320);
         addMouseListener(this);
         addMouseMotionListener(this);
