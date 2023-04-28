@@ -348,6 +348,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
             // add (-) (kuantitas) (+) button
             SpinnerNumberModel numberModel = new SpinnerNumberModel(1,1,10,1);
             JSpinner kuantitasSpinner = new JSpinner(numberModel);
+            ((JSpinner.DefaultEditor) kuantitasSpinner.getEditor()).getTextField().setEditable(false);
             // get kuantitas from the plus-minus button
 
             optionPanel.add(chooseItemLabel);

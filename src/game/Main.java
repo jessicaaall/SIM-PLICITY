@@ -1,9 +1,5 @@
 package game;
-import entity.Rumah;
-import entity.World;
 
-import javax.swing.*;
-import java.awt.*;
 public class Main {
     public static void main(String[] args) {
         SimplicityUIManager suim = new SimplicityUIManager();
@@ -17,8 +13,6 @@ public class Main {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-
-        // game clock
     }
 }
 
