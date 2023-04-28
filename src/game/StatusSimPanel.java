@@ -28,27 +28,41 @@ public class StatusSimPanel extends JPanel implements MouseListener, MouseMotion
         setOpaque(true);
         setBorder(new LineBorder(Color.BLACK, 5, true));
 
-        JPanel infoPanel = new JPanel(new GridLayout(2, 2, 0, 10));
+        JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 320, 0));
+        infoPanel.setBorder(new LineBorder(Color.lightGray, 1, false));
         infoPanel.setBackground(new Color(150, 178, 102));
         JPanel statusPanel = new JPanel(new GridLayout(0, 1));
         statusPanel.setBackground(new Color(150, 178, 102));
+        statusPanel.setBorder(new LineBorder(Color.lightGray, 1, false));
         JLabel namaSim = new JLabel(sim.getNamaLengkap());
-        namaSim.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+        namaSim.setFont(new Font("Comic Sans MS", Font.BOLD, 36));
         JLabel fotoSim = new JLabel(new ImageIcon(sim.getSimImage().getScaledInstance(40, 80, Image.SCALE_FAST)));
+        fotoSim.setPreferredSize(new Dimension(80,80));
+        fotoSim.setBorder(new LineBorder(Color.BLACK, 3, true));
+        fotoSim.setOpaque(true);
+        fotoSim.setBackground(Color.white);
         kekenyanganLabel = new JLabel("Kekenyangan: "+sim.getKekenyangan());
         moodLabel = new JLabel("Mood: " + sim.getMood());
         kesehatanLabel = new JLabel("Kesehatan: " + sim.getKesehatan());
         uangLabel = new JLabel("Uang: " + sim.getUang());
         pekerjaanLabel = new JLabel("Pekerjaan: " + sim.getPekerjaan().getNamaPekerjaan());
+
+        kekenyanganLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        moodLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        kesehatanLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        uangLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        pekerjaanLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        statusPanel.setPreferredSize(new Dimension(160,320));
         infoPanel.add(fotoSim);
         infoPanel.add(namaSim);
-        infoPanel.add(pekerjaanLabel);
         statusPanel.add(kekenyanganLabel);
         statusPanel.add(moodLabel);
         statusPanel.add(kesehatanLabel);
         statusPanel.add(uangLabel);
+        statusPanel.add(pekerjaanLabel);
 
         JButton button = new JButton("Close");
+
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -58,6 +72,7 @@ public class StatusSimPanel extends JPanel implements MouseListener, MouseMotion
         infoPanel.add(button);
         add(statusPanel, BorderLayout.WEST);
         add(infoPanel, BorderLayout.CENTER);
+        button.setPreferredSize(new Dimension(160, 40));
         setBounds(0,0, 640, 320);
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -115,7 +130,14 @@ public class StatusSimPanel extends JPanel implements MouseListener, MouseMotion
         kekenyanganLabel.setText("Kekenyangan: "+sim.getKekenyangan());
         moodLabel.setText("Mood: " + sim.getMood());
         kesehatanLabel.setText("Kesehatan: " + sim.getKesehatan());
-        pekerjaanLabel.setText("Uang: " + sim.getUang());
+        pekerjaanLabel.setText("Pekerjaan: " + sim.getPekerjaan().getNamaPekerjaan());
         uangLabel.setText("Uang: " + sim.getUang());
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+
     }
 }
