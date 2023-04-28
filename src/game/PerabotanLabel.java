@@ -164,6 +164,14 @@ public class PerabotanLabel extends JLabel {
                 put = false;
                 housePanel.centerPanel.revalidate();
                 housePanel.centerPanel.repaint();
+                //timpa lagi sim di atas ketika ada sesuatu
+                for (Component component : housePanel.centerPanel.getComponents()){
+                    if (component instanceof SimLabel){
+                        SimLabel simLabel = (SimLabel) component;
+                        housePanel.centerPanel.remove(component);
+                        housePanel.centerPanel.add(simLabel, 0);
+                    }
+                }
                 housePanel.revalidate();
                 housePanel.repaint();
             }
@@ -324,6 +332,14 @@ public class PerabotanLabel extends JLabel {
             }
             startDragPoint = null;
             isDragging = false;
+            //timpa lagi sim di atas ketika ada sesuatu
+            for (Component component : housePanel.centerPanel.getComponents()){
+                if (component instanceof SimLabel){
+                    SimLabel simLabel = (SimLabel) component;
+                    housePanel.centerPanel.remove(component);
+                    housePanel.centerPanel.add(simLabel, 0);
+                }
+            }
             repaint();
         }
 

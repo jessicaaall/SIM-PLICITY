@@ -46,6 +46,8 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     // information Label
     JLabel currentFPSLabel;
     JLabel saldoSimLabel;
+
+    StatusSimPanel statusSimPanel;
     DaftarThreadPane daftarThreadPane;
     private boolean isUpgradeRumah = false;
     private boolean validSectionForUpgrade = false;
@@ -282,6 +284,10 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         cameraWidth = 3*mainPanel.width/5;
         cameraHeight = mainPanel.height;
         upgradeRumahPanel = new UpgradeRumahPanel();
+        System.out.println(rumah.getSim().getKekenyangan());
+        System.out.println(rumah.getSim().getKesehatan());
+        System.out.println(rumah.getSim().getMood());
+        System.out.println(rumah.getSim().getPekerjaan());
         startThread();
         repaint();
     }
@@ -451,6 +457,18 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 centerPanel.add(upgradeRumahPanel, 0);
             }
         }
+        if (e.getSource() == statusSimButton){
+            //check whether there is any StatusSimPanel
+            for (Component component : centerPanel.getComponents()){
+                if (component instanceof StatusSimPanel){
+                    centerPanel.remove(component);
+                }
+            }
+            statusSimPanel = new StatusSimPanel(HousePanel.this.rumah.getSim(), HousePanel.this);
+            centerPanel.add(statusSimPanel, 0);
+            centerPanel.revalidate();
+            centerPanel.repaint();
+        }
     }
 
     @Override
@@ -567,7 +585,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     }
                 }
             }
-
+        }
+        if (statusSimPanel != null){
+            statusSimPanel.update();
         }
         repaint();
     }

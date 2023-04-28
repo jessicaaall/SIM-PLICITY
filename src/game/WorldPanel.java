@@ -126,7 +126,9 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     }
 
     public void update(){
+        for (Rumah rumah : world.getDaftarRumah()){
 
+        }
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -206,10 +208,11 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             for (Rumah rumah : world.getDaftarRumah()){
                 if (rumah.getLokasi().equals(mousePoint)){
                     if (currentClickTime - startClickTime >= 1000){
+                        System.out.println(rumah.getSim().getKesehatan());
+                        System.out.println(rumah.getSim().getMood());
+                        System.out.println(rumah.getSim().getPekerjaan().getNamaPekerjaan());
                         System.out.println("You entered the house");
                         HousePanel hp = new HousePanel(this, rumah);
-                        this.mainThread.interrupt();
-                        mainThread = null;
                         mp.remove(wop);
                         mp.remove(this);
                         mp.add(hp);
@@ -217,6 +220,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
                         mp.repaint();
                         startClickTime = currentClickTime;
                         stopMusic();
+                        mainThread = null;
                     }
                 }
             }

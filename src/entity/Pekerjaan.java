@@ -47,7 +47,7 @@ public class Pekerjaan {
             namaPekerjaan = "Selebgram";
             gaji = 40;
         }
-        else if(id == 33){
+        else if(id == 34){
             namaPekerjaan = "Aktor";
             gaji = 40;
         }
