@@ -2,9 +2,10 @@ package entity;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 import java.util.*;
 
-public class Rumah  {
+public class Rumah implements Serializable{
     private Point lokasi = new Point();
     private ArrayList<Ruangan> daftarRuangan = new ArrayList<Ruangan>();
     private Sim sim;

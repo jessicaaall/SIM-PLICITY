@@ -1,11 +1,12 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import thread.ThreadAksi;
 import thread.ThreadAksiPasif;
 
-public class World  implements Runnable{
+public class World  implements Runnable, Serializable {
     /**
      * menambahkan objek-objek apa saja yang ada di dunia
      * @return array dari Objek-objek tersebut

@@ -2,12 +2,15 @@ package game;
 
 import entity.Objek;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 import java.util.Map;
+import java.util.Objects;
 
 public class InventorySlotPanel extends JPanel {
     HousePanel hp;
@@ -39,7 +42,7 @@ public class InventorySlotPanel extends JPanel {
         int iterate = 0;
         for (Map.Entry<Objek, Integer> objekEntry : hp.rumah.getSim().getInventory().getContainer().entrySet()){
             ObjekInventoryLabel oil = new ObjekInventoryLabel(objekEntry, this);
-            oil.setIcon(new ImageIcon(objekEntry.getKey().getImage().getScaledInstance(hp.unitSize, hp.unitSize, Image.SCALE_DEFAULT)));
+            oil.setIcon(new ImageIcon(oil.image.getScaledInstance(hp.unitSize, hp.unitSize, Image.SCALE_DEFAULT)));
             oil.setPreferredSize(new Dimension(hp.unitSize, hp.unitSize));
             this.remove(iterate);
             oil.repaint();

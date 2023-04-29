@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.*;
 
 public class Perabotan extends Objek implements BisaDibeli {

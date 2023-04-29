@@ -75,10 +75,23 @@ public class StartGamePanel extends JPanel implements ActionListener {
             mp.repaint();
 
         } else if (e.getSource() == loadWorldButton) {
-            SaveLoad saveload = new SaveLoad();
-            saveload.load("Sembarang", worldChoice);
-            worldChoice.startThread();
-            showWorldPanel();
+            JPanel panel = new JPanel(new GridLayout(0, 1));
+            JTextField namaFile = new JTextField();
+
+            panel.add(new JLabel("<html>Masukkan Nama File Yang Ingin Di-Load"));
+            panel.add(namaFile);
+            int result = JOptionPane.showConfirmDialog(null, panel, "Save",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            
+            if (result == JOptionPane.OK_OPTION) {
+                String loadFile = namaFile.getText();
+                SaveLoad saveload = new SaveLoad();
+                worldChoice = saveload.load(loadFile);
+                worldChoice.startThread();
+                showWorldPanel();
+            }
+
+            
             
         }
     }

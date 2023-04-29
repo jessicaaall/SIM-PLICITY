@@ -4,10 +4,13 @@ import entity.Objek;
 import entity.Perabotan;
 import entity.Ruangan;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 public class PerabotanLabel extends JLabel {
     HousePanel housePanel;
@@ -37,7 +40,7 @@ public class PerabotanLabel extends JLabel {
         this.roomPanel = roomPanel;
         int width = perabotan.getDimensi().width*PerabotanLabel.this.housePanel.unitSize;
         int height = perabotan.getDimensi().height*PerabotanLabel.this.housePanel.unitSize;
-        Image imagenya = perabotan.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        Image imagenya = generateImage(perabotan.getNama()).getScaledInstance(width, height, Image.SCALE_DEFAULT);
         image = new ImageIcon(imagenya);
         this.setIcon(image);
         this.setOpaque(false);
@@ -395,6 +398,43 @@ public class PerabotanLabel extends JLabel {
                 });
             }
         }
+    }
+
+    private BufferedImage generateImage(String name) {
+        BufferedImage image1 =null;
+        try {
+            image1 =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/" + name + ".png")));
+            return image1;
+        } catch (Exception e) {
+//            e.printStackTrace();
+            image1 = generateDefaultImage();
+            try {
+                image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/mystery box.png")));
+                return image1;
+            } catch (Exception ed) {
+                image1 = generateDefaultImage();
+                return image1;
+            }
+        }
+
+    }
+
+
+    public ImageIcon getImage() {
+        return image;
+    }
+
+    private BufferedImage generateDefaultImage() {
+        // Menghasilkan gambar default atau placeholder
+        // Misalnya, sebuah gambar dengan warna solid dan pesan "Gambar tidak tersedia"
+        BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = image.createGraphics();
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(0, 0, 100, 100);
+        g2d.setColor(Color.BLACK);
+        g2d.drawString("Gambar tidak tersedia", 10, 50);
+        g2d.dispose();
+        return image;
     }
 
 

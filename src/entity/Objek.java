@@ -4,10 +4,11 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Objek {
-    private BufferedImage image = generateDefaultImage();
+public class Objek implements Serializable{
+
 
     private int id;
     private String nama;
@@ -18,9 +19,7 @@ public class Objek {
         return harga;
     }
 
-    public BufferedImage getImage() {
-        return image;
-    }
+
 
 
     public Objek(String nama) {
@@ -77,7 +76,6 @@ public class Objek {
             this.id = 36;
         }
         this.jenis = tipeJenis(this.id);
-        generateImage(this.nama);
     }
 
     public Objek(int id) {
@@ -134,7 +132,6 @@ public class Objek {
         } else if (id == 36) {
             this.nama = "wastafel";
         }
-        generateImage(this.nama);
     }
 
     public Objek(int id, String nama, String jenis) {
@@ -172,32 +169,8 @@ public class Objek {
         return this.id == objek.getId();
     }
 
-    private void generateImage(String name) {
-        try {
-            image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/" + name + ".png")));
-        } catch (Exception e) {
-//            e.printStackTrace();
-            image = generateDefaultImage();
-            try {
-                image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/mystery box.png")));
-            } catch (Exception ed) {
-                image = generateDefaultImage();
-            }
-        }
 
-    }
-    private BufferedImage generateDefaultImage() {
-        // Menghasilkan gambar default atau placeholder
-        // Misalnya, sebuah gambar dengan warna solid dan pesan "Gambar tidak tersedia"
-        BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2d = image.createGraphics();
-        g2d.setColor(Color.WHITE);
-        g2d.fillRect(0, 0, 100, 100);
-        g2d.setColor(Color.BLACK);
-        g2d.drawString("Gambar tidak tersedia", 10, 50);
-        g2d.dispose();
-        return image;
-    }
+
 }
 
 

@@ -3,13 +3,16 @@ package game;
 import entity.Objek;
 import entity.Perabotan;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.Map;
+import java.util.Objects;
 
 public class ObjekInventoryLabel extends JLabel {
     public Map.Entry<Objek, Integer> getObjek() {
@@ -18,6 +21,7 @@ public class ObjekInventoryLabel extends JLabel {
     ObjekInventoryLabel label;
 
     private Map.Entry<Objek, Integer> objek;
+    Image image;
     public InventorySlotPanel ip;
     ObjekInventoryLabel(Map.Entry<Objek, Integer> objek, InventorySlotPanel ip){
         super();
@@ -30,6 +34,7 @@ public class ObjekInventoryLabel extends JLabel {
         this.setOpaque(true);
         MouseListener ml = new MouseListener();
         this.addMouseListener(ml);
+        image = generateImage(objek.getKey().getNama());
         repaint();
 
     }
@@ -45,6 +50,7 @@ public class ObjekInventoryLabel extends JLabel {
             taruhBarangPanel.setSize(new Dimension(2*ip.hp.unitSize, 2*ip.hp.unitSize));
             JButton tombolTaruh = new JButton("Taruh");
             JButton tombolBatal = new JButton("Batal");
+
             tombolTaruh.setFocusable(false);
             tombolTaruh.setBackground(Color.white);
             tombolTaruh.setForeground(new Color(51, 102, 0));
@@ -135,4 +141,38 @@ public class ObjekInventoryLabel extends JLabel {
             super(mgr);
         }
     }
+
+    private BufferedImage generateImage(String name) {
+        BufferedImage image1 =null;
+        try {
+            image1 =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/" + name + ".png")));
+            return image1;
+        } catch (Exception e) {
+//            e.printStackTrace();
+            try {
+                image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/mystery box.png")));
+                return image1;
+            } catch (Exception ed) {
+                image1 = generateDefaultImage();
+                return image1;
+            }
+        }
+
+    }
+
+
+
+    private BufferedImage generateDefaultImage() {
+        // Menghasilkan gambar default atau placeholder
+        // Misalnya, sebuah gambar dengan warna solid dan pesan "Gambar tidak tersedia"
+        BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = image.createGraphics();
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(0, 0, 100, 100);
+        g2d.setColor(Color.BLACK);
+        g2d.drawString("Gambar tidak tersedia", 10, 50);
+        g2d.dispose();
+        return image;
+    }
+
 }

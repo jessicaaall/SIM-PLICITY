@@ -32,11 +32,11 @@ public class Sim {
     private boolean isSudahBuangAir;
     private Waktu waktuTerakhirMakan;
 
-    public BufferedImage getSimImage() {
+    public Image getSimImage() {
         return simImage;
     }
 
-    private BufferedImage simImage;
+    private Image simImage;
     
     // Objek random untuk random apapun yang dirandom wkwkwk
     private Random rand = new Random();

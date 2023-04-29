@@ -11,28 +11,34 @@ public class SaveLoad {
     }
 
     public void save(String namaFile, World world) {
+        ObjectOutputStream oos;
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(namaFile)));
-
+            oos = new ObjectOutputStream(new FileOutputStream(new File(namaFile)));
             DataStorage ds = new DataStorage();
-
             ds.setWorld(world);
-
             oos.writeObject(ds);
-        } catch (Exception e) {
-            System.out.println("Save Exception!");
-        } 
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        
     }
 
-    public void load(String namaFile, World world) {
+    public World load(String namaFile) {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(namaFile)));
 
             DataStorage ds = (DataStorage)ois.readObject();
 
-            world = ds.getWorld();
+            return ds.getWorld();
         } catch(Exception e) {
             System.out.println("Load Exception!");
+            System.out.println("MASUK SINI MAS");
+            return null;
         }
         
     }

@@ -206,7 +206,6 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
                 String saveFile = namaFile.getText();
                 SaveLoad saveLoad = new SaveLoad();
                 saveLoad.save(saveFile, wp.getWorld());
-
             }
 
         }
