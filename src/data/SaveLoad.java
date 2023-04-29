@@ -31,7 +31,7 @@ public class SaveLoad {
 
             DataStorage ds = (DataStorage)ois.readObject();
 
-            wp.setWorld(ds.getWorlrd());
+            wp.setWorld(ds.getWorld());
         } catch(Exception e) {
             System.out.println("Load Exception!");
         }

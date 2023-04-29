@@ -11,7 +11,7 @@ public class DataStorage implements Serializable {
 
     }
 
-    public World getWorlrd() {
+    public World getWorld() {
         return world;
     }
 
