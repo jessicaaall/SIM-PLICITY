@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class WorldOptionPanel extends JPanel implements ActionListener {
     public JButton toMainMenuButton = new JButton("<html>Back to<br>Main Menu</html>");
     public JButton addHouseButton = new JButton("Add Sim");
-    public JButton save = new JButton("Save");
+    public JButton saveButton = new JButton("Save");
     public JSlider volumeSlider = new JSlider(500, 860, 700);
     public JLabel timeLabel;
     public MainPanel mp;
@@ -45,29 +45,42 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
         timeLabel.setHorizontalTextPosition(SwingConstants.CENTER);
         timeLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 10));
         timeLabel.setBounds(0,0, this.getWidth(), timeLabel.getFontMetrics(timeLabel.getFont()).getHeight()*2+15);
-        toMainMenuButton.setFocusable(false);
-        toMainMenuButton.setHorizontalTextPosition(JButton.CENTER);
-        toMainMenuButton.setVerticalTextPosition(JButton.CENTER);
-        toMainMenuButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
 
-        toMainMenuButton.addActionListener(this);
+        toMainMenuButton.setFocusable(false);                                           // done
+        toMainMenuButton.setHorizontalTextPosition(JButton.CENTER);                               // done
+        toMainMenuButton.setVerticalTextPosition(JButton.CENTER);                                 // done
+        toMainMenuButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));             // done
+        toMainMenuButton.addActionListener(this);                                                 // done
         toMainMenuButton.setBackground(Color.yellow);
         toMainMenuButton.setBounds(0, timeLabel.getY()+timeLabel.getHeight(),
                 this.getWidth(),
                 toMainMenuButton.getFontMetrics(toMainMenuButton.getFont()).getHeight()*2+5);
-        addHouseButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
-        addHouseButton.addActionListener(this);
-        addHouseButton.setFocusable(false);
-        addHouseButton.setHorizontalTextPosition(JButton.CENTER);
-        addHouseButton.setVerticalTextPosition(JButton.CENTER);
-        addHouseButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+
+        addHouseButton.addActionListener(this);                                                   // done
+        addHouseButton.setFocusable(false);                                             // done
+        addHouseButton.setHorizontalTextPosition(JButton.CENTER);                                 // done
+        addHouseButton.setVerticalTextPosition(JButton.CENTER);                                   // done
+        addHouseButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));               // done
         addHouseButton.setBounds(0,
                 toMainMenuButton.getY() + toMainMenuButton.getHeight(),
                 this.getWidth(),
                 addHouseButton.getFontMetrics(addHouseButton.getFont()).getHeight()+5);
+
+        saveButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+        saveButton.setVerticalTextPosition(JButton.CENTER);
+        saveButton.setHorizontalTextPosition(JButton.CENTER);
+        saveButton.setFocusable(false);
+        saveButton.addActionListener(this);
+        saveButton.setBounds(0,
+                addHouseButton.getY() + addHouseButton.getHeight(),
+                this.getWidth(),
+                saveButton.getFontMetrics(saveButton.getFont()).getHeight()+5);
+
         add(timeLabel);
         add(toMainMenuButton);
         add(addHouseButton);
+        add(saveButton);
+
         volumeSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -87,7 +100,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
         music.setBackground(Color.white);
         music.setOpaque(true);
         music.setBounds((this.getWidth()-music.getFontMetrics(music.getFont()).stringWidth(music.getText()))/2,
-                addHouseButton.getY()+addHouseButton.getHeight(),
+                saveButton.getY()+saveButton.getHeight(),
                 this.getWidth(),
                 music.getFontMetrics(music.getFont()).getHeight()+3);
         add(music);

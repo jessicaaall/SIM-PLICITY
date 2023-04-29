@@ -11,9 +11,9 @@ public class SaveLoad {
         this.wp = wp;
     }
 
-    public void save() {
+    public void save(String namaFile) {
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("save.dat")));
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(namaFile)));
 
             DataStorage ds = new DataStorage();
 
@@ -25,9 +25,9 @@ public class SaveLoad {
         } 
     }
 
-    public void load() {
+    public void load(String namaFile) {
         try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("save.dat")));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(namaFile)));
 
             DataStorage ds = (DataStorage)ois.readObject();
 
