@@ -300,7 +300,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         Ruangan ruanganBaru = new Ruangan("Ruangan " + rumah.getDaftarRuangan().size()
                 , rumah,new Point((highlightedRoom.getX()-ruanganAcuanPanel.getX())/unitSize,
                 (highlightedRoom.getY()-ruanganAcuanPanel.getY())/unitSize));
-        rumah.addRuangan(ruanganBaru);
+        rumah.upgrade(ruanganBaru);
         RoomPanel newRoomPanel = new RoomPanel(ruanganBaru, rumah, HousePanel.this);
         centerPanel.add(newRoomPanel,0);
         centerPanel.revalidate();
