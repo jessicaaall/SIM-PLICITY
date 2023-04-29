@@ -3,6 +3,7 @@ package game;
 import entity.Rumah;
 import entity.Sim;
 import data.*;
+import entity.World;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -26,9 +27,11 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
     public JLabel timeLabel;
     public MainPanel mp;
     public WorldPanel wp;
+    public World loadedWorld;
     public WorldOptionPanel(MainPanel mainPanel, WorldPanel worldPanel){
         mp = mainPanel; wp = worldPanel;
 //        this.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+        loadedWorld = wp.getWorld();
         setFocusable(false);
         timeLabel = new JLabel("<html> "+ wp.getWorld().getWaktu().tampilkanWaktu()[0] +"<br>" +
                 wp.getWorld().getWaktu().tampilkanWaktu()[1] + "<br>" +
@@ -205,7 +208,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
             if (result == JOptionPane.OK_OPTION) {
                 String saveFile = namaFile.getText();
                 SaveLoad saveLoad = new SaveLoad();
-                saveLoad.save(saveFile, wp.getWorld());
+                saveLoad.save(saveFile, loadedWorld);
             }
 
         }

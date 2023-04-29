@@ -59,7 +59,7 @@ public class World  implements Runnable, Serializable {
     int harike;
     private Waktu waktu;
     private int dailySimCreation;
-    private Thread worldThread;
+    private transient Thread worldThread;
     private ArrayList<ThreadAksi> listThreadAksi;
 
     public ArrayList<ThreadAksiPasif> getListThreadAksiPasif() {

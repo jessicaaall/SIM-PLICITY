@@ -1,9 +1,10 @@
 package thread;
 
+import java.io.Serializable;
 import java.lang.reflect.*;
 import entity.World;
 
-public class ThreadAksi extends Thread {
+public class ThreadAksi extends Thread implements Serializable {
     // Deklarasi atribut
     private String nama;
     private int sisaWaktu;

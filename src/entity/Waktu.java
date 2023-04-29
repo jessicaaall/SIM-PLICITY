@@ -1,12 +1,14 @@
 package entity;
 
-public class Waktu implements Runnable {
+import java.io.Serializable;
+
+public class Waktu implements Runnable, Serializable {
     // Deklarasi variabel
     private World world;
     private int hariKe;
     private int sisaDetik;
 
-    private Thread waktuThread;
+    private transient Thread waktuThread;
 
     // Konstruktor
     public Waktu(World world) {

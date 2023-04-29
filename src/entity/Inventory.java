@@ -1,9 +1,10 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Inventory<T extends Objek> {
+public class Inventory<T extends Objek> implements Serializable {
 
     // Deklarasi Atribut
     private Map<T, Integer> container;

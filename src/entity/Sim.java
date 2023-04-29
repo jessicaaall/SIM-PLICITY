@@ -1,12 +1,12 @@
 package entity;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 import java.awt.*;
 
-public class Sim {
+public class Sim implements Serializable {
     // Deklarasi Variabel
     private World theirWorld;
     private String namaLengkap;
@@ -32,11 +32,6 @@ public class Sim {
     private boolean isSudahBuangAir;
     private Waktu waktuTerakhirMakan;
 
-    public Image getSimImage() {
-        return simImage;
-    }
-
-    private Image simImage;
     
     // Objek random untuk random apapun yang dirandom wkwkwk
     private Random rand = new Random();
@@ -70,11 +65,6 @@ public class Sim {
         kasur = null;
         isSudahBuangAir = false;
         waktuTerakhirMakan = null;
-        try {
-            simImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/sim"+(new Random().nextInt(4)+1)+".png")));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
     
     

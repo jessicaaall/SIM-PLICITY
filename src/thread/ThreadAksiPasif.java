@@ -1,12 +1,13 @@
 package thread;
 
+import java.io.Serializable;
 import java.lang.reflect.*;
 import entity.World;
 
 /**
  * Tipe Object untuk Thread aksi tidak aktif, ketika thread dijalankan, maka tidak akan mengurangi waktu
  */
-public class ThreadAksiPasif extends Thread {
+public class ThreadAksiPasif extends Thread implements Serializable {
     // Deklarasi atribut
     private String nama;
     private int sisaWaktu;

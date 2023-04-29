@@ -28,7 +28,11 @@ public class SimLabel extends JLabel implements MouseListener {
         this.housePanel = housePanel;
         width = 22;
         height = unitSize;
-        simLabelImage = sim.getSimImage().getScaledInstance(width,height, Image.SCALE_DEFAULT);
+        try {
+            simLabelImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/sim"+(new Random().nextInt(4)+1)+".png"))).getScaledInstance(width,height, Image.SCALE_DEFAULT);;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         setPreferredSize(new Dimension(height, height));
         setSize(height, height);
         setIcon(new ImageIcon(simLabelImage));

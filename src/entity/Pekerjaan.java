@@ -1,7 +1,9 @@
 package entity;
 
 
-public class Pekerjaan {
+import java.io.Serializable;
+
+public class Pekerjaan implements Serializable {
     private String namaPekerjaan;
     private int gaji;
     private int id;

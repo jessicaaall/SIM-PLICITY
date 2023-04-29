@@ -36,7 +36,7 @@ public class StatusSimPanel extends JPanel implements MouseListener, MouseMotion
         statusPanel.setBorder(new LineBorder(Color.lightGray, 1, false));
         JLabel namaSim = new JLabel(sim.getNamaLengkap());
         namaSim.setFont(new Font("Comic Sans MS", Font.BOLD, 36));
-        JLabel fotoSim = new JLabel(new ImageIcon(sim.getSimImage().getScaledInstance(40, 80, Image.SCALE_FAST)));
+        JLabel fotoSim = new JLabel(new ImageIcon(new SimLabel(sim,housePanel).simLabelImage.getScaledInstance(40, 80, Image.SCALE_FAST)));
         fotoSim.setPreferredSize(new Dimension(80,80));
         fotoSim.setBorder(new LineBorder(Color.BLACK, 3, true));
         fotoSim.setOpaque(true);
