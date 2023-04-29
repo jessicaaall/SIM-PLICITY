@@ -163,12 +163,6 @@ public class Objek implements Serializable{
     
     @Override
     public boolean equals(Object obj) {
-        if (this == obj){
-            return true;
-        }
-        if (obj == null){
-            return false;
-        }
         Objek objek = (Objek) obj;
         return this.id == objek.getId();
     }

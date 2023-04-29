@@ -148,6 +148,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         saldoSimLabel.setVerticalTextPosition(JLabel.CENTER); */
         eastPanel.add(currentFPSLabel);
         // eastPanel.add(saldoSimLabel);
+        eastPanel.add(daftarThreadPane);
 
         // set panel barat
         westPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 15));
@@ -524,7 +525,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 else{
                     upgradeRumahButton.setEnabled(true);
                 }
-                HousePanel.this.requestFocus();
+                mainPanel.requestFocus();
 
             }
             if (timer >= Math.pow(10, 9)){
@@ -540,6 +541,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 daftarThreadPane.update();
 
                         rumah.getSim().getUang() + "</html>"); */
+                daftarThreadPane.update();
 
             }
         }
