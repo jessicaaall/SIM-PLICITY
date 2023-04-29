@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class WorldOptionPanel extends JPanel implements ActionListener {
     public JButton toMainMenuButton = new JButton("<html>Back to<br>Main Menu</html>");
     public JButton addHouseButton = new JButton("Add Sim");
+    public JButton save = new JButton("Save");
     public JSlider volumeSlider = new JSlider(500, 860, 700);
     public JLabel timeLabel;
     public MainPanel mp;
