@@ -134,8 +134,10 @@ public class Rumah  {
 
  
 
-    public void upgrade(Sim sim){
-        Scanner input = new Scanner(System.in);
+    public void upgrade(Ruangan ruangan){
+        daftarRuangan.add(ruangan);
+        sim.setUang(sim.getUang()-1500);
+        /*Scanner input = new Scanner(System.in);
         if(daftarRuangan.size()<2){
             System.out.print("Masukan lokasi penambahan ruangan (Kanan/Kiri/Atas/Bawah): ");
             String locTambah = input.nextLine();
@@ -232,7 +234,7 @@ public class Rumah  {
                 System.out.println("Ruangan pada "+locTambah+" ruangan acuan sudah ada");
             }            
 
-        }
+        }*/
 
     }
 }
