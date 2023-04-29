@@ -2,7 +2,7 @@ package game;
 
 public class Main {
     public static void main(String[] args) {
-        SimplicityUIManager suim = new SimplicityUIManager();
+        new SimplicityUIManager();
         GameFrame frame = new GameFrame();
         MainPanel mainPanel = new MainPanel(frame);
         mainPanel.gf = frame;
