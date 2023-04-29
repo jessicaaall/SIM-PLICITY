@@ -2,6 +2,7 @@ package entity;
 
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Objek implements Serializable{
 
@@ -160,13 +161,22 @@ public class Objek implements Serializable{
         }
     } 
     
-    public boolean equals(Objek obj) {
-        Objek objek = obj;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj){
+            return true;
+        }
+        if (obj == null){
+            return false;
+        }
+        Objek objek = (Objek) obj;
         return this.id == objek.getId();
     }
 
-
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
 
 

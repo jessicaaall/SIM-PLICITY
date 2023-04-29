@@ -29,7 +29,7 @@ public class SimLabel extends JLabel implements MouseListener {
         width = 22;
         height = unitSize;
         try {
-            simLabelImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/sim"+(new Random().nextInt(4)+1)+".png"))).getScaledInstance(width,height, Image.SCALE_DEFAULT);;
+            simLabelImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/sim"+sim.getRandomSkin()+".png"))).getScaledInstance(width,height, Image.SCALE_DEFAULT);;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

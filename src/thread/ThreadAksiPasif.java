@@ -7,62 +7,34 @@ import entity.World;
 /**
  * Tipe Object untuk Thread aksi tidak aktif, ketika thread dijalankan, maka tidak akan mengurangi waktu
  */
-public class ThreadAksiPasif extends Thread implements Serializable {
+public abstract class ThreadAksiPasif extends Thread implements Serializable {
     // Deklarasi atribut
-    private String nama;
-    private int sisaWaktu;
-    private Method method;
-    private Object object;
-    private World world;
-    private Object[] parameters;
+    protected String nama;
+    protected int sisaWaktu;
+    protected Object object;
+    protected World world;
+    protected Object[] parameters;
+    protected int savedSisaWaktu = 0;
+    protected boolean stopped = false;
 
     // Konstruktor
-    public ThreadAksiPasif(String nama, int sisaWaktu, Method method, Object[] parameters, Object object, World world) {
+    public ThreadAksiPasif(String nama, int sisaWaktu, Object[] parameters, Object object, World world) {
         this.nama = nama;
         this.sisaWaktu = sisaWaktu;
-        this.method = method;
         this.world = world;
         this.object = object;
         this.parameters = parameters;
     }
-    public ThreadAksiPasif(String nama, int sisaWaktu, Method method, Object object, World world) {
+    public ThreadAksiPasif(String nama, int sisaWaktu, Object object, World world) {
         this.nama = nama;
         this.sisaWaktu = sisaWaktu;
-        this.method = method;
         this.world = world;
         this.object = object;
         this.parameters = new Object[0];
     }
 
     // Method
-    @Override
-    public void run() {
-        System.out.println("start");
 
-        while (sisaWaktu > 0){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-
-            }
-//            System.out.print(sisaWaktu + " ");
-            sisaWaktu--;
-        }
-        //delete thread dari daftar thread
-        world.getListThreadAksi().remove(this);
-        System.out.println(this.getNama() + " deleted");
-        try {
-            invoke();
-        } catch (InvocationTargetException e) {
-            System.out.println(e.getMessage());
-
-        } catch (IllegalAccessException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-    public Object invoke() throws InvocationTargetException, IllegalAccessException {
-        return method.invoke(object, parameters);
-    }
 
     public String getNama() {
         return nama;
@@ -80,4 +52,27 @@ public class ThreadAksiPasif extends Thread implements Serializable {
         this.sisaWaktu = sisaWaktu;
     }
 
+    public void stopThread(){
+        stopped = true;
+        savedSisaWaktu = sisaWaktu;
+        interrupt();
+    }
+
+    public void startThread(){
+        if (stopped){
+            sisaWaktu = savedSisaWaktu;
+            stopped = false;
+            start();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return nama + " (" + sisaWaktu + "s)";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return nama.equals(((ThreadAksiPasif)obj).nama);
+    }
 }
