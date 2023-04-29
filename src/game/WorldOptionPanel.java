@@ -204,8 +204,8 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
                 String saveFile = namaFile.getText();
-                SaveLoad saveLoad = new SaveLoad(wp);
-                saveLoad.save(saveFile);
+                SaveLoad saveLoad = new SaveLoad();
+                saveLoad.save(saveFile, wp.getWorld());
 
             }
 

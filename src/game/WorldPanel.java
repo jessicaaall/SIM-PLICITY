@@ -305,7 +305,4 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         }
         repaint();
     }
-
-    // SAVE & LOAD
-    SaveLoad saveLoad = new SaveLoad(this);
 }
