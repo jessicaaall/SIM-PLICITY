@@ -32,6 +32,8 @@ public class SimLabel extends JLabel implements MouseListener {
         setPreferredSize(new Dimension(height, height));
         setSize(height, height);
         setIcon(new ImageIcon(simLabelImage));
+        setAlignmentX(SwingConstants.CENTER);
+        setAlignmentY(SwingConstants.CENTER);
         setBounds(sim.getPosisi().x*unitSize, sim.getPosisi().y*unitSize, height, height);
         setOpaque(false);
         selected = false;
