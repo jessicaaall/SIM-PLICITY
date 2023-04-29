@@ -28,7 +28,7 @@ public class StatusSimPanel extends JPanel implements MouseListener, MouseMotion
         setOpaque(true);
         setBorder(new LineBorder(Color.BLACK, 5, true));
 
-        JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 320, 0));
+        JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 320, 10));
         infoPanel.setBorder(new LineBorder(Color.lightGray, 1, false));
         infoPanel.setBackground(new Color(150, 178, 102));
         JPanel statusPanel = new JPanel(new GridLayout(0, 1));
@@ -61,6 +61,9 @@ public class StatusSimPanel extends JPanel implements MouseListener, MouseMotion
         statusPanel.add(uangLabel);
         statusPanel.add(pekerjaanLabel);
 
+        AksiButton berkunjungButton = new AksiButton("berkunjung");
+        infoPanel.add(berkunjungButton);
+
         JButton closeButton = new JButton("Close");
 
         closeButton.addActionListener(new ActionListener() {
@@ -83,6 +86,17 @@ public class StatusSimPanel extends JPanel implements MouseListener, MouseMotion
         revalidate();
         repaint();
     }
+
+    private class AksiButton extends JButton {
+        AksiButton(String text) {
+            super(text);
+            this.setFont(new Font("SansSerif", Font.PLAIN, 13));
+            this.setBackground(Color.white);
+            this.setForeground(Color.black);
+            this.setFocusable(false);
+        }
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
 
