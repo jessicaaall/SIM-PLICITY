@@ -93,7 +93,7 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
             public void actionPerformed(ActionEvent e) {
                 System.out.println("aksi tidur");
                 //cek apakah ada kasur di sekitar sim
-                ItemChecker<Kasur> itemChecker = new ItemChecker<>();
+                ItemChecker<Kasur> itemChecker = new ItemChecker<>(Kasur.class);
                 Kasur kasur = itemChecker.checkItem();
                 if (kasur == null){
                     JOptionPane.showMessageDialog(null, "Tidak ada kasur di sekitar");
@@ -158,6 +158,14 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
 
     }
     private class ItemChecker<T extends Perabotan>{
+        private final Class<T> tClass;
+        ItemChecker(Class<T> tClass){
+            if (tClass == null){
+                throw new NullPointerException();
+            }
+            this.tClass = tClass;
+        }
+
         public T checkItem(){
             for (int i = -1; i <= 1; i++){
                 for (int j = -1; j <= 1; j++){
@@ -165,8 +173,8 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                     for (Perabotan perabotan : hp.rumah.getSim().getLocRuang().getDaftarObjek()){
                         T t;
                         try {
-                            t = (T) perabotan;
-                        }catch (ClassCastException e){
+                            t = tClass.cast(perabotan);
+                        }catch (RuntimeException e){
                             System.out.println("bukan");
                             continue;
                         }
