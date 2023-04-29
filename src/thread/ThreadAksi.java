@@ -11,6 +11,7 @@ public class ThreadAksi extends Thread {
     private Object object;
     private World world;
     private Object[] parameters;
+    public Thread actionThread;
     
     // Konstruktor
     public ThreadAksi(String nama, int sisaWaktu, Method method, Object[] parameters, Object object, World world) {
