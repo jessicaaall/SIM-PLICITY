@@ -64,6 +64,12 @@ public class StatusSimPanel extends JPanel implements MouseListener, MouseMotion
         AksiButton berkunjungButton = new AksiButton("berkunjung");
         infoPanel.add(berkunjungButton);
 
+        AksiButton kerjaButton = new AksiButton("kerja");
+        infoPanel.add(kerjaButton);
+
+        AksiButton olahragaButton = new AksiButton("olahraga");
+        infoPanel.add(olahragaButton);
+
         JButton closeButton = new JButton("Close");
 
         closeButton.addActionListener(new ActionListener() {

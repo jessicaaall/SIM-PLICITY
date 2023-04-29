@@ -2,22 +2,21 @@ package data;
 
 import java.io.*;
 
-import game.WorldPanel;
+import entity.World;
 
 public class SaveLoad {
-    private WorldPanel wp;
 
-    public SaveLoad(WorldPanel wp) {
-        this.wp = wp;
+    public SaveLoad() {
+        
     }
 
-    public void save(String namaFile) {
+    public void save(String namaFile, World world) {
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(namaFile)));
 
             DataStorage ds = new DataStorage();
 
-            ds.setWorld(wp.getWorld());
+            ds.setWorld(world);
 
             oos.writeObject(ds);
         } catch (Exception e) {
@@ -25,15 +24,16 @@ public class SaveLoad {
         } 
     }
 
-    public void load(String namaFile) {
+    public void load(String namaFile, World world) {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(namaFile)));
 
             DataStorage ds = (DataStorage)ois.readObject();
 
-            wp.setWorld(ds.getWorld());
+            world = ds.getWorld();
         } catch(Exception e) {
             System.out.println("Load Exception!");
         }
+        
     }
 }

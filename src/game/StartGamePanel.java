@@ -75,7 +75,11 @@ public class StartGamePanel extends JPanel implements ActionListener {
             mp.repaint();
 
         } else if (e.getSource() == loadWorldButton) {
-            SaveLoad saveload = new SaveLoad(null);
+            SaveLoad saveload = new SaveLoad();
+            saveload.load("Sembarang", worldChoice);
+            worldChoice.startThread();
+            showWorldPanel();
+            
         }
     }
 

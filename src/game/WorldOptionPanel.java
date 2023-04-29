@@ -2,6 +2,7 @@ package game;
 
 import entity.Rumah;
 import entity.Sim;
+import data.*;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -91,7 +92,6 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
                 else{
                     wp.sound.setVolume(-86f);
                 }
-
             }
         });
         JLabel music = new JLabel("Music Volume");
@@ -124,9 +124,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
             mp.remove(wp);
             mp.revalidate();
             mp.repaint();
-        }
-
-        else if (e.getSource() == addHouseButton){
+        } else if (e.getSource() == addHouseButton){
             JPanel panel = new JPanel(new GridLayout(0, 1));
             JLabel label = new JLabel("<html>Set the coordinate of your house:<br></html>");
             JTextField xField = new JTextField();
@@ -196,6 +194,21 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
                     wp.getWorld().tambahSim(simBaru);
                 }
             }
+        } else if (e.getSource() == saveButton) {
+            JPanel panel = new JPanel(new GridLayout(0, 1));
+            JTextField namaFile = new JTextField();
+
+            panel.add(new JLabel("<html>Masukkan Nama File Yang Ingin Disimpan"));
+            panel.add(namaFile);
+            int result = JOptionPane.showConfirmDialog(null, panel, "Save",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+                String saveFile = namaFile.getText();
+                SaveLoad saveLoad = new SaveLoad();
+                saveLoad.save(saveFile, wp.getWorld());
+
+            }
+
         }
     }
 
