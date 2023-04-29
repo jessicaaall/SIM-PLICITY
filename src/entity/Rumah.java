@@ -28,21 +28,26 @@ public class Rumah  {
         daftarRuangan.add(ruangan1);
 //            daftarRuangan.add(new Ruangan("Ruangan 2", this, new Point( 0, 6)));
         Perabotan mejakursi = new MejaDanKursi(ruangan1); //cuma sample buat uji coba, nanti bakal dihilangin
-        mejakursi.setKiriAtas(new Point(0,0));//cuma sample buat uji coba, nanti bakal dihilangin
         Perabotan kasur = new Kasur(5, ruangan1);
-        kasur.setKiriAtas(new Point(2, 5));
         Perabotan jam = new Jam(world,ruangan1);
-        jam.setKiriAtas(new Point(0, 4));
         Perabotan toilet = new Toilet(ruangan1);
-        toilet.setKiriAtas(new Point(0, 5));
         Perabotan komporgas = new Kompor(2, ruangan1);
-        komporgas.setKiriAtas(new Point(4, 0));
-
-        daftarRuangan.get(0).getDaftarObjek().add(mejakursi); //cuma sample buat uji coba, nanti bakal dihilangin
-        daftarRuangan.get(0).getDaftarObjek().add(kasur);
-        daftarRuangan.get(0).getDaftarObjek().add(jam);
-        daftarRuangan.get(0).getDaftarObjek().add(toilet);
-        daftarRuangan.get(0).getDaftarObjek().add(komporgas);
+//        toilet.setKiriAtas(new Point(0, 5));
+//        jam.setKiriAtas(new Point(0, 4));
+//        kasur.setKiriAtas(new Point(2, 5));
+//        mejakursi.setKiriAtas(new Point(0,0));//cuma sample buat uji coba, nanti bakal dihilangin
+//        komporgas.setKiriAtas(new Point(4, 0));
+//
+//        daftarRuangan.get(0).getDaftarObjek().add(mejakursi); //cuma sample buat uji coba, nanti bakal dihilangin
+//        daftarRuangan.get(0).getDaftarObjek().add(kasur);
+//        daftarRuangan.get(0).getDaftarObjek().add(jam);
+//        daftarRuangan.get(0).getDaftarObjek().add(toilet);
+//        daftarRuangan.get(0).getDaftarObjek().add(komporgas);
+        sim.getInventory().addItem(mejakursi);
+        sim.getInventory().addItem(kasur);
+        sim.getInventory().addItem(jam);
+        sim.getInventory().addItem(toilet);
+        sim.getInventory().addItem(komporgas);
 
         sim.setPosisi(new Point(3,3));
     }
