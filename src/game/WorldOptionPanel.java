@@ -135,12 +135,6 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
         wp.wop = this;
     }
 
-    private int x;
-    private int y;
-    public void setXY(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toMainMenuButton){
@@ -255,7 +249,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
                 return;
             }
             JPanel panel = new JPanel(new GridLayout(0,1));
-            panel.setBackground(new Color(150, 178, 102));
+            panel.setBackground(Color.white);
             JLabel titleLabel = new JLabel("LOKASI SIM SAAT INI");
             JLabel lineLabel = new JLabel("-------------------------------------------");
             titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -267,8 +261,8 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
             panel.add(rumahLocLabel);
             panel.add(ruanganLocLabel);
             panel.setOpaque(true);
-            panel.setBorder(new LineBorder(Color.BLACK, 3, true));
-            panel.setBounds(wp.getMapX()+(wp.getWidth()-200)/2, wp.getMapY()+(wp.getHeight()-100)/2, 200, 100);
+            panel.setBorder(new LineBorder(Color.BLACK, 2, false));
+            panel.setBounds(wp.getMapX()+(wp.getWidth()-200)/2, wp.getMapY()+(wp.getHeight()-100)/2, 200, 130);
             panel.setFocusable(false);
             wp.viewCurrentLocationPanel = panel;
             wp.add(panel);
