@@ -34,6 +34,7 @@ public class SimLabel extends JLabel implements MouseListener {
         setIcon(new ImageIcon(simLabelImage));
         setAlignmentX(SwingConstants.CENTER);
         setAlignmentY(SwingConstants.CENTER);
+
         setBounds(sim.getPosisi().x*unitSize, sim.getPosisi().y*unitSize, height, height);
         setOpaque(false);
         selected = false;
@@ -47,22 +48,20 @@ public class SimLabel extends JLabel implements MouseListener {
         System.out.printf("memilih %s\n", sim.getNamaLengkap());
         for (Component component : housePanel.centerPanel.getComponents()){
             if (component instanceof SimLabel){
-                if (!((SimLabel) component).selected){
-                    ((SimLabel) component).setBorder(null);
-                    //cek apakah dia sudah enggak diselect dan selectedSim sudah ada
-                    if (housePanel.selectedSim == null){
-                        continue;
-                    }
-                    if (component.getLocation().equals(housePanel.selectedSim.getLocation())){
-                        housePanel.selectedSim = null;
-                    }
+                ((SimLabel) component).setBorder(null);
+                //cek apakah dia sudah enggak diselect dan selectedSim sudah ada
+                if (housePanel.selectedSim == null){
+                    continue;
+                }
+                if (component.getLocation().equals(housePanel.selectedSim.getLocation())){
+                    housePanel.selectedSim = null;
                 }
             }
         }
         if (!selected){
             selected = true;
             Color color = new Color(200, 100, 60);
-            setBorder(BorderFactory.createLineBorder(color, 3, true));
+            setBorder(BorderFactory.createLineBorder(color, 1, true));
             housePanel.selectedSim = this;
             return;
         }

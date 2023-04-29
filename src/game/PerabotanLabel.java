@@ -1,5 +1,6 @@
 package game;
 
+import entity.Kasur;
 import entity.Objek;
 import entity.Perabotan;
 import entity.Ruangan;
@@ -181,6 +182,20 @@ public class PerabotanLabel extends JLabel {
             else {
                 if (isDragging){
                     return;
+                }
+                // untuk metode aksi
+                if (housePanel.selectedSim != null){
+                    JPanel container = new JPanel(new FlowLayout());
+                    container.setBounds(e.getX(), e.getY(), 3*housePanel.unitSize, 2*housePanel.unitSize);
+                    if (PerabotanLabel.this.perabotan instanceof Kasur){
+                        JButton tidurButton = new JButton("Tidur");
+                        tidurButton.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Kasur kasur = (Kasur) PerabotanLabel.this.perabotan;
+                            }
+                        });
+                    }
                 }
                 /* Masukkan panel untuk memasukkan ke inventory*/
                 for (Component component : housePanel.centerPanel.getComponents()){

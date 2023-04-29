@@ -149,8 +149,13 @@ public class Ruangan implements Serializable {
      * @param barang : barang yang ingin dihilangkan
     * */
     public void hilangkan(Perabotan barang){
+<<<<<<< HEAD
         Iterator<Perabotan> it= daftarObjek.iterator();
         while (it.hasNext()){
+=======
+        Iterator<Perabotan> it = daftarObjek.iterator();
+        while(it.hasNext()){
+>>>>>>> 865ff6fc02257a885ac44af581ba65a6a4a8f9fc
             Perabotan perabotan = it.next();
             if(perabotan.equals(barang)){
                 it.remove();
