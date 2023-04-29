@@ -32,6 +32,8 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     private int mouseHoverX = -1;
     private int mouseHoverY = -1;
 
+    public JPanel viewCurrentLocationPanel;
+
 
     TileManager tileManager = new TileManager(this);
     Sound sound = new Sound();
@@ -129,7 +131,9 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             wop.repaint();
 
             wop.setLocation(mapX + getWidth() - wop.getWidth() - 10, mapY + 10);
-
+            if (viewCurrentLocationPanel != null){
+                viewCurrentLocationPanel.setLocation(getMapX()+(getWidth()-200)/2, getMapY()+(getHeight()-100)/2);
+            }
         }
     }
 
