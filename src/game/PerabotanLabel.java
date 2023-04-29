@@ -193,6 +193,17 @@ public class PerabotanLabel extends JLabel {
                         Math.floorDiv(clickedComp.getY() - housePanel.ruanganAcuanPanel.getY(), housePanel.unitSize)
                 ));
                 housePanel.isGoToObject = false;
+                for (Component component : housePanel.westPanel.getComponents()){
+                    if (component instanceof JButton jb){
+                        if (jb.getText().equals(housePanel.goToObjectButton.getText())){
+                            continue;
+                        }
+                        if (jb.isEnabled()){
+                            continue;
+                        }
+                        jb.setEnabled(true);
+                    }
+                }
             }
             else {
                 if (isDragging){

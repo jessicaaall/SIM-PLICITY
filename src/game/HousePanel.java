@@ -83,7 +83,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 //        repaint();
     }
 
-    private class HousePanelButton extends JButton{
+    public class HousePanelButton extends JButton{
         HousePanelButton(String text){
             super(text);
             Font font = new Font("Comic Sans MS", Font.PLAIN, 15);
@@ -524,11 +524,33 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     JOptionPane.showMessageDialog(null, "Tidak ada object");
                     return;
                 }
+                for (Component component : westPanel.getComponents()){
+                    if (component instanceof JButton jb){
+                        if (jb.getText().equals(goToObjectButton.getText())){
+                            continue;
+                        }
+                        if (!jb.isEnabled()){
+                            continue;
+                        }
+                        jb.setEnabled(false);
+                    }
+                }
                 System.out.println(selectedSim.sim.getNamaLengkap());
                 System.out.println("silakan pilih objek yang ingin dituju");
                 isGoToObject = true;
             }
             else{
+                for (Component component : westPanel.getComponents()){
+                    if (component instanceof JButton jb){
+                        if (jb.getText().equals(goToObjectButton.getText())){
+                            continue;
+                        }
+                        if (jb.isEnabled()){
+                            continue;
+                        }
+                        jb.setEnabled(true);
+                    }
+                }
                 System.out.println("matikan go to object");
                 isGoToObject = false;
             }
