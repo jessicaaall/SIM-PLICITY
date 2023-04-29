@@ -32,84 +32,81 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
     public WorldPanel wp;
     public World loadedWorld;
     public WorldOptionPanel(MainPanel mainPanel, WorldPanel worldPanel){
+        super(new BorderLayout());
         mp = mainPanel; wp = worldPanel;
 //        this.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         loadedWorld = wp.getWorld();
+        Dimension size = new Dimension(170, wp.getHeight()/3+70);
+        this.setSize(size);
+        this.setPreferredSize(size);
+        this.setBounds(wp.getWidth() - this.getWidth() - 10,10, 170, wp.getHeight()/3+70);
+        this.setBackground(Color.white);
         setFocusable(false);
+
+        JPanel main = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
+        main.setBackground(Color.white);
+        JPanel panel1 = new JPanel();
+        panel1.setBackground(Color.white);
+        panel1.setPreferredSize(new Dimension(170,50));
+
         timeLabel = new JLabel("<html> "+ wp.getWorld().getWaktu().tampilkanWaktu()[0] +"<br>" +
                 wp.getWorld().getWaktu().tampilkanWaktu()[1] + "<br>" +
                 wp.getWorld().getWaktu().tampilkanWaktu()[2] + "</html>");
 //        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
-        GridLayout layout = new GridLayout(0, 1);
-        layout.setVgap(5);
-        setLayout(layout);
-        Dimension size = new Dimension(170, wp.getHeight()/2+10);
-        this.setSize(size);
-        this.setPreferredSize(size);
-        this.setBounds(wp.getWidth() - this.getWidth() - 10,10, 170, wp.getHeight()/2+10);
-        this.setBackground(Color.white);
+        
         timeLabel.setFocusable(false);
 //        timeLabel.setOpaque(true);
         timeLabel.setVerticalTextPosition(SwingConstants.CENTER);
         timeLabel.setHorizontalTextPosition(SwingConstants.CENTER);
         timeLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 10));
-        timeLabel.setBounds(0,0, this.getWidth(), timeLabel.getFontMetrics(timeLabel.getFont()).getHeight()*2+15);
-
-        toMainMenuButton.setFocusable(false);                                           // done
-        toMainMenuButton.setHorizontalTextPosition(JButton.CENTER);                               // done
-        toMainMenuButton.setVerticalTextPosition(JButton.CENTER);                                 // done
+        
+        JPanel panel2 = new JPanel();
+        panel2.setBackground(Color.white);
+        GridLayout layout1 = new GridLayout(5,1);
+        layout1.setVgap(5);
+        panel2.setLayout(layout1);
+        
         toMainMenuButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));             // done
         toMainMenuButton.addActionListener(this);                                                 // done
         toMainMenuButton.setBackground(Color.yellow);
-        toMainMenuButton.setBounds(0, timeLabel.getY()+timeLabel.getHeight(),
-                this.getWidth(),
-                toMainMenuButton.getFontMetrics(toMainMenuButton.getFont()).getHeight()+5);
+        toMainMenuButton.setPreferredSize(new Dimension(100,25));
+
+        panel1.add(timeLabel);
+        main.add(panel1);
 
         addHouseButton.addActionListener(this);                                                   // done
         addHouseButton.setFocusable(false);                                             // done
         addHouseButton.setHorizontalTextPosition(JButton.CENTER);                                 // done
         addHouseButton.setVerticalTextPosition(JButton.CENTER);                                   // done
         addHouseButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));               // done
-        addHouseButton.setBounds(0,
-                toMainMenuButton.getY() + toMainMenuButton.getHeight(),
-                this.getWidth(),
-                addHouseButton.getFontMetrics(addHouseButton.getFont()).getHeight()+5);
 
         changeSimButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
         changeSimButton.setVerticalTextPosition(JButton.CENTER);
         changeSimButton.setHorizontalTextPosition(JButton.CENTER);
         changeSimButton.setFocusable(false);
-        changeSimButton.setBounds(0,
-                changeSimButton.getY() + changeSimButton.getHeight(),
-                this.getWidth(),
-                changeSimButton.getFontMetrics(changeSimButton.getFont()).getHeight()+5);
 
         viewCurrentLocButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
         viewCurrentLocButton.setVerticalTextPosition(JButton.CENTER);
         viewCurrentLocButton.setHorizontalTextPosition(JButton.CENTER);
         viewCurrentLocButton.setFocusable(false);
         viewCurrentLocButton.addActionListener(this);
-        viewCurrentLocButton.setBounds(0,
-                viewCurrentLocButton.getY() + viewCurrentLocButton.getHeight(),
-                this.getWidth(),
-                viewCurrentLocButton.getFontMetrics(viewCurrentLocButton.getFont()).getHeight()+5);
 
         saveButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
         saveButton.setVerticalTextPosition(JButton.CENTER);
         saveButton.setHorizontalTextPosition(JButton.CENTER);
         saveButton.setFocusable(false);
         saveButton.addActionListener(this);
-        saveButton.setBounds(0,
-                addHouseButton.getY() + addHouseButton.getHeight(),
-                this.getWidth(),
-                saveButton.getFontMetrics(saveButton.getFont()).getHeight()+5);
 
-        add(timeLabel);
-        add(toMainMenuButton);
-        add(addHouseButton);
-        add(changeSimButton);
-        add(viewCurrentLocButton);
-        add(saveButton);
+        panel2.add(toMainMenuButton);
+        panel2.add(addHouseButton);
+        panel2.add(changeSimButton);
+        panel2.add(viewCurrentLocButton);
+        panel2.add(saveButton);
+        main.add(panel2);
+
+        JPanel panel3 = new JPanel();
+        panel3.setBackground(Color.white);
+        panel3.setPreferredSize(new Dimension(160,50));
 
         volumeSlider.addChangeListener(new ChangeListener() {
             @Override
@@ -128,18 +125,16 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
         music.setHorizontalTextPosition(SwingConstants.CENTER);
         music.setBackground(Color.white);
         music.setOpaque(true);
-        music.setBounds((this.getWidth()-music.getFontMetrics(music.getFont()).stringWidth(music.getText()))/2,
-                saveButton.getY()+saveButton.getHeight(),
-                this.getWidth(),
-                music.getFontMetrics(music.getFont()).getHeight()+3);
-        add(music);
-        volumeSlider.setBounds(0, music.getY()+music.getHeight(), this.getWidth(), 15);
-        add(volumeSlider);
+        volumeSlider.setPreferredSize(new Dimension(160,20));
+
+        panel3.add(music);
+        panel3.add(volumeSlider);
+        main.add(panel3);
+
+        add(main, BorderLayout.CENTER);
         wp.wop = this;
     }
 
-    private Sim chosenSim;
-    private String chosenSimName;
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toMainMenuButton){
@@ -254,7 +249,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
                 return;
             }
             JPanel panel = new JPanel(new GridLayout(0,1));
-            panel.setBackground(new Color(150, 178, 102));
+            panel.setBackground(Color.white);
             JLabel titleLabel = new JLabel("LOKASI SIM SAAT INI");
             JLabel lineLabel = new JLabel("-------------------------------------------");
             titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -266,8 +261,8 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
             panel.add(rumahLocLabel);
             panel.add(ruanganLocLabel);
             panel.setOpaque(true);
-            panel.setBorder(new LineBorder(Color.BLACK, 3, true));
-            panel.setBounds(wp.getMapX()+(wp.getWidth()-200)/2, wp.getMapY()+(wp.getHeight()-100)/2, 200, 100);
+            panel.setBorder(new LineBorder(Color.BLACK, 2, false));
+            panel.setBounds(wp.getMapX()+(wp.getWidth()-200)/2, wp.getMapY()+(wp.getHeight()-100)/2, 200, 130);
             panel.setFocusable(false);
             wp.viewCurrentLocationPanel = panel;
             wp.add(panel);
