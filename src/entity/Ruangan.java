@@ -148,9 +148,11 @@ public class Ruangan {
      * @param barang : barang yang ingin dihilangkan
     * */
     public void hilangkan(Perabotan barang){
-        for(Perabotan perabotan: daftarObjek){
+        Iterator<Perabotan> it = daftarObjek.iterator();
+        while(it.hasNext()){
+            Perabotan perabotan = it.next();
             if(perabotan.equals(barang)){
-                daftarObjek.remove(barang);
+                it.remove();
             }
         }
     }
