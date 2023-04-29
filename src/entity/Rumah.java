@@ -28,11 +28,11 @@ public class Rumah implements Serializable{
         ruanganAcuan = ruangan1;
         daftarRuangan.add(ruangan1);
 //            daftarRuangan.add(new Ruangan("Ruangan 2", this, new Point( 0, 6)));
-        Perabotan mejakursi = new MejaDanKursi(ruangan1); //cuma sample buat uji coba, nanti bakal dihilangin
-        Perabotan kasur = new Kasur(5, ruangan1);
-        Perabotan jam = new Jam(world,ruangan1);
-        Perabotan toilet = new Toilet(ruangan1);
-        Perabotan komporgas = new Kompor(2, ruangan1);
+        Perabotan mejakursi = new MejaDanKursi(); //cuma sample buat uji coba, nanti bakal dihilangin
+        Perabotan kasur = new Kasur(5);
+        Perabotan jam = new Jam(world);
+        Perabotan toilet = new Toilet();
+        Perabotan komporgas = new Kompor(2);
 //        toilet.setKiriAtas(new Point(0, 5));
 //        jam.setKiriAtas(new Point(0, 4));
 //        kasur.setKiriAtas(new Point(2, 5));

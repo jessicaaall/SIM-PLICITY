@@ -7,6 +7,7 @@ import entity.World;
 import javax.swing.*;
 
 import data.SaveLoad;
+import thread.ThreadAksiPasif;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -51,6 +52,9 @@ public class StartGamePanel extends JPanel implements ActionListener {
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (res == JOptionPane.OK_OPTION){
                 String stringNamaSim = namaSim.getText();
+                if (stringNamaSim.length() == 0){
+                    JOptionPane.showMessageDialog(null, "Nama tidak boleh kosong");
+                }
                 worldChoice = new World();
                 Sim addedSim = new Sim(stringNamaSim, worldChoice);
                 worldChoice.setChosenSim(addedSim);
@@ -89,6 +93,11 @@ public class StartGamePanel extends JPanel implements ActionListener {
                 SaveLoad saveload = new SaveLoad();
                 worldChoice = saveload.load(loadFile);
                 worldChoice.startThread();
+                for (ThreadAksiPasif threadAksiPasif : worldChoice.getListThreadAksiPasif()){
+                    synchronized (threadAksiPasif){
+                        threadAksiPasif.startThread();
+                    }
+                }
                 showWorldPanel();
             }
 

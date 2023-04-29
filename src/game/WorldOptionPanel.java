@@ -145,10 +145,10 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
         if (e.getSource() == toMainMenuButton){
 
             JPanel warningMessage = new JPanel(new GridLayout(0,1));
-            JLabel label = new JLabel("Anda belum menyimpan data permainan.");
+            JLabel label = new JLabel("Pastikan bahwa file data telah disimpan.");
             JLabel label2 = new JLabel("Yakin ingin keluar?");
             warningMessage.add(label);warningMessage.add(label2);
-            int result = JOptionPane.showConfirmDialog(null, warningMessage, "Belum disave gan"
+            int result = JOptionPane.showConfirmDialog(null, warningMessage, "Reminder"
                     , JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
             if (result == JOptionPane.OK_OPTION){
                 System.out.println("Exit Game");

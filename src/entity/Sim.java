@@ -15,7 +15,7 @@ public class Sim implements Serializable {
     private int kekenyangan;
     private int mood= 80;;
     private int kesehatan= 80;
-    private float uang = 100;
+    private int uang = 100;
     private Pekerjaan pekerjaan;
     private String status;
     private Inventory<Objek> inventory;
@@ -67,6 +67,7 @@ public class Sim implements Serializable {
         kasur = null;
         isSudahBuangAir = false;
         waktuTerakhirMakan = null;
+        randomSkin = new Random().nextInt(4)+1;
     }
     
     
@@ -92,7 +93,7 @@ public class Sim implements Serializable {
     public int getKesehatan() {
         return kesehatan;
     }
-    public float getUang() {
+    public int getUang() {
         return uang;
     }
     public Pekerjaan getPekerjaan() {
@@ -133,6 +134,12 @@ public class Sim implements Serializable {
         return waktuKerja;
     }
 
+    public int getRandomSkin() {
+        return randomSkin;
+    }
+
+    private int randomSkin;
+
     // Method : Setter
     public void setLocRuang(Ruangan newLocRuang) {
         locRuang = newLocRuang;
@@ -165,7 +172,7 @@ public class Sim implements Serializable {
         }
         kesehatan = newKesehatan;
     }
-    public void setUang(float newUang) {
+    public void setUang(int newUang) {
         uang = newUang;
     }
     public void setIsDuduk(boolean newIsDuduk) {
