@@ -486,6 +486,17 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
             centerPanel.revalidate();
             centerPanel.repaint();
         }
+        if (e.getSource() == actionButton) {
+            for (Component component : centerPanel.getComponents()){
+                if (component instanceof ActionPanel){
+                    centerPanel.remove(component);
+                }
+            }
+            ActionPanel actionPanel = new ActionPanel();
+            centerPanel.add(actionPanel, 0);
+            centerPanel.revalidate();
+            centerPanel.repaint();
+        }
     }
 
     @Override
