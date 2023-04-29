@@ -1,8 +1,6 @@
 package game;
 
 import entity.*;
-import thread.ThreadAksi;
-import thread.ThreadAksiPasif;
 import thread.ThreadBeli;
 import thread.ThreadUpgradeRumah;
 
@@ -567,8 +565,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 if (component instanceof RoomPanel || component instanceof HighlightedPanel ||component instanceof SimLabel){
                     component.setBounds(component.getX() + speed, component.getY(), component.getWidth(), component.getHeight());
                 }
-                if (component instanceof  PerabotanLabel){
-                    PerabotanLabel pl = (PerabotanLabel) component;
+                if (component instanceof PerabotanLabel pl){
                     pl.setBounds(pl.getX() + speed, pl.getY(), pl.getWidth(), pl.getHeight());
                     if (pl.startDragPoint != null){
                         pl.startDragPoint.translate(speed, 0);
@@ -581,8 +578,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 if (component instanceof RoomPanel|| component instanceof HighlightedPanel||component instanceof SimLabel){
                     component.setBounds(component.getX()-speed, component.getY(), component.getWidth(), component.getHeight());
                 }
-                if (component instanceof  PerabotanLabel){
-                    PerabotanLabel pl = (PerabotanLabel) component;
+                if (component instanceof PerabotanLabel pl){
                     pl.setBounds(pl.getX() - speed, pl.getY(), pl.getWidth(), pl.getHeight());
                     if (pl.startDragPoint != null){
                         pl.startDragPoint.translate(-speed, 0);
@@ -596,8 +592,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     component.setBounds(component.getX(), component.getY()-speed, component.getWidth(), component.getHeight());
 
                 }
-                if (component instanceof  PerabotanLabel){
-                    PerabotanLabel pl = (PerabotanLabel) component;
+                if (component instanceof PerabotanLabel pl){
                     pl.setBounds(pl.getX(), pl.getY()-speed, pl.getWidth(), pl.getHeight());
                     if (pl.startDragPoint != null){
                         pl.startDragPoint.translate(0, -speed);
@@ -610,8 +605,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 if (component instanceof RoomPanel|| component instanceof HighlightedPanel||component instanceof SimLabel){
                     component.setBounds(component.getX(), component.getY()+speed, component.getWidth(), component.getHeight());
                 }
-                if (component instanceof  PerabotanLabel){
-                    PerabotanLabel pl = (PerabotanLabel) component;
+                if (component instanceof PerabotanLabel pl){
                     pl.setBounds(pl.getX(), pl.getY()+speed, pl.getWidth(), pl.getHeight());
                     if (pl.startDragPoint != null){
                         pl.startDragPoint.translate(0, speed);
@@ -665,8 +659,8 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     }
 
     private class UpgradeRumahPanel extends JPanel implements ActionListener{
-        HousePanelButton OKButton = new HousePanelButton("OK");
-        HousePanelButton cancelButton = new HousePanelButton("Batal");
+        HousePanelButton OKButton;
+        HousePanelButton cancelButton;
         ButtonContainer buttonContainer;
 
         UpgradeRumahPanel(){
@@ -738,7 +732,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
             String text2 = "Yakin untuk melanjutkan?";
             int fontHeight2 = getFontMetrics(font1).getHeight();
             int fontWidth2 = getFontMetrics(font1).stringWidth(text2);
-            int drawStringX2 = (getWidth()-fontWidth1)/2;
+            int drawStringX2 = (getWidth()-fontWidth2)/2;
             int drawStringY2 = 5+fontHeight1+fontHeight2;
             g2d.setFont(font2);
             g2d.drawString(text2, drawStringX2,drawStringY2);
