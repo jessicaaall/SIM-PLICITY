@@ -6,6 +6,7 @@ import data.*;
 import entity.World;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.AbstractDocument;
@@ -20,8 +21,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class WorldOptionPanel extends JPanel implements ActionListener {
-    public JButton toMainMenuButton = new JButton("<html>Back to<br>Main Menu</html>");
+    public JButton toMainMenuButton = new JButton("Back to Main Menu");
     public JButton addHouseButton = new JButton("Add Sim");
+    public JButton changeSimButton = new JButton("Change Sim");
+    public JButton viewCurrentLocButton = new JButton("View Current Location");
     public JButton saveButton = new JButton("Save");
     public JSlider volumeSlider = new JSlider(500, 860, 700);
     public JLabel timeLabel;
@@ -37,11 +40,13 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
                 wp.getWorld().getWaktu().tampilkanWaktu()[1] + "<br>" +
                 wp.getWorld().getWaktu().tampilkanWaktu()[2] + "</html>");
 //        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
-        setLayout(new GridLayout(0,1));
-        Dimension size = new Dimension(160, wp.getHeight()/3);
+        GridLayout layout = new GridLayout(0, 1);
+        layout.setVgap(5);
+        setLayout(layout);
+        Dimension size = new Dimension(170, wp.getHeight()/2+10);
         this.setSize(size);
         this.setPreferredSize(size);
-        this.setBounds(wp.getWidth() - this.getWidth() - 10,10, 160, wp.getHeight()/3);
+        this.setBounds(wp.getWidth() - this.getWidth() - 10,10, 170, wp.getHeight()/2+10);
         this.setBackground(Color.white);
         timeLabel.setFocusable(false);
 //        timeLabel.setOpaque(true);
@@ -53,24 +58,43 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
         toMainMenuButton.setFocusable(false);                                           // done
         toMainMenuButton.setHorizontalTextPosition(JButton.CENTER);                               // done
         toMainMenuButton.setVerticalTextPosition(JButton.CENTER);                                 // done
-        toMainMenuButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));             // done
+        toMainMenuButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));             // done
         toMainMenuButton.addActionListener(this);                                                 // done
         toMainMenuButton.setBackground(Color.yellow);
         toMainMenuButton.setBounds(0, timeLabel.getY()+timeLabel.getHeight(),
                 this.getWidth(),
-                toMainMenuButton.getFontMetrics(toMainMenuButton.getFont()).getHeight()*2+5);
+                toMainMenuButton.getFontMetrics(toMainMenuButton.getFont()).getHeight()+5);
 
         addHouseButton.addActionListener(this);                                                   // done
         addHouseButton.setFocusable(false);                                             // done
         addHouseButton.setHorizontalTextPosition(JButton.CENTER);                                 // done
         addHouseButton.setVerticalTextPosition(JButton.CENTER);                                   // done
-        addHouseButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));               // done
+        addHouseButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));               // done
         addHouseButton.setBounds(0,
                 toMainMenuButton.getY() + toMainMenuButton.getHeight(),
                 this.getWidth(),
                 addHouseButton.getFontMetrics(addHouseButton.getFont()).getHeight()+5);
 
-        saveButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+        changeSimButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
+        changeSimButton.setVerticalTextPosition(JButton.CENTER);
+        changeSimButton.setHorizontalTextPosition(JButton.CENTER);
+        changeSimButton.setFocusable(false);
+        changeSimButton.setBounds(0,
+                changeSimButton.getY() + changeSimButton.getHeight(),
+                this.getWidth(),
+                changeSimButton.getFontMetrics(changeSimButton.getFont()).getHeight()+5);
+
+        viewCurrentLocButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
+        viewCurrentLocButton.setVerticalTextPosition(JButton.CENTER);
+        viewCurrentLocButton.setHorizontalTextPosition(JButton.CENTER);
+        viewCurrentLocButton.setFocusable(false);
+        viewCurrentLocButton.addActionListener(this);
+        viewCurrentLocButton.setBounds(0,
+                viewCurrentLocButton.getY() + viewCurrentLocButton.getHeight(),
+                this.getWidth(),
+                viewCurrentLocButton.getFontMetrics(viewCurrentLocButton.getFont()).getHeight()+5);
+
+        saveButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
         saveButton.setVerticalTextPosition(JButton.CENTER);
         saveButton.setHorizontalTextPosition(JButton.CENTER);
         saveButton.setFocusable(false);
@@ -83,6 +107,8 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
         add(timeLabel);
         add(toMainMenuButton);
         add(addHouseButton);
+        add(changeSimButton);
+        add(viewCurrentLocButton);
         add(saveButton);
 
         volumeSlider.addChangeListener(new ChangeListener() {
@@ -221,14 +247,36 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
                 saveLoad.save(saveFile, loadedWorld);
             }
 
+        } else if (e.getSource() == viewCurrentLocButton) {
+            JPanel panel = new JPanel(new GridLayout(0,1));
+            panel.setBackground(new Color(150, 178, 102));
+            JLabel titleLabel = new JLabel("LOKASI SIM SAAT INI");
+            JLabel lineLabel = new JLabel("-------------------------------------------");
+            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            lineLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            JLabel rumahLocLabel = new JLabel(" Rumah    : (" + (int) loadedWorld.getChosenSim().getLocRuang().getInfoRumah().getLokasi().getX() + ", " + (int) loadedWorld.getChosenSim().getLocRuang().getInfoRumah().getLokasi().getY() + ")");
+            JLabel ruanganLocLabel = new JLabel(" Ruangan  : " + loadedWorld.getChosenSim().getLocRuang().getNama());
+            panel.add(titleLabel);
+            panel.add(lineLabel);
+            panel.add(rumahLocLabel);
+            panel.add(ruanganLocLabel);
+            panel.setOpaque(true);
+            panel.setBorder(new LineBorder(Color.BLACK, 3, true));
+            panel.setLocation(wp.getMapX()+wp.getWidth()/2, wp.getMapY()+wp.getHeight()/2);
+            panel.setBounds(wp.getMapX()+wp.getWidth()/2, wp.getMapY()+wp.getHeight()/2, 200, 100);
+            panel.setFocusable(false);
+
+            wp.add(panel);
+            wp.revalidate();
+            wp.repaint();
         }
     }
 
     @Override
     public void paintComponent(Graphics g){
+        super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         RoundRectangle2D shape = new RoundRectangle2D.Double(0,0, getWidth(), getHeight(), 10, 10);
         g2d.setClip(shape);
-        super.paintComponent(g);
     }
 }

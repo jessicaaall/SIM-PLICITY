@@ -53,6 +53,7 @@ public class StartGamePanel extends JPanel implements ActionListener {
                 String stringNamaSim = namaSim.getText();
                 worldChoice = new World();
                 Sim addedSim = new Sim(stringNamaSim, worldChoice);
+                worldChoice.setChosenSim(addedSim);
                 System.out.println(addedSim.getKekenyangan());
                 System.out.println(addedSim.getKesehatan());
                 System.out.println(addedSim.getMood());

@@ -69,6 +69,14 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         this.world = world;
     }
 
+    public int getMapX() {
+        return mapX;
+    }
+
+    public int getMapY() {
+        return mapY;
+    }
+
     public void startMainThread(){
         mainThread = new Thread(this);
         mainThread.start();

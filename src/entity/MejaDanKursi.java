@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.*;
+
 
 public class MejaDanKursi extends Perabotan implements BisaDiduduki {
     public MejaDanKursi() {

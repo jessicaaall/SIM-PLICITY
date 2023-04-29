@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.*;
+
 
 public class Kompor extends Perabotan {
     private String tipe;
