@@ -5,6 +5,9 @@ import entity.Sim;
 import entity.World;
 
 import javax.swing.*;
+
+import data.SaveLoad;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,11 +75,7 @@ public class StartGamePanel extends JPanel implements ActionListener {
             mp.repaint();
 
         } else if (e.getSource() == loadWorldButton) {
-            try {
-                Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            SaveLoad saveload = new SaveLoad(null);
         }
     }
 
