@@ -33,6 +33,8 @@ public class Sim implements Serializable {
     private Waktu waktuTerakhirMakan;
 
     
+
+    
     // Objek random untuk random apapun yang dirandom wkwkwk
     private Random rand = new Random();
     
