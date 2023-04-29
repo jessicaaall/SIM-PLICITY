@@ -11,7 +11,9 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.lang.reflect.Method;
+import java.security.DigestException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -82,11 +84,12 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     private class HousePanelButton extends JButton{
         HousePanelButton(String text){
             super(text);
-            this.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+            Font font = new Font("Comic Sans MS", Font.PLAIN, 15);
+            this.setFont(font);
             this.setBackground(Color.white);
             this.setForeground(Color.black);
             this.setFocusable(false);
-            this.setPreferredSize(new Dimension(150, 30));
+//            this.setPreferredSize(new Dimension(getFontMetrics(font).stringWidth(text) + 20, 30));
             this.addActionListener(HousePanel.this);
         }
     }
@@ -149,23 +152,47 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         eastPanel.add(daftarThreadPane);
 
         // set panel barat
-        westPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 15));
+//        westPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 15));
+        westPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(15,10,10,10);
+        gbc.gridy = 0;
         westPanel.setPreferredSize(new Dimension(mainPanel.width/5, mainPanel.height));
         westPanel.setBackground(Color.pink);
         westPanel.setFocusable(false);
 
         //add button to west panel
         //westPanel.add(backToMainMenuButton);
-        westPanel.add(backToWorldButton);
-        westPanel.add(statusSimButton);
-        westPanel.add(lihatInventoryButton);
-        westPanel.add(upgradeRumahButton);
-        westPanel.add(moveRoomButton);
-        westPanel.add(editRoomButton);
-        westPanel.add(listObjectButton);
-        westPanel.add(goToObjectButton);
-        westPanel.add(actionButton);
-        westPanel.add(beliItemButton);
+        int gridy = 0;
+        westPanel.add(backToWorldButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(statusSimButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(lihatInventoryButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(upgradeRumahButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(moveRoomButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(editRoomButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(listObjectButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(goToObjectButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(actionButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(beliItemButton, gbc);
+//        int maxWidth = 100;
+//        for (Component component : westPanel.getComponents()){
+//            Dimension preferredSize = component.getMaximumSize();
+//            int width = preferredSize.getSize().width;
+//            maxWidth = Math.max(maxWidth, width);
+//        }
+//        for (Component component : westPanel.getComponents()){
+//            component.setPreferredSize(new Dimension(maxWidth, component.getHeight()));
+//        }
 
         centerPanel = new JPanel(null);
         centerPanel.setPreferredSize(new Dimension(3*mainPanel.width/5, mainPanel.height));
@@ -524,6 +551,16 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     upgradeRumahButton.setEnabled(true);
                 }
                 mainPanel.requestFocus();
+                if (selectedSim == null){
+                    goToObjectButton.setEnabled(false);
+                    moveRoomButton.setEnabled(false);
+                    actionButton.setEnabled(false);
+                }
+                else {
+                    goToObjectButton.setEnabled(true);
+                    moveRoomButton.setEnabled(true);
+                    actionButton.setEnabled(true);
+                }
 
             }
             if (timer >= Math.pow(10, 9)){
@@ -665,11 +702,13 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 
         UpgradeRumahPanel(){
             OKButton = new HousePanelButton("OK");
+            OKButton.setPreferredSize(new Dimension(160, 80));
             cancelButton = new HousePanelButton("Batal");
+            cancelButton.setPreferredSize(new Dimension(160, 80));
             OKButton.setFocusable(false);
             cancelButton.setFocusable(false);
             OKButton.setBounds(0,0, 10*unitSize/4, unitSize);
-            cancelButton.setBounds(5*unitSize/2,0, 10*unitSize/4, unitSize);
+            cancelButton.setBounds(6*unitSize/2,0, 10*unitSize/4, unitSize);
             OKButton.setVisible(true);
             cancelButton.setVisible(true);
             OKButton.setOpaque(true);
@@ -741,7 +780,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         private class ButtonContainer extends JPanel{
             ButtonContainer(){
 //                super(new GridLayout(1,0, 10, 0));
-                super(new FlowLayout());
+                super(new GridLayout(1,0));
                 setFocusable(false);
                 setBackground(new Color(150,178,102));
                 setOpaque(true);
