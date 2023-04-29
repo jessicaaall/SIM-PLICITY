@@ -40,6 +40,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 
     RoomPanel ruanganAcuanPanel;
     HighlightedPanel highlightedRoom;
+    SimLabel selectedSim;
     private int slotCol = 0;
     private int slotRow = 0;
 

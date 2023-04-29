@@ -47,6 +47,13 @@ public class SimLabel extends JLabel implements MouseListener {
             if (component instanceof SimLabel){
                 if (!((SimLabel) component).selected){
                     ((SimLabel) component).setBorder(null);
+                    //cek apakah dia sudah enggak diselect dan selectedSim sudah ada
+                    if (housePanel.selectedSim == null){
+                        continue;
+                    }
+                    if (component.getLocation().equals(housePanel.selectedSim.getLocation())){
+                        housePanel.selectedSim = null;
+                    }
                 }
             }
         }
@@ -54,6 +61,7 @@ public class SimLabel extends JLabel implements MouseListener {
             selected = true;
             Color color = new Color(200, 100, 60);
             setBorder(BorderFactory.createLineBorder(color, 3, true));
+            housePanel.selectedSim = this;
             return;
         }
         else{
