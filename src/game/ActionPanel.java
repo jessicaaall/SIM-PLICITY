@@ -1,5 +1,9 @@
 package game;
 
+import entity.Kasur;
+import entity.Perabotan;
+import entity.Ruangan;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -9,8 +13,11 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
     MouseEvent pressed;
     Point location;
 
-    ActionPanel(){
+    HousePanel hp;
+
+    ActionPanel(HousePanel hp){
         super(new BorderLayout());
+        this.hp = hp;
         setLocation(new Point(0,0));
         setBackground(new Color(150, 178, 102));
         setOpaque(true);
@@ -79,6 +86,23 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
         setBounds(0,0, 570, 420);
         addMouseListener(this);
         addMouseMotionListener(this);
+
+        // semua action listener button
+        tidurButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("aksi tidur");
+                //cek apakah ada kasur di sekitar sim
+                ItemChecker<Kasur> itemChecker = new ItemChecker<>();
+                Kasur kasur = itemChecker.checkItem();
+                if (kasur == null){
+                    JOptionPane.showMessageDialog(null, "Tidak ada kasur di sekitar");
+                    return;
+                }
+                kasur.tidur(30, ActionPanel.this.hp.selectedSim.sim);
+                System.out.println("tidur");
+            }
+        });
         revalidate();
         repaint();
     }
@@ -133,4 +157,28 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
         Graphics2D g2d = (Graphics2D) g;
 
     }
+    private class ItemChecker<T extends Perabotan>{
+        public T checkItem(){
+            for (int i = -1; i <= 1; i++){
+                for (int j = -1; j <= 1; j++){
+                    Point thisPoint = new Point(hp.rumah.getSim().getPosisi().x +i, hp.rumah.getSim().getPosisi().y + j);
+                    for (Perabotan perabotan : hp.rumah.getSim().getLocRuang().getDaftarObjek()){
+                        T t;
+                        try {
+                            t = (T) perabotan;
+                        }catch (ClassCastException e){
+                            System.out.println("bukan");
+                            continue;
+                        }
+                        if (perabotan.getKiriAtas().equals(thisPoint)){
+                            return t;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+    }
+
 }
+
