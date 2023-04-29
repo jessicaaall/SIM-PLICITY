@@ -29,28 +29,35 @@ public class SimLabel extends JLabel implements MouseListener {
         width = 22;
         height = unitSize;
         simLabelImage = sim.getSimImage().getScaledInstance(width,height, Image.SCALE_DEFAULT);
-        setPreferredSize(new Dimension(width, height));
-        setSize(width, height);
+        setPreferredSize(new Dimension(height, height));
+        setSize(height, height);
         setIcon(new ImageIcon(simLabelImage));
-        setBounds(sim.getPosisi().x*unitSize, sim.getPosisi().y*unitSize, width, height);
+        setBounds(sim.getPosisi().x*unitSize, sim.getPosisi().y*unitSize, height, height);
         setOpaque(false);
+        selected = false;
+        addMouseListener(this);
         revalidate();
         repaint();
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        System.out.printf("memilih %s\n", sim.getNamaLengkap());
         for (Component component : housePanel.centerPanel.getComponents()){
             if (component instanceof SimLabel){
-                ((SimLabel) component).setBorder(null);
+                if (!((SimLabel) component).selected){
+                    ((SimLabel) component).setBorder(null);
+                }
             }
         }
         if (!selected){
             selected = true;
             Color color = new Color(200, 100, 60);
             setBorder(BorderFactory.createLineBorder(color, 3, true));
-            System.out.printf("memilih %s", sim.getNamaLengkap());
             return;
+        }
+        else{
+            selected = false;
         }
         JPanel wadahButton = new JPanel(new GridLayout(0,1,0,3));
         wadahButton.setPreferredSize(new Dimension(3*unitSize, 3*unitSize));
