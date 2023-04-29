@@ -134,9 +134,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     }
 
     public void update(){
-        for (Rumah rumah : world.getDaftarRumah()){
 
-        }
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);

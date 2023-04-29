@@ -18,6 +18,8 @@ public class Rumah implements Serializable{
 
     Ruangan ruanganAcuan;
 
+    private int jumlahRuangan;
+
     public Rumah(int x, int y, Sim sim, Color color, World world){
         this.world = world;
         this.sim = sim;
@@ -49,7 +51,7 @@ public class Rumah implements Serializable{
         sim.getInventory().addItem(jam);
         sim.getInventory().addItem(toilet);
         sim.getInventory().addItem(komporgas);
-
+        jumlahRuangan = 1;
         sim.setPosisi(new Point(3,3));
     }
 
@@ -142,6 +144,7 @@ public class Rumah implements Serializable{
 
     public void upgrade(Ruangan ruangan){
         daftarRuangan.add(ruangan);
+        jumlahRuangan++;
         sim.setUang(sim.getUang()-1500);
         /*Scanner input = new Scanner(System.in);
         if(daftarRuangan.size()<2){
@@ -241,6 +244,13 @@ public class Rumah implements Serializable{
             }            
 
         }*/
+    }
 
+    public int getJumlahPerabot(){
+        int jumlah = 0;
+        for (Ruangan ruangan : getDaftarRuangan()){
+            jumlah += ruangan.getDaftarObjek().size();
+        }
+        return jumlah;
     }
 }

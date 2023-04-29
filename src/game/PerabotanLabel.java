@@ -179,6 +179,21 @@ public class PerabotanLabel extends JLabel {
                 housePanel.revalidate();
                 housePanel.repaint();
             }
+            else if (housePanel.isGoToObject){
+                //cek item nya itu bener perabot gak
+                System.out.println("mau teleport ke sini");
+                PerabotanLabel clickedComp = (PerabotanLabel) e.getSource();
+                if (!clickedComp.roomPanel.ruangan.getNama().equals(housePanel.selectedSim.sim.getLocRuang().getNama())) {
+                    System.out.println("di luar ruangan");
+                    return;
+                }
+                housePanel.selectedSim.setLocation(clickedComp.getX(), clickedComp.getY());
+                housePanel.selectedSim.sim.setPosisi(new Point(
+                        Math.floorDiv(clickedComp.getY() - housePanel.ruanganAcuanPanel.getY(), housePanel.unitSize),
+                        Math.floorDiv(clickedComp.getY() - housePanel.ruanganAcuanPanel.getY(), housePanel.unitSize)
+                ));
+                housePanel.isGoToObject = false;
+            }
             else {
                 if (isDragging){
                     return;
@@ -209,6 +224,9 @@ public class PerabotanLabel extends JLabel {
                 housePanel.centerPanel.repaint();
             }
         }
+
+        private int clickedCount = 0;
+        private JButton lastButtonPressed;
         @Override
         public void mousePressed(MouseEvent e) {
             if (put){

@@ -148,4 +148,10 @@ public class Ruangan implements Serializable {
     public void hilangkan(Perabotan barang) {
         daftarObjek.removeIf(perabotan -> perabotan.equals(barang));
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Ruangan ruangan = (Ruangan) obj;
+        return nama.equals(ruangan.nama);
+    }
 }
