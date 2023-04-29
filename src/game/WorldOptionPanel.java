@@ -117,16 +117,26 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toMainMenuButton){
-            System.out.println("Exit Game");
-            wp.stopMusic();
-            wp.mainThread.interrupt();
-            wp.mainThread =null;
-            mp.remove(toMainMenuButton);
-            mp.add(wp.mmp, BorderLayout.CENTER);
-            mp.remove(this);
-            mp.remove(wp);
-            mp.revalidate();
-            mp.repaint();
+
+            JPanel warningMessage = new JPanel(new GridLayout(0,1));
+            JLabel label = new JLabel("Anda belum menyimpan data permainan.");
+            JLabel label2 = new JLabel("Yakin ingin keluar?");
+            warningMessage.add(label);warningMessage.add(label2);
+            int result = JOptionPane.showConfirmDialog(null, warningMessage, "Belum disave gan"
+                    , JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (result == JOptionPane.OK_OPTION){
+                System.out.println("Exit Game");
+                wp.stopMusic();
+                wp.mainThread.interrupt();
+                wp.mainThread =null;
+                mp.remove(toMainMenuButton);
+                mp.add(wp.mmp, BorderLayout.CENTER);
+                mp.remove(this);
+                mp.remove(wp);
+                mp.revalidate();
+                mp.repaint();
+            }
+
         } else if (e.getSource() == addHouseButton){
             JPanel panel = new JPanel(new GridLayout(0, 1));
             JLabel label = new JLabel("<html>Set the coordinate of your house:<br></html>");
