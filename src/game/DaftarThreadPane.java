@@ -5,6 +5,7 @@ import entity.World;
 import thread.ThreadAksiPasif;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
 public class DaftarThreadPane extends JScrollPane {
@@ -18,6 +19,7 @@ public class DaftarThreadPane extends JScrollPane {
         this.sim = sim;
         defaultListModel = new DefaultListModel<>();
         listAksi = new JList<>(defaultListModel);
+        setBackground(Color.pink);
         setViewportView(listAksi);
     }
 

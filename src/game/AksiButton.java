@@ -18,6 +18,7 @@ public class AksiButton extends JButton {
         super(text);
         setBackground(Color.white);
         setForeground(Color.black);
+        setFocusable(false);
         setFont(new Font("SansSerif", Font.PLAIN, 12));
         setPreferredSize(new Dimension(150, 30));
     }

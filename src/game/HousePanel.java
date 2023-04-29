@@ -139,18 +139,15 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         saldoSimLabel.setPreferredSize(new Dimension(saldoSimLabel.getFontMetrics(standardFont).stringWidth(saldoSimLabel.getText())+15,
                 saldoSimLabel.getFontMetrics(standardFont).getHeight() + 10));
         saldoSimLabel.setHorizontalTextPosition(JLabel.CENTER);
-<<<<<<< HEAD
         saldoSimLabel.setVerticalTextPosition(JLabel.CENTER);
 
 
         eastPanel.add(currentFPSLabel);
         eastPanel.add(saldoSimLabel);
         eastPanel.add(daftarThreadPane);
-=======
         saldoSimLabel.setVerticalTextPosition(JLabel.CENTER); */
         eastPanel.add(currentFPSLabel);
         // eastPanel.add(saldoSimLabel);
->>>>>>> eb7311baadb3941e26031643adb3e8d6c0e0c15b
 
         // set panel barat
         westPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 15));
@@ -340,36 +337,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 
     @Override
     public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-        if (e.getSource() == backToMainMenuButton){
-            JPanel warningMessage = new JPanel(new GridLayout(0,1));
-            JLabel label = new JLabel("Pastikan bahwa file data telah disimpan.");
-            JLabel label2 = new JLabel("Yakin ingin keluar?");
-            warningMessage.add(label);warningMessage.add(label2);
-            int result = JOptionPane.showConfirmDialog(null, warningMessage, "Reminder"
-                    , JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (result == JOptionPane.OK_OPTION){
-                mainPanel.remove(this);
-                mainPanel.add(mainMenuPanel);
-                thread.interrupt();
-                thread = null;
-                mainPanel.revalidate();
-                mainPanel.repaint();
-            }
-
-        }
-        else if (e.getSource() == backToWorldButton){
-=======
-        /* if (e.getSource() == backToMainMenuButton){
-            mainPanel.remove(this);
-            mainPanel.add(mainMenuPanel);
-            thread.interrupt();
-            thread = null;
-            mainPanel.revalidate();
-            mainPanel.repaint();
-        } */
         if (e.getSource() == backToWorldButton){
->>>>>>> eb7311baadb3941e26031643adb3e8d6c0e0c15b
             mainPanel.remove(this);
             worldPanel.add(worldPanel.wop);
             mainPanel.add(worldPanel);
@@ -550,6 +518,13 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 repaint();
                 delta--;
                 drawCount++;
+                if(rumah.busyUpgrading){
+                    upgradeRumahButton.setEnabled(false);
+                }
+                else{
+                    upgradeRumahButton.setEnabled(true);
+                }
+                HousePanel.this.requestFocus();
 
             }
             if (timer >= Math.pow(10, 9)){
@@ -561,19 +536,11 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                         + " :<br>" + rumah.getSim().getUang() + "</html>");
                 // update label saldo
                 saldoSimLabel.setText("<html>Total uang " + rumah.getSim().getNamaLengkap() + " :<br>" +
-<<<<<<< HEAD
                         rumah.getSim().getUang() + "</html>");
                 daftarThreadPane.update();
-=======
+
                         rumah.getSim().getUang() + "</html>"); */
 
->>>>>>> eb7311baadb3941e26031643adb3e8d6c0e0c15b
-                if(rumah.busyUpgrading){
-                    upgradeRumahButton.setEnabled(false);
-                }
-                else{
-                    upgradeRumahButton.setEnabled(true);
-                }
             }
         }
 
