@@ -63,6 +63,8 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     DaftarThreadPane daftarThreadPane;
     private boolean isUpgradeRumah = false;
     private boolean validSectionForUpgrade = false;
+
+    boolean isGoToObject = false;
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
 //        int notches = e.getWheelRotation();
@@ -81,7 +83,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 //        repaint();
     }
 
-    private class HousePanelButton extends JButton{
+    public class HousePanelButton extends JButton{
         HousePanelButton(String text){
             super(text);
             Font font = new Font("Comic Sans MS", Font.PLAIN, 15);
@@ -116,11 +118,13 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         backToWorldButton.setForeground(Color.black);
         backToWorldButton.setFocusable(false);
         backToWorldButton.setPreferredSize(new Dimension(150, 30));
-        backToWorldButton.addActionListener(this);
         eastPanel = new JPanel(new GridLayout(0, 1, 0, 5));
         eastPanel.setPreferredSize(new Dimension(mainPanel.width/5, mainPanel.height));
         eastPanel.setBackground(Color.pink);
         eastPanel.setFocusable(false);
+
+
+        backToWorldButton.addActionListener(this);
 
         // set label untuk panel timur
         currentFPSLabel = new JLabel("FPS = 0");
@@ -184,6 +188,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         westPanel.add(actionButton, gbc);
         gbc.gridy = ++gridy;
         westPanel.add(beliItemButton, gbc);
+
 //        int maxWidth = 100;
 //        for (Component component : westPanel.getComponents()){
 //            Dimension preferredSize = component.getMaximumSize();
@@ -292,14 +297,12 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     else{
                         rumah.busyUpgrading = false;
                     }
-
-                }
-                for (Component component : centerPanel.getComponents()){
-                    if (component instanceof HighlightedPanel){
-                        centerPanel.remove(component);
+                    for (Component component : centerPanel.getComponents()){
+                        if (component instanceof HighlightedPanel){
+                            centerPanel.remove(component);
+                        }
                     }
                 }
-
             }
 
             @Override
@@ -446,15 +449,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 //                rumah.getSim().getInventory().addItem(selectedItem, kuantitas);
                 BisaDibeli buyed = (BisaDibeli) selectedItem;
                 Object[] parameters = {rumah.getSim(), totalHarga};
-//                ThreadAksi threadAksi = new ThreadAksi("beli " + selectedItem.getNama(),
-//                        (new Random().nextInt(5)+1)*30, method, parameters, buyed, rumah.world);
-//                rumah.world.getListThreadAksi().add(threadAksi);
-//                threadAksi.start();
-
-       /*         ThreadAksiPasif threadAksiPasif = new ThreadAksiPasif("beli " + selectedItem.getNama(),
-                        (new Random().nextInt(5)+1)*30, method, parameters, buyed, rumah.world);
-                rumah.world.getListThreadAksiPasif().add((threadAksiPasif));
-                threadAksiPasif.start();*/
                 ThreadBeli threadBeli = new ThreadBeli("beli " + selectedItem.getNama(),
                         (new Random().nextInt(5)+1)*30, parameters, buyed, rumah.world);
                 rumah.world.getListThreadAksiPasif().add((threadBeli));
@@ -522,6 +516,44 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
             centerPanel.add(actionPanel, 0);
             centerPanel.revalidate();
             centerPanel.repaint();
+        }
+
+        if (e.getSource() == goToObjectButton){
+            if (!isGoToObject) {
+                if (rumah.getJumlahPerabot() < 1){
+                    JOptionPane.showMessageDialog(null, "Tidak ada object");
+                    return;
+                }
+                for (Component component : westPanel.getComponents()){
+                    if (component instanceof JButton jb){
+                        if (jb.getText().equals(goToObjectButton.getText())){
+                            continue;
+                        }
+                        if (!jb.isEnabled()){
+                            continue;
+                        }
+                        jb.setEnabled(false);
+                    }
+                }
+                System.out.println(selectedSim.sim.getNamaLengkap());
+                System.out.println("silakan pilih objek yang ingin dituju");
+                isGoToObject = true;
+            }
+            else{
+                for (Component component : westPanel.getComponents()){
+                    if (component instanceof JButton jb){
+                        if (jb.getText().equals(goToObjectButton.getText())){
+                            continue;
+                        }
+                        if (jb.isEnabled()){
+                            continue;
+                        }
+                        jb.setEnabled(true);
+                    }
+                }
+                System.out.println("matikan go to object");
+                isGoToObject = false;
+            }
         }
     }
 

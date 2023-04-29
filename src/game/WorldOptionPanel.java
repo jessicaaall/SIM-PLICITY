@@ -249,6 +249,11 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
             }
 
         } else if (e.getSource() == viewCurrentLocButton) {
+            if (wp.viewCurrentLocationPanel != null){
+                wp.remove(wp.viewCurrentLocationPanel);
+                wp.viewCurrentLocationPanel = null;
+                return;
+            }
             JPanel panel = new JPanel(new GridLayout(0,1));
             panel.setBackground(new Color(150, 178, 102));
             JLabel titleLabel = new JLabel("LOKASI SIM SAAT INI");
@@ -263,10 +268,9 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
             panel.add(ruanganLocLabel);
             panel.setOpaque(true);
             panel.setBorder(new LineBorder(Color.BLACK, 3, true));
-            panel.setLocation(wp.getMapX()+wp.getWidth()/2, wp.getMapY()+wp.getHeight()/2);
-            panel.setBounds(wp.getMapX()+wp.getWidth()/2, wp.getMapY()+wp.getHeight()/2, 200, 100);
+            panel.setBounds(wp.getMapX()+(wp.getWidth()-200)/2, wp.getMapY()+(wp.getHeight()-100)/2, 200, 100);
             panel.setFocusable(false);
-
+            wp.viewCurrentLocationPanel = panel;
             wp.add(panel);
             wp.revalidate();
             wp.repaint();
