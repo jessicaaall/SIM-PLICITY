@@ -34,7 +34,9 @@ public class Waktu implements Runnable, Serializable {
             }
             if (world.getListThreadAksi().size() > 0) {
                 sisaDetik--;
-
+                for (Sim sim : world.getDaftarSim()) {
+                    sim.trackBuangAirSetelahMakan();
+                }
             }
             if (sisaDetik < 0) {
                 hariKe++;

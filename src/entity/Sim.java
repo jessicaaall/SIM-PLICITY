@@ -7,6 +7,7 @@ import java.util.*;
 import java.awt.*;
 
 public class Sim implements Serializable {
+
     // Deklarasi Variabel
     private World theirWorld;
     private String namaLengkap;
@@ -30,9 +31,7 @@ public class Sim implements Serializable {
     private boolean isPernahGantiKerja;
     private Kasur kasur;
     private boolean isSudahBuangAir;
-    private Waktu waktuTerakhirMakan;
-
-    
+    private ArrayList<Integer> timerTerakhirMakan;
 
     
     // Objek random untuk random apapun yang dirandom wkwkwk
@@ -66,7 +65,7 @@ public class Sim implements Serializable {
         isPernahGantiKerja = false;
         kasur = null;
         isSudahBuangAir = false;
-        waktuTerakhirMakan = null;
+        timerTerakhirMakan = new ArrayList<Integer>();
         randomSkin = new Random().nextInt(4)+1;
     }
     
@@ -126,8 +125,8 @@ public class Sim implements Serializable {
     public boolean getIsSudahBuangAir() {
         return isSudahBuangAir;
     }
-    public Waktu getWaktuTerakhirMakan() {
-        return waktuTerakhirMakan;
+    public ArrayList<Integer> getTimerTerakhirMakan() {
+        return timerTerakhirMakan;
     }
 
     public int getWaktuKerja(){
@@ -198,8 +197,14 @@ public class Sim implements Serializable {
     public void setIsSudahBuangAir(boolean isSudahBuangAir) {
         this.isSudahBuangAir = isSudahBuangAir;
     }
-    public void setWaktuTerakhirMakan(Waktu waktuTerakhirMakan) {
-        this.waktuTerakhirMakan = waktuTerakhirMakan;
+    public void addTimerTerakhirMakan() {
+        timerTerakhirMakan.add(0);
+    }
+    public void removeTimerTerakhirMakan(int index) {
+        timerTerakhirMakan.remove(index);
+    }
+    public void incrementTimerTerakhirMakan(int index) {
+        timerTerakhirMakan.set(index, timerTerakhirMakan.get(index)+1);
     }
     
     // Method lain
@@ -407,22 +412,29 @@ public class Sim implements Serializable {
     }
 
     public void trackBuangAirSetelahMakan() {
-        if (waktuTerakhirMakan != null) {
-            while ((selisihWaktu(theirWorld.getWaktu(), waktuTerakhirMakan) < 240) && (!isSudahBuangAir)) {
-
+        if (timerTerakhirMakan.size() > 0) {
+            if (isSudahBuangAir) {
+                removeTimerTerakhirMakan(0);
+                isSudahBuangAir = false;
             }
-            if (!isSudahBuangAir) {
-                kesehatan -= 5;
-                mood -= 5;
+            if (timerTerakhirMakan.size() > 0) {
+                for (int i = 0; i < timerTerakhirMakan.size(); i++) {
+                    incrementTimerTerakhirMakan(i);
+                    if (timerTerakhirMakan.get(i) >= 240) {
+                        kesehatan -= 5;
+                        mood -= 5;
+                        removeTimerTerakhirMakan(i);
+                    }
+                }
             }
-            waktuTerakhirMakan = null;
-            isSudahBuangAir = false;
         }
     }
 
+    /*
     public int selisihWaktu(Waktu waktu1, Waktu waktu2) {
         int detik1 = waktu1.getHariKe() * 720 + waktu1.getSisaDetik();
         int detik2 = waktu2.getHariKe() * 720 + waktu2.getSisaDetik();
         return (Math.abs(detik1 - detik2));
     }
+    */
 }
