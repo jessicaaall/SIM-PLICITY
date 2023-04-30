@@ -118,7 +118,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         backToWorldButton.setPreferredSize(new Dimension(150, 30));
         eastPanel = new JPanel(new GridLayout(0, 1, 0, 5));
         eastPanel.setPreferredSize(new Dimension(mainPanel.width/5, mainPanel.height));
-        eastPanel.setBackground(Color.pink);
+        eastPanel.setBackground(new Color(105, 180, 110));
         eastPanel.setFocusable(false);
 
 
@@ -161,7 +161,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         gbc.insets = new Insets(15,10,10,10);
         gbc.gridx = 0;
         westPanel.setPreferredSize(new Dimension(mainPanel.width/5, mainPanel.height));
-        westPanel.setBackground(Color.pink);
+        westPanel.setBackground(new Color(105, 180, 110));
         westPanel.setFocusable(false);
 
         //add button to west panel

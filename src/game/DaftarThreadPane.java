@@ -19,7 +19,9 @@ public class DaftarThreadPane extends JScrollPane {
         this.sim = sim;
         defaultListModel = new DefaultListModel<>();
         listAksi = new JList<>(defaultListModel);
+        listAksi.setBackground(new Color(105, 180, 110));
         setBackground(Color.pink);
+        setOpaque(true);
         setViewportView(listAksi);
     }
 
@@ -37,6 +39,7 @@ public class DaftarThreadPane extends JScrollPane {
            tambahThread(threadAksiPasif);
         }
         listAksi = new JList<>(defaultListModel);
+        listAksi.setBackground(new Color(105, 180, 110));
         setViewportView(listAksi);
     }
 }

@@ -40,7 +40,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener, MouseLis
         this.setBounds(wp.getMapX() + wp.getWidth() - this.getWidth() - 10,wp.getMapY() + 10, 170, wp.getHeight()/3+70);
         this.setBackground(Color.white);
         setFocusable(false);
-
+        setOpaque(false);
         JPanel main = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
         main.setBackground(Color.white);
         JPanel panel1 = new JPanel();
