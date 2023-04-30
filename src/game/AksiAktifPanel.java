@@ -95,13 +95,6 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     housePanel.centerPanel.add(timerAksiPanel, 0);
                     timerAksiPanel.startThread();
                 }
-                else if (perabotan instanceof MejaDanKursi mejaDanKursi){
-                    MakanPanel makanPanel = new MakanPanel(housePanel, mejaDanKursi);
-                    makanPanel.setBounds(160, 80, 320, 320);
-                    housePanel.centerPanel.add(makanPanel, 0);
-                    housePanel.centerPanel.revalidate();
-                    housePanel.centerPanel.repaint();
-                }
             }
             housePanel.centerPanel.remove(this);
         }

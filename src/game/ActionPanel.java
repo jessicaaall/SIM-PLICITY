@@ -1,9 +1,6 @@
 package game;
 
-import entity.Kasur;
-import entity.Perabotan;
-import entity.Ruangan;
-import entity.Toilet;
+import entity.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -121,6 +118,22 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                 AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, toilet, "ngising");
                 hp.centerPanel.add(aksiAktifPanel, 0);
                 hp.centerPanel.remove(ActionPanel.this);
+                hp.centerPanel.revalidate();
+                hp.centerPanel.repaint();
+            }
+        });
+        makanButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ItemChecker<MejaDanKursi> itemChecker = new ItemChecker<>(MejaDanKursi.class);
+                MejaDanKursi mejaDanKursi = itemChecker.checkItem();
+                if (mejaDanKursi == null){
+                    JOptionPane.showMessageDialog(null, "Tidak ada Meja-Kursi di sekitar");
+                    return;
+                }
+                MakanPanel makanPanel = new MakanPanel(hp, mejaDanKursi);
+                makanPanel.setBounds(160, 80, 320, 320);
+                hp.centerPanel.add(makanPanel, 0);
                 hp.centerPanel.revalidate();
                 hp.centerPanel.repaint();
             }
