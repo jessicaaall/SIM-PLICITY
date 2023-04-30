@@ -216,6 +216,15 @@ public class PerabotanLabel extends JLabel {
                 else if (perabotan instanceof Toilet){
                     aksi = "modol";
                 }
+                else if (perabotan instanceof MejaDanKursi mejaDanKursi){
+                    aksi = "makan";
+                    MakanPanel makanPanel = new MakanPanel(housePanel, mejaDanKursi);
+                    makanPanel.setBounds(160, 80, 320, 320);
+                    housePanel.centerPanel.add(makanPanel, 0);
+                    housePanel.centerPanel.revalidate();
+                    housePanel.centerPanel.repaint();
+                    return;
+                }
                 else{
                     aksi = perabotan.getNama();
                 }

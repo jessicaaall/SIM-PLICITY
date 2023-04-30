@@ -103,6 +103,7 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                 }
                 AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, kasur, "tidur");
                 hp.centerPanel.add(aksiAktifPanel, 0);
+                hp.centerPanel.remove(ActionPanel.this);
                 hp.centerPanel.revalidate();
                 hp.centerPanel.repaint();
                 System.out.println("tidur");
@@ -119,6 +120,7 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                 }
                 AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, toilet, "ngising");
                 hp.centerPanel.add(aksiAktifPanel, 0);
+                hp.centerPanel.remove(ActionPanel.this);
                 hp.centerPanel.revalidate();
                 hp.centerPanel.repaint();
             }
