@@ -10,7 +10,7 @@ public class ThreadAksi extends Thread implements Serializable {
     private int sisaWaktu;
     private World world;
 
-    public boolean stopped;
+    public boolean stopped = false;
     public int savedSisaWaktu;
     
     // Konstruktor
@@ -22,6 +22,7 @@ public class ThreadAksi extends Thread implements Serializable {
 
     public void startThread(){
         world.setThreadAksi(this);
+        world.isActive = true;
         if (stopped){
             sisaWaktu = savedSisaWaktu;
             stopped = false;

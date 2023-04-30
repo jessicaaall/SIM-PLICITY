@@ -68,11 +68,12 @@ public class MasakPanel extends JPanel {
                     housePanel.centerPanel.remove(MasakPanel.this);
                     int waktu = (int) ((double)makananTerpilih.getPoinKekenyangan() * 1.5);
                     ThreadAksi aksiMasak = new ThreadAksi("Masak "+ makananTerpilih.getNama(), waktu, housePanel.rumah.world);
+                    housePanel.rumah.world.setThreadAksi(aksiMasak);
+                    aksiMasak.start();
                     TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Masak",aksiMasak);
                     housePanel.centerPanel.add(timerAksiPanel, 0);
-                    housePanel.rumah.world.setThreadAksi(aksiMasak);
                     timerAksiPanel.startThread();
-                    aksiMasak.start();
+
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
