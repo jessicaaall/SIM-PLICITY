@@ -55,6 +55,8 @@ public class MakanPanel extends JPanel {
                 housePanel.centerPanel.remove(MakanPanel.this);
             }
         });
+        OKButton.setFocusable(false);
+        cancelButton.setFocusable(false);
         OKCancelPanel.add(OKButton);
         OKCancelPanel.add(cancelButton);
         OKCancelPanel.setPreferredSize(new Dimension(320, 80));
