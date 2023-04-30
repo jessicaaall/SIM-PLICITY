@@ -73,6 +73,7 @@ public class MainMenuPanel extends JPanel {
         MenuPanel menuPanel = new MenuPanel();
         this.add(menuPanel);
         setPreferredSize(new Dimension(mainPanel.width, mainPanel.height));
+        setOpaque(false);
         setDoubleBuffered(true);
         repaint();
 
