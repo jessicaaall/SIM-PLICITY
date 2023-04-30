@@ -22,7 +22,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     public MainPanel mp;
     public WorldOptionPanel wop;
     public MainMenuPanel mmp;
-    private boolean isDragging = false;
+    boolean isDragging = false;
     public int unitSize = 40;
     private int mapX =0, mapY=0;
     private int cameraWidth;
@@ -40,22 +40,25 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
     public WorldPanel(World world, MainPanel mp, MainMenuPanel mmp) {
         this.mp = mp;
         this.mmp = mmp;
-        cameraWidth = mp.width;
+        cameraWidth = 5*mp.width/6;
         cameraHeight = mp.height;
         this.setFocusable(false);
+        setLayout(new BorderLayout());
         mapX = 0;
         mapY = 0;
         this.world = world;
-        setPreferredSize(new Dimension(cameraWidth, cameraHeight));
-        setLayout(null);
-        setBounds(0, 0, cameraWidth, cameraHeight);
+        setPreferredSize(new Dimension(cameraWidth, cameraWidth));
+        setBounds(0, 0, cameraWidth, cameraWidth);
         addMouseListener(this);
         addMouseMotionListener(this);
         addMouseWheelListener(this);
         setDoubleBuffered(true);
         playMusic(0);
         wop = new WorldOptionPanel( this.mp, this);
-        this.add(wop);
+        wop.setBounds(mapX + cameraWidth - wop.getWidth() - 10, mapY + 10, 170, cameraHeight/3+70);
+        mp.add(wop, BorderLayout.EAST);
+        revalidate();
+        repaint();
     }
 
     Thread mainThread;
@@ -111,7 +114,15 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             lastTime = currentTime;
             if (delta >= 1){
                 update();
-                repaint();
+//                WorldPanel.this.remove(wop);
+//                wop = new WorldOptionPanel( this.mp, this);
+//                this.add(wop, 0);
+                wop.revalidate();
+                wop.repaint();
+                wop.saveButton.revalidate();
+                wop.volumeSlider.revalidate();
+                wop.viewCurrentLocButton.revalidate();
+                wop.changeSimButton.revalidate();
                 delta--;
                 drawCount++;
             }
@@ -127,13 +138,17 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
                     getWorld().getWaktu().tampilkanWaktu()[2] + "</html>");
             wop.timeLabel.revalidate();
             wop.timeLabel.repaint();
+//            wop.setLocation(getWidth() - wop.getWidth() - 10, 10);
             wop.revalidate();
             wop.repaint();
-
-            wop.setLocation(mapX + getWidth() - wop.getWidth() - 10, mapY + 10);
+//            for (Component component)
             if (viewCurrentLocationPanel != null){
-                viewCurrentLocationPanel.setLocation(getMapX()+(getWidth()-200)/2, getMapY()+(getHeight()-100)/2);
+                viewCurrentLocationPanel.setLocation(getMapX()+(cameraWidth-200)/2, getMapY()+(cameraHeight-100)/2);
+                viewCurrentLocationPanel.revalidate();
+                viewCurrentLocationPanel.repaint();
             }
+            revalidate();
+            repaint();
         }
     }
 
@@ -141,7 +156,6 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
 
     }
     public void paintComponent(Graphics g){
-        super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.translate(-mapX, -mapY);
         for (int i = 0; i <= world.getWidth(); i++){
@@ -280,6 +294,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
 
                 lastMouseX = e.getX();
                 lastMouseY = e.getY();
+                revalidate();
                 repaint();
             }
         }

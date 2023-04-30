@@ -1,19 +1,27 @@
 package game;
 
+import entity.Kasur;
+import entity.Kompor;
 import entity.Perabotan;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.text.AbstractDocument;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class AksiAktifPanel extends JPanel {
+public class AksiAktifPanel extends JPanel implements ActionListener {
     HousePanel housePanel;
     Perabotan perabotan;
+
+    JButton OKButton;
+    JButton cancelButton;
+    JTextField durasiText;
     AksiAktifPanel(HousePanel housePanel, Perabotan perabotan, String aksi){
         this.housePanel = housePanel;
         this.perabotan = perabotan;
-        setBackground(new Color(150, 178, 102));
+        setBackground(new Color(150, 178, 102, 150));
         setOpaque(true);
         setDoubleBuffered(true);
         setPreferredSize(new Dimension(housePanel.centerPanel.getWidth()/2, housePanel.centerPanel.getHeight()/2));
@@ -28,7 +36,7 @@ public class AksiAktifPanel extends JPanel {
         int gridy = 0;
         JLabel aksiLabel = new JLabel("Aksi " + aksi);
         JLabel _aksiLabel = new JLabel("Durasi");
-        JTextField durasiText = new JTextField();
+        durasiText = new JTextField();
         IntegerFilter _if = new IntegerFilter();
         ((AbstractDocument) durasiText.getDocument()).setDocumentFilter(_if);
         durasiText.setPreferredSize(new Dimension(housePanel.centerPanel.getWidth()/4, housePanel.unitSize/2));
@@ -36,9 +44,9 @@ public class AksiAktifPanel extends JPanel {
         aksiLabel.setAlignmentX(SwingConstants.CENTER);
         _aksiLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
         _aksiLabel.setAlignmentX(SwingConstants.CENTER);
-        JButton OKButton = new JButton("OK");
+        OKButton = new JButton("OK");
         OKButton.setPreferredSize(new Dimension(housePanel.centerPanel.getWidth()/8, 2*housePanel.unitSize/3));
-        JButton cancelButton = new JButton("Cancel");
+        cancelButton = new JButton("Cancel");
         cancelButton.setPreferredSize(new Dimension(housePanel.centerPanel.getWidth()/8, 2*housePanel.unitSize/3));
         add(aksiLabel, gbc);
         gbc.gridy = ++gridy;
@@ -49,7 +57,32 @@ public class AksiAktifPanel extends JPanel {
         add(OKButton, gbc);
         gbc.gridy = ++gridy;
         add(cancelButton, gbc);
+        OKButton.addActionListener(this);
+        cancelButton.addActionListener(this);
         revalidate();
         repaint();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == OKButton){
+            int duration = Integer.parseInt(durasiText.getText());
+            //check apakah durasi valid
+            if (duration == 0){
+                JOptionPane.showMessageDialog(null, "Input durasi tidak boleh nol");
+            }
+            else{
+                if (perabotan instanceof Kasur kasur){
+                    kasur.tidur(duration, housePanel.selectedSim.sim);
+                }
+                else if (perabotan instanceof Kompor){
+
+                }
+            }
+            housePanel.centerPanel.remove(this);
+        }
+        else if (e.getSource() == cancelButton){
+            housePanel.centerPanel.remove(this);
+        }
     }
 }

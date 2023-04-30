@@ -5,6 +5,14 @@ import java.util.ArrayList;
 public class Makanan extends Objek implements BisaDimakan {
     private ArrayList<BahanMakanan> resep;
     private int poinKekenyangan;
+
+    public final static Makanan[] daftarMakanan = {
+            new Makanan(19),
+        new Makanan(20),
+        new Makanan(21),
+        new Makanan(22),
+            new Makanan(23)
+    };
     
     public Makanan(int id) {
         super(id);
@@ -45,6 +53,16 @@ public class Makanan extends Objek implements BisaDimakan {
     @Override
     public void dimakan(Sim sim) {
         sim.setKekenyangan(sim.getKekenyangan() + poinKekenyangan);
+    }
+
+    public String toStringResep(){
+        String res = "";
+        for (int i = 0; i < resep.size()-1; i++){
+            res += resep.get(i).getNama();
+            res += ", ";
+        }
+        res += resep.get(resep.size()-1);
+        return  res;
     }
 }
  

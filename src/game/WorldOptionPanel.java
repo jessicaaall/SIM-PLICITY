@@ -14,13 +14,12 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-public class WorldOptionPanel extends JPanel implements ActionListener {
+public class WorldOptionPanel extends JPanel implements ActionListener, MouseListener {
     public JButton toMainMenuButton = new JButton("Back to Main Menu");
     public JButton addHouseButton = new JButton("Add Sim");
     public JButton changeSimButton = new JButton("Change Sim");
@@ -37,9 +36,8 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
 //        this.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         loadedWorld = wp.getWorld();
         Dimension size = new Dimension(170, wp.getHeight()/3+70);
-        this.setSize(size);
         this.setPreferredSize(size);
-        this.setBounds(wp.getWidth() - this.getWidth() - 10,10, 170, wp.getHeight()/3+70);
+        this.setBounds(wp.getMapX() + wp.getWidth() - this.getWidth() - 10,wp.getMapY() + 10, 170, wp.getHeight()/3+70);
         this.setBackground(Color.white);
         setFocusable(false);
 
@@ -132,6 +130,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
         main.add(panel3);
 
         add(main, BorderLayout.CENTER);
+        addMouseListener(this);
         wp.wop = this;
     }
 
@@ -274,8 +273,38 @@ public class WorldOptionPanel extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        RoundRectangle2D shape = new RoundRectangle2D.Double(0,0, getWidth(), getHeight(), 10, 10);
-        g2d.setClip(shape);
+//        Graphics2D g2d = (Graphics2D) g;
+//        RoundRectangle2D shape = new RoundRectangle2D.Double(0,0, getWidth(), getHeight(), 10, 10);
+//        g2d.setClip(shape);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    public void update(){
+        this.setLocation(wp.getMapX() + getWidth() - wp.wop.getWidth() - 10, wp.getMapY() + 10);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        wp.isDragging = false;
+        System.out.println("entered the menu");
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }
