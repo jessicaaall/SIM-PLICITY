@@ -63,6 +63,8 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     private boolean validSectionForUpgrade = false;
 
     boolean isGoToObject = false;
+
+    boolean isAction = false;
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
 //        int notches = e.getWheelRotation();
@@ -442,8 +444,10 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 //                rumah.getSim().getInventory().addItem(selectedItem, kuantitas);
                 BisaDibeli buyed = (BisaDibeli) selectedItem;
                 Object[] parameters = {rumah.getSim(), totalHarga};
+//                int durasi = new Random().nextInt(5)+1)*30;
+                int durasi = 10;
                 ThreadBeli threadBeli = new ThreadBeli("beli " + selectedItem.getNama(),
-                        (new Random().nextInt(5)+1)*30, parameters, buyed, rumah.world);
+                        durasi, parameters, buyed, rumah.world);
                 rumah.world.getListThreadAksiPasif().add((threadBeli));
                 threadBeli.start();
             }
@@ -582,10 +586,14 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     actionButton.setEnabled(false);
                 }
                 else {
-                    goToObjectButton.setEnabled(true);
-                    moveRoomButton.setEnabled(true);
-                    actionButton.setEnabled(true);
+                    if (!isAction){
+                        goToObjectButton.setEnabled(true);
+                        moveRoomButton.setEnabled(true);
+                        actionButton.setEnabled(true);
+                    }
+
                 }
+
 
             }
             if (timer >= Math.pow(10, 9)){
@@ -610,6 +618,29 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     public void startThread(){
         thread = new Thread(this);
         thread.start();
+    }
+
+    public boolean isLoading(){
+        boolean loading = false;
+        for (Component component : centerPanel.getComponents()){
+            if (component instanceof TimerAksiPanel){
+                loading = true;
+                break;
+            }
+        }
+        return  loading;
+    }
+
+    public void disabledAllButton(){
+        for (Component component : westPanel.getComponents()){
+            component.setEnabled(false);
+        }
+    }
+
+    public void enabledAllButton(){
+        for (Component component : westPanel.getComponents()){
+            component.setEnabled(true);
+        }
     }
 
     public void paintComponent(Graphics g){

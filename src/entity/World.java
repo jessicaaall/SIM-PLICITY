@@ -68,7 +68,7 @@ public class World  implements Runnable, Serializable {
     private Waktu waktu;
     private int dailySimCreation;
     private transient Thread worldThread;
-    private ArrayList<ThreadAksi> listThreadAksi;
+    private ThreadAksi threadAksi;
 
     public ArrayList<ThreadAksiPasif> getListThreadAksiPasif() {
         return listThreadAksiPasif;
@@ -89,14 +89,18 @@ public class World  implements Runnable, Serializable {
         daftarSim = new ArrayList<Sim>();
         waktu = new Waktu(this);
         harike = waktu.getHariKe();
-        listThreadAksi = new ArrayList<>();
+        threadAksi = null;
         listThreadAksiPasif = new ArrayList<>();
         waktu.startThread();
         chosenSim = null;
     }
     
-    public ArrayList<ThreadAksi> getListThreadAksi() {
-        return listThreadAksi;
+    public ThreadAksi getThreadAksi() {
+        return threadAksi;
+    }
+
+    public void setThreadAksi(ThreadAksi threadAksi){
+        this.threadAksi = threadAksi;
     }
 
     public int getWidth() {

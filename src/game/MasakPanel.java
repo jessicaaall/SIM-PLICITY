@@ -2,6 +2,7 @@ package game;
 
 import entity.Kompor;
 import entity.Makanan;
+import thread.ThreadAksi;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -64,7 +65,15 @@ public class MasakPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     kompor.masak(housePanel.selectedSim.sim, makananTerpilih);
-                } catch (Kompor.BahanKurangException ex) {
+                    housePanel.centerPanel.remove(MasakPanel.this);
+                    int waktu = (int) ((double)makananTerpilih.getPoinKekenyangan() * 1.5);
+                    ThreadAksi aksiMasak = new ThreadAksi("Masak "+ makananTerpilih.getNama(), waktu, housePanel.rumah.world);
+                    TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Masak",aksiMasak);
+                    housePanel.centerPanel.add(timerAksiPanel, 0);
+                    housePanel.rumah.world.setThreadAksi(aksiMasak);
+                    timerAksiPanel.startThread();
+                    aksiMasak.start();
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }

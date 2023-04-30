@@ -8,44 +8,33 @@ public class ThreadAksi extends Thread implements Serializable {
     // Deklarasi atribut
     private String nama;
     private int sisaWaktu;
-    private Object object;
     private World world;
-    private Object[] parameters;
-    public Thread actionThread;
+
+    public boolean stopped;
+    public int savedSisaWaktu;
     
     // Konstruktor
-    public ThreadAksi(String nama, int sisaWaktu, Object[] parameters, Object object, World world) {
+    public ThreadAksi(String nama, int sisaWaktu, World world) {
         this.nama = nama;
         this.sisaWaktu = sisaWaktu;
         this.world = world;
-        this.object = object;
-        this.parameters = parameters;
-    }
-    public ThreadAksi(String nama, int sisaWaktu, Object object, World world) {
-        this.nama = nama;
-        this.sisaWaktu = sisaWaktu;
-        this.world = world;
-        this.object = object;
-        this.parameters = new Object[0];
     }
 
-    // Method
-    @Override
-    public void run() {
-        System.out.println("start");
-        while (sisaWaktu > 0){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-
-            }
-//            System.out.print(sisaWaktu + " ");
-            sisaWaktu--;
+    public void startThread(){
+        world.setThreadAksi(this);
+        if (stopped){
+            sisaWaktu = savedSisaWaktu;
+            stopped = false;
+            start();
         }
-        //delete thread dari daftar thread
-        world.getListThreadAksi().remove(this);
-        System.out.println(this.getNama() + " deleted");
     }
+
+    public void stopThread(){
+        stopped = true;
+        savedSisaWaktu = sisaWaktu;
+        interrupt();
+    }
+
 
     public String getNama() {
         return nama;
@@ -62,5 +51,22 @@ public class ThreadAksi extends Thread implements Serializable {
     public void setSisaWaktu(int sisaWaktu) {
         this.sisaWaktu = sisaWaktu;
     }
-    
+
+    @Override
+    public void run() {
+        while (!isInterrupted()) {
+            while (sisaWaktu > 0){
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+
+                }
+                //            System.out.print(sisaWaktu + " ");
+                sisaWaktu--;
+            }
+            stopThread();
+            //delete thread dari daftar thread
+            world.setThreadAksi(null);
+        }
+    }
 }

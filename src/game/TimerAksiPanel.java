@@ -1,20 +1,26 @@
 package game;
 
 import entity.*;
+import thread.ThreadAksi;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 
-public class TimerAksiPanel extends JPanel implements MouseListener, MouseMotionListener {
+public class TimerAksiPanel extends JPanel implements MouseListener, MouseMotionListener, Runnable {
     MouseEvent pressed;
     Point location;
 
+    Thread thread;
+    ThreadAksi threadAksi;
     HousePanel hp;
+    JLabel timer;
 
-    TimerAksiPanel(HousePanel hp, String aksi){
+    TimerAksiPanel(HousePanel hp, String aksi, ThreadAksi threadAksi){
         super(new BorderLayout());
         this.hp = hp;
+        this.threadAksi = threadAksi;
         setLocation(hp.centerPanel.getWidth()/6-18, hp.centerPanel.getHeight()/3+30);
         setBounds(hp.centerPanel.getWidth()/6-18, hp.centerPanel.getHeight()/3+30, 480, 150);
         setBackground(new Color(255, 255, 255, 200));
@@ -37,7 +43,7 @@ public class TimerAksiPanel extends JPanel implements MouseListener, MouseMotion
         aksiTitle.setHorizontalAlignment(SwingConstants.CENTER);
         aksiTitle.setFont(new Font("Monospaced", Font.BOLD, 20));
       
-        JLabel timer = new JLabel(String.valueOf(100));
+        timer = new JLabel(String.valueOf(100));
         timer.setFocusable(false);
         timer.setVerticalAlignment(SwingConstants.CENTER);
         timer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -100,5 +106,28 @@ public class TimerAksiPanel extends JPanel implements MouseListener, MouseMotion
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
     }
-        
+
+    @Override
+    public void run() {
+        hp.isAction = true;
+        hp.disabledAllButton();
+        while (hp.rumah.world.getThreadAksi() != null){
+            timer.setText(String.valueOf(threadAksi.getSisaWaktu()));
+            try {
+                Thread.sleep(1000/60);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        hp.centerPanel.remove(this);
+        hp.westPanel.setEnabled(true);
+        hp.enabledAllButton();
+        hp.isAction = false;
+    }
+
+    public void startThread(){
+        Thread thread1 = new Thread(this);
+        thread1.start();
+    }
+
 }
