@@ -40,6 +40,14 @@ public class MakanPanel extends JPanel {
         }
         JPanel OKCancelPanel = new JPanel(new GridLayout(1, 0));
         JButton OKButton = new JButton("Makan");
+        OKButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                highlightedButton.makanan.dimakan(housePanel.selectedSim.sim);
+                System.out.println("Makan " + ((Objek) highlightedButton.makanan).getNama() + ". enak");
+                housePanel.centerPanel.remove(MakanPanel.this);
+            }
+        });
         JButton cancelButton = new JButton("Batal");
         cancelButton.addActionListener(new ActionListener() {
             @Override

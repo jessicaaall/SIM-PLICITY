@@ -49,7 +49,8 @@ public class BahanMakanan extends Objek implements BisaDimakan, BisaDibeli {
 
     @Override
     public void dimakan(Sim sim) {
-        sim.setKekenyangan(sim.getKekenyangan() + poinKekenyangan);        
+        sim.setKekenyangan(sim.getKekenyangan() + poinKekenyangan);
+        sim.getInventory().removeItem(this);
     }
     
 }
