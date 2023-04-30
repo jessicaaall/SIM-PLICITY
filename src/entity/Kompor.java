@@ -31,21 +31,26 @@ public class Kompor extends Perabotan {
             }
         }
         if (hasAll) {
-            for (BahanMakanan bahan : makanan.getResep()) {
-                sim.getInventory().removeItem(bahan);
-            }
-            int waktuMasak = makanan.getPoinKekenyangan() * 1500;
-            long endTime = System.currentTimeMillis() + waktuMasak;
-            while (System.currentTimeMillis() < endTime) {
+            Thread thread = new Thread(() -> {
+                for (BahanMakanan bahan : makanan.getResep()) {
+                    sim.getInventory().removeItem(bahan);
+                }
+                int waktuMasak = makanan.getPoinKekenyangan() * 1500;
+                long endTime = System.currentTimeMillis() + waktuMasak;
+                while (System.currentTimeMillis() < endTime) {
 
-            }
-            sim.setMood(sim.getMood() + 10);
-            sim.getInventory().addItem(makanan);
-            System.out.println("Makanan " + makanan.getNama() + " selesai dimasak oleh " + sim.getNamaLengkap() + ".");
+                }
+                sim.setMood(sim.getMood() + 10);
+                sim.getInventory().addItem(makanan);
+                System.out.println("Makanan " + makanan.getNama() + " selesai dimasak oleh " + sim.getNamaLengkap() + ".");
+            });
+            thread.start();
         } else {
-//            System.out.println("Masak " + makanan.getNama() + " gagal. Ada bahan makanan yang tidak dimiliki.");
+//                   System.out.println("Masak " + makanan.getNama() + " gagal. Ada bahan makanan yang tidak dimiliki.");
             throw new BahanKurangException(makanan);
         }
+
+
         /*
         System.out.println("===== M E N U =====");
         System.out.println("1. Nasi Ayam");
