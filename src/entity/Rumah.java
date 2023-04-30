@@ -18,6 +18,8 @@ public class Rumah implements Serializable{
 
     Ruangan ruanganAcuan;
 
+    private int jumlahRuangan;
+
     public Rumah(int x, int y, Sim sim, Color color, World world){
         this.world = world;
         this.sim = sim;
@@ -28,11 +30,11 @@ public class Rumah implements Serializable{
         ruanganAcuan = ruangan1;
         daftarRuangan.add(ruangan1);
 //            daftarRuangan.add(new Ruangan("Ruangan 2", this, new Point( 0, 6)));
-        Perabotan mejakursi = new MejaDanKursi(ruangan1); //cuma sample buat uji coba, nanti bakal dihilangin
-        Perabotan kasur = new Kasur(5, ruangan1);
-        Perabotan jam = new Jam(world,ruangan1);
-        Perabotan toilet = new Toilet(ruangan1);
-        Perabotan komporgas = new Kompor(2, ruangan1);
+        Perabotan mejakursi = new MejaDanKursi(); //cuma sample buat uji coba, nanti bakal dihilangin
+        Perabotan kasur = new Kasur(5);
+        Perabotan jam = new Jam(world);
+        Perabotan toilet = new Toilet();
+        Perabotan komporgas = new Kompor(2);
 //        toilet.setKiriAtas(new Point(0, 5));
 //        jam.setKiriAtas(new Point(0, 4));
 //        kasur.setKiriAtas(new Point(2, 5));
@@ -49,7 +51,7 @@ public class Rumah implements Serializable{
         sim.getInventory().addItem(jam);
         sim.getInventory().addItem(toilet);
         sim.getInventory().addItem(komporgas);
-
+        jumlahRuangan = 1;
         sim.setPosisi(new Point(3,3));
     }
 
@@ -142,6 +144,7 @@ public class Rumah implements Serializable{
 
     public void upgrade(Ruangan ruangan){
         daftarRuangan.add(ruangan);
+        jumlahRuangan++;
         sim.setUang(sim.getUang()-1500);
         /*Scanner input = new Scanner(System.in);
         if(daftarRuangan.size()<2){
@@ -241,6 +244,17 @@ public class Rumah implements Serializable{
             }            
 
         }*/
+    }
 
+    /**
+     * harusnya bisa
+     * @return
+     */
+    public int getJumlahPerabot(){
+        int jumlah = 0;
+        for (Ruangan ruangan : getDaftarRuangan()){
+            jumlah += ruangan.getDaftarObjek().size();
+        }
+        return jumlah;
     }
 }

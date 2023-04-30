@@ -1,9 +1,6 @@
 package game;
 
-import entity.Kasur;
-import entity.Objek;
-import entity.Perabotan;
-import entity.Ruangan;
+import entity.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -179,6 +176,51 @@ public class PerabotanLabel extends JLabel {
                 housePanel.revalidate();
                 housePanel.repaint();
             }
+            else if (housePanel.isGoToObject){
+                //cek item nya itu bener perabot gak
+                System.out.println("mau teleport ke sini");
+                PerabotanLabel clickedComp = (PerabotanLabel) e.getSource();
+                if (!clickedComp.roomPanel.ruangan.getNama().equals(housePanel.selectedSim.sim.getLocRuang().getNama())) {
+                    System.out.println("di luar ruangan");
+                    return;
+                }
+                housePanel.selectedSim.setLocation(clickedComp.getX(), clickedComp.getY());
+                housePanel.selectedSim.sim.setPosisi(new Point(
+                        Math.floorDiv(clickedComp.getY() - housePanel.ruanganAcuanPanel.getY(), housePanel.unitSize),
+                        Math.floorDiv(clickedComp.getY() - housePanel.ruanganAcuanPanel.getY(), housePanel.unitSize)
+                ));
+                housePanel.isGoToObject = false;
+                for (Component component : housePanel.westPanel.getComponents()){
+                    if (component instanceof JButton jb){
+                        if (jb.getText().equals(housePanel.goToObjectButton.getText())){
+                            continue;
+                        }
+                        if (jb.isEnabled()){
+                            continue;
+                        }
+                        jb.setEnabled(true);
+                    }
+                }
+                String aksi;
+                if (perabotan instanceof Kasur){
+                    aksi = "tidur";
+                }
+                else if (perabotan instanceof Kompor kompor){
+                    aksi = "masak";
+                    MasakPanel masakPanel = new MasakPanel(housePanel, kompor);
+                    housePanel.centerPanel.add(masakPanel, 0);
+                    housePanel.centerPanel.revalidate();
+                    housePanel.centerPanel.repaint();
+                    return;
+                }
+                else{
+                    aksi = perabotan.getNama();
+                }
+                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(housePanel, perabotan, aksi);
+                housePanel.centerPanel.add(aksiAktifPanel, 0);
+                housePanel.centerPanel.revalidate();
+                housePanel.centerPanel.repaint();
+            }
             else {
                 if (isDragging){
                     return;
@@ -209,6 +251,9 @@ public class PerabotanLabel extends JLabel {
                 housePanel.centerPanel.repaint();
             }
         }
+
+        private int clickedCount = 0;
+        private JButton lastButtonPressed;
         @Override
         public void mousePressed(MouseEvent e) {
             if (put){

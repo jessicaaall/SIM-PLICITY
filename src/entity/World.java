@@ -27,6 +27,7 @@ public class World  implements Runnable, Serializable {
     };
     private int width;
     private int height;
+    private Sim chosenSim;
 
     public void setWidth(int width) {
         this.width = width;
@@ -46,6 +47,13 @@ public class World  implements Runnable, Serializable {
 
     public void setDaftarSim(ArrayList<Sim> daftarSim) {
         this.daftarSim = daftarSim;
+    }
+
+    public Sim getChosenSim() {
+        return chosenSim;
+    }
+    public void setChosenSim(Sim sim) {
+        chosenSim = sim;
     }
 
     public void setWaktu(Waktu waktu) {
@@ -84,6 +92,7 @@ public class World  implements Runnable, Serializable {
         listThreadAksi = new ArrayList<>();
         listThreadAksiPasif = new ArrayList<>();
         waktu.startThread();
+        chosenSim = null;
     }
     
     public ArrayList<ThreadAksi> getListThreadAksi() {

@@ -1,8 +1,8 @@
 package game;
 
 import entity.*;
-import thread.ThreadAksi;
-import thread.ThreadAksiPasif;
+import thread.ThreadBeli;
+import thread.ThreadUpgradeRumah;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -27,12 +27,21 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     private Thread thread;
     private int FPS = 60;
     private int currentFPS;
-    JButton backToMainMenuButton = new JButton("To Main Menu");
-    JButton backToWorldButton = new JButton("Keluar rumah");
+    // JButton backToMainMenuButton = new JButton("To Main Menu");
+    JButton backToWorldButton = new JButton("Back To World");
+    HousePanelButton statusSimButton = new HousePanelButton("View Sim Info");
+    HousePanelButton lihatInventoryButton = new HousePanelButton("View Inventory");
+    HousePanelButton upgradeRumahButton = new HousePanelButton("Upgrade House");
+    HousePanelButton moveRoomButton = new HousePanelButton("Move Room");
+    HousePanelButton editRoomButton = new HousePanelButton("Edit Room");
+    HousePanelButton listObjectButton = new HousePanelButton("List Object");
+    HousePanelButton goToObjectButton = new HousePanelButton("Go To Object");
+    HousePanelButton actionButton = new HousePanelButton("Action");
+
     HousePanelButton beliItemButton = new HousePanelButton("Beli Item");
-    HousePanelButton lihatInventoryButton = new HousePanelButton("Lihat Inventory");
-    HousePanelButton upgradeRumahButton = new HousePanelButton("Upgrade Rumah");
-    HousePanelButton statusSimButton = new HousePanelButton("Status Sim");
+
+
+
     UpgradeRumahPanel upgradeRumahPanel;
     JPanel eastPanel;
     JPanel westPanel;
@@ -52,6 +61,8 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     DaftarThreadPane daftarThreadPane;
     private boolean isUpgradeRumah = false;
     private boolean validSectionForUpgrade = false;
+
+    boolean isGoToObject = false;
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
 //        int notches = e.getWheelRotation();
@@ -70,13 +81,15 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 //        repaint();
     }
 
-    private class HousePanelButton extends JButton{
+    public class HousePanelButton extends JButton{
         HousePanelButton(String text){
             super(text);
-            this.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
-            this.setBackground(Color.green);
+            Font font = new Font("Comic Sans MS", Font.PLAIN, 15);
+            this.setFont(font);
+            this.setBackground(Color.white);
             this.setForeground(Color.black);
             this.setFocusable(false);
+//            this.setPreferredSize(new Dimension(getFontMetrics(font).stringWidth(text) + 20, 30));
             this.addActionListener(HousePanel.this);
         }
     }
@@ -90,21 +103,26 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         this.setBackground(Color.black);
         unitSize = 40;
 
+        daftarThreadPane = new DaftarThreadPane(worldPanel.getWorld(), rumah.getSim());
+
         Font standardFont = new Font("Comic Sans MS", Font.PLAIN, 15);
-        backToMainMenuButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+        /* backToMainMenuButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
         backToMainMenuButton.setBackground(Color.green);
         backToMainMenuButton.setForeground(Color.black);
         backToMainMenuButton.setFocusable(false);
-        backToMainMenuButton.addActionListener(this);
+        backToMainMenuButton.addActionListener(this); */
         backToWorldButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
-        backToWorldButton.setBackground(Color.green);
+        backToWorldButton.setBackground(Color.white);
         backToWorldButton.setForeground(Color.black);
         backToWorldButton.setFocusable(false);
-        backToWorldButton.addActionListener(this);
+        backToWorldButton.setPreferredSize(new Dimension(150, 30));
         eastPanel = new JPanel(new GridLayout(0, 1, 0, 5));
         eastPanel.setPreferredSize(new Dimension(mainPanel.width/5, mainPanel.height));
-        eastPanel.setBackground(Color.pink);
+        eastPanel.setBackground(new Color(105, 180, 110));
         eastPanel.setFocusable(false);
+
+
+        backToWorldButton.addActionListener(this);
 
         // set label untuk panel timur
         currentFPSLabel = new JLabel("FPS = 0");
@@ -115,36 +133,73 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         currentFPSLabel.setPreferredSize(new Dimension(eastPanel.getWidth()
                 , getFontMetrics(currentFPSLabel.getFont()).getHeight()*3));
 
-        saldoSimLabel = new JLabel("<html>Total uang " + rumah.getSim().getNamaLengkap() + " :<br>0</html>");
+        /* saldoSimLabel = new JLabel("<html>Total uang " + rumah.getSim().getNamaLengkap() + " :<br>0</html>");
         saldoSimLabel.setFocusable(false);
         saldoSimLabel.setFont(standardFont);
         saldoSimLabel.setPreferredSize(new Dimension(eastPanel.getWidth()
                 , getFontMetrics(saldoSimLabel.getFont()).getHeight()*3));
-//        saldoSimLabel.setBorder(BorderFactory.createDashedBorder(Color.black));
-/*        saldoSimLabel.setPreferredSize(new Dimension(saldoSimLabel.getFontMetrics(standardFont).stringWidth(saldoSimLabel.getText())+15,
-                saldoSimLabel.getFontMetrics(standardFont).getHeight() + 10));*/
+        saldoSimLabel.setBorder(BorderFactory.createDashedBorder(Color.black));
+        saldoSimLabel.setPreferredSize(new Dimension(saldoSimLabel.getFontMetrics(standardFont).stringWidth(saldoSimLabel.getText())+15,
+                saldoSimLabel.getFontMetrics(standardFont).getHeight() + 10));
         saldoSimLabel.setHorizontalTextPosition(JLabel.CENTER);
         saldoSimLabel.setVerticalTextPosition(JLabel.CENTER);
+
+
         eastPanel.add(currentFPSLabel);
         eastPanel.add(saldoSimLabel);
+        eastPanel.add(daftarThreadPane);
+        saldoSimLabel.setVerticalTextPosition(JLabel.CENTER); */
+        eastPanel.add(currentFPSLabel);
+        // eastPanel.add(saldoSimLabel);
+        eastPanel.add(daftarThreadPane);
 
         // set panel barat
-        westPanel = new JPanel(new FlowLayout());
+//        westPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 15));
+        westPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(15,10,10,10);
+        gbc.gridx = 0;
         westPanel.setPreferredSize(new Dimension(mainPanel.width/5, mainPanel.height));
-        westPanel.setBackground(Color.pink);
+        westPanel.setBackground(new Color(105, 180, 110));
         westPanel.setFocusable(false);
 
         //add button to west panel
-        westPanel.add(backToMainMenuButton);
-        westPanel.add(backToWorldButton);
-        westPanel.add(beliItemButton);
-        westPanel.add(lihatInventoryButton);
-        westPanel.add(upgradeRumahButton);
-        westPanel.add(statusSimButton);
+        //westPanel.add(backToMainMenuButton);
+        int gridy = 0;
+        westPanel.add(backToWorldButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(statusSimButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(lihatInventoryButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(upgradeRumahButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(moveRoomButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(editRoomButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(listObjectButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(goToObjectButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(actionButton, gbc);
+        gbc.gridy = ++gridy;
+        westPanel.add(beliItemButton, gbc);
+
+//        int maxWidth = 100;
+//        for (Component component : westPanel.getComponents()){
+//            Dimension preferredSize = component.getMaximumSize();
+//            int width = preferredSize.getSize().width;
+//            maxWidth = Math.max(maxWidth, width);
+//        }
+//        for (Component component : westPanel.getComponents()){
+//            component.setPreferredSize(new Dimension(maxWidth, component.getHeight()));
+//        }
 
         centerPanel = new JPanel(null);
         centerPanel.setPreferredSize(new Dimension(3*mainPanel.width/5, mainPanel.height));
-        centerPanel.setBackground(Color.black);
+        centerPanel.setBackground(Color.darkGray);
         centerPanel.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -220,17 +275,12 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         centerPanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                mainPanel.requestFocusInWindow();
                 if (isUpgradeRumah){
                     isUpgradeRumah = false;
                     if (validSectionForUpgrade){
-                        Method method;
-                        try {
-                            method = HousePanel.this.getClass().getMethod("upgradeRumah");
-                        } catch (NoSuchMethodException ex) {
-                            throw new RuntimeException(ex);
-                        }
                         rumah.busyUpgrading = true;
-                        ThreadAksiPasif threadAksiPasif = new ThreadAksiPasif("Upgrade Rumah", 1080, method, HousePanel.this, rumah.world);
+                        ThreadUpgradeRumah threadAksiPasif = new ThreadUpgradeRumah("Upgrade Rumah", 1080, rumah, rumah.world);
                         rumah.world.getListThreadAksiPasif().add(threadAksiPasif);
                         threadAksiPasif.start();
 //                        ThreadAksi threadAksi = new ThreadAksi("Upgrade Rumah", 1080, method, HousePanel.this, rumah.world);
@@ -240,14 +290,12 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     else{
                         rumah.busyUpgrading = false;
                     }
-
-                }
-                for (Component component : centerPanel.getComponents()){
-                    if (component instanceof HighlightedPanel){
-                        centerPanel.remove(component);
+                    for (Component component : centerPanel.getComponents()){
+                        if (component instanceof HighlightedPanel){
+                            centerPanel.remove(component);
+                        }
                     }
                 }
-
             }
 
             @Override
@@ -311,18 +359,10 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == backToMainMenuButton){
+        if (e.getSource() == backToWorldButton){
             mainPanel.remove(this);
-            mainPanel.add(mainMenuPanel);
-            thread.interrupt();
-            thread = null;
-            mainPanel.revalidate();
-            mainPanel.repaint();
-        }
-        else if (e.getSource() == backToWorldButton){
-            mainPanel.remove(this);
-            worldPanel.add(worldPanel.wop);
-            mainPanel.add(worldPanel);
+            mainPanel.add(worldPanel, BorderLayout.CENTER);
+            mainPanel.add(worldPanel.wop, BorderLayout.EAST);
             thread.interrupt();
             thread = null;
             mainPanel.revalidate();
@@ -402,21 +442,10 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 //                rumah.getSim().getInventory().addItem(selectedItem, kuantitas);
                 BisaDibeli buyed = (BisaDibeli) selectedItem;
                 Object[] parameters = {rumah.getSim(), totalHarga};
-                Class<?>[] paramTypes = {Sim.class, int.class};
-                Method method;
-                try {
-                    method = buyed.getClass().getMethod("beli", Sim.class, int.class);
-                } catch (NoSuchMethodException ex) {
-                    throw new RuntimeException(ex);
-                }
-//                ThreadAksi threadAksi = new ThreadAksi("beli " + selectedItem.getNama(),
-//                        (new Random().nextInt(5)+1)*30, method, parameters, buyed, rumah.world);
-//                rumah.world.getListThreadAksi().add(threadAksi);
-//                threadAksi.start();
-                ThreadAksiPasif threadAksiPasif = new ThreadAksiPasif("beli " + selectedItem.getNama(),
-                        (new Random().nextInt(5)+1)*30, method, parameters, buyed, rumah.world);
-                rumah.world.getListThreadAksiPasif().add((threadAksiPasif));
-                threadAksiPasif.start();
+                ThreadBeli threadBeli = new ThreadBeli("beli " + selectedItem.getNama(),
+                        (new Random().nextInt(5)+1)*30, parameters, buyed, rumah.world);
+                rumah.world.getListThreadAksiPasif().add((threadBeli));
+                threadBeli.start();
             }
         }
         if (e.getSource() == lihatInventoryButton){
@@ -470,6 +499,55 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
             centerPanel.revalidate();
             centerPanel.repaint();
         }
+        if (e.getSource() == actionButton) {
+            for (Component component : centerPanel.getComponents()){
+                if (component instanceof ActionPanel){
+                    centerPanel.remove(component);
+                }
+            }
+            ActionPanel actionPanel = new ActionPanel(this);
+            centerPanel.add(actionPanel, 0);
+            centerPanel.revalidate();
+            centerPanel.repaint();
+        }
+
+        if (e.getSource() == goToObjectButton){
+            if (!isGoToObject) {
+                if (rumah.getJumlahPerabot() < 1){
+                    JOptionPane.showMessageDialog(null, "Tidak ada object");
+                    return;
+                }
+                for (Component component : westPanel.getComponents()){
+                    if (component instanceof JButton jb){
+                        if (jb.getText().equals(goToObjectButton.getText())){
+                            continue;
+                        }
+                        if (!jb.isEnabled()){
+                            continue;
+                        }
+                        jb.setEnabled(false);
+                    }
+                }
+                System.out.println(selectedSim.sim.getNamaLengkap());
+                System.out.println("silakan pilih objek yang ingin dituju");
+                isGoToObject = true;
+            }
+            else{
+                for (Component component : westPanel.getComponents()){
+                    if (component instanceof JButton jb){
+                        if (jb.getText().equals(goToObjectButton.getText())){
+                            continue;
+                        }
+                        if (jb.isEnabled()){
+                            continue;
+                        }
+                        jb.setEnabled(true);
+                    }
+                }
+                System.out.println("matikan go to object");
+                isGoToObject = false;
+            }
+        }
     }
 
     @Override
@@ -491,6 +569,23 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 repaint();
                 delta--;
                 drawCount++;
+                if(rumah.busyUpgrading){
+                    upgradeRumahButton.setEnabled(false);
+                }
+                else{
+                    upgradeRumahButton.setEnabled(true);
+                }
+                mainPanel.setFocusable(true);
+                if (selectedSim == null){
+                    goToObjectButton.setEnabled(false);
+                    moveRoomButton.setEnabled(false);
+                    actionButton.setEnabled(false);
+                }
+                else {
+                    goToObjectButton.setEnabled(true);
+                    moveRoomButton.setEnabled(true);
+                    actionButton.setEnabled(true);
+                }
 
             }
             if (timer >= Math.pow(10, 9)){
@@ -498,18 +593,15 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 drawCount = 0;
                 timer = 0;
                 currentFPSLabel.setText("FPS = " + currentFPS);
-                saldoSimLabel.setText("<html>Total uang " + rumah.getSim().getNamaLengkap()
+                /* saldoSimLabel.setText("<html>Total uang " + rumah.getSim().getNamaLengkap()
                         + " :<br>" + rumah.getSim().getUang() + "</html>");
                 // update label saldo
                 saldoSimLabel.setText("<html>Total uang " + rumah.getSim().getNamaLengkap() + " :<br>" +
                         rumah.getSim().getUang() + "</html>");
+                daftarThreadPane.update();
 
-                if(rumah.busyUpgrading){
-                    upgradeRumahButton.setEnabled(false);
-                }
-                else{
-                    upgradeRumahButton.setEnabled(true);
-                }
+                        rumah.getSim().getUang() + "</html>"); */
+                daftarThreadPane.update();
 
             }
         }
@@ -535,8 +627,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 if (component instanceof RoomPanel || component instanceof HighlightedPanel ||component instanceof SimLabel){
                     component.setBounds(component.getX() + speed, component.getY(), component.getWidth(), component.getHeight());
                 }
-                if (component instanceof  PerabotanLabel){
-                    PerabotanLabel pl = (PerabotanLabel) component;
+                if (component instanceof PerabotanLabel pl){
                     pl.setBounds(pl.getX() + speed, pl.getY(), pl.getWidth(), pl.getHeight());
                     if (pl.startDragPoint != null){
                         pl.startDragPoint.translate(speed, 0);
@@ -549,8 +640,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 if (component instanceof RoomPanel|| component instanceof HighlightedPanel||component instanceof SimLabel){
                     component.setBounds(component.getX()-speed, component.getY(), component.getWidth(), component.getHeight());
                 }
-                if (component instanceof  PerabotanLabel){
-                    PerabotanLabel pl = (PerabotanLabel) component;
+                if (component instanceof PerabotanLabel pl){
                     pl.setBounds(pl.getX() - speed, pl.getY(), pl.getWidth(), pl.getHeight());
                     if (pl.startDragPoint != null){
                         pl.startDragPoint.translate(-speed, 0);
@@ -564,8 +654,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     component.setBounds(component.getX(), component.getY()-speed, component.getWidth(), component.getHeight());
 
                 }
-                if (component instanceof  PerabotanLabel){
-                    PerabotanLabel pl = (PerabotanLabel) component;
+                if (component instanceof PerabotanLabel pl){
                     pl.setBounds(pl.getX(), pl.getY()-speed, pl.getWidth(), pl.getHeight());
                     if (pl.startDragPoint != null){
                         pl.startDragPoint.translate(0, -speed);
@@ -578,8 +667,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 if (component instanceof RoomPanel|| component instanceof HighlightedPanel||component instanceof SimLabel){
                     component.setBounds(component.getX(), component.getY()+speed, component.getWidth(), component.getHeight());
                 }
-                if (component instanceof  PerabotanLabel){
-                    PerabotanLabel pl = (PerabotanLabel) component;
+                if (component instanceof PerabotanLabel pl){
                     pl.setBounds(pl.getX(), pl.getY()+speed, pl.getWidth(), pl.getHeight());
                     if (pl.startDragPoint != null){
                         pl.startDragPoint.translate(0, speed);
@@ -633,17 +721,19 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     }
 
     private class UpgradeRumahPanel extends JPanel implements ActionListener{
-        HousePanelButton OKButton = new HousePanelButton("OK");
-        HousePanelButton cancelButton = new HousePanelButton("Batal");
+        HousePanelButton OKButton;
+        HousePanelButton cancelButton;
         ButtonContainer buttonContainer;
 
         UpgradeRumahPanel(){
             OKButton = new HousePanelButton("OK");
+            OKButton.setPreferredSize(new Dimension(160, 80));
             cancelButton = new HousePanelButton("Batal");
+            cancelButton.setPreferredSize(new Dimension(160, 80));
             OKButton.setFocusable(false);
             cancelButton.setFocusable(false);
             OKButton.setBounds(0,0, 10*unitSize/4, unitSize);
-            cancelButton.setBounds(5*unitSize/2,0, 10*unitSize/4, unitSize);
+            cancelButton.setBounds(6*unitSize/2,0, 10*unitSize/4, unitSize);
             OKButton.setVisible(true);
             cancelButton.setVisible(true);
             OKButton.setOpaque(true);
@@ -706,7 +796,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
             String text2 = "Yakin untuk melanjutkan?";
             int fontHeight2 = getFontMetrics(font1).getHeight();
             int fontWidth2 = getFontMetrics(font1).stringWidth(text2);
-            int drawStringX2 = (getWidth()-fontWidth1)/2;
+            int drawStringX2 = (getWidth()-fontWidth2)/2;
             int drawStringY2 = 5+fontHeight1+fontHeight2;
             g2d.setFont(font2);
             g2d.drawString(text2, drawStringX2,drawStringY2);
@@ -715,7 +805,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         private class ButtonContainer extends JPanel{
             ButtonContainer(){
 //                super(new GridLayout(1,0, 10, 0));
-                super(new FlowLayout());
+                super(new GridLayout(1,0));
                 setFocusable(false);
                 setBackground(new Color(150,178,102));
                 setOpaque(true);

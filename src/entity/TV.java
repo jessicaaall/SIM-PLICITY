@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.*;
+
 
 public class TV extends Perabotan {
     public TV() {

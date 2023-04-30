@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.*;
+
 
 public class MejaDanKursi extends Perabotan implements BisaDiduduki {
     public MejaDanKursi() {
@@ -64,7 +64,7 @@ public class MejaDanKursi extends Perabotan implements BisaDiduduki {
 
             }
             makanan.dimakan(sim);
-            sim.setWaktuTerakhirMakan(sim.getTheirWorld().getWaktu());
+            sim.addTimerTerakhirMakan();
             sim.setIsSudahBuangAir(false);
             System.out.println("Sim " + sim.getNamaLengkap() + " selesai makan " + food.getNama() + ".");
         } else {

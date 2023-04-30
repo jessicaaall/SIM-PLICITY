@@ -34,7 +34,9 @@ public class Waktu implements Runnable, Serializable {
             }
             if (world.getListThreadAksi().size() > 0) {
                 sisaDetik--;
-
+                for (Sim sim : world.getDaftarSim()) {
+                    sim.trackBuangAirSetelahMakan();
+                }
             }
             if (sisaDetik < 0) {
                 hariKe++;
@@ -57,7 +59,7 @@ public class Waktu implements Runnable, Serializable {
     }
     public String[] tampilkanWaktu() {
         String[] nilaiWaktu = new String[3];
-        nilaiWaktu[0] = "Waktu dunia Sim-Plicity :";
+        nilaiWaktu[0] = "WAKTU DUNIA SIM-PLICITY";
         nilaiWaktu[1] = "- Hari ke    : " + hariKe;
         nilaiWaktu[2] = "- Sisa detik : " + sisaDetik;
         return nilaiWaktu;

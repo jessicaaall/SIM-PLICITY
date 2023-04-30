@@ -22,17 +22,19 @@ public class MainPanel extends JPanel  {
     public MainPanel(GameFrame gf){
         this.gf = gf;
         this.setPreferredSize(new Dimension(width, height));
+        this.setBounds(0,0,width,height);
         this.setDoubleBuffered(true);
+        setLayout(new BorderLayout());
         setFocusable(true);
-        setOpaque(false);
+        setOpaque(true);
         requestFocus();
         addKeyListener(keyH);
-        repaint();
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/background.jpg")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        repaint();
     }
 
     public void setFullScreen(){

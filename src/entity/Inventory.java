@@ -46,7 +46,6 @@ public class Inventory<T extends Objek> implements Serializable {
             } else {
                 container.remove(item);
             }
-            container.remove(item);
         } else {
             System.out.println("Tidak ada item yang dimaksud");
         }

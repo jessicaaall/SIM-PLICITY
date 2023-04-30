@@ -23,6 +23,7 @@ public class MainMenuPanel extends JPanel {
             setPreferredSize(new Dimension(400,240));
             setDoubleBuffered(true);
             setFocusable(false);
+            setOpaque(false);
             // create and add button
             startButton = new MainMenuButton("Start");
             helpButton = new MainMenuButton("Help");
@@ -72,6 +73,7 @@ public class MainMenuPanel extends JPanel {
         MenuPanel menuPanel = new MenuPanel();
         this.add(menuPanel);
         setPreferredSize(new Dimension(mainPanel.width, mainPanel.height));
+        setOpaque(false);
         setDoubleBuffered(true);
         repaint();
 
