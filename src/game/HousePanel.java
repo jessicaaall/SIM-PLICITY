@@ -11,9 +11,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.lang.reflect.Method;
-import java.security.DigestException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -161,7 +159,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(15,10,10,10);
-        gbc.gridy = 0;
+        gbc.gridx = 0;
         westPanel.setPreferredSize(new Dimension(mainPanel.width/5, mainPanel.height));
         westPanel.setBackground(Color.pink);
         westPanel.setFocusable(false);
@@ -277,15 +275,10 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         centerPanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                mainPanel.requestFocusInWindow();
                 if (isUpgradeRumah){
                     isUpgradeRumah = false;
                     if (validSectionForUpgrade){
-                        Method method;
-                        try {
-                            method = HousePanel.this.getClass().getMethod("upgradeRumah");
-                        } catch (NoSuchMethodException ex) {
-                            throw new RuntimeException(ex);
-                        }
                         rumah.busyUpgrading = true;
                         ThreadUpgradeRumah threadAksiPasif = new ThreadUpgradeRumah("Upgrade Rumah", 1080, rumah, rumah.world);
                         rumah.world.getListThreadAksiPasif().add(threadAksiPasif);
@@ -582,7 +575,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 else{
                     upgradeRumahButton.setEnabled(true);
                 }
-                mainPanel.requestFocus();
+                mainPanel.setFocusable(true);
                 if (selectedSim == null){
                     goToObjectButton.setEnabled(false);
                     moveRoomButton.setEnabled(false);

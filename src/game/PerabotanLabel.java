@@ -1,9 +1,6 @@
 package game;
 
-import entity.Kasur;
-import entity.Objek;
-import entity.Perabotan;
-import entity.Ruangan;
+import entity.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -204,6 +201,20 @@ public class PerabotanLabel extends JLabel {
                         jb.setEnabled(true);
                     }
                 }
+                String aksi;
+                if (perabotan instanceof Kasur){
+                    aksi = "tidur";
+                }
+                else if (perabotan instanceof Kompor){
+                    aksi = "masak";
+                }
+                else{
+                    aksi = perabotan.getNama();
+                }
+                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(housePanel, perabotan, aksi);
+                housePanel.centerPanel.add(aksiAktifPanel, 0);
+                housePanel.centerPanel.revalidate();
+                housePanel.centerPanel.repaint();
             }
             else {
                 if (isDragging){

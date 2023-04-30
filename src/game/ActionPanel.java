@@ -6,6 +6,7 @@ import entity.Ruangan;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.text.AbstractDocument;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -175,7 +176,6 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                         try {
                             t = tClass.cast(perabotan);
                         }catch (RuntimeException e){
-                            System.out.println("bukan");
                             continue;
                         }
                         if (perabotan.getKiriAtas().equals(thisPoint)){
@@ -188,5 +188,22 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
         }
     }
 
+    public class DurasiPanel extends JPanel{
+        DurasiPanel(){
+          setLayout(new GridLayout(0, 1));
+          setBounds((hp.centerPanel.getWidth()-320)/2, (hp.centerPanel.getHeight()-160)/2, 320, 160);
+          setPreferredSize(new Dimension(320, 160));
+          setBackground(new Color(150, 178, 102));
+          setOpaque(true);
+          JTextField timeInput = new JTextField();
+          IntegerFilter _if = new IntegerFilter();
+          ((AbstractDocument) timeInput.getDocument()).setDocumentFilter(_if);
+          JLabel label = new JLabel("Masukkan durasi aksi: ");
+          add(label);
+          add(timeInput);
+          JButton button = new JButton("OK");
+          add(button);
+        }
+    }
 }
 

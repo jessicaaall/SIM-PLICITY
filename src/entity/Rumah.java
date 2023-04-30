@@ -246,6 +246,10 @@ public class Rumah implements Serializable{
         }*/
     }
 
+    /**
+     * harusnya bisa
+     * @return
+     */
     public int getJumlahPerabot(){
         int jumlah = 0;
         for (Ruangan ruangan : getDaftarRuangan()){
