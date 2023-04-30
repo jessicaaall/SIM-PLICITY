@@ -75,7 +75,7 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                 if (perabotan instanceof Kasur kasur){
                     kasur.tidur(duration, housePanel.selectedSim.sim);
                 }
-                else if (perabotan instanceof Kompor){
+                else if (perabotan instanceof Kompor kompor){
 
                 }
             }

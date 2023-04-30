@@ -205,8 +205,13 @@ public class PerabotanLabel extends JLabel {
                 if (perabotan instanceof Kasur){
                     aksi = "tidur";
                 }
-                else if (perabotan instanceof Kompor){
+                else if (perabotan instanceof Kompor kompor){
                     aksi = "masak";
+                    MasakPanel masakPanel = new MasakPanel(housePanel, kompor);
+                    housePanel.centerPanel.add(masakPanel, 0);
+                    housePanel.centerPanel.revalidate();
+                    housePanel.centerPanel.repaint();
+                    return;
                 }
                 else{
                     aksi = perabotan.getNama();

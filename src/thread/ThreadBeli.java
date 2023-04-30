@@ -24,7 +24,6 @@ public class ThreadBeli extends ThreadAksiPasif{
     @Override
     public void run() {
         System.out.println("start");
-
         while (!isInterrupted()) {
             while (sisaWaktu > 0){
                 try {
