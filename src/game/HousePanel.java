@@ -361,8 +361,8 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backToWorldButton){
             mainPanel.remove(this);
-            worldPanel.add(worldPanel.wop);
-            mainPanel.add(worldPanel);
+            mainPanel.add(worldPanel, BorderLayout.CENTER);
+            mainPanel.add(worldPanel.wop, BorderLayout.WEST);
             thread.interrupt();
             thread = null;
             mainPanel.revalidate();
