@@ -20,6 +20,8 @@ public class MasakPanel extends JPanel {
     JPanel daftarMasakanPanel;
     JPanel infoMasakanPanel;
 
+    Makanan makananTerpilih;
+
     MasakPanel(HousePanel housePanel, Kompor kompor){
         super(new BorderLayout());
         this.housePanel =  housePanel;
@@ -55,6 +57,16 @@ public class MasakPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 housePanel.centerPanel.remove(MasakPanel.this);
+            }
+        });
+        OKButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    kompor.masak(housePanel.selectedSim.sim, makananTerpilih);
+                } catch (Kompor.BahanKurangException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         JPanel panelButton = new JPanel(new GridLayout(1, 2));
@@ -93,6 +105,7 @@ public class MasakPanel extends JPanel {
                     }
                     JLabel infoMakanan = new JLabel("<html>" + makanan.getDeskripsi() +"</html>");
                     infoMakanan.setPreferredSize(new Dimension(MasakPanel.this.getPreferredSize().width/4 - 8, MasakPanel.this.getPreferredSize().height));
+                    makananTerpilih = masakan;
                     infoMasakanPanel.add(infoMakanan, BorderLayout.CENTER);
                     infoMasakanPanel.revalidate();
                     infoMasakanPanel.repaint();
