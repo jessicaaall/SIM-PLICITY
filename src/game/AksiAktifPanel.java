@@ -3,6 +3,8 @@ package game;
 import entity.Kasur;
 import entity.Kompor;
 import entity.Perabotan;
+import entity.Sim;
+import thread.ThreadAksi;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -73,10 +75,14 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
             }
             else{
                 if (perabotan instanceof Kasur kasur){
-                    kasur.tidur(duration, housePanel.selectedSim.sim);
-                }
-                else if (perabotan instanceof Kompor kompor){
-
+                    Sim simnya = housePanel.selectedSim.sim;
+                    housePanel.selectedSim.sim.tidur(duration, kasur);
+                    ThreadAksi aksiTidur = new ThreadAksi(simnya.getNamaLengkap() + " tidur", duration, housePanel.rumah.world);
+                    housePanel.rumah.world.setThreadAksi(aksiTidur);
+                    aksiTidur.start();
+                    TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Tidur",aksiTidur);
+                    housePanel.centerPanel.add(timerAksiPanel, 0);
+                    timerAksiPanel.startThread();
                 }
             }
             housePanel.centerPanel.remove(this);

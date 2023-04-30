@@ -100,7 +100,10 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                     JOptionPane.showMessageDialog(null, "Tidak ada kasur di sekitar");
                     return;
                 }
-                kasur.tidur(30, ActionPanel.this.hp.selectedSim.sim);
+                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, kasur, "tidur");
+                hp.centerPanel.add(aksiAktifPanel, 0);
+                hp.centerPanel.revalidate();
+                hp.centerPanel.repaint();
                 System.out.println("tidur");
             }
         });
