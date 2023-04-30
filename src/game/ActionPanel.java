@@ -3,6 +3,7 @@ package game;
 import entity.Kasur;
 import entity.Perabotan;
 import entity.Ruangan;
+import entity.Toilet;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -105,6 +106,21 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                 hp.centerPanel.revalidate();
                 hp.centerPanel.repaint();
                 System.out.println("tidur");
+            }
+        });
+        buangAirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ItemChecker<Toilet> itemChecker = new ItemChecker<Toilet>(Toilet.class);
+                Toilet toilet = itemChecker.checkItem();
+                if (toilet ==  null){
+                    JOptionPane.showMessageDialog(null, "Tidak ada WC di sekitar");
+                    return;
+                }
+                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, toilet, "ngising");
+                hp.centerPanel.add(aksiAktifPanel, 0);
+                hp.centerPanel.revalidate();
+                hp.centerPanel.repaint();
             }
         });
         revalidate();

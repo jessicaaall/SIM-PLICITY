@@ -61,7 +61,7 @@ public class Kasur extends Perabotan implements BisaDiduduki {
         long startTime = System.currentTimeMillis();
         long currentTime = startTime;
         long endTime = startTime + (durasi*1000);
-        while (currentTime < endTime) {
+        while (currentTime <= endTime) {
             if (currentTime - startTime >= 240000) {
                 startTime = currentTime;
                 sim.setMood(sim.getMood() + 30);
@@ -79,7 +79,7 @@ public class Kasur extends Perabotan implements BisaDiduduki {
         long startTime = System.currentTimeMillis();
         long currentTime = startTime;
         long endTime = startTime + (durasi*1000);
-        while (currentTime < endTime) {
+        while (currentTime <= endTime) {
             if (currentTime - startTime >= 20000) {
                 startTime = currentTime;
                 sim.setMood(sim.getMood() - 2);

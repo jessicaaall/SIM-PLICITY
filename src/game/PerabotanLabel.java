@@ -213,6 +213,9 @@ public class PerabotanLabel extends JLabel {
                     housePanel.centerPanel.repaint();
                     return;
                 }
+                else if (perabotan instanceof Toilet){
+                    aksi = "modol";
+                }
                 else{
                     aksi = perabotan.getNama();
                 }

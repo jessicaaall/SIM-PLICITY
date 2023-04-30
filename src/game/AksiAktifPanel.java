@@ -1,9 +1,6 @@
 package game;
 
-import entity.Kasur;
-import entity.Kompor;
-import entity.Perabotan;
-import entity.Sim;
+import entity.*;
 import thread.ThreadAksi;
 
 import javax.swing.*;
@@ -61,6 +58,10 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
         add(cancelButton, gbc);
         OKButton.addActionListener(this);
         cancelButton.addActionListener(this);
+        if (perabotan instanceof Toilet){
+            durasiText.setText("10");
+            durasiText.setEnabled(false);
+        }
         revalidate();
         repaint();
     }
@@ -81,6 +82,16 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     housePanel.rumah.world.setThreadAksi(aksiTidur);
                     aksiTidur.start();
                     TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Tidur",aksiTidur);
+                    housePanel.centerPanel.add(timerAksiPanel, 0);
+                    timerAksiPanel.startThread();
+                }
+                else if (perabotan instanceof Toilet toilet){
+                    Sim simnya = housePanel.selectedSim.sim;
+                    toilet.buangAir(simnya);
+                    ThreadAksi aksiNgising = new ThreadAksi(simnya.getNamaLengkap() + " ngising", duration, housePanel.rumah.world);
+                    housePanel.rumah.world.setThreadAksi(aksiNgising);
+                    aksiNgising.start();
+                    TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Buang Air", aksiNgising);
                     housePanel.centerPanel.add(timerAksiPanel, 0);
                     timerAksiPanel.startThread();
                 }
