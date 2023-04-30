@@ -512,7 +512,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     centerPanel.remove(component);
                 }
             }
-            ActionPanel actionPanel = new ActionPanel();
+            ActionPanel actionPanel = new ActionPanel(this);
             centerPanel.add(actionPanel, 0);
             centerPanel.revalidate();
             centerPanel.repaint();
