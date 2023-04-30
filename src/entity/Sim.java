@@ -366,7 +366,6 @@ public class Sim implements Serializable {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                setLocRuang(sim.getKepemilikanRumah().getRuanganAcuan());
                 int waktu = (int)Math.sqrt(Math.pow((sim.getKepemilikanRumah().getLokasi().getX() - Sim.this.getKepemilikanRumah().getLokasi().getX()), 2) + Math.pow((sim.getKepemilikanRumah().getLokasi().getY() - Sim.this.getKepemilikanRumah().getLokasi().getY()), 2));
                 int siklus = 1;
                 int periodeSiklus = 30;
@@ -389,8 +388,32 @@ public class Sim implements Serializable {
             }
         });
         thread.start();
+        setLocRuang(sim.getKepemilikanRumah().getRuanganAcuan());
     }
-    public void pulang() {
+
+    /**
+     *
+     * @param sim sim yang rumahnya selesai dikunjungi
+     */
+    public void pulang(Sim sim) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int waktu = (int)Math.sqrt(Math.pow((sim.getKepemilikanRumah().getLokasi().getX() - Sim.this.getKepemilikanRumah().getLokasi().getX()), 2) + Math.pow((sim.getKepemilikanRumah().getLokasi().getY() - Sim.this.getKepemilikanRumah().getLokasi().getY()), 2));
+                int sisaWaktu = waktu;
+                isSibuk = true;
+                while (sisaWaktu >= 0) {
+                    sisaWaktu--;
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                isSibuk = false;
+            }
+        });
+        thread.start();
         setLocRuang(Sim.this.getKepemilikanRumah().getRuanganAcuan());
     }
     public void lihatInventory() {
