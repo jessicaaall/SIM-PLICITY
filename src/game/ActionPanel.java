@@ -134,6 +134,7 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                 MakanPanel makanPanel = new MakanPanel(hp, mejaDanKursi);
                 makanPanel.setBounds(160, 80, 320, 320);
                 hp.centerPanel.add(makanPanel, 0);
+                hp.centerPanel.remove(ActionPanel.this);
                 hp.centerPanel.revalidate();
                 hp.centerPanel.repaint();
             }
