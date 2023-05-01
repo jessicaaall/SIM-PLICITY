@@ -161,6 +161,24 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                 hp.centerPanel.repaint();
             }
         });
+
+        melihatWaktuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ItemChecker<Jam> itemChecker = new ItemChecker<>(Jam.class);
+                Jam jam = itemChecker.checkItem();
+                if (jam == null){
+                    JOptionPane.showMessageDialog(null, "Tidak ada jam di sekitar");
+                    return;
+                }
+                WaktuPanel waktuPanel = new WaktuPanel(jam.getWaktu(), hp);
+                hp.centerPanel.add(waktuPanel, 0);
+                hp.centerPanel.remove(ActionPanel.this);
+                hp.centerPanel.revalidate();
+                hp.centerPanel.repaint();
+
+            }
+        });
         revalidate();
         repaint();
     }

@@ -225,6 +225,15 @@ public class PerabotanLabel extends JLabel {
                     housePanel.centerPanel.repaint();
                     return;
                 }
+                else if (perabotan instanceof Jam jam){
+                    aksi = "melihat waktu";
+                    WaktuPanel waktuPanel = new WaktuPanel(jam.getWaktu(), housePanel);
+                    waktuPanel.setBounds(160, 80, 320, 480);
+                    housePanel.centerPanel.add(waktuPanel, 0);
+                    housePanel.centerPanel.revalidate();
+                    housePanel.centerPanel.repaint();
+                    return;
+                }
                 else{
                     aksi = perabotan.getNama();
                 }
