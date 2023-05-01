@@ -532,9 +532,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                         if (jb.getText().equals(goToObjectButton.getText())){
                             continue;
                         }
-                        if (jb.isEnabled()){
-                            continue;
-                        }
                         jb.setEnabled(true);
                     }
                 }
