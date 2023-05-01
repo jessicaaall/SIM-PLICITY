@@ -71,6 +71,5 @@ public class ThreadAksi extends Thread implements Serializable {
             //delete thread dari daftar thread
             world.setThreadAksi(null);
         }
-        world.isActive = false;
     }
 }

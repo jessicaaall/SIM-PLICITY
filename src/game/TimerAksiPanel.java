@@ -120,10 +120,11 @@ public class TimerAksiPanel extends JPanel implements MouseListener, MouseMotion
                 throw new RuntimeException(e);
             }
         }
+        hp.isAction = false;
         hp.rumah.world.isActive = false;
         hp.centerPanel.remove(this);
         hp.enabledAllButton();
-        hp.isAction = false;
+
 
     }
 

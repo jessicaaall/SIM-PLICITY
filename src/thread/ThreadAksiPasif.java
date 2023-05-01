@@ -15,7 +15,17 @@ public abstract class ThreadAksiPasif extends Thread implements Serializable {
     protected World world;
     protected Object[] parameters;
     protected int savedSisaWaktu = 0;
-    protected boolean stopped = false;
+    protected boolean stopped;
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
+
+    protected boolean started = false;
 
 
     // Konstruktor
@@ -25,6 +35,7 @@ public abstract class ThreadAksiPasif extends Thread implements Serializable {
         this.world = world;
         this.object = object;
         this.parameters = parameters;
+        stopped = false;
     }
     public ThreadAksiPasif(String nama, int sisaWaktu, Object object, World world) {
         this.nama = nama;
@@ -32,6 +43,7 @@ public abstract class ThreadAksiPasif extends Thread implements Serializable {
         this.world = world;
         this.object = object;
         this.parameters = new Object[0];
+        stopped = false;
     }
 
     // Method
@@ -56,20 +68,27 @@ public abstract class ThreadAksiPasif extends Thread implements Serializable {
     public void stopThread(){
         stopped = true;
         savedSisaWaktu = sisaWaktu;
-        interrupt();
-
     }
 
     public void startThread(){
-        if (stopped){
-            sisaWaktu = savedSisaWaktu;
-            stopped = false;
+        if (!started){
+            System.out.println("started");
             start();
-        }
-        else{
-            if (!isAlive()){
+            started = true;
+            if (stopped){
+                stopped = false;
+                System.out.println("start again");
+                sisaWaktu = savedSisaWaktu;
+                stopped = false;
                 start();
             }
+            return;
+        }
+        if (stopped){
+            stopped = false;
+            System.out.println("start again");
+            sisaWaktu = savedSisaWaktu;
+            stopped = false;
         }
     }
 
@@ -81,5 +100,11 @@ public abstract class ThreadAksiPasif extends Thread implements Serializable {
     @Override
     public boolean equals(Object obj) {
         return nama.equals(((ThreadAksiPasif)obj).nama);
+    }
+
+    public void killThread(){
+        stopped = true;
+        savedSisaWaktu = sisaWaktu;
+        interrupt();
     }
 }

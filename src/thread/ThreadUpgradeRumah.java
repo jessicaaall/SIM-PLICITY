@@ -24,7 +24,7 @@ public class ThreadUpgradeRumah extends ThreadAksiPasif{
     public void run() {
         System.out.println("start");
 
-        while (world.isActive) {
+        while (!stopped) {
             while (sisaWaktu > 0 && world.isActive){
                 try {
                     Thread.sleep(1000);

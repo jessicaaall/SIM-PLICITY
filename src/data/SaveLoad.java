@@ -25,7 +25,7 @@ public class SaveLoad {
             DataStorage ds = new DataStorage();
             for (ThreadAksiPasif thread : world.getListThreadAksiPasif()) {
                 synchronized (thread) {
-                    thread.stopThread();
+                    thread.killThread();
                 }
             }
             ds.setWorld(world);

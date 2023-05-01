@@ -24,22 +24,19 @@ public class ThreadBeli extends ThreadAksiPasif{
     @Override
     public void run() {
         System.out.println("start");
-        while (world.isActive) {
-            while (sisaWaktu > 0 && world.isActive) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-
-                }
-                if (!world.isActive){
-                    continue;
-                }
-    //            System.out.print(sisaWaktu + " ");
+        while (sisaWaktu > 0) {
+            if (!stopped){
                 sisaWaktu--;
             }
-            stopThread();
-            //delete thread dari daftar thread
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println("thread interrupted");
+            }
+//            System.out.println("sisa waktu = " + sisaWaktu);
         }
+
+        //delete thread dari daftar thread
         if (sisaWaktu <= 0){
             Iterator<ThreadAksiPasif> it = world.getListThreadAksiPasif().iterator();
             while (it.hasNext()){
@@ -48,6 +45,7 @@ public class ThreadBeli extends ThreadAksiPasif{
                     it.remove();
                 }
             }
+            started = false;
             System.out.println(this.getNama() + " deleted");
             bisaDibeli.beli((Sim)parameters[0], (int) parameters[1]);
         }

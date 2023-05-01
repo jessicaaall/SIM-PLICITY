@@ -30,11 +30,9 @@ public class Waktu implements Runnable, Serializable {
         System.out.println("waktu started");
         while (waktuThread != null){
             if (world.isActive){
-                System.out.println("asu");
                 for (ThreadAksiPasif aksiPasif : world.getListThreadAksiPasif()){
                     aksiPasif.startThread();
                 }
-
                 sisaDetik--;
                 for (Sim sim : world.getDaftarSim()) {
                     sim.trackBuangAirSetelahMakan();
@@ -42,7 +40,9 @@ public class Waktu implements Runnable, Serializable {
             }
             else{
                 for (ThreadAksiPasif aksiPasif : world.getListThreadAksiPasif()){
-                    aksiPasif.stopThread();
+                    if (aksiPasif.isStarted()){
+                        aksiPasif.stopThread();
+                    }
                 }
             }
             try {

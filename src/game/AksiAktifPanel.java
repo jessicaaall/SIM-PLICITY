@@ -79,21 +79,21 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     Sim simnya = housePanel.selectedSim.sim;
                     housePanel.selectedSim.sim.tidur(duration, kasur);
                     ThreadAksi aksiTidur = new ThreadAksi(simnya.getNamaLengkap() + " tidur", duration, housePanel.rumah.world);
+                    housePanel.rumah.world.setThreadAksi(aksiTidur);
                     TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Tidur",aksiTidur);
                     housePanel.centerPanel.add(timerAksiPanel, 0);
-                    housePanel.rumah.world.setThreadAksi(aksiTidur);
-                    aksiTidur.startThread();
                     timerAksiPanel.startThread();
+                    aksiTidur.startThread();
                 }
                 else if (perabotan instanceof Toilet toilet){
                     Sim simnya = housePanel.selectedSim.sim;
                     toilet.buangAir(simnya);
                     ThreadAksi aksiNgising = new ThreadAksi(simnya.getNamaLengkap() + " ngising", duration, housePanel.rumah.world);
                     housePanel.rumah.world.setThreadAksi(aksiNgising);
-                    aksiNgising.startThread();
                     TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Buang Air", aksiNgising);
                     housePanel.centerPanel.add(timerAksiPanel, 0);
                     timerAksiPanel.startThread();
+                    aksiNgising.startThread();
                 }
             }
             housePanel.centerPanel.remove(this);
