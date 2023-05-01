@@ -131,6 +131,7 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     ThreadAksi aksiKerja = new ThreadAksi(simnya.getNamaLengkap() + " kerja", duration, housePanel.rumah.world);
                     housePanel.rumah.world.setThreadAksi(aksiKerja);
                     TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Kerja", aksiKerja);
+                    housePanel.centerPanel.add(timerAksiPanel, 0);
                     simnya.kerja(duration);
                     timerAksiPanel.startThread();
                     aksiKerja.startThread();
@@ -138,7 +139,7 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                 }
                 else if (aksi.equals("olahraga")){
                     if (!(duration % 20 == 0)){
-                        JOptionPane.showMessageDialog(null, "Input harus kelipatan 120", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Input harus kelipatan 20", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     Sim simnya = housePanel.selectedSim.sim;
@@ -146,6 +147,7 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     housePanel.rumah.world.setThreadAksi(aksiOlahraga);
                     TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Olahraga", aksiOlahraga);
                     simnya.olahraga(duration);
+                    housePanel.centerPanel.add(timerAksiPanel, 0);
                     timerAksiPanel.startThread();
                     aksiOlahraga.startThread();
                     housePanel.centerPanel.remove(this);
