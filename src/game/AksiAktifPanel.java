@@ -79,10 +79,10 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     Sim simnya = housePanel.selectedSim.sim;
                     housePanel.selectedSim.sim.tidur(duration, kasur);
                     ThreadAksi aksiTidur = new ThreadAksi(simnya.getNamaLengkap() + " tidur", duration, housePanel.rumah.world);
-                    housePanel.rumah.world.setThreadAksi(aksiTidur);
-                    aksiTidur.start();
                     TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Tidur",aksiTidur);
                     housePanel.centerPanel.add(timerAksiPanel, 0);
+                    housePanel.rumah.world.setThreadAksi(aksiTidur);
+                    aksiTidur.startThread();
                     timerAksiPanel.startThread();
                 }
                 else if (perabotan instanceof Toilet toilet){
@@ -90,7 +90,7 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     toilet.buangAir(simnya);
                     ThreadAksi aksiNgising = new ThreadAksi(simnya.getNamaLengkap() + " ngising", duration, housePanel.rumah.world);
                     housePanel.rumah.world.setThreadAksi(aksiNgising);
-                    aksiNgising.start();
+                    aksiNgising.startThread();
                     TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Buang Air", aksiNgising);
                     housePanel.centerPanel.add(timerAksiPanel, 0);
                     timerAksiPanel.startThread();

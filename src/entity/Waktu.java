@@ -1,5 +1,7 @@
 package entity;
 
+import thread.ThreadAksiPasif;
+
 import java.io.Serializable;
 
 public class Waktu implements Runnable, Serializable {
@@ -27,16 +29,26 @@ public class Waktu implements Runnable, Serializable {
     public void run() {
         System.out.println("waktu started");
         while (waktuThread != null){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
+            if (world.isActive){
+                System.out.println("asu");
+                for (ThreadAksiPasif aksiPasif : world.getListThreadAksiPasif()){
+                    aksiPasif.startThread();
+                }
 
-            }
-            if (world.isActive || world.getThreadAksi() != null) {
                 sisaDetik--;
                 for (Sim sim : world.getDaftarSim()) {
                     sim.trackBuangAirSetelahMakan();
                 }
+            }
+            else{
+                for (ThreadAksiPasif aksiPasif : world.getListThreadAksiPasif()){
+                    aksiPasif.stopThread();
+                }
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+
             }
             if (sisaDetik < 0) {
                 hariKe++;

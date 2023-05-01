@@ -24,8 +24,8 @@ public class ThreadUpgradeRumah extends ThreadAksiPasif{
     public void run() {
         System.out.println("start");
 
-        while (!isInterrupted()) {
-            while (sisaWaktu > 0){
+        while (world.isActive) {
+            while (sisaWaktu > 0 && world.isActive){
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -36,15 +36,18 @@ public class ThreadUpgradeRumah extends ThreadAksiPasif{
             }
             stopThread();
         }
-        //delete thread dari daftar thread
-        Iterator<ThreadAksiPasif> it = world.getListThreadAksiPasif().iterator();
-        while (it.hasNext()){
-            ThreadAksiPasif threadAksiPasif = it.next();
-            if (threadAksiPasif.equals(this)){
-                it.remove();
+        if (sisaWaktu <= 0){
+            //delete thread dari daftar thread
+            Iterator<ThreadAksiPasif> it = world.getListThreadAksiPasif().iterator();
+            while (it.hasNext()){
+                ThreadAksiPasif threadAksiPasif = it.next();
+                if (threadAksiPasif.equals(this)){
+                    it.remove();
+                }
             }
+            System.out.println(this.getNama() + " deleted");
+            rumah.upgrade((Ruangan) parameters[0]);
         }
-        System.out.println(this.getNama() + " deleted");
-        rumah.upgrade((Ruangan) parameters[0]);
+
     }
 }

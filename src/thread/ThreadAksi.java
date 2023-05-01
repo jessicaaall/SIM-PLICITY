@@ -22,10 +22,12 @@ public class ThreadAksi extends Thread implements Serializable {
 
     public void startThread(){
         world.setThreadAksi(this);
-        world.isActive = true;
         if (stopped){
             sisaWaktu = savedSisaWaktu;
             stopped = false;
+            start();
+        }
+        else{
             start();
         }
     }
@@ -69,5 +71,6 @@ public class ThreadAksi extends Thread implements Serializable {
             //delete thread dari daftar thread
             world.setThreadAksi(null);
         }
+        world.isActive = false;
     }
 }

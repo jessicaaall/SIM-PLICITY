@@ -111,6 +111,7 @@ public class TimerAksiPanel extends JPanel implements MouseListener, MouseMotion
     public void run() {
         hp.isAction = true;
         hp.disabledAllButton();
+        hp.rumah.world.isActive = true;
         while (hp.rumah.world.getThreadAksi() != null){
             timer.setText(String.valueOf(threadAksi.getSisaWaktu()));
             try {
@@ -119,10 +120,11 @@ public class TimerAksiPanel extends JPanel implements MouseListener, MouseMotion
                 throw new RuntimeException(e);
             }
         }
+        hp.rumah.world.isActive = false;
         hp.centerPanel.remove(this);
         hp.enabledAllButton();
         hp.isAction = false;
-        hp.rumah.world.isActive = false;
+
     }
 
     public void startThread(){

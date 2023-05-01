@@ -17,6 +17,7 @@ public abstract class ThreadAksiPasif extends Thread implements Serializable {
     protected int savedSisaWaktu = 0;
     protected boolean stopped = false;
 
+
     // Konstruktor
     public ThreadAksiPasif(String nama, int sisaWaktu, Object[] parameters, Object object, World world) {
         this.nama = nama;
@@ -56,6 +57,7 @@ public abstract class ThreadAksiPasif extends Thread implements Serializable {
         stopped = true;
         savedSisaWaktu = sisaWaktu;
         interrupt();
+
     }
 
     public void startThread(){
@@ -63,6 +65,11 @@ public abstract class ThreadAksiPasif extends Thread implements Serializable {
             sisaWaktu = savedSisaWaktu;
             stopped = false;
             start();
+        }
+        else{
+            if (!isAlive()){
+                start();
+            }
         }
     }
 

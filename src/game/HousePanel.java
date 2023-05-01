@@ -189,16 +189,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         gbc.gridy = ++gridy;
         westPanel.add(beliItemButton, gbc);
 
-//        int maxWidth = 100;
-//        for (Component component : westPanel.getComponents()){
-//            Dimension preferredSize = component.getMaximumSize();
-//            int width = preferredSize.getSize().width;
-//            maxWidth = Math.max(maxWidth, width);
-//        }
-//        for (Component component : westPanel.getComponents()){
-//            component.setPreferredSize(new Dimension(maxWidth, component.getHeight()));
-//        }
-
         centerPanel = new JPanel(null);
         centerPanel.setPreferredSize(new Dimension(3*mainPanel.width/5, mainPanel.height));
         centerPanel.setBackground(Color.darkGray);
@@ -281,10 +271,12 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 if (isUpgradeRumah){
                     isUpgradeRumah = false;
                     if (validSectionForUpgrade){
+                        rumah.world.isActive = true;
                         rumah.busyUpgrading = true;
                         ThreadUpgradeRumah threadAksiPasif = new ThreadUpgradeRumah("Upgrade Rumah", 1080, rumah, rumah.world);
                         rumah.world.getListThreadAksiPasif().add(threadAksiPasif);
-                        threadAksiPasif.start();
+//                        threadAksiPasif.startThread();
+//                        threadAksiPasif.start();
 //                        ThreadAksi threadAksi = new ThreadAksi("Upgrade Rumah", 1080, method, HousePanel.this, rumah.world);
 //                        rumah.world.getListThreadAksi().add(threadAksi);
 //                        threadAksi.start();
@@ -444,12 +436,12 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 //                rumah.getSim().getInventory().addItem(selectedItem, kuantitas);
                 BisaDibeli buyed = (BisaDibeli) selectedItem;
                 Object[] parameters = {rumah.getSim(), totalHarga};
-//                int durasi = new Random().nextInt(5)+1)*30;
-                int durasi = 10;
+                int durasi = (new Random().nextInt(5)+1)*30;
+//                int durasi = 10;
                 ThreadBeli threadBeli = new ThreadBeli("beli " + selectedItem.getNama(),
                         durasi, parameters, buyed, rumah.world);
                 rumah.world.getListThreadAksiPasif().add((threadBeli));
-                threadBeli.start();
+//                threadBeli.startThread();
             }
         }
         if (e.getSource() == lihatInventoryButton){
