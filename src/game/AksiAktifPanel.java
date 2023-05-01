@@ -14,6 +14,7 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
     HousePanel housePanel;
     Perabotan perabotan;
 
+    String aksi;
     JButton OKButton;
     JButton cancelButton;
     JTextField durasiText;
@@ -68,6 +69,7 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
     AksiAktifPanel(HousePanel housePanel, String aksi){
         this.housePanel = housePanel;
         this.perabotan = null;
+        this.aksi = aksi;
         setBackground(new Color(150, 178, 102, 150));
         setOpaque(true);
         setDoubleBuffered(true);
@@ -119,7 +121,38 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Input durasi tidak boleh nol");
             }
             else if (perabotan == null){
-
+                if (aksi.equals("kerja")){
+                    //cek durasi kerja
+                    if (!(duration % 120 == 0)){
+                        JOptionPane.showMessageDialog(null, "Input durasi harus kelipatan 120", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    Sim simnya = housePanel.selectedSim.sim;
+                    ThreadAksi aksiKerja = new ThreadAksi(simnya.getNamaLengkap() + " kerja", duration, housePanel.rumah.world);
+                    housePanel.rumah.world.setThreadAksi(aksiKerja);
+                    TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Kerja", aksiKerja);
+                    simnya.kerja(duration);
+                    timerAksiPanel.startThread();
+                    aksiKerja.startThread();
+                    housePanel.centerPanel.remove(this);
+                }
+                else if (aksi.equals("olahraga")){
+                    if (!(duration % 20 == 0)){
+                        JOptionPane.showMessageDialog(null, "Input harus kelipatan 120", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    Sim simnya = housePanel.selectedSim.sim;
+                    ThreadAksi aksiOlahraga = new ThreadAksi(simnya.getNamaLengkap() + " olahraga", duration, housePanel.rumah.world);
+                    housePanel.rumah.world.setThreadAksi(aksiOlahraga);
+                    TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Olahraga", aksiOlahraga);
+                    simnya.olahraga(duration);
+                    timerAksiPanel.startThread();
+                    aksiOlahraga.startThread();
+                    housePanel.centerPanel.remove(this);
+                }
+                else if (aksi.equals("berkunjung")){
+                    housePanel.centerPanel.remove(this);
+                }
             }
             else{
                 if (perabotan instanceof Kasur kasur){
@@ -141,9 +174,10 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     housePanel.centerPanel.add(timerAksiPanel, 0);
                     timerAksiPanel.startThread();
                     aksiNgising.startThread();
+                    housePanel.centerPanel.remove(this);
                 }
             }
-            housePanel.centerPanel.remove(this);
+
         }
         else if (e.getSource() == cancelButton){
             housePanel.centerPanel.remove(this);

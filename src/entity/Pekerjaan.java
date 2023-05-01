@@ -77,7 +77,7 @@ public class Pekerjaan implements Serializable {
             long now = begin;
             long finish = begin + (waktu*1000);
 
-            while(now < finish){
+            while(now <= finish){
                 long runtime = now - begin;
                 if(runtime % 30000 == 0){
                     sim.setMood(sim.getMood()-10);
