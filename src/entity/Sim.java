@@ -56,7 +56,7 @@ public class Sim implements Serializable {
         status = "";
         inventory = new Inventory<Objek>();
         isDuduk = false;
-        isSudahTidur = true;
+        isSudahTidur = false;
         waktuKerja = 0;
         waktuTidur = 0;
         waktuTidakTidur = 0;
@@ -301,6 +301,10 @@ public class Sim implements Serializable {
             }
         });
         thread.start();
+        setWaktuTidur(getWaktuTidur() + durasi);
+        if (waktuTidur > 300) {
+            setIsSudahTidur(true);
+        }
     }
 
     public void efekTidakTidur() {
@@ -328,6 +332,11 @@ public class Sim implements Serializable {
         } else {
             startTime = null;
         }
+    }
+
+    public void resetKondisiSim() {
+        setWaktuTidur(0);
+        setWaktuTidakTidur(0);
     }
 
     public void olahraga(int waktu) {
