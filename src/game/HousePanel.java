@@ -58,7 +58,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     JLabel saldoSimLabel;
 
     StatusSimPanel statusSimPanel;
-    DaftarThreadPane daftarThreadPane;
+//    DaftarThreadPane daftarThreadPane;
     private boolean isUpgradeRumah = false;
     private boolean validSectionForUpgrade = false;
 
@@ -104,8 +104,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         this.setLayout(new BorderLayout());
         this.setBackground(Color.black);
         unitSize = 40;
-
-        daftarThreadPane = new DaftarThreadPane(worldPanel.getWorld(), rumah.getSim());
 
         Font standardFont = new Font("Comic Sans MS", Font.PLAIN, 15);
         /* backToMainMenuButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
@@ -153,7 +151,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         saldoSimLabel.setVerticalTextPosition(JLabel.CENTER); */
         eastPanel.add(currentFPSLabel);
         // eastPanel.add(saldoSimLabel);
-        eastPanel.add(daftarThreadPane);
+//        eastPanel.add(daftarThreadPane);
 
         // set panel barat
 //        westPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 15));
@@ -601,7 +599,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 daftarThreadPane.update();
 
                         rumah.getSim().getUang() + "</html>"); */
-                daftarThreadPane.update();
 
             }
         }

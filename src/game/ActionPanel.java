@@ -172,6 +172,7 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                     return;
                 }
                 WaktuPanel waktuPanel = new WaktuPanel(jam.getWaktu(), hp);
+                waktuPanel.setBounds(160, 80, 320, 480);
                 hp.centerPanel.add(waktuPanel, 0);
                 hp.centerPanel.remove(ActionPanel.this);
                 hp.centerPanel.revalidate();
