@@ -72,7 +72,7 @@ public class World  implements Runnable, Serializable {
     private transient Thread worldThread;
     private ThreadAksi threadAksi;
 
-    public ArrayList<ThreadAksiPasif> getListThreadAksiPasif() {
+    public synchronized ArrayList<ThreadAksiPasif> getListThreadAksiPasif() {
         return listThreadAksiPasif;
     }
 
@@ -189,7 +189,7 @@ public class World  implements Runnable, Serializable {
      * jika waktu sudah berganti hari, maka dailySimCreation direset kembali
      * menjadi 1
      */
-    private void cekWaktu(){
+    void cekWaktu(){
         if (waktu.getHariKe() > harike){
             harike = waktu.getHariKe();
             dailySimCreation = 1;

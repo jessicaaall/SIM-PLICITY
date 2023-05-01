@@ -30,18 +30,22 @@ public class Waktu implements Runnable, Serializable {
         System.out.println("waktu started");
         while (waktuThread != null){
             if (world.isActive){
-                for (ThreadAksiPasif aksiPasif : world.getListThreadAksiPasif()){
-                    aksiPasif.startThread();
-                }
-                sisaDetik--;
-                for (Sim sim : world.getDaftarSim()) {
-                    sim.trackBuangAirSetelahMakan();
+                synchronized (this) {
+                    for (ThreadAksiPasif aksiPasif : world.getListThreadAksiPasif()){
+                        aksiPasif.startThread();
+                    }
+                    sisaDetik--;
+                    for (Sim sim : world.getDaftarSim()) {
+                        sim.trackBuangAirSetelahMakan();
+                    }
                 }
             }
             else{
-                for (ThreadAksiPasif aksiPasif : world.getListThreadAksiPasif()){
-                    if (aksiPasif.isStarted()){
-                        aksiPasif.stopThread();
+                synchronized (this) {
+                    for (ThreadAksiPasif aksiPasif : world.getListThreadAksiPasif()){
+                        if (aksiPasif.isStarted()){
+                            aksiPasif.stopThread();
+                        }
                     }
                 }
             }
@@ -52,11 +56,13 @@ public class Waktu implements Runnable, Serializable {
             }
             if (sisaDetik < 0) {
                 hariKe++;
+                System.out.println("hari berganti ke hari "+ hariKe);
                 sisaDetik = 720;
             }
             for (Sim sim : world.getDaftarSim()) {
                 sim.updateKondisiSim();
             }
+            world.cekWaktu();
 
         }
 
