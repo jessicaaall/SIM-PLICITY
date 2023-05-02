@@ -54,7 +54,7 @@ public class Waktu implements Runnable, Serializable {
             } catch (InterruptedException e) {
 
             }
-            if (sisaDetik < 0) {
+            if (sisaDetik <= 0) {
                 hariKe++;
                 System.out.println("hari berganti ke hari "+ hariKe);
                 sisaDetik = 720;

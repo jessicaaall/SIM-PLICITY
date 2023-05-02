@@ -37,7 +37,7 @@ public class Kompor extends Perabotan {
                 }
                 int waktuMasak = makanan.getPoinKekenyangan() * 1500;
                 long endTime = System.currentTimeMillis() + waktuMasak;
-                while (System.currentTimeMillis() < endTime) {
+                while (System.currentTimeMillis() <= endTime) {
 
                 }
                 sim.setMood(sim.getMood() + 10);

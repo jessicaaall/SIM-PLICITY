@@ -14,12 +14,12 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
     JButton taruhItemButton;
     public InventoryPanel(HousePanel hp){
         this.hp = hp;
-        setBounds(hp.centerPanel.getWidth()/4, hp.centerPanel.getHeight()/4, 10*hp.unitSize,10*hp.unitSize);
-        setPreferredSize(new Dimension(10*hp.unitSize, 10*hp.unitSize));
+        setBounds(hp.centerPanel.getWidth()/4, hp.centerPanel.getHeight()/4, 10*hp.unitSize,8*hp.unitSize);
+        setPreferredSize(new Dimension(10*hp.unitSize, 8*hp.unitSize));
         setLocation(hp.centerPanel.getWidth()/4, hp.centerPanel.getHeight()/4);
         setLayout(null);
         setDoubleBuffered(true);
-        setBorder(new LineBorder(Color.BLACK, 5, true));
+        setBorder(new LineBorder(Color.BLACK, 4, false));
         setBackground(new Color(150, 178, 102));
         addMouseMotionListener(this);
         addMouseListener(this);

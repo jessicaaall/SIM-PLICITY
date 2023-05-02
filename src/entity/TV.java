@@ -42,18 +42,23 @@ public class TV extends Perabotan {
         }
         sc.close();
         */
-
-        long startTime = System.currentTimeMillis();
-        long currentTime = startTime;
-        long endTime = startTime + (durasi*1000);
-        while (currentTime < endTime) {
-            if (currentTime - startTime >= 30000) {
-                startTime = currentTime;
-                sim.setMood(sim.getMood() + 5);
-                sim.setKekenyangan(sim.getKekenyangan() - 2);
+        Thread thread = new Thread (new Runnable() {
+            @Override
+            public void run() {
+                long startTime = System.currentTimeMillis();
+                long currentTime = startTime;
+                long endTime = startTime + (durasi*1000);
+                while (currentTime <= endTime) {
+                    if (currentTime - startTime >= 30000) {
+                        startTime = currentTime;
+                        sim.setMood(sim.getMood() + 5);
+                        sim.setKekenyangan(sim.getKekenyangan() - 2);
+                    }
+                    currentTime = System.currentTimeMillis();
+                }
+                System.out.println("Sim " + sim.getNamaLengkap() + " selesai menonton TV.");
             }
-            currentTime = System.currentTimeMillis();
-        }
-        System.out.println("Sim " + sim.getNamaLengkap() + " selesai menonton TV.");
+        });
+        thread.start();
     }
 }

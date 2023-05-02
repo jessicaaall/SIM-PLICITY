@@ -74,19 +74,25 @@ public class Kasur extends Perabotan implements BisaDiduduki {
     }
 
     public void membersihkanKasur(Sim sim, int durasi) {
-        long startTime = System.currentTimeMillis();
-        long currentTime = startTime;
-        long endTime = startTime + (durasi*1000);
-        while (currentTime <= endTime) {
-            if (currentTime - startTime >= 20000) {
-                startTime = currentTime;
-                sim.setMood(sim.getMood() - 2);
-                sim.setKekenyangan(sim.getKekenyangan() - 4);
-                sim.setKesehatan(sim.getKesehatan() + 2);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                long startTime = System.currentTimeMillis();
+                long currentTime = startTime;
+                long endTime = startTime + (durasi*1000);
+                while (currentTime <= endTime) {
+                    if (currentTime - startTime >= 20000) {
+                        startTime = currentTime;
+                        sim.setMood(sim.getMood() - 2);
+                        sim.setKekenyangan(sim.getKekenyangan() - 4);
+                        sim.setKesehatan(sim.getKesehatan() + 2);
+                    }
+                    currentTime = System.currentTimeMillis();
+                }
+                System.out.println("Sim " + sim.getNamaLengkap() + " selesai membersihkan kasur.");
             }
-            currentTime = System.currentTimeMillis();
-        }
-        System.out.println("Sim " + sim.getNamaLengkap() + " selesai membersihkan kasur.");
+        });
+        thread.start();
     }
 
     @Override

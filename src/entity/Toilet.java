@@ -30,13 +30,19 @@ public class Toilet extends Perabotan implements BisaDiduduki {
     }
 
     public void siramToilet(Sim sim) {
-        long endTime = System.currentTimeMillis() + (3*1000);
-        while (System.currentTimeMillis() < endTime) {
+        Thread thread = new Thread (new Runnable() {
+            @Override
+            public void run() {
+                long endTime = System.currentTimeMillis() + (3*1000);
+                while (System.currentTimeMillis() <= endTime) {
 
-        }
-        sim.setMood(sim.getMood() + 1);
-        sim.setKesehatan(sim.getKesehatan() + 1);
-        System.out.println("Sim " + sim.getNamaLengkap() + " telah menyiram toilet.");
+                }
+                sim.setMood(sim.getMood() + 1);
+                sim.setKesehatan(sim.getKesehatan() + 1);
+                System.out.println("Sim " + sim.getNamaLengkap() + " telah menyiram toilet.");
+            }
+        });
+        thread.start();
     }
 
 

@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.*;
+
 
 public class Wastafel extends Perabotan {
     public Wastafel() {
@@ -17,7 +17,7 @@ public class Wastafel extends Perabotan {
                 long startTime = System.currentTimeMillis();
                 long currentTime = startTime;
                 long endTime = startTime + (durasi*1000);
-                while (currentTime < endTime) {
+                while (currentTime <= endTime) {
                     if (currentTime - startTime >= 10000) {
                         startTime = currentTime;
                         sim.setMood(sim.getMood() + 3);
@@ -41,7 +41,7 @@ public class Wastafel extends Perabotan {
                 long startTime = System.currentTimeMillis();
                 long currentTime = startTime;
                 long endTime = startTime + (durasi*1000);
-                while (currentTime < endTime) {
+                while (currentTime <= endTime) {
                     if (currentTime - startTime >= 5000) {
                         startTime = currentTime;
                         sim.setMood(sim.getMood() + 2);

@@ -62,7 +62,7 @@ public class MejaDanKursi extends Perabotan implements BisaDiduduki {
                 if (sim.getInventory().checkItem(food)) {
                     sim.getInventory().removeItem(food);
                     long endTime = System.currentTimeMillis() + (30 * 1000);
-                    while (System.currentTimeMillis() < endTime) {
+                    while (System.currentTimeMillis() <= endTime) {
 
                     }
                     makanan.dimakan(sim);

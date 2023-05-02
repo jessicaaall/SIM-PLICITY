@@ -43,35 +43,48 @@ public class Komputer extends Perabotan {
         sc.close();
          */
 
-        long startTime = System.currentTimeMillis();
-        long currentTime = startTime;
-        long endTime = startTime + (durasi*1000);
-        while (currentTime < endTime) {
-            if (currentTime - startTime >= 20000) {
-                startTime = currentTime;
-                sim.setMood(sim.getMood() + 5);
-                sim.setKekenyangan(sim.getKekenyangan() - 2);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                long startTime = System.currentTimeMillis();
+                long currentTime = startTime;
+                long endTime = startTime + (durasi*1000);
+                while (currentTime <= endTime) {
+                    if (currentTime - startTime >= 20000) {
+                        startTime = currentTime;
+                        sim.setMood(sim.getMood() + 5);
+                        sim.setKekenyangan(sim.getKekenyangan() - 2);
+                    }
+                    currentTime = System.currentTimeMillis();
+                }
+                System.out.println("Sim " + sim.getNamaLengkap() + " selesai bermain game.");
             }
-            currentTime = System.currentTimeMillis();
-        }
-        System.out.println("Sim " + sim.getNamaLengkap() + " selesai bermain game.");
+        });
+        thread.start();
+
     }
 
-    public void ngerjainTubes(Sim sim) {
-        Random rand = new Random();
-        int durasi = rand.nextInt((5*60 - 20) + 1) + 20;
-        long startTime = System.currentTimeMillis();
-        long currentTime = startTime;
-        long endTime = startTime + (durasi*1000);
-        while (currentTime < endTime) {
-            if (currentTime - startTime >= 20000) {
-                startTime = currentTime;
-                sim.setMood(sim.getMood() - 6);
-                sim.setKekenyangan(sim.getKekenyangan() - 6);
-                sim.setKesehatan(sim.getKesehatan() - 2);
+    public void ngerjainTubes(Sim sim, int durasi) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // Random rand = new Random();
+                // int durasi = rand.nextInt((5*60 - 20) + 1) + 20;
+                long startTime = System.currentTimeMillis();
+                long currentTime = startTime;
+                long endTime = startTime + (durasi*1000);
+                while (currentTime <= endTime) {
+                    if (currentTime - startTime >= 20000) {
+                        startTime = currentTime;
+                        sim.setMood(sim.getMood() - 6);
+                        sim.setKekenyangan(sim.getKekenyangan() - 6);
+                        sim.setKesehatan(sim.getKesehatan() - 2);
+                    }
+                    currentTime = System.currentTimeMillis();
+                }
+                System.out.println("Sim " + sim.getNamaLengkap() + " selesai mengerjakan tubes.");
             }
-            currentTime = System.currentTimeMillis();
-        }
-        System.out.println("Sim " + sim.getNamaLengkap() + " selesai mengerjakan tubes.");
+        });
+        thread.start();
     }
 }

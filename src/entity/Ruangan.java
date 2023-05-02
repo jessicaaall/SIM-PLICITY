@@ -75,7 +75,7 @@ public class Ruangan implements Serializable {
         samping.put(sampingRuang, ruang);
     }
 
-    public Map getDaftarSamping(){
+    public Map<String, Ruangan> getDaftarSamping(){
         return samping;
     }
 
