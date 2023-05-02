@@ -203,7 +203,7 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                 ItemChecker<BakMandi> itemChecker = new ItemChecker<>(BakMandi.class);
                 BakMandi bakMandi = itemChecker.checkItem();
                 if (bakMandi == null){
-                    itemChecker.showNonExistent(bakMandi);
+                    itemChecker.showNonExistent();
                     return;
                 }
                 AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, "mandi");
@@ -217,7 +217,17 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
         cuciTanganButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                ItemChecker<Wastafel> itemChecker = new ItemChecker<>(Wastafel.class);
+                Wastafel wastafel = itemChecker.checkItem();
+                if (wastafel == null){
+                    itemChecker.showNonExistent();
+                    return;
+                }
+                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, "cuci tangan");
+                hp.centerPanel.add(aksiAktifPanel, 0);
+                hp.centerPanel.remove(ActionPanel.this);
+                hp.centerPanel.revalidate();
+                hp.centerPanel.repaint();
             }
         });
         membersihkanKasurButton.addActionListener(new ActionListener() {
@@ -324,6 +334,13 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
 
         public void showNonExistent(Perabotan perabotan){
             JOptionPane.showMessageDialog(null, "Tidak ada "+perabotan.getNama() + " di sekitar");
+        }
+
+        /**
+         * memunculkan error message yaitu perabotan tidak ada di sekitar sim yang ditunjuk
+         */
+        public void showNonExistent(){
+            JOptionPane.showMessageDialog(null, "Tidak ada "+tClass.getSimpleName() + " di sekitar");
         }
     }
 

@@ -375,7 +375,8 @@ public class Sim implements Serializable {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                int waktu = (int)Math.sqrt(Math.pow((sim.getKepemilikanRumah().getLokasi().getX() - Sim.this.getKepemilikanRumah().getLokasi().getX()), 2) + Math.pow((sim.getKepemilikanRumah().getLokasi().getY() - Sim.this.getKepemilikanRumah().getLokasi().getY()), 2));
+                int waktu = (int)Math.sqrt(Math.pow((sim.getKepemilikanRumah().getLokasi().getX() - Sim.this.getKepemilikanRumah().getLokasi().getX()), 2)
+                        + Math.pow((sim.getKepemilikanRumah().getLokasi().getY() - Sim.this.getKepemilikanRumah().getLokasi().getY()), 2));
                 int siklus = 1;
                 int periodeSiklus = 30;
                 int sisaWaktu = waktu;
