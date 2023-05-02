@@ -564,7 +564,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     upgradeRumahButton.setEnabled(false);
                 }
                 else{
-                    upgradeRumahButton.setEnabled(true);
+                    if (!isAction){
+                        upgradeRumahButton.setEnabled(true);
+                    }
                 }
                 mainPanel.setFocusable(true);
                 if (selectedSim == null){

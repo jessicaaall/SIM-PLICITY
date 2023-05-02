@@ -166,6 +166,7 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     housePanel.centerPanel.add(timerAksiPanel, 0);
                     timerAksiPanel.startThread();
                     aksiTidur.startThread();
+                    housePanel.centerPanel.remove(this);
                 }
                 else if (perabotan instanceof Toilet toilet){
                     Sim simnya = housePanel.selectedSim.sim;
@@ -177,6 +178,7 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     timerAksiPanel.startThread();
                     aksiNgising.startThread();
                     housePanel.centerPanel.remove(this);
+
                 }
             }
 
