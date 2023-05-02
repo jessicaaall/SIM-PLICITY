@@ -54,24 +54,29 @@ public class MejaDanKursi extends Perabotan implements BisaDiduduki {
             sc.close();
         }
         */
-        duduk(sim);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                duduk(sim);
+                Objek food = (Objek) makanan;
+                if (sim.getInventory().checkItem(food)) {
+                    sim.getInventory().removeItem(food);
+                    long endTime = System.currentTimeMillis() + (30 * 1000);
+                    while (System.currentTimeMillis() < endTime) {
 
-        Objek food = (Objek) makanan;
-        if (sim.getInventory().checkItem(food)) {
-            sim.getInventory().removeItem(food);
-            long endTime = System.currentTimeMillis() + (30 * 1000);
-            while (System.currentTimeMillis() < endTime) {
-
+                    }
+                    makanan.dimakan(sim);
+                    sim.addTimerTerakhirMakan();
+                    sim.setIsSudahBuangAir(false);
+                    System.out.println("Sim " + sim.getNamaLengkap() + " selesai makan " + food.getNama() + ".");
+                } else {
+                    System.out.println("Makanan " + food.getNama() + " tidak ada pada Inventory Sim " + sim.getNamaLengkap() + ".");
+                }
+                berdiri(sim);
             }
-            makanan.dimakan(sim);
-            sim.addTimerTerakhirMakan();
-            sim.setIsSudahBuangAir(false);
-            System.out.println("Sim " + sim.getNamaLengkap() + " selesai makan " + food.getNama() + ".");
-        } else {
-            System.out.println("Makanan " + food.getNama() + " tidak ada pada Inventory Sim " + sim.getNamaLengkap() + ".");
-        }
+        });
+        thread.start();
 
-        berdiri(sim);
     }
 
     @Override

@@ -73,9 +73,7 @@ public class Kasur extends Perabotan implements BisaDiduduki {
         System.out.println("Sim " + sim.getNamaLengkap() + " selesai tidur.");
     }
 
-    public void membersihkanKasur(Sim sim) {
-        Random rand = new Random();
-        int durasi = rand.nextInt((90 - 20) + 1) + 20;
+    public void membersihkanKasur(Sim sim, int durasi) {
         long startTime = System.currentTimeMillis();
         long currentTime = startTime;
         long endTime = startTime + (durasi*1000);

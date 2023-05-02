@@ -56,7 +56,7 @@ public class Sim implements Serializable {
         status = "";
         inventory = new Inventory<Objek>();
         isDuduk = false;
-        isSudahTidur = false;
+        isSudahTidur = true;
         waktuKerja = 0;
         waktuTidur = 0;
         waktuTidakTidur = 0;

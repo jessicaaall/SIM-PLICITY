@@ -179,6 +179,41 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
 
             }
         });
+        memasakButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ItemChecker<Kompor> itemChecker = new ItemChecker<>(Kompor.class);
+                Kompor kompor = itemChecker.checkItem();
+                if (kompor == null){
+                    JOptionPane.showMessageDialog(null, "Tidak ada kompor di sekitar");
+                    return;
+                }
+                MasakPanel masakPanel = new MasakPanel(hp, kompor);
+                masakPanel.setBounds(0, 0, hp.centerPanel.getWidth(), hp.centerPanel.getHeight()*3/4);
+                hp.centerPanel.add(masakPanel, 0);
+                hp.centerPanel.remove(ActionPanel.this);
+                hp.centerPanel.revalidate();
+                hp.centerPanel.repaint();
+
+            }
+        });
+        mandiButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ItemChecker<BakMandi> itemChecker = new ItemChecker<>(BakMandi.class);
+                BakMandi bakMandi = itemChecker.checkItem();
+                if (bakMandi == null){
+                    itemChecker.showNonExistent(bakMandi);
+                    return;
+                }
+                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, "mandi");
+                hp.centerPanel.add(aksiAktifPanel, 0);
+                hp.centerPanel.remove(ActionPanel.this);
+                hp.centerPanel.revalidate();
+                hp.centerPanel.repaint();
+
+            }
+        });
         revalidate();
         repaint();
     }
@@ -262,6 +297,10 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                 }
             }
             return null;
+        }
+
+        public void showNonExistent(Perabotan perabotan){
+            JOptionPane.showMessageDialog(null, "Tidak ada "+perabotan.getNama() + " di sekitar");
         }
     }
 
