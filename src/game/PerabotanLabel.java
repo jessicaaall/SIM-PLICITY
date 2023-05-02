@@ -201,6 +201,7 @@ public class PerabotanLabel extends JLabel {
                         jb.setEnabled(true);
                     }
                 }
+                /*
                 String aksi;
                 if (perabotan instanceof Kasur){
                     aksi = "tidur";
@@ -240,7 +241,7 @@ public class PerabotanLabel extends JLabel {
                 AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(housePanel, perabotan, aksi);
                 housePanel.centerPanel.add(aksiAktifPanel, 0);
                 housePanel.centerPanel.revalidate();
-                housePanel.centerPanel.repaint();
+                housePanel.centerPanel.repaint();*/
             }
             else {
                 if (isDragging){

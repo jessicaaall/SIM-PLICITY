@@ -148,7 +148,6 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                 hp.centerPanel.remove(ActionPanel.this);
                 hp.centerPanel.revalidate();
                 hp.centerPanel.repaint();
-
             }
         });
         olahragaButton.addActionListener(new ActionListener() {
