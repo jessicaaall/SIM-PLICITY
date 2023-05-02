@@ -214,6 +214,29 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
 
             }
         });
+        cuciTanganButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        membersihkanKasurButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //cek apakah ada kasur di sekitar sim
+                ItemChecker<Kasur> itemChecker = new ItemChecker<>(Kasur.class);
+                Kasur kasur = itemChecker.checkItem();
+                if (kasur == null){
+                    JOptionPane.showMessageDialog(null, "Tidak ada kasur di sekitar");
+                    return;
+                }
+                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, "bersih kasur");
+                hp.centerPanel.add(aksiAktifPanel, 0);
+                hp.centerPanel.remove(ActionPanel.this);
+                hp.centerPanel.revalidate();
+                hp.centerPanel.repaint();
+            }
+        });
         revalidate();
         repaint();
     }

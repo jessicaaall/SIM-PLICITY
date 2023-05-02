@@ -71,6 +71,19 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
             durasiText.setText(Integer.toString(durasi));
             durasiText.setEnabled(false);
         }
+        if (perabotan instanceof Wastafel){
+            int durasi = 0;
+            if (aksi.equals("cuci tangan")){
+                Random rand = new Random();
+                durasi = rand.nextInt((20 - 5) + 1) + 5;
+            }
+            else if (aksi.equals("sikat gigi")){
+                Random rand = new Random();
+                durasi = rand.nextInt((60 - 10) + 1) + 10;
+            }
+            durasiText.setText(Integer.toString(durasi));
+            durasiText.setEnabled(false);
+        }
         revalidate();
         repaint();
     }
@@ -214,6 +227,31 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     timerAksiPanel.startThread();
                     aksiMandi.startThread();
                     housePanel.centerPanel.remove(this);
+                }
+                else if (perabotan instanceof Wastafel wastafel){
+                    if (aksi.equals("cuci tangan")){
+                        Sim simnya = housePanel.selectedSim.sim;
+                        ThreadAksi aksiCuciTangan  = new ThreadAksi(simnya.getNamaLengkap() + " cuci tangan"
+                        , duration, housePanel.rumah.world);
+                        housePanel.rumah.world.setThreadAksi(aksiCuciTangan);
+                        TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Cuci Tangan", aksiCuciTangan);
+                        housePanel.centerPanel.add(timerAksiPanel, 0);
+                        wastafel.cuciTangan(simnya, duration);
+                        timerAksiPanel.startThread();
+                        aksiCuciTangan.startThread();
+                        housePanel.centerPanel.remove(this);
+                    } else if (aksi.equals("sikat gigi")){
+                        Sim simnya = housePanel.selectedSim.sim;
+                        ThreadAksi aksiSikatGigi = new ThreadAksi(simnya.getNamaLengkap() + " sikat gigi"
+                        , duration, housePanel.rumah.world);
+                        housePanel.rumah.world.setThreadAksi(aksiSikatGigi);
+                        TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Sikat Gigi", aksiSikatGigi);
+                        housePanel.centerPanel.add(timerAksiPanel, 0);
+                        wastafel.sikatGigi(simnya, duration);
+                        timerAksiPanel.startThread();
+                        aksiSikatGigi.startThread();
+                        housePanel.centerPanel.remove(this);
+                    }
                 }
             }
 
