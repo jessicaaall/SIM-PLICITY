@@ -22,6 +22,7 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
     AksiAktifPanel(HousePanel housePanel, Perabotan perabotan, String aksi){
         this.housePanel = housePanel;
         this.perabotan = perabotan;
+        this.aksi = aksi;
         setBackground(new Color(150, 178, 102, 150));
         setOpaque(true);
         setDoubleBuffered(true);

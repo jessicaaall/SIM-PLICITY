@@ -47,7 +47,7 @@ public class MakanPanel extends JPanel {
                 Sim sim = housePanel.selectedSim.sim;
                 ThreadAksi aksiMakan  = new ThreadAksi(sim.getNamaLengkap() + " makan", 30, housePanel.rumah.world);
                 housePanel.rumah.world.setThreadAksi(aksiMakan);
-                TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, " Mandi", aksiMakan);
+                TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, " Makan", aksiMakan);
                 housePanel.centerPanel.add(timerAksiPanel, 0);
                 mejaDanKursi.makan(sim, highlightedButton.makanan);
                 timerAksiPanel.startThread();
