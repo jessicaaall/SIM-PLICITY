@@ -6,7 +6,10 @@ import thread.ThreadAksi;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,7 +35,15 @@ public class BerkunjungPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-
+                    Sim simnya = housePanel.selectedSim.sim;
+                    int waktu = (int)Math.sqrt(Math.pow((visitedSim.getKepemilikanRumah().getLokasi().getX() - simnya.getKepemilikanRumah().getLokasi().getX()), 2) + Math.pow((visitedSim.getKepemilikanRumah().getLokasi().getY() - simnya.getKepemilikanRumah().getLokasi().getY()), 2));
+                    ThreadAksi threadAksi = new ThreadAksi(simnya.getNamaLengkap() + " berkunjung", waktu, housePanel.rumah.world);
+                    housePanel.rumah.world.setThreadAksi(threadAksi);
+                    TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Berkunjung", threadAksi);
+                    housePanel.centerPanel.add(timerAksiPanel, 0);
+                    simnya.berkunjung(visitedSim);
+                    threadAksi.startThread();
+                    timerAksiPanel.startThread();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -55,12 +66,54 @@ public class BerkunjungPanel extends JPanel {
 
     }
 
+    private class SimTableCellRenderer implements TableCellRenderer{
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Sim sim = null;
+            Point point = null;
+            JLabel label = null;
+
+            if (value instanceof Sim){
+                sim = (Sim) value;
+                label = new JLabel(sim.getNamaLengkap());
+            }
+            else if (value instanceof Point){
+                point = (Point) value;
+                label = new JLabel(String.format("(%d, %d)", point.x, point.y));
+            }
+            if (isSelected){
+                label.setBackground(table.getSelectionBackground());
+                label.setForeground(table.getSelectionForeground());
+            }
+            else{
+                label.setBackground(table.getBackground());
+                label.setBackground(table.getForeground());
+            }
+            return label;
+        }
+    }
+
     private class DaftarSimPanel extends JScrollPane{
         SimTableModel model;
         JTable table;
         DaftarSimPanel(){
             model = new SimTableModel(housePanel.rumah.world.getDaftarSim());
             table = new JTable(model);
+            table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    if (!e.getValueIsAdjusting()){
+                        int row = table.getSelectedRow();
+                        if (row != -1){
+                            visitedSim = (Sim) table.getValueAt(row, 0);
+                        }
+                    }
+                }
+            });
+            table.getColumnModel().getColumn(0).setCellRenderer(new SimTableCellRenderer());
+            table.getColumnModel().getColumn(1).setCellRenderer(new SimTableCellRenderer());
             setViewportView(table);
         }
 
@@ -90,9 +143,9 @@ public class BerkunjungPanel extends JPanel {
             Sim sim = sims.get(rowIndex);
             switch (columnIndex){
                 case 0:
-                    return sim.getNamaLengkap();
+                    return sim;
                 case 1:
-                    return "(" + sim.getKepemilikanRumah().getLokasi().x + ", " + sim.getKepemilikanRumah().getLokasi().y+ ")";
+                    return sim.getKepemilikanRumah().getLokasi();
                 default:
                     return null;
             }
