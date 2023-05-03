@@ -247,6 +247,16 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                 hp.centerPanel.repaint();
             }
         });
+        berkunjungButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BerkunjungPanel berkunjungPanel = new BerkunjungPanel(hp);
+                hp.centerPanel.add(berkunjungPanel, 0);
+                hp.centerPanel.remove(ActionPanel.this);
+                hp.centerPanel.revalidate();
+                hp.centerPanel.repaint();
+            }
+        });
         revalidate();
         repaint();
     }
