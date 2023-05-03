@@ -332,7 +332,7 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                             continue;
                         }
                         thisPoint.translate(-perabotan.getKiriAtas().x, -perabotan.getKiriAtas().y);
-                        if ((thisPoint.getX() >= 0 && thisPoint.getX() <= perabotan.getDimensi().width) ||
+                        if ((thisPoint.getX() >= 0 && thisPoint.getX() <= perabotan.getDimensi().width) &&
                                 (thisPoint.getY() >= 0 && thisPoint.getY() <= perabotan.getDimensi().height)){
                             return t;
                         }
