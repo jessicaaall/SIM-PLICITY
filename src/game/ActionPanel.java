@@ -206,7 +206,7 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                     itemChecker.showNonExistent();
                     return;
                 }
-                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, "mandi");
+                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, bakMandi, "mandi");
                 hp.centerPanel.add(aksiAktifPanel, 0);
                 hp.centerPanel.remove(ActionPanel.this);
                 hp.centerPanel.revalidate();
@@ -223,7 +223,7 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                     itemChecker.showNonExistent();
                     return;
                 }
-                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, "cuci tangan");
+                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, wastafel, "cuci tangan");
                 hp.centerPanel.add(aksiAktifPanel, 0);
                 hp.centerPanel.remove(ActionPanel.this);
                 hp.centerPanel.revalidate();
@@ -240,7 +240,7 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                     JOptionPane.showMessageDialog(null, "Tidak ada kasur di sekitar");
                     return;
                 }
-                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, "bersih kasur");
+                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, kasur,"bersih kasur");
                 hp.centerPanel.add(aksiAktifPanel, 0);
                 hp.centerPanel.remove(ActionPanel.this);
                 hp.centerPanel.revalidate();
