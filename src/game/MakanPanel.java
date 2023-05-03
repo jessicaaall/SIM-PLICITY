@@ -44,16 +44,20 @@ public class MakanPanel extends JPanel {
         OKButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Sim sim = housePanel.selectedSim.sim;
-                ThreadAksi aksiMakan  = new ThreadAksi(sim.getNamaLengkap() + " makan", 30, housePanel.rumah.world);
-                housePanel.rumah.world.setThreadAksi(aksiMakan);
-                TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, " Makan", aksiMakan);
-                housePanel.centerPanel.add(timerAksiPanel, 0);
-                mejaDanKursi.makan(sim, highlightedButton.makanan);
-                timerAksiPanel.startThread();
-                aksiMakan.startThread();
-                System.out.println("Makan " + ((Objek) highlightedButton.makanan).getNama() + ". enak");
-                housePanel.centerPanel.remove(MakanPanel.this);
+                try {
+                    Sim sim = housePanel.selectedSim.sim;
+                    ThreadAksi aksiMakan  = new ThreadAksi(sim.getNamaLengkap() + " makan", 30, housePanel.rumah.world);
+                    housePanel.rumah.world.setThreadAksi(aksiMakan);
+                    TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, " Makan", aksiMakan);
+                    housePanel.centerPanel.add(timerAksiPanel, 0);
+                    mejaDanKursi.makan(sim, highlightedButton.makanan);
+                    timerAksiPanel.startThread();
+                    aksiMakan.startThread();
+                    System.out.println("Makan " + ((Objek) highlightedButton.makanan).getNama() + ". enak");
+                    housePanel.centerPanel.remove(MakanPanel.this);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         JButton cancelButton = new JButton("Batal");
