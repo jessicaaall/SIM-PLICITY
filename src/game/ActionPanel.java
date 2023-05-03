@@ -1,6 +1,7 @@
 package game;
 
 import entity.*;
+import thread.ThreadAksi;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -48,6 +49,8 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
         AksiButton sikatGigiButton = new AksiButton("sikat gigi");
         AksiButton cuciTanganButton = new AksiButton("cuci tangan");
         AksiButton melihatWaktuButton = new AksiButton("melihat waktu");
+        AksiButton pulangButton = new AksiButton("pulang");
+        AksiButton gantiPekerjaanButton = new AksiButton("ganti pekerjaan");
 
         aksiPanel1.add(kerjaButton);
         aksiPanel1.add(olahragaButton);
@@ -65,6 +68,8 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
         aksiPanel1.add(sikatGigiButton);
         aksiPanel1.add(cuciTanganButton);
         aksiPanel1.add(melihatWaktuButton);
+        aksiPanel1.add(pulangButton);
+        aksiPanel1.add(gantiPekerjaanButton);
 
         mainPanel.add(aksiPanel1);
 
@@ -303,6 +308,51 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                 hp.centerPanel.remove(ActionPanel.this);
                 hp.centerPanel.revalidate();
                 hp.centerPanel.repaint();
+            }
+        });
+        pulangButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int result = JOptionPane.showConfirmDialog(null, "Yakin ingin pulang ke rumah?"
+                        , "Pulang", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                if (result == JOptionPane.OK_OPTION){
+                    //cek apakah dia udah di rumahnya sendiri
+                    try {
+                        if (hp.selectedSim.sim.getKepemilikanRumah().equals(hp.rumah)){
+                            JOptionPane.showMessageDialog(null, "ngapain pulang, kan udah di rumah"
+                                    , "what's wrong with you", JOptionPane.PLAIN_MESSAGE);
+                            hp.centerPanel.remove(ActionPanel.this);
+                            return;
+                        }
+                        int waktu = (int)Math.sqrt(Math.pow((hp.selectedSim.sim.getKepemilikanRumah().getLokasi().getX() - hp.rumah.getLokasi().getX()), 2)
+                                + Math.pow((hp.selectedSim.sim.getKepemilikanRumah().getLokasi().getY() - hp.rumah.getLokasi().getY()), 2));
+                        ThreadAksi threadAksi = new ThreadAksi("pulang", waktu, hp.rumah.world);
+                        TimerAksiPanel timerAksiPanel = new TimerAksiPanel(hp, "Pulang", threadAksi);
+                        hp.centerPanel.add(timerAksiPanel, 0);
+                        hp.selectedSim.sim.pulang(hp.rumah.getSim());
+                        hp.rumah.world.setThreadAksi(threadAksi);
+                        timerAksiPanel.startThread();
+                        threadAksi.startThread();
+                        hp.centerPanel.remove(ActionPanel.this);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+        gantiPekerjaanButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int result = JOptionPane.showConfirmDialog(null, "Yakin ingin ganti pekerjaan? " +
+                                "kamu baru bisa ganti pekerjaan lagi setelah bekerja di pekerjaan baru selama 12 menit" +
+                                "dan hanya dapat dilakuan 1 hari setelah mengganti pekerjaan"
+                        , "Ganti Pekerjaan", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                try {
+//                    hp.selectedSim.sim.gantiPekerjaan();
+                    hp.centerPanel.remove(ActionPanel.this);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         revalidate();

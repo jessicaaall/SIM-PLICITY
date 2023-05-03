@@ -389,7 +389,8 @@ public class Sim implements Serializable {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                int waktu = (int)Math.sqrt(Math.pow((sim.getKepemilikanRumah().getLokasi().getX() - Sim.this.getKepemilikanRumah().getLokasi().getX()), 2) + Math.pow((sim.getKepemilikanRumah().getLokasi().getY() - Sim.this.getKepemilikanRumah().getLokasi().getY()), 2));
+                int waktu = (int)Math.sqrt(Math.pow((sim.getKepemilikanRumah().getLokasi().getX() - Sim.this.getKepemilikanRumah().getLokasi().getX()), 2)
+                        + Math.pow((sim.getKepemilikanRumah().getLokasi().getY() - Sim.this.getKepemilikanRumah().getLokasi().getY()), 2));
                 int sisaWaktu = waktu;
                 isSibuk = true;
                 while (sisaWaktu >= 0) {
@@ -412,7 +413,7 @@ public class Sim implements Serializable {
     public void masangBarang(Perabotan barang, Ruangan locRuang, Point posisi) {
         inventory.removeItem(barang);
     }
-    public void gantiPekerjaan(Pekerjaan newPekerjaan) {
+    public void gantiPekerjaan(Pekerjaan newPekerjaan) throws Exception{
         if (waktuKerja > 720) {
             uang -= (1/2) * newPekerjaan.getGaji(); // Bayar 1/2 dari gaji pekerjaan baru
             pekerjaan = newPekerjaan;
@@ -420,7 +421,7 @@ public class Sim implements Serializable {
             waktuSetelahGantiKerja = 0;
             isPernahGantiKerja = true;
         } else {
-            System.out.println("Kamu belum bekerja minimal 12 menit ngab");
+            throw  new Exception("Kamu belum bekerja minimal 12 menit ngab");
         }
     }
 
