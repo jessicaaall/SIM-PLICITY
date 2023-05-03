@@ -9,6 +9,7 @@ public class Pekerjaan implements Serializable {
     private int id;
 
     public Pekerjaan (int id) {
+        this.id = id;
         if(id == 24){
             namaPekerjaan = "Badut Sulap";
             gaji = 15;
