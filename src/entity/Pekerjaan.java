@@ -76,21 +76,28 @@ public class Pekerjaan implements Serializable {
             long begin = System.currentTimeMillis();
             long now = begin;
             long finish = begin + (waktu*1000);
+            long begin1 = begin;
 
             while(now <= finish){
-                long runtime = now - begin;
-                if(runtime % 30000 == 0){
-                    sim.setMood(sim.getMood()-10);
+                long now1 = now;
+                
+
+                if(now1 - begin1 >= 30000){
+                    begin1 = now1;
                     sim.setKekenyangan(sim.getKekenyangan()-10);
+                    sim.setMood(sim.getMood()-10);
                 }
-                if(runtime % 240000 == 0){
-                    sim.setUang(sim.getUang()+this.getGaji());
+
+                if(now - begin >= 240000){
+                    begin = now;
+                    sim.setUang(sim.getUang()+sim.getPekerjaan().getGaji());
                 }
                 now = System.currentTimeMillis();
-                sim.setWaktuKerja(sim.getWaktuKerja() + 1);
+                
                     
             }
             System.out.println("sim "+sim.getNamaLengkap()+" selesai bekerja!");
+            sim.setWaktuKerja(sim.getWaktuKerja() + waktu);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
