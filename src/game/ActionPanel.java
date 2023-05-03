@@ -343,6 +343,11 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
         gantiPekerjaanButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                GantiKerjaPanel gantiKerjaPanel = new GantiKerjaPanel(hp.selectedSim.sim);
+                hp.centerPanel.add(gantiKerjaPanel, 0);
+                hp.centerPanel.revalidate();
+                hp.centerPanel.repaint();
+                /*
                 int result = JOptionPane.showConfirmDialog(null, "Yakin ingin ganti pekerjaan? " +
                                 "kamu baru bisa ganti pekerjaan lagi setelah bekerja di pekerjaan baru selama 12 menit" +
                                 "dan hanya dapat dilakuan 1 hari setelah mengganti pekerjaan"
@@ -353,6 +358,7 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
+                */
             }
         });
         revalidate();
