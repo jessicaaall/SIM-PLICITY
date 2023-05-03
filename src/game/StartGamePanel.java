@@ -43,9 +43,8 @@ public class StartGamePanel extends JPanel implements ActionListener {
         if (e.getSource() == newWorldButton){
 
             JPanel newSimPanel = new JPanel(new GridLayout(0,1));
-            newSimPanel.setBackground(Color.white);
             JTextField namaSim = new JTextField();
-            JLabel message = new JLabel("<html> Masukkan nama Sim mu<br></hmtl>");
+            JLabel message = new JLabel("Masukkan nama Sim");
             newSimPanel.add(message);
             newSimPanel.add(namaSim);
             int res = JOptionPane.showConfirmDialog(null, newSimPanel, "Create a New Sim",
@@ -84,7 +83,7 @@ public class StartGamePanel extends JPanel implements ActionListener {
             JPanel panel = new JPanel(new GridLayout(0, 1));
             JTextField namaFile = new JTextField();
 
-            panel.add(new JLabel("<html>Masukkan Nama File Yang Ingin Di-Load"));
+            panel.add(new JLabel("Masukkan Nama File Yang Ingin Di-Load"));
             panel.add(namaFile);
             int result = JOptionPane.showConfirmDialog(null, panel, "Save",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);

@@ -14,9 +14,11 @@ public class SimplicityUIManager {
         UIManager.put("OptionPane.buttonFont", new Font("Comic Sans MS", Font.PLAIN, 12));
         UIManager.put("Button.foreground", new Color(51, 102, 0));
         UIManager.put("Button.focusable", false);
-        UIManager.put("TextField.background", new Color(255,204,229));
+        UIManager.put("TextField.background", Color.white);
         UIManager.put("TextField.font", new Font("Comic Sans MS", Font.PLAIN, 12));
         UIManager.put("Label.font", new Font("Comic Sans MS", Font.PLAIN, 12));
         UIManager.put("InternalFrame.titleFont",  new Font("Comic Sans MS", Font.PLAIN, 12));
+        UIManager.put("Panel.background", new Color(150, 178, 102));
+        UIManager.put("OptionPane.background", new Color(150, 178, 102));
     }
 }
