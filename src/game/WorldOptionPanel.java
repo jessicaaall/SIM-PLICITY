@@ -265,7 +265,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener, MouseLis
             panel.setBounds(wp.getMapX()+(wp.getWidth()-200)/2, wp.getMapY()+(wp.getHeight()-100)/2, 200, 130);
             panel.setFocusable(false);
             wp.viewCurrentLocationPanel = panel;
-            wp.add(panel);
+            wp.add(panel,0);
             wp.revalidate();
             wp.repaint();
         }

@@ -43,7 +43,7 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         cameraWidth = 5*mp.width/6;
         cameraHeight = mp.height;
         this.setFocusable(false);
-        setLayout(new BorderLayout());
+        setLayout(null);
         mapX = 0;
         mapY = 0;
         this.world = world;
@@ -119,10 +119,11 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
 //                this.add(wop, 0);
                 wop.revalidate();
                 wop.repaint();
-                wop.saveButton.revalidate();
-                wop.volumeSlider.revalidate();
-                wop.viewCurrentLocButton.revalidate();
-                wop.changeSimButton.revalidate();
+                if (viewCurrentLocationPanel != null){
+                    viewCurrentLocationPanel.setLocation(mapX+(cameraWidth-200)/2, mapY+(cameraHeight-100)/2);
+                    viewCurrentLocationPanel.revalidate();
+                    viewCurrentLocationPanel.repaint();
+                }
                 delta--;
                 drawCount++;
             }
@@ -142,11 +143,6 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             wop.revalidate();
             wop.repaint();
 //            for (Component component)
-            if (viewCurrentLocationPanel != null){
-                viewCurrentLocationPanel.setLocation(getMapX()+(cameraWidth-200)/2, getMapY()+(cameraHeight-100)/2);
-                viewCurrentLocationPanel.revalidate();
-                viewCurrentLocationPanel.repaint();
-            }
             revalidate();
             repaint();
         }

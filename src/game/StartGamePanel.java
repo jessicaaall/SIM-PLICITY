@@ -54,6 +54,7 @@ public class StartGamePanel extends JPanel implements ActionListener {
                 String stringNamaSim = namaSim.getText();
                 if (stringNamaSim.length() == 0){
                     JOptionPane.showMessageDialog(null, "Nama tidak boleh kosong");
+                    return;
                 }
                 worldChoice = new World();
                 Sim addedSim = new Sim(stringNamaSim, worldChoice);
