@@ -248,26 +248,6 @@ public class Sim implements Serializable {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-//                int siklus = 1;
-//                int periodeSiklus = 30;
-//                int sisaWaktu = waktu;
-//                while (sisaWaktu >= 0) {
-//                    sisaWaktu--;
-//                    waktuKerja++;
-//                    if (sisaWaktu == (waktu - (periodeSiklus * siklus))) {
-//                        kekenyangan -= 10;
-//                        mood -= 10;
-//                        siklus++;
-//                    }
-//                    if (waktuKerja == 240) {
-//                        uang += pekerjaan.getGaji();
-//                    }
-//                    try {
-//                        Thread.sleep(1000);
-//                    } catch (InterruptedException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
                 isSibuk = false;
             }
         });

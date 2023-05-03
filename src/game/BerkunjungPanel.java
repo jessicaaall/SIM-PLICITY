@@ -70,8 +70,8 @@ public class BerkunjungPanel extends JPanel {
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            Sim sim = null;
-            Point point = null;
+            Sim sim;
+            Point point;
             JLabel label = null;
 
             if (value instanceof Sim){
@@ -82,13 +82,15 @@ public class BerkunjungPanel extends JPanel {
                 point = (Point) value;
                 label = new JLabel(String.format("(%d, %d)", point.x, point.y));
             }
+            label.setOpaque(true);
             if (isSelected){
-                label.setBackground(table.getSelectionBackground());
-                label.setForeground(table.getSelectionForeground());
+                label.setBackground(Color.cyan);
+                label.setForeground(Color.black);
+                label.setBorder(new LineBorder(Color.yellow, 2, false));
             }
             else{
-                label.setBackground(table.getBackground());
-                label.setBackground(table.getForeground());
+                label.setBackground(Color.white);
+                label.setForeground(Color.black);
             }
             return label;
         }

@@ -257,6 +257,54 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                 hp.centerPanel.repaint();
             }
         });
+        kerjainTubesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ItemChecker<Komputer> itemChecker = new ItemChecker<>(Komputer.class);
+                Komputer komputer = itemChecker.checkItem();
+                if (komputer == null){
+                    itemChecker.showNonExistent();
+                    return;
+                }
+                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, komputer,"kerjain tubes");
+                hp.centerPanel.add(aksiAktifPanel, 0);
+                hp.centerPanel.remove(ActionPanel.this);
+                hp.centerPanel.revalidate();
+                hp.centerPanel.repaint();
+            }
+        });
+        mainGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ItemChecker<Komputer> itemChecker = new ItemChecker<>(Komputer.class);
+                Komputer komputer = itemChecker.checkItem();
+                if (komputer == null){
+                    itemChecker.showNonExistent();
+                    return;
+                }
+                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, komputer,"bermain game");
+                hp.centerPanel.add(aksiAktifPanel, 0);
+                hp.centerPanel.remove(ActionPanel.this);
+                hp.centerPanel.revalidate();
+                hp.centerPanel.repaint();
+            }
+        });
+        siramToiletButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ItemChecker<Toilet> itemChecker = new ItemChecker<Toilet>(Toilet.class);
+                Toilet toilet = itemChecker.checkItem();
+                if (toilet ==  null){
+                    JOptionPane.showMessageDialog(null, "Tidak ada WC di sekitar");
+                    return;
+                }
+                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, toilet, "siram WC");
+                hp.centerPanel.add(aksiAktifPanel, 0);
+                hp.centerPanel.remove(ActionPanel.this);
+                hp.centerPanel.revalidate();
+                hp.centerPanel.repaint();
+            }
+        });
         revalidate();
         repaint();
     }

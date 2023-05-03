@@ -62,8 +62,15 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
         OKButton.addActionListener(this);
         cancelButton.addActionListener(this);
         if (perabotan instanceof Toilet){
-            durasiText.setText("10");
-            durasiText.setEnabled(false);
+            if (aksi.equals("ngising")){
+                durasiText.setText("10");
+                durasiText.setEnabled(false);
+            }
+            else {
+                durasiText.setText("30");
+                durasiText.setEnabled(false);
+            }
+
         }
         if (aksi.equals("bersih kasur")){
             Random rand = new Random();
@@ -174,9 +181,6 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                         aksiOlahraga.startThread();
                         housePanel.centerPanel.remove(this);
                     }
-                    else if (aksi.equals("berkunjung")){
-                        housePanel.centerPanel.remove(this);
-                    }
                 }
                 else{
                     if (perabotan instanceof Kasur kasur){
@@ -208,15 +212,31 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                         }
                     }
                     else if (perabotan instanceof Toilet toilet){
-                        Sim simnya = housePanel.selectedSim.sim;
-                        toilet.buangAir(simnya);
-                        ThreadAksi aksiNgising = new ThreadAksi(simnya.getNamaLengkap() + " ngising", duration, housePanel.rumah.world);
-                        housePanel.rumah.world.setThreadAksi(aksiNgising);
-                        TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Buang Air", aksiNgising);
-                        housePanel.centerPanel.add(timerAksiPanel, 0);
-                        timerAksiPanel.startThread();
-                        aksiNgising.startThread();
-                        housePanel.centerPanel.remove(this);
+                        if (aksi.equals("ngising")){
+                            Sim simnya = housePanel.selectedSim.sim;
+                            ThreadAksi aksiNgising = new ThreadAksi(simnya.getNamaLengkap() + " ngising", duration, housePanel.rumah.world);
+                            TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Buang Air", aksiNgising);
+                            housePanel.centerPanel.add(timerAksiPanel, 0);
+                            housePanel.rumah.world.setThreadAksi(aksiNgising);
+                            toilet.buangAir(simnya);
+                            timerAksiPanel.startThread();
+                            aksiNgising.startThread();
+                            housePanel.centerPanel.remove(this);
+                        }
+                        else if (aksi.equals("siram WC")){
+                            Sim sim = housePanel.selectedSim.sim;
+                            ThreadAksi aksiSiramToilet = new ThreadAksi(sim.getNamaLengkap() + " siram toilet",
+                                    duration, housePanel.rumah.world);
+                            TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Siram Toilet", aksiSiramToilet);
+                            housePanel.centerPanel.add(timerAksiPanel, 0);
+                            toilet.siramToilet(sim);
+                            housePanel.rumah.world.setThreadAksi(aksiSiramToilet);
+                            timerAksiPanel.startThread();
+                            aksiSiramToilet.startThread();
+                            housePanel.centerPanel.remove(this);
+
+                        }
+
                     }
                     else if (perabotan instanceof BakMandi bakMandi){
                         Sim simnya = housePanel.selectedSim.sim;
@@ -253,6 +273,33 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                             aksiSikatGigi.startThread();
                             housePanel.centerPanel.remove(this);
                         }
+                    }
+                    else if (perabotan instanceof Komputer komputer){
+                        if (aksi.equals("bermain game")){
+                            Sim sim = housePanel.selectedSim.sim;
+                            ThreadAksi aksiMainGame = new ThreadAksi(sim.getNamaLengkap()+" main game", duration, housePanel.rumah.world);
+                            TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Bermain Game", aksiMainGame);
+                            housePanel.centerPanel.add(timerAksiPanel, 0);
+                            housePanel.rumah.world.setThreadAksi(aksiMainGame);
+                            komputer.mainGame(sim, duration);
+                            timerAksiPanel.startThread();
+                            aksiMainGame.startThread();
+                            housePanel.centerPanel.remove(this);
+                        }
+                        else if (aksi.equals("kerjain tubes")){
+                            Sim sim = housePanel.selectedSim.sim;
+                            ThreadAksi aksiNgerjainTubes = new ThreadAksi(sim.getNamaLengkap()+" ngerjain tubes", duration, housePanel.rumah.world);
+                            TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Gawe Tubes", aksiNgerjainTubes);
+                            housePanel.centerPanel.add(timerAksiPanel, 0);
+                            komputer.ngerjainTubes(sim, duration);
+                            housePanel.rumah.world.setThreadAksi(aksiNgerjainTubes);
+                            timerAksiPanel.startThread();
+                            aksiNgerjainTubes.startThread();
+                            housePanel.centerPanel.remove(this);
+                        }
+
+
+
                     }
                 }
             } catch (NumberFormatException | HeadlessException ex) {
