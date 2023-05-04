@@ -13,6 +13,7 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BerkunjungPanel extends JPanel {
@@ -100,7 +101,9 @@ public class BerkunjungPanel extends JPanel {
         SimTableModel model;
         JTable table;
         DaftarSimPanel(){
-            model = new SimTableModel(housePanel.rumah.world.getDaftarSim());
+            ArrayList<Sim> without_he_she = new ArrayList<>(housePanel.rumah.world.getDaftarSim());
+            without_he_she.removeIf(sim -> sim.equals(housePanel.selectedSim.sim));
+            model = new SimTableModel(without_he_she);
             table = new JTable(model);
             table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {

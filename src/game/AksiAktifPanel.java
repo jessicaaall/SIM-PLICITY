@@ -202,10 +202,10 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                         else if (aksi.equals("bersih kasur")){
                             Sim simnya = housePanel.selectedSim.sim;
                             ThreadAksi aksiBersihKasur = new ThreadAksi(simnya.getNamaLengkap()+ " bersih kasur", duration, housePanel.rumah.world);
-                            housePanel.rumah.world.setThreadAksi(aksiBersihKasur);
                             TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Bersih Kasur", aksiBersihKasur);
                             housePanel.centerPanel.add(timerAksiPanel, 0);
                             kasur.membersihkanKasur(simnya, duration);
+                            housePanel.rumah.world.setThreadAksi(aksiBersihKasur);
                             timerAksiPanel.startThread();
                             aksiBersihKasur.startThread();
                             housePanel.centerPanel.remove(this);

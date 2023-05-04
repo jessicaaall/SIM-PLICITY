@@ -142,10 +142,14 @@ public class Sim implements Serializable {
     // Method : Setter
     public void setLocRuang(Ruangan newLocRuang) {
         if (locRuang != null){
-            locRuang.removeSim(this);
+            synchronized (this){
+                locRuang.removeSim(this);
+            }
         }
         locRuang = newLocRuang;
-        newLocRuang.getDaftarSim().add(this);
+        synchronized (this) {
+            newLocRuang.getDaftarSim().add(this);
+        }
     }
     public void setPosisi(Point newPosisi) {
         posisi = newPosisi;

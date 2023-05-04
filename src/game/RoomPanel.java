@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-public class RoomPanel extends JPanel {
+public class RoomPanel extends JPanel implements MouseListener {
     public HousePanel hp;
     public Ruangan ruangan;
     public Rumah rumah;
@@ -54,6 +54,7 @@ public class RoomPanel extends JPanel {
             SimLabel simLabel = new SimLabel(sim, hp, this);
             hp.centerPanel.add(simLabel, 0);
         }
+        addMouseListener(this);
     }
 
     public void paintComponent(Graphics g){
@@ -77,8 +78,34 @@ public class RoomPanel extends JPanel {
                     , roomPanel.getY()-simLabel.roomPanel.getY()+simLabel.getY());
             simLabel.sim.setLocRuang(roomPanel.ruangan);
             simLabel.roomPanel = roomPanel;
+            System.out.println("berhasil pindah");
         }
     }
 
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("click room panel");
+        moveRoom((RoomPanel) e.getComponent());
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }
