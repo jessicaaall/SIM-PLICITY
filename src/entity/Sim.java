@@ -416,6 +416,8 @@ public class Sim implements Serializable {
             }
         });
         thread.start();
+        sim.getKepemilikanRumah().getRuanganAcuan().removeSim(this);
+        Sim.this.getLocRuang().removeSim(this);
         setLocRuang(Sim.this.getKepemilikanRumah().getRuanganAcuan());
     }
     public void lihatInventory() {
