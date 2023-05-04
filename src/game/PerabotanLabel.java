@@ -201,47 +201,8 @@ public class PerabotanLabel extends JLabel {
                         jb.setEnabled(true);
                     }
                 }
-                /*
-                String aksi;
-                if (perabotan instanceof Kasur){
-                    aksi = "tidur";
-                }
-                else if (perabotan instanceof Kompor kompor){
-                    aksi = "masak";
-                    MasakPanel masakPanel = new MasakPanel(housePanel, kompor);
-                    housePanel.centerPanel.add(masakPanel, 0);
-                    housePanel.centerPanel.revalidate();
-                    housePanel.centerPanel.repaint();
-                    return;
-                }
-                else if (perabotan instanceof Toilet){
-                    aksi = "modol";
-                }
-                else if (perabotan instanceof MejaDanKursi mejaDanKursi){
-                    aksi = "makan";
-                    MakanPanel makanPanel = new MakanPanel(housePanel, mejaDanKursi);
-                    makanPanel.setBounds(160, 80, 320, 320);
-                    housePanel.centerPanel.add(makanPanel, 0);
-                    housePanel.centerPanel.revalidate();
-                    housePanel.centerPanel.repaint();
-                    return;
-                }
-                else if (perabotan instanceof Jam jam){
-                    aksi = "melihat waktu";
-                    WaktuPanel waktuPanel = new WaktuPanel(jam.getWaktu(), housePanel);
-                    waktuPanel.setBounds(160, 80, 320, 480);
-                    housePanel.centerPanel.add(waktuPanel, 0);
-                    housePanel.centerPanel.revalidate();
-                    housePanel.centerPanel.repaint();
-                    return;
-                }
-                else{
-                    aksi = perabotan.getNama();
-                }
-                AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(housePanel, perabotan, aksi);
-                housePanel.centerPanel.add(aksiAktifPanel, 0);
                 housePanel.centerPanel.revalidate();
-                housePanel.centerPanel.repaint();*/
+                housePanel.centerPanel.repaint();
             }
             else {
                 if (isDragging){

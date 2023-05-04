@@ -82,6 +82,7 @@ public class RoomPanel extends JPanel implements MouseListener {
             simLabel.sim.setLocRuang(roomPanel.ruangan);
             simLabel.roomPanel = roomPanel;
             System.out.println("berhasil pindah");
+            simLabel.moving = !simLabel.moving;
             revalidate();
             repaint();
             hp.centerPanel.revalidate();

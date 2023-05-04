@@ -269,23 +269,6 @@ public class Sim implements Serializable {
                 isSibuk = true;
                 setKasur(kasur);
                 kasur.tidur(durasi, Sim.this);
-//                int siklus = 1;
-//                int periodeSiklus = 240;
-//                int sisaWaktu = waktu;
-//                while (sisaWaktu >= 0) {
-//                    sisaWaktu--;
-//                    waktuTidur++;
-//                    if (sisaWaktu == (waktu - (periodeSiklus * siklus))) {
-//                        kesehatan += 20;
-//                        mood += 30;
-//                        siklus++;
-//                    }
-//                    try {
-//                        Thread.sleep(1000);
-//                    } catch (InterruptedException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
                 isSibuk = false;
             }
         });

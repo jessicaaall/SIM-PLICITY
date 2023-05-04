@@ -3,7 +3,6 @@ package entity;
 import thread.ThreadAksiPasif;
 
 import java.io.Serializable;
-import java.util.Iterator;
 
 public class Waktu implements Runnable, Serializable {
     // Deklarasi variabel
@@ -39,10 +38,10 @@ public class Waktu implements Runnable, Serializable {
             if (world.isActive){
                 sisaDetik--;
                 synchronized (this) {
-                    Iterator<ThreadAksiPasif> iterator = world.getListThreadAksiPasif().iterator();
-                    while (iterator.hasNext()){
-                        ThreadAksiPasif threadAksiPasif = iterator.next();
-                        threadAksiPasif.startThread();
+                    for (ThreadAksiPasif aksiPasif : world.getListThreadAksiPasif()){
+                        synchronized (this){
+                            aksiPasif.startThread();
+                        }
                     }
                     for (Sim sim : world.getDaftarSim()) {
                         sim.trackBuangAirSetelahMakan();

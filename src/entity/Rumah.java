@@ -89,7 +89,7 @@ public class Rumah implements Serializable{
     }
 
     public void showDaftarRuangan(){
-        if(daftarRuangan.size() <= 0){
+        if(daftarRuangan.size() == 0){
             System.out.println("Tidak terdapat ruangan dalam rumah");
         }
 
@@ -266,5 +266,10 @@ public class Rumah implements Serializable{
             }
         }
         System.out.println("**================================================**");
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Rumah Warna RGB(%d, %d, %d) dengan posisi di (%d, %d)", color.getRed(), color.getGreen(), color.getBlue(), getLokasi().x, getLokasi().y);
     }
 }

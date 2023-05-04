@@ -158,9 +158,9 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                         }
                         Sim simnya = housePanel.selectedSim.sim;
                         ThreadAksi aksiKerja = new ThreadAksi(simnya.getNamaLengkap() + " kerja", duration, housePanel.rumah.world);
-                        housePanel.rumah.world.setThreadAksi(aksiKerja);
                         TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Kerja", aksiKerja);
                         housePanel.centerPanel.add(timerAksiPanel, 0);
+                        housePanel.rumah.world.setThreadAksi(aksiKerja);
                         simnya.kerja(duration);
                         timerAksiPanel.startThread();
                         aksiKerja.startThread();
@@ -191,10 +191,10 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                             }
                             Sim simnya = housePanel.selectedSim.sim;
                             ThreadAksi aksiTidur = new ThreadAksi(simnya.getNamaLengkap() + " tidur", duration, housePanel.rumah.world);
-                            housePanel.rumah.world.setThreadAksi(aksiTidur);
                             TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Tidur",aksiTidur);
                             housePanel.centerPanel.add(timerAksiPanel, 0);
                             housePanel.selectedSim.sim.tidur(duration, kasur);
+                            housePanel.rumah.world.setThreadAksi(aksiTidur);
                             timerAksiPanel.startThread();
                             aksiTidur.startThread();
                             housePanel.centerPanel.remove(this);
@@ -241,10 +241,10 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     else if (perabotan instanceof BakMandi bakMandi){
                         Sim simnya = housePanel.selectedSim.sim;
                         ThreadAksi aksiMandi  = new ThreadAksi(simnya.getNamaLengkap() + " mandi", duration, housePanel.rumah.world);
-                        housePanel.rumah.world.setThreadAksi(aksiMandi);
                         TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, " Mandi", aksiMandi);
                         housePanel.centerPanel.add(timerAksiPanel, 0);
                         bakMandi.mandi(simnya, duration);
+                        housePanel.rumah.world.setThreadAksi(aksiMandi);
                         timerAksiPanel.startThread();
                         aksiMandi.startThread();
                         housePanel.centerPanel.remove(this);

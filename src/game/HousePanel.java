@@ -484,6 +484,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 }
             }
             statusSimPanel = new StatusSimPanel(HousePanel.this.rumah.getSim(), HousePanel.this);
+            HousePanel.this.rumah.getSim().viewSimInfo();
             centerPanel.add(statusSimPanel, 0);
             centerPanel.revalidate();
             centerPanel.repaint();
