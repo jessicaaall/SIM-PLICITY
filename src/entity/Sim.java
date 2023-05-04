@@ -141,6 +141,9 @@ public class Sim implements Serializable {
 
     // Method : Setter
     public void setLocRuang(Ruangan newLocRuang) {
+        if (locRuang != null){
+            locRuang.removeSim(this);
+        }
         locRuang = newLocRuang;
         newLocRuang.getDaftarSim().add(this);
     }
@@ -444,11 +447,10 @@ public class Sim implements Serializable {
         }
     }
 
-    /*
-    public int selisihWaktu(Waktu waktu1, Waktu waktu2) {
-        int detik1 = waktu1.getHariKe() * 720 + waktu1.getSisaDetik();
-        int detik2 = waktu2.getHariKe() * 720 + waktu2.getSisaDetik();
-        return (Math.abs(detik1 - detik2));
+    @Override
+    public boolean equals(Object obj) {
+        Sim sim = (Sim) obj;
+        return namaLengkap.equals(sim.namaLengkap);
     }
-    */
+
 }

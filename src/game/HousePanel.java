@@ -42,6 +42,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 
 
 
+
     UpgradeRumahPanel upgradeRumahPanel;
     JPanel eastPanel;
     JPanel westPanel;
@@ -106,11 +107,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         unitSize = 40;
 
         Font standardFont = new Font("Comic Sans MS", Font.PLAIN, 15);
-        /* backToMainMenuButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
-        backToMainMenuButton.setBackground(Color.green);
-        backToMainMenuButton.setForeground(Color.black);
-        backToMainMenuButton.setFocusable(false);
-        backToMainMenuButton.addActionListener(this); */
         backToWorldButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
         backToWorldButton.setBackground(Color.white);
         backToWorldButton.setForeground(Color.black);
@@ -133,25 +129,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         currentFPSLabel.setPreferredSize(new Dimension(eastPanel.getWidth()
                 , getFontMetrics(currentFPSLabel.getFont()).getHeight()*3));
 
-        /* saldoSimLabel = new JLabel("<html>Total uang " + rumah.getSim().getNamaLengkap() + " :<br>0</html>");
-        saldoSimLabel.setFocusable(false);
-        saldoSimLabel.setFont(standardFont);
-        saldoSimLabel.setPreferredSize(new Dimension(eastPanel.getWidth()
-                , getFontMetrics(saldoSimLabel.getFont()).getHeight()*3));
-        saldoSimLabel.setBorder(BorderFactory.createDashedBorder(Color.black));
-        saldoSimLabel.setPreferredSize(new Dimension(saldoSimLabel.getFontMetrics(standardFont).stringWidth(saldoSimLabel.getText())+15,
-                saldoSimLabel.getFontMetrics(standardFont).getHeight() + 10));
-        saldoSimLabel.setHorizontalTextPosition(JLabel.CENTER);
-        saldoSimLabel.setVerticalTextPosition(JLabel.CENTER);
-
-
         eastPanel.add(currentFPSLabel);
-        eastPanel.add(saldoSimLabel);
-        eastPanel.add(daftarThreadPane);
-        saldoSimLabel.setVerticalTextPosition(JLabel.CENTER); */
-        eastPanel.add(currentFPSLabel);
-        // eastPanel.add(saldoSimLabel);
-//        eastPanel.add(daftarThreadPane);
 
         // set panel barat
 //        westPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 15));
@@ -541,6 +519,12 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         }
         if (e.getSource() == listObjectButton){
             rumah.showAllFurniture();
+        }
+        if (e.getSource() == moveRoomButton){
+            selectedSim.moving = !selectedSim.moving;
+            if (selectedSim.moving){
+                System.out.println("silakan pilih ruangan");
+            }
         }
     }
 

@@ -110,6 +110,7 @@ public class BerkunjungPanel extends JPanel {
                         int row = table.getSelectedRow();
                         if (row != -1){
                             visitedSim = (Sim) table.getValueAt(row, 0);
+                            System.out.println("memilih "+ visitedSim.getNamaLengkap());
                         }
                     }
                 }

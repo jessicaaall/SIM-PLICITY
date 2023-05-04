@@ -51,7 +51,7 @@ public class RoomPanel extends JPanel {
             }
         }
         for (Sim sim:ruangan.getDaftarSim()){
-            SimLabel simLabel = new SimLabel(sim, hp);
+            SimLabel simLabel = new SimLabel(sim, hp, this);
             hp.centerPanel.add(simLabel, 0);
         }
     }
@@ -67,5 +67,18 @@ public class RoomPanel extends JPanel {
         }
 
     }
+    public void moveRoom(RoomPanel roomPanel){
+        SimLabel simLabel = hp.selectedSim;
+        if (simLabel.moving){
+            simLabel.sim.setPosisi(new Point(
+                    simLabel.sim.getPosisi().x-simLabel.sim.getLocRuang().getPosisi().x + roomPanel.ruangan.getPosisi().x,
+                    simLabel.sim.getPosisi().y-simLabel.sim.getLocRuang().getPosisi().y + roomPanel.ruangan.getPosisi().y));
+            simLabel.setLocation(roomPanel.getX()-simLabel.roomPanel.getX()+simLabel.getX()
+                    , roomPanel.getY()-simLabel.roomPanel.getY()+simLabel.getY());
+            simLabel.sim.setLocRuang(roomPanel.ruangan);
+            simLabel.roomPanel = roomPanel;
+        }
+    }
+
 
 }

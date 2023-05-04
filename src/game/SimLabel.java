@@ -19,13 +19,16 @@ public class SimLabel extends JLabel implements MouseListener {
     public Sim sim;
     public Image simLabelImage;
     public HousePanel housePanel;
+    public RoomPanel roomPanel;
     public int width;
     public int height;
     public boolean selected = false;
+    public boolean moving = false;
     public int unitSize = 40;
-    public SimLabel(Sim sim, HousePanel housePanel){
+    public SimLabel(Sim sim, HousePanel housePanel, RoomPanel roomPanel){
         this.sim = sim;
         this.housePanel = housePanel;
+        this.roomPanel = roomPanel;
         width = 22;
         height = unitSize;
         try {
@@ -114,4 +117,5 @@ public class SimLabel extends JLabel implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+
 }
