@@ -4,20 +4,18 @@ import entity.Ruangan;
 import entity.Rumah;
 import entity.Sim;
 import entity.World;
+import game.HousePanel;
 
 import java.util.Iterator;
 
 public class ThreadUpgradeRumah extends ThreadAksiPasif{
 
-    Rumah rumah;
     public ThreadUpgradeRumah(String nama, int sisaWaktu, Object[] parameters, Object object, World world) {
         super(nama, sisaWaktu, parameters, object, world);
-        rumah = (Rumah) object;
     }
 
     public ThreadUpgradeRumah(String nama, int sisaWaktu, Object object, World world) {
         super(nama, sisaWaktu, object, world);
-        rumah = (Rumah) object;
     }
 
     @Override
@@ -46,7 +44,7 @@ public class ThreadUpgradeRumah extends ThreadAksiPasif{
                 }
             }
             System.out.println(this.getNama() + " deleted");
-            rumah.upgrade((Ruangan) parameters[0]);
+            ((HousePanel) object).upgradeRumah();
         }
 
     }

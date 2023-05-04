@@ -247,7 +247,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 if (isUpgradeRumah){
                     isUpgradeRumah = false;
                     if (validSectionForUpgrade){
-                        rumah.world.isActive = true;
                         rumah.busyUpgrading = true;
                         int durasi;
                         if (rumah.world.developerMode){
@@ -256,7 +255,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                         else{
                             durasi = 1080;
                         }
-                        ThreadUpgradeRumah threadAksiPasif = new ThreadUpgradeRumah("Upgrade Rumah", durasi, rumah, rumah.world);
+                        ThreadUpgradeRumah threadAksiPasif = new ThreadUpgradeRumah("Upgrade Rumah", durasi, this, rumah.world);
                         rumah.world.getListThreadAksiPasif().add(threadAksiPasif);
 //                        threadAksiPasif.startThread();
 //                        threadAksiPasif.start();
