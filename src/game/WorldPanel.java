@@ -319,8 +319,8 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             unitSize -= 2;
         }
 
-        if (unitSize < 10){
-            unitSize = 10;
+        if (unitSize < 20){
+            unitSize = 20;
         } else if (unitSize > 160) {
             unitSize = 160;
         }
