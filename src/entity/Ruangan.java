@@ -103,11 +103,7 @@ public class Ruangan implements Serializable {
     }
 
     public void removeSim(Sim sim){
-        for(Sim sims : daftarSim){
-            if(sim.equals(sims)){
-                daftarSim.remove(sim);
-            }
-        }
+        daftarSim.removeIf(sim::equals);
     }
 
     public int luas(){
