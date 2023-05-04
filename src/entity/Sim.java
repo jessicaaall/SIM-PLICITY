@@ -387,9 +387,9 @@ public class Sim implements Serializable {
             }
         });
         thread.start();
-        setLocRuang(sim.getKepemilikanRumah().getRuanganAcuan());
         Sim.this.getKepemilikanRumah().getRuanganAcuan().removeSim(this);
         getLocRuang().removeSim(this);
+        setLocRuang(sim.getKepemilikanRumah().getRuanganAcuan());
     }
 
     /**
