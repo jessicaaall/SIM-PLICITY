@@ -186,7 +186,7 @@ public class PerabotanLabel extends JLabel {
                 }
                 housePanel.selectedSim.setLocation(clickedComp.getX(), clickedComp.getY());
                 housePanel.selectedSim.sim.setPosisi(new Point(
-                        Math.floorDiv(clickedComp.getY() - housePanel.ruanganAcuanPanel.getY(), housePanel.unitSize),
+                        Math.floorDiv(clickedComp.getX() - housePanel.ruanganAcuanPanel.getX(), housePanel.unitSize),
                         Math.floorDiv(clickedComp.getY() - housePanel.ruanganAcuanPanel.getY(), housePanel.unitSize)
                 ));
                 housePanel.isGoToObject = false;
