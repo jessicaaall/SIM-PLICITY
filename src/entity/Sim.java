@@ -370,8 +370,6 @@ public class Sim implements Serializable {
             }
         });
         thread.start();
-        Sim.this.getKepemilikanRumah().getRuanganAcuan().removeSim(this);
-        getLocRuang().removeSim(this);
         setLocRuang(sim.getKepemilikanRumah().getRuanganAcuan());
         sim.getKepemilikanRumah().getRuanganAcuan().insertSim(this);
     }
@@ -400,8 +398,6 @@ public class Sim implements Serializable {
             }
         });
         thread.start();
-        sim.getKepemilikanRumah().getRuanganAcuan().removeSim(this);
-        Sim.this.getLocRuang().removeSim(this);
         setLocRuang(Sim.this.getKepemilikanRumah().getRuanganAcuan());
         Sim.this.getKepemilikanRumah().getRuanganAcuan().insertSim(this);
     }

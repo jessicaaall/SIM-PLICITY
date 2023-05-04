@@ -52,7 +52,9 @@ public class Waktu implements Runnable, Serializable {
                 synchronized (this) {
                     for (ThreadAksiPasif aksiPasif : world.getListThreadAksiPasif()){
                         if (aksiPasif.isStarted()){
-                            aksiPasif.stopThread();
+                            synchronized (this){
+                                aksiPasif.stopThread();
+                            }
                         }
                     }
                 }
