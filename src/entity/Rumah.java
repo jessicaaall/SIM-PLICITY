@@ -257,4 +257,14 @@ public class Rumah implements Serializable{
         }
         return jumlah;
     }
+
+    public void showAllFurniture(){
+        System.out.println("**====== DAFTAR OBJEK YANG ADA DI RUMAH INI ======**");
+        for (Ruangan ruangan : getDaftarRuangan()){
+            for (Perabotan perabotan: ruangan.getDaftarObjek()){
+                System.out.printf("%s, (%d, %d), %s\n", perabotan.getNama(), perabotan.getKiriAtas().x, perabotan.getKiriAtas().y, perabotan.getRuangan().getNama());
+            }
+        }
+        System.out.println("**===============================================**");
+    }
 }

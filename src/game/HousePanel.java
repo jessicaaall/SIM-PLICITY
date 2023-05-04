@@ -539,6 +539,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 isGoToObject = false;
             }
         }
+        if (e.getSource() == listObjectButton){
+            rumah.showAllFurniture();
+        }
     }
 
     @Override
