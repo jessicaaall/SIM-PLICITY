@@ -297,12 +297,22 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                             aksiNgerjainTubes.startThread();
                             housePanel.centerPanel.remove(this);
                         }
-
-
+                    }
+                    else if (perabotan instanceof TV tv){
+                        Sim sim = housePanel.selectedSim.sim;
+                        ThreadAksi aksiNontonTV = new ThreadAksi(sim.getNamaLengkap() + " nonton TV",
+                                duration, housePanel.rumah.world);
+                        TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Nonton TV", aksiNontonTV);
+                        housePanel.centerPanel.add(timerAksiPanel, 0);
+                        tv.nontonTV(sim, duration);
+                        housePanel.rumah.world.setThreadAksi(aksiNontonTV);
+                        timerAksiPanel.startThread();
+                        aksiNontonTV.startThread();
+                        housePanel.centerPanel.remove(this);
 
                     }
                 }
-            } catch (NumberFormatException | HeadlessException ex) {
+            } catch (NumberFormatException | HeadlessException | NullPointerException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
 
