@@ -224,6 +224,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener, MouseLis
                     Sim simBaru = new Sim(namaSim, wp.getWorld());
                     Rumah rumahBaru = new Rumah(x, y,simBaru, color[0],wp.getWorld());
                     simBaru.setKepemilikanRumah(rumahBaru);
+                    simBaru.setLocRuang(rumahBaru.getDaftarRuangan().get(0));
                     wp.getWorld().tambahRumah(rumahBaru);
                     wp.getWorld().tambahSim(simBaru);
                 }
