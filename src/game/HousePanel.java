@@ -255,7 +255,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                         else{
                             durasi = 1080;
                         }
-                        ThreadUpgradeRumah threadAksiPasif = new ThreadUpgradeRumah("Upgrade Rumah", durasi, this, rumah.world);
+                        ThreadUpgradeRumah threadAksiPasif = new ThreadUpgradeRumah("Upgrade Rumah", durasi, HousePanel.this, rumah.world);
                         rumah.world.getListThreadAksiPasif().add(threadAksiPasif);
 //                        threadAksiPasif.startThread();
 //                        threadAksiPasif.start();

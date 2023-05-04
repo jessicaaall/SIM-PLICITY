@@ -9,16 +9,13 @@ import game.HousePanel;
 import java.util.Iterator;
 
 public class ThreadUpgradeRumah extends ThreadAksiPasif{
-    transient HousePanel housePanel;
 
     public ThreadUpgradeRumah(String nama, int sisaWaktu, Object[] parameters, Object object, World world) {
         super(nama, sisaWaktu, parameters, object, world);
-        housePanel = (HousePanel) object;
     }
 
     public ThreadUpgradeRumah(String nama, int sisaWaktu, Object object, World world) {
         super(nama, sisaWaktu, object, world);
-        housePanel = (HousePanel) object;
     }
 
     @Override
@@ -47,7 +44,7 @@ public class ThreadUpgradeRumah extends ThreadAksiPasif{
                 }
             }
             System.out.println(this.getNama() + " deleted");
-            housePanel.upgradeRumah();
+            ((HousePanel) object).upgradeRumah();
         }
 
     }
