@@ -379,18 +379,6 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                 hp.centerPanel.add(gantiKerjaPanel, 0);
                 hp.centerPanel.revalidate();
                 hp.centerPanel.repaint();
-                /*
-                int result = JOptionPane.showConfirmDialog(null, "Yakin ingin ganti pekerjaan? " +
-                                "kamu baru bisa ganti pekerjaan lagi setelah bekerja di pekerjaan baru selama 12 menit" +
-                                "dan hanya dapat dilakuan 1 hari setelah mengganti pekerjaan"
-                        , "Ganti Pekerjaan", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-                try {
-//                    hp.selectedSim.sim.gantiPekerjaan();
-                    hp.centerPanel.remove(ActionPanel.this);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                */
             }
         });
         revalidate();
@@ -467,9 +455,10 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                         }catch (RuntimeException e){
                             continue;
                         }
-                        thisPoint.translate(-perabotan.getKiriAtas().x, -perabotan.getKiriAtas().y);
-                        if ((thisPoint.getX() >= 0 && thisPoint.getX() <= perabotan.getDimensi().width) &&
-                                (thisPoint.getY() >= 0 && thisPoint.getY() <= perabotan.getDimensi().height)){
+                        Point testPoint = new Point(thisPoint);
+                        testPoint.translate(-perabotan.getKiriAtas().x, -perabotan.getKiriAtas().y);
+                        if ((testPoint.getX() >= 0 && testPoint.getX() <= perabotan.getDimensi().width) &&
+                                (testPoint.getY() >= 0 && testPoint.getY() <= perabotan.getDimensi().height)){
                             return t;
                         }
                     }
