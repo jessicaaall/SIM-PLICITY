@@ -339,9 +339,9 @@ public class Sim implements Serializable {
                 while (sisaWaktu >= 0) {
                     sisaWaktu--;
                     if (sisaWaktu == (waktu - (periodeSiklus * siklus))) {
-                        kesehatan += 5;
-                        mood += 10;
-                        kekenyangan -= 5;
+                        setKesehatan(getKesehatan() + 5);
+                        setMood(getMood() + 10);
+                        setKekenyangan(getKekenyangan() - 5);
                         siklus++;
                     }
                     try {
@@ -390,6 +390,7 @@ public class Sim implements Serializable {
         Sim.this.getKepemilikanRumah().getRuanganAcuan().removeSim(this);
         getLocRuang().removeSim(this);
         setLocRuang(sim.getKepemilikanRumah().getRuanganAcuan());
+        sim.getKepemilikanRumah().getRuanganAcuan().insertSim(this);
     }
 
     /**
@@ -419,6 +420,7 @@ public class Sim implements Serializable {
         sim.getKepemilikanRumah().getRuanganAcuan().removeSim(this);
         Sim.this.getLocRuang().removeSim(this);
         setLocRuang(Sim.this.getKepemilikanRumah().getRuanganAcuan());
+        Sim.this.getKepemilikanRumah().getRuanganAcuan().insertSim(this);
     }
     public void lihatInventory() {
         inventory.showItem();
