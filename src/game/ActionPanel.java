@@ -445,20 +445,32 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
         }
 
         public T checkItem(){
+            Point point = new Point(hp.selectedSim.sim.getPosisi().x, hp.selectedSim.sim.getPosisi().y);
+            for (Perabotan perabotan : hp.selectedSim.sim.getLocRuang().getDaftarObjek()){
+                T t;
+                try {
+                    t = tClass.cast(perabotan);
+                }catch (Exception e){
+                    System.out.println("casting " + tClass.getSimpleName() + " gagal");
+                    continue;
+                }
+                if (point.equals(perabotan.getKiriAtas())){
+                    return t;
+                }
+            }
             for (int i = -1; i <= 1; i++){
                 for (int j = -1; j <= 1; j++){
-                    Point thisPoint = new Point(hp.rumah.getSim().getPosisi().x +i, hp.rumah.getSim().getPosisi().y + j);
+                    Point thisPoint = new Point(hp.selectedSim.sim.getPosisi().x +i, hp.selectedSim.sim.getPosisi().y + j);
                     for (Perabotan perabotan : hp.rumah.getSim().getLocRuang().getDaftarObjek()){
                         T t;
                         try {
                             t = tClass.cast(perabotan);
-                        }catch (RuntimeException e){
+                        }catch (Exception e){
                             continue;
                         }
                         Point testPoint = new Point(thisPoint);
-                        testPoint.translate(-perabotan.getKiriAtas().x, -perabotan.getKiriAtas().y);
-                        if ((testPoint.getX() >= 0 && testPoint.getX() <= perabotan.getDimensi().width) &&
-                                (testPoint.getY() >= 0 && testPoint.getY() <= perabotan.getDimensi().height)){
+                        if ((testPoint.getX() >= perabotan.getKiriAtas().x && testPoint.getX() < perabotan.getKiriAtas().x + perabotan.getDimensi().width) &&
+                                (testPoint.getY() >= perabotan.getKiriAtas().y && testPoint.getY() < perabotan.getKiriAtas().y + perabotan.getDimensi().height)){
                             return t;
                         }
                     }

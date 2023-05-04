@@ -70,6 +70,9 @@ public class RoomPanel extends JPanel implements MouseListener {
     }
     public void moveRoom(RoomPanel roomPanel){
         SimLabel simLabel = hp.selectedSim;
+        if (simLabel == null){
+            return;
+        }
         if (simLabel.moving){
             simLabel.sim.setPosisi(new Point(
                     simLabel.sim.getPosisi().x-simLabel.sim.getLocRuang().getPosisi().x + roomPanel.ruangan.getPosisi().x,
