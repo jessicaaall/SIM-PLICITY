@@ -69,6 +69,7 @@ public class SimLabel extends JLabel implements MouseListener {
             Color color = new Color(200, 100, 60);
             setBorder(BorderFactory.createLineBorder(color, 1, true));
             housePanel.selectedSim = this;
+            housePanel.worldPanel.wop.loadedWorld.setChosenSim(sim);
             return;
         }
         else{
