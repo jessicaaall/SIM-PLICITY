@@ -180,7 +180,7 @@ public class PerabotanLabel extends JLabel {
                 //cek item nya itu bener perabot gak
                 System.out.println("mau teleport ke sini");
                 PerabotanLabel clickedComp = (PerabotanLabel) e.getSource();
-                if (!clickedComp.roomPanel.ruangan.getNama().equals(housePanel.selectedSim.sim.getLocRuang().getNama())) {
+                if (!clickedComp.roomPanel.ruangan.getPosisi().equals(housePanel.selectedSim.sim.getLocRuang().getPosisi())) {
                     System.out.println("di luar ruangan");
                     return;
                 }

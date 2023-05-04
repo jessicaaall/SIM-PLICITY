@@ -45,6 +45,7 @@ public class BerkunjungPanel extends JPanel {
                     simnya.berkunjung(visitedSim);
                     threadAksi.startThread();
                     timerAksiPanel.startThread();
+                    housePanel.centerPanel.remove(BerkunjungPanel.this);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }

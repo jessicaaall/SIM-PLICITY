@@ -150,7 +150,7 @@ public class Sim implements Serializable {
         }
         locRuang = newLocRuang;
         synchronized (this) {
-            newLocRuang.getDaftarSim().add(this);
+            newLocRuang.insertSim(this);
         }
     }
     public void setPosisi(Point newPosisi) {

@@ -50,6 +50,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 
     RoomPanel ruanganAcuanPanel;
     HighlightedPanel highlightedRoom;
+    HighlightedPanel selectedRoom;
     SimLabel selectedSim;
     private int slotCol = 0;
     private int slotRow = 0;
@@ -268,7 +269,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     }
                     for (Component component : centerPanel.getComponents()){
                         if (component instanceof HighlightedPanel){
-                            centerPanel.remove(component);
+                            component.setVisible(false);
                         }
                     }
                 }
@@ -321,7 +322,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         if (isUpgradeRumah) {
             isUpgradeRumah = false;
         }
-        Ruangan ruanganBaru = new Ruangan("Ruangan " + rumah.getDaftarRuangan().size()
+        Ruangan ruanganBaru = new Ruangan("Ruangan " + (rumah.getDaftarRuangan().size()+1)
                 , rumah,new Point((highlightedRoom.getX()-ruanganAcuanPanel.getX())/unitSize,
                 (highlightedRoom.getY()-ruanganAcuanPanel.getY())/unitSize));
         rumah.upgrade(ruanganBaru);
@@ -330,6 +331,11 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         centerPanel.revalidate();
         centerPanel.repaint();
         rumah.busyUpgrading = false;
+        for (Component component : centerPanel.getComponents()){
+            if (component instanceof HighlightedPanel){
+                centerPanel.remove(component);
+            }
+        }
 
     }
 
@@ -588,15 +594,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 drawCount = 0;
                 timer = 0;
                 currentFPSLabel.setText("FPS = " + currentFPS);
-                /* saldoSimLabel.setText("<html>Total uang " + rumah.getSim().getNamaLengkap()
-                        + " :<br>" + rumah.getSim().getUang() + "</html>");
-                // update label saldo
-                saldoSimLabel.setText("<html>Total uang " + rumah.getSim().getNamaLengkap() + " :<br>" +
-                        rumah.getSim().getUang() + "</html>");
-                daftarThreadPane.update();
-
-                        rumah.getSim().getUang() + "</html>"); */
-
             }
         }
 
@@ -835,6 +832,11 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     private class HighlightedPanel extends JPanel{
         HighlightedPanel(LayoutManager mgr){
             super(mgr);
+        }
+
+        @Override
+        protected Object clone() throws CloneNotSupportedException {
+            return super.clone();
         }
     }
 

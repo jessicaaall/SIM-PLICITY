@@ -259,6 +259,7 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                 TV tv = itemChecker.checkItem();
                 if (tv == null){
                     itemChecker.showNonExistent();
+                    return;
                 }
                 AksiAktifPanel aksiAktifPanel = new AksiAktifPanel(hp, tv, "nonton tv");
                 hp.centerPanel.add(aksiAktifPanel, 0);

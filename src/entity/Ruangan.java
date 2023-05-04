@@ -99,6 +99,7 @@ public class Ruangan implements Serializable {
     }
 
     public void insertSim (Sim sim){
+
         daftarSim.add(sim);
     }
 
