@@ -77,6 +77,7 @@ public class World  implements Runnable, Serializable {
     }
 
     private ArrayList<ThreadAksiPasif> listThreadAksiPasif;
+    public boolean developerMode = false;
 
 
     /** Konstuktor
@@ -96,7 +97,11 @@ public class World  implements Runnable, Serializable {
         waktu.startThread();
         chosenSim = null;
     }
-    
+
+    public World(boolean developerMode){
+        this();
+        this.developerMode = developerMode;
+    }
     public ThreadAksi getThreadAksi() {
         return threadAksi;
     }

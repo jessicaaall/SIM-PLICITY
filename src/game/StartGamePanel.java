@@ -55,7 +55,12 @@ public class StartGamePanel extends JPanel implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Nama tidak boleh kosong");
                     return;
                 }
-                worldChoice = new World();
+                if (stringNamaSim.equals("developer")){
+                    worldChoice = new World(true);
+                }
+                else{
+                    worldChoice = new World();
+                }
                 Sim addedSim = new Sim(stringNamaSim, worldChoice);
                 worldChoice.setChosenSim(addedSim);
                 Random random = new Random();

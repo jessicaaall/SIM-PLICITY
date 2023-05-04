@@ -10,6 +10,7 @@ public class Waktu implements Runnable, Serializable {
     private int hariKe;
     private int sisaDetik;
 
+    private int developerModeTime = 30;
     private transient Thread waktuThread;
 
     // Konstruktor
@@ -17,6 +18,9 @@ public class Waktu implements Runnable, Serializable {
         this.hariKe = 1;
         this.sisaDetik = 720;
         this.world = world;
+        if (world.developerMode){
+            this.sisaDetik = developerModeTime;
+        }
     }
 
     public void startThread(){
@@ -57,7 +61,12 @@ public class Waktu implements Runnable, Serializable {
             if (sisaDetik <= 0) {
                 hariKe++;
                 System.out.println("hari berganti ke hari "+ hariKe);
-                sisaDetik = 720;
+                if (world.developerMode){
+                    sisaDetik = developerModeTime;
+                }
+                else{
+                    sisaDetik = 720;
+                }
             }
             for (Sim sim : world.getDaftarSim()) {
                 sim.updateKondisiSim();

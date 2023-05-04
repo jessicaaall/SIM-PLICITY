@@ -32,7 +32,6 @@ public class Sim implements Serializable {
     private Kasur kasur;
     private boolean isSudahBuangAir;
     private ArrayList<Integer> timerTerakhirMakan;
-
     
     // Objek random untuk random apapun yang dirandom wkwkwk
     private Random rand = new Random();
@@ -67,6 +66,9 @@ public class Sim implements Serializable {
         isSudahBuangAir = false;
         timerTerakhirMakan = new ArrayList<Integer>();
         randomSkin = new Random().nextInt(4)+1;
+        if (theirWorld.developerMode){
+            uang = (int)Math.pow(10, 6);
+        }
     }
     
     
