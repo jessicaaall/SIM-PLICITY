@@ -398,7 +398,6 @@ public class Sim implements Serializable {
         });
         thread.start();
         setLocRuang(sim.getKepemilikanRumah().getRuanganAcuan());
-        sim.getKepemilikanRumah().getRuanganAcuan().insertSim(this);
     }
 
     /**
@@ -426,7 +425,6 @@ public class Sim implements Serializable {
         });
         thread.start();
         setLocRuang(Sim.this.getKepemilikanRumah().getRuanganAcuan());
-        Sim.this.getKepemilikanRumah().getRuanganAcuan().insertSim(this);
     }
     public void lihatInventory() {
         inventory.showItem();
