@@ -118,8 +118,13 @@ public class SimLabel extends JLabel implements MouseListener {
 
     }
 
-    public void mati(){
+    public void mati(MainPanel mainPanel){
+
         housePanel.centerPanel.remove(this);
+        mainPanel.removeAll();
+        mainPanel.add(new GameOverPanel(mainPanel));
+        mainPanel.revalidate();
+        mainPanel.repaint();
     }
 
 }
