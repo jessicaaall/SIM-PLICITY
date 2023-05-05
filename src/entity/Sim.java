@@ -271,6 +271,7 @@ public class Sim implements Serializable {
             }
         });
         thread.start();
+        setWaktuKerja(getWaktuKerja() + waktu);
     }
 
     /**
