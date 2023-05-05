@@ -83,6 +83,8 @@ public class RoomPanel extends JPanel implements MouseListener {
             simLabel.roomPanel = roomPanel;
             System.out.println("berhasil pindah");
             simLabel.moving = !simLabel.moving;
+            hp.centerPanel.setComponentZOrder(simLabel, 0);
+            setBorder(new LineBorder(new Color(255,255,255), 4, false));
             revalidate();
             repaint();
             hp.centerPanel.revalidate();
@@ -94,6 +96,7 @@ public class RoomPanel extends JPanel implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         System.out.println("click room panel");
+        hp.enabledAllButton();
         moveRoom((RoomPanel) e.getComponent());
     }
 
@@ -109,11 +112,24 @@ public class RoomPanel extends JPanel implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        if (hp.selectedSim == null){
+            return;
+        }
+        if (hp.selectedSim.moving){
+            setBorder(new LineBorder(Color.green, 5, false));
+        }
+        else {
+            setBorder(new LineBorder(new Color(255,255,255), 4, false));
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        if (hp.selectedSim == null){
+            return;
+        }
+        if (hp.selectedSim.moving){
+            setBorder(new LineBorder(new Color(255,255,255), 4, false));
+        }
     }
 }

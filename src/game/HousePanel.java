@@ -226,16 +226,20 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                         selectedSection.setBorder(new LineBorder(Color.red, 5, true));
                         centerPanel.add(selectedSection, 0);
                         highlightedRoom = selectedSection;
-                        selectedSection.repaint();
                         validSectionForUpgrade = false;
+                        selectedSection.repaint();
+                        centerPanel.revalidate();
+                        centerPanel.repaint();
                         return;
                     }
                     else if (inReach){
                         selectedSection.setBorder(new LineBorder(Color.yellow, 5, true));
                         centerPanel.add(selectedSection, 0);
                         highlightedRoom = selectedSection;
-                        selectedSection.repaint();
                         validSectionForUpgrade = true;
+                        selectedSection.repaint();
+                        centerPanel.revalidate();
+                        centerPanel.repaint();
                         return;
                     }
                 }
@@ -568,11 +572,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 if(rumah.busyUpgrading){
                     upgradeRumahButton.setEnabled(false);
                 }
-                else{
-                    if (!isAction){
-                        upgradeRumahButton.setEnabled(true);
-                    }
-                }
                 mainPanel.setFocusable(true);
                 if (selectedSim == null){
                     goToObjectButton.setEnabled(false);
@@ -581,9 +580,24 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 }
                 else {
                     if (!isAction){
-                        goToObjectButton.setEnabled(true);
-                        moveRoomButton.setEnabled(true);
-                        actionButton.setEnabled(true);
+                        if (selectedSim.moving){
+                            backToWorldButton.setEnabled(false);
+                            statusSimButton.setEnabled(false);
+                            lihatInventoryButton.setEnabled(false);
+                            upgradeRumahButton.setEnabled(false);
+                            editRoomButton.setEnabled(false);
+                            listObjectButton.setEnabled(true);
+                            goToObjectButton.setEnabled(false);
+                            actionButton.setEnabled(false);
+                            beliItemButton.setEnabled(false);
+                            moveRoomButton.setEnabled(true);
+                        }
+                        else{
+                            goToObjectButton.setEnabled(true);
+                            moveRoomButton.setEnabled(true);
+                            actionButton.setEnabled(true);
+                            enabledAllButton();
+                        }
                     }
 
                 }
