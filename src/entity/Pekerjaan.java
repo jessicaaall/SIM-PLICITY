@@ -103,6 +103,6 @@ public class Pekerjaan implements Serializable {
 
     @Override
     public String toString() {
-        return getNamaPekerjaan() + String.format(("Gaji per menit: " + ((double) gaji/(double) 4)));
+        return getNamaPekerjaan() + String.format((" Gaji per menit: " + ((double) gaji/(double) 4)));
     }
 }
