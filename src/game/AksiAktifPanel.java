@@ -67,7 +67,7 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                 durasiText.setEnabled(false);
             }
             else {
-                durasiText.setText("30");
+                durasiText.setText("3");
                 durasiText.setEnabled(false);
             }
 

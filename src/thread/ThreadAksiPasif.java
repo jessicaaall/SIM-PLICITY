@@ -67,7 +67,6 @@ public abstract class ThreadAksiPasif extends Thread implements Serializable {
 
     public void stopThread(){
         stopped = true;
-        savedSisaWaktu = sisaWaktu;
     }
 
     public void startThread(){
@@ -79,7 +78,6 @@ public abstract class ThreadAksiPasif extends Thread implements Serializable {
             if (stopped){
                 stopped = false;
                 System.out.println("start again");
-                sisaWaktu = savedSisaWaktu;
                 stopped = false;
                 start();
             }
@@ -88,7 +86,6 @@ public abstract class ThreadAksiPasif extends Thread implements Serializable {
         if (stopped){
             stopped = false;
             System.out.println("start again");
-            sisaWaktu = savedSisaWaktu;
             stopped = false;
         }
     }
@@ -107,5 +104,45 @@ public abstract class ThreadAksiPasif extends Thread implements Serializable {
         stopped = true;
         savedSisaWaktu = sisaWaktu;
         interrupt();
+    }
+
+    public int getSavedSisaWaktu() {
+        return savedSisaWaktu;
+    }
+
+    public Object getObject() {
+        return object;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
+    }
+
+    public void setParameters(Object[] parameters) {
+        this.parameters = parameters;
+    }
+
+    public void setSavedSisaWaktu(int savedSisaWaktu) {
+        this.savedSisaWaktu = savedSisaWaktu;
+    }
+
+    public boolean isStopped() {
+        return stopped;
+    }
+
+    public void setStopped(boolean stopped) {
+        this.stopped = stopped;
+    }
+
+    public Object[] getParameters() {
+        return parameters;
     }
 }

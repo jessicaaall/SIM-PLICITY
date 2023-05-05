@@ -8,11 +8,14 @@ import javax.swing.*;
 
 import data.SaveLoad;
 import thread.ThreadAksiPasif;
+import thread.ThreadBeli;
+import thread.ThreadUpgradeRumah;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class StartGamePanel extends JPanel implements ActionListener {
@@ -76,6 +79,7 @@ public class StartGamePanel extends JPanel implements ActionListener {
                 worldChoice.tambahRumah(rumahBaru);
                 worldChoice.tambahSim(rumahBaru.getSim());
                 worldChoice.startThread();
+                worldChoice.getWaktu().startThread();
                 showWorldPanel();
             }
 
@@ -99,11 +103,16 @@ public class StartGamePanel extends JPanel implements ActionListener {
                 SaveLoad saveload = new SaveLoad();
                 worldChoice = saveload.load(loadFile);
                 worldChoice.startThread();
-                for (ThreadAksiPasif threadAksiPasif : worldChoice.getListThreadAksiPasif()){
-                    synchronized (this){
-                        threadAksiPasif.startThread();
+                worldChoice.getWaktu().startThread();
+                ArrayList<ThreadAksiPasif> listThreadBaru = new ArrayList<>();
+                for (ThreadAksiPasif threadAksiPasif : worldChoice.getListThreadAksiPasif()) {
+                    ThreadAksiPasif buffer;
+                    synchronized (this) {
+                        buffer = new ThreadBeli(threadAksiPasif.getNama(), threadAksiPasif.getSisaWaktu(), threadAksiPasif.getParameters(), threadAksiPasif.getObject(), threadAksiPasif.getWorld());
+                        listThreadBaru.add(buffer);
                     }
                 }
+                worldChoice.setListThreadAksiPasif(listThreadBaru);
                 showWorldPanel();
             }
 
