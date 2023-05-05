@@ -319,38 +319,17 @@ public class Sim implements Serializable {
         }
     }
 
-    private Long startTime = null;
-
     /**
      * update kondisi ketidaktiduran sim
      */
     public void updateKondisiSim() {
-//        int patokanTidakTidur;
-//        if (theirWorld.developerMode) {
-//            patokanTidakTidur = 20;
-//        } else {
-//            patokanTidakTidur = 600;
-//        }
-//
-//        if (waktuTidakTidur >= patokanTidakTidur) {
-//            setIsSudahTidur(false);
-//        }
-
         if (!getIsSudahTidur()) {
-            if (startTime == null) {
-                startTime = System.currentTimeMillis();
-            }
-            Long currentTime = System.currentTimeMillis();
-            if (currentTime - startTime >= 1000) {
-                System.out.println("udah gak tidur");
-                waktuTidakTidur++;
-                startTime = currentTime;
-            }
-            efekTidakTidur();
-        } else {
-            startTime = null;
+            System.out.println("udah gak tidur");
+            waktuTidakTidur++;
         }
+        efekTidakTidur();
     }
+
 
     public void resetKondisiSim() {
         setWaktuTidur(0);
