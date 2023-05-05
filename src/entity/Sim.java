@@ -303,10 +303,17 @@ public class Sim implements Serializable {
      * memberikan efek berjangka ketika Sim tidak tidur
      */
     public void efekTidakTidur() {
+        int bagi;
+        if (theirWorld.developerMode) {
+            bagi = 60;
+        } else {
+            bagi = 600;
+        }
+
         if (waktuTidakTidur == 0){
             return;
         }
-        if (waktuTidakTidur % 600 == 0) {
+        if (waktuTidakTidur % bagi == 0) {
             setKesehatan(getKesehatan() - 5);
             setMood(getMood() - 5);
         }
