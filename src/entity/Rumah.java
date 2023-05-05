@@ -194,7 +194,7 @@ public class Rumah implements Serializable{
         System.out.println("**====== DAFTAR OBJEK YANG ADA DI RUMAH INI ======**");
         for (Ruangan ruangan : getDaftarRuangan()){
             for (Perabotan perabotan: ruangan.getDaftarObjek()){
-                System.out.printf("%s, (%d, %d), %s (%d, %d)\n", perabotan.getNama(), perabotan.getKiriAtas().x, perabotan.getKiriAtas().y, perabotan.getRuangan().getNama(), ruangan.getPosisi().x, ruangan.getPosisi().y);
+                System.out.printf("%s, (%d, %d), (%d, %d), %s (%d, %d)\n", perabotan.getNama(), perabotan.getKiriAtas().x, perabotan.getKiriAtas().y, perabotan.getDimensi().width, perabotan.getDimensi().height, perabotan.getRuangan().getNama(), ruangan.getPosisi().x, ruangan.getPosisi().y);
             }
         }
         System.out.println("**================================================**");
