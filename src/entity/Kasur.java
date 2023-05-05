@@ -69,6 +69,9 @@ public class Kasur extends Perabotan implements BisaDiduduki {
             }
             currentTime = System.currentTimeMillis();
             sim.setWaktuTidur(sim.getWaktuTidur() + 1);
+            if (sim.getWaktuTidur() >= 180) {
+                sim.setIsSudahTidur(true);
+            }
         }
         System.out.println("Sim " + sim.getNamaLengkap() + " selesai tidur.");
     }

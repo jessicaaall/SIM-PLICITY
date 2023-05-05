@@ -305,7 +305,7 @@ public class Sim implements Serializable {
     public void efekTidakTidur() {
         int bagi;
         if (theirWorld.developerMode) {
-            bagi = 30;
+            bagi = 20;
         } else {
             bagi = 600;
         }
@@ -325,6 +325,17 @@ public class Sim implements Serializable {
      * update kondisi ketidaktiduran sim
      */
     public void updateKondisiSim() {
+//        int patokanTidakTidur;
+//        if (theirWorld.developerMode) {
+//            patokanTidakTidur = 20;
+//        } else {
+//            patokanTidakTidur = 600;
+//        }
+//
+//        if (waktuTidakTidur >= patokanTidakTidur) {
+//            setIsSudahTidur(false);
+//        }
+
         if (!getIsSudahTidur()) {
             if (startTime == null) {
                 startTime = System.currentTimeMillis();

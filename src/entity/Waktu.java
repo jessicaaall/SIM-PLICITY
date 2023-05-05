@@ -89,7 +89,13 @@ public class Waktu implements Runnable, Serializable {
                 Iterator<Sim> simIterator = world.getDaftarSim().iterator();
                 while (simIterator.hasNext()){
                     Sim sim = simIterator.next();
-                    if (sim.getWaktuTidur() < 180){
+                    int patokanWaktuTidur;
+                    if (world.developerMode) {
+                        patokanWaktuTidur = 20;
+                    } else {
+                        patokanWaktuTidur = 180;
+                    }
+                    if (sim.getWaktuTidur() < patokanWaktuTidur){
                         sim.setIsSudahTidur(false);
                         sim.resetKondisiSim();
                     }
