@@ -64,7 +64,7 @@ public class PerabotanLabel extends JLabel {
         g2d.setComposite(alphaComposite);
 
         /* start rotating */
-        
+
         super.paintComponents(g);
         g2d.dispose();
 

@@ -60,6 +60,27 @@ public class Rumah implements Serializable{
         sim.getInventory().addItem(jam);
         sim.getInventory().addItem(toilet);
         sim.getInventory().addItem(komporgas);
+        if (world.developerMode){
+            sim.getInventory().addItem(new Kasur(6));
+            sim.getInventory().addItem(new Kasur(7));
+            sim.getInventory().addItem(new TV());
+            sim.getInventory().addItem(new Komputer());
+            sim.getInventory().addItem(new BahanMakanan(11), 100);
+            sim.getInventory().addItem(new BahanMakanan(12), 100);
+            sim.getInventory().addItem(new BahanMakanan(13), 100);
+            sim.getInventory().addItem(new BahanMakanan(14), 100);
+            sim.getInventory().addItem(new BahanMakanan(15), 100);
+            sim.getInventory().addItem(new BahanMakanan(16), 100);
+            sim.getInventory().addItem(new BahanMakanan(17), 100);
+            sim.getInventory().addItem(new BahanMakanan(18), 100);
+            sim.getInventory().addItem(new Makanan(19), 10);
+            sim.getInventory().addItem(new Makanan(20), 10);
+            sim.getInventory().addItem(new Makanan(21), 10);
+            sim.getInventory().addItem(new Makanan(22), 10);
+            sim.getInventory().addItem(new Makanan(23), 10);
+            sim.getInventory().addItem(new BakMandi());
+            sim.getInventory().addItem(new Wastafel());
+        }
         jumlahRuangan = 1;
         sim.setPosisi(new Point(3,3));
     }
@@ -155,104 +176,6 @@ public class Rumah implements Serializable{
         daftarRuangan.add(ruangan);
         jumlahRuangan++;
         sim.setUang(sim.getUang()-1500);
-        /*Scanner input = new Scanner(System.in);
-        if(daftarRuangan.size()<2){
-            System.out.print("Masukan lokasi penambahan ruangan (Kanan/Kiri/Atas/Bawah): ");
-            String locTambah = input.nextLine();
-            Ruangan ruangacuan = daftarRuangan.get(0);
-            if(ruangacuan.getSamping(locTambah) == null){
-                System.out.print("Masukan nama ruangan baru: ");
-                String ruangBaru = input.nextLine();
-                if(locTambah.equals("Kanan")){
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(1, 0),ruangacuan,"Kiri"));
-                    
-                }
-                else if(locTambah.equals("Kiri")){
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(-1, 0),ruangacuan,"Kanan"));
-                }
-                else if(locTambah.equals("Atas")){
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(0, 1),ruangacuan,"Bawah"));
-                }
-                else{
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(0, -1),ruangacuan,"Atas"));
-                }
-                Ruangan newRomm = daftarRuangan.get(1);
-                ruangacuan.setSamping(locTambah,newRomm);
-            }
-            else{
-                System.out.println("Ruangan pada "+locTambah+" ruangan acuan sudah ada");
-            }
-        }
-        else{
-            System.out.println("Pilih ruang acuan: ");
-            this.showDaftarRuangan();
-            String acuan1 = input.nextLine();
-            Ruangan ruangacuan = getRuanganbyName(acuan1);
-            System.out.print("Masukan lokasi penambahan ruangan (Kanan/Kiri/Atas/Bawah): ");
-            String locTambah = input.nextLine();
-            if(ruangacuan.getSamping(locTambah) == null){
-                System.out.print("Masukan nama ruangan baru: ");
-                String ruangBaru = input.nextLine();
-                int x = (int) ruangacuan.getPosisi().getX();
-                int y = (int) ruangacuan.getPosisi().getY();
-                if(locTambah.equals("Kanan")){
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x+1, y),ruangacuan,"Kiri"));
-                    
-                }
-                else if(locTambah.equals("Kiri")){
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x-1, y),ruangacuan,"Kanan"));
-                }
-                else if(locTambah.equals("Atas")){
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x, y+1),ruangacuan,"Bawah"));
-                }
-                else{
-                    daftarRuangan.add(new Ruangan(ruangBaru,this,new Point(x, y-1),ruangacuan,"Atas"));
-                }
-
-                Ruangan newRoom = daftarRuangan.get(daftarRuangan.size()-1);
-                ruangacuan.setSamping(locTambah,newRoom);
-                
-                
-                Point newRoomPoint = newRoom.getPosisi();
-                int nx = (int) newRoomPoint.getX();
-                int ny = (int) newRoomPoint.getY();
-
-                Point sampingKanan = new Point(nx+1, ny);
-                Point sampingKiri = new Point(nx-1, ny);
-                Point sampingAtas = new Point(nx, ny+1);
-                Point sampingBawah = new Point(nx, ny-1);
-
-                Ruangan ruangKanan = getRuanganbyPoint(sampingKanan);
-                Ruangan ruangKiri = getRuanganbyPoint(sampingKiri);
-                Ruangan ruangAtas = getRuanganbyPoint(sampingAtas);
-                Ruangan ruangBawah = getRuanganbyPoint(sampingBawah);
-
-                if(ruangKanan != null){
-                    ruangKanan.setSamping("Kiri",newRoom);
-                    newRoom.setSamping("Kanan",ruangKanan);
-                }
-
-                if(ruangKiri != null){
-                    ruangKiri.setSamping("Kanan",newRoom);
-                    newRoom.setSamping("Kiri",ruangKiri);
-                }
-
-                if(ruangAtas != null){
-                    ruangAtas.setSamping("Bawah",newRoom);
-                    newRoom.setSamping("Atas",ruangAtas);
-                }
-
-                if(ruangBawah != null){
-                    ruangBawah.setSamping("Atas",newRoom);
-                    newRoom.setSamping("Bawah",ruangBawah);
-                }
-
-            }
-            else{
-                System.out.println("Ruangan pada "+locTambah+" ruangan acuan sudah ada");
-            }            
-
-        }*/
     }
 
     /**
