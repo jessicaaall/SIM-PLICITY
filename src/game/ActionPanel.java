@@ -363,6 +363,7 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                         TimerAksiPanel timerAksiPanel = new TimerAksiPanel(hp, "Pulang", threadAksi);
                         hp.centerPanel.add(timerAksiPanel, 0);
                         hp.selectedSim.sim.pulang(hp.rumah.getSim());
+                        hp.centerPanel.remove(hp.selectedSim);
                         hp.rumah.getWorld().setThreadAksi(threadAksi);
                         timerAksiPanel.startThread();
                         threadAksi.startThread();

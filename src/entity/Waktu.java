@@ -41,16 +41,22 @@ public class Waktu implements Runnable, Serializable {
                 synchronized (this) {
                     for (ThreadAksiPasif aksiPasif : world.getListThreadAksiPasif()){
                         synchronized (this){
-                            aksiPasif.startThread();
+                            if (aksiPasif != null){
+                                aksiPasif.startThread();
+                            }
                         }
                     }
                     for (Sim sim : world.getDaftarSim()) {
-                        sim.trackBuangAirSetelahMakan();
+                        if (sim != null){
+                            sim.trackBuangAirSetelahMakan();
+                        }
                     }
                 }
                 for (Sim sim : world.getDaftarSim()) {
                     synchronized (this){
-                        sim.updateKondisiSim();
+                        if (sim !=  null){
+                            sim.updateKondisiSim();
+                        }
                     }
                 }
             }

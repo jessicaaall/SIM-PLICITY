@@ -149,7 +149,6 @@ public class World  implements Runnable, Serializable {
         daftarSim.add(sim);
         jumlahSim++;
         dailySimCreation--;
-
     }
     public Waktu getWaktu() {
         return waktu;

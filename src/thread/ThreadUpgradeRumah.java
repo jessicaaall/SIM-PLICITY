@@ -36,6 +36,9 @@ public class ThreadUpgradeRumah extends ThreadAksiPasif{
             Iterator<ThreadAksiPasif> it = world.getListThreadAksiPasif().iterator();
             while (it.hasNext()){
                 ThreadAksiPasif threadAksiPasif = it.next();
+                if (threadAksiPasif == null){
+                    continue;
+                }
                 if (threadAksiPasif.equals(this)){
                     it.remove();
                 }
