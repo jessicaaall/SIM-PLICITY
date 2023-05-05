@@ -76,6 +76,10 @@ public class World  implements Runnable, Serializable {
         return listThreadAksiPasif;
     }
 
+    public void setListThreadAksiPasif(ArrayList<ThreadAksiPasif> listThreadAksiPasif) {
+        this.listThreadAksiPasif = listThreadAksiPasif;
+    }
+
     private ArrayList<ThreadAksiPasif> listThreadAksiPasif;
     public boolean developerMode = false;
 

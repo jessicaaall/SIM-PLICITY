@@ -9,6 +9,7 @@ import javax.swing.text.AbstractDocument;
 import java.awt.*;
 import java.awt.event.*;
 
+// ini action panel
 public class ActionPanel extends JPanel implements MouseListener, MouseMotionListener {
     MouseEvent pressed;
     Point location;
