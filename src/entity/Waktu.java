@@ -41,16 +41,22 @@ public class Waktu implements Runnable, Serializable {
                 synchronized (this) {
                     for (ThreadAksiPasif aksiPasif : world.getListThreadAksiPasif()){
                         synchronized (this){
-                            aksiPasif.startThread();
+                            if (aksiPasif != null){
+                                aksiPasif.startThread();
+                            }
                         }
                     }
                     for (Sim sim : world.getDaftarSim()) {
-                        sim.trackBuangAirSetelahMakan();
+                        if (sim != null){
+                            sim.trackBuangAirSetelahMakan();
+                        }
                     }
                 }
                 for (Sim sim : world.getDaftarSim()) {
                     synchronized (this){
-                        sim.updateKondisiSim();
+                        if (sim !=  null){
+                            sim.updateKondisiSim();
+                        }
                     }
                 }
             }
@@ -83,7 +89,13 @@ public class Waktu implements Runnable, Serializable {
                 Iterator<Sim> simIterator = world.getDaftarSim().iterator();
                 while (simIterator.hasNext()){
                     Sim sim = simIterator.next();
-                    if (sim.getWaktuTidur() < 180){
+                    int patokanWaktuTidur;
+                    if (world.developerMode) {
+                        patokanWaktuTidur = 20;
+                    } else {
+                        patokanWaktuTidur = 180;
+                    }
+                    if (sim.getWaktuTidur() < patokanWaktuTidur){
                         sim.setIsSudahTidur(false);
                         sim.resetKondisiSim();
                     }

@@ -33,12 +33,8 @@ public class ThreadUpgradeRumah extends ThreadAksiPasif{
         }
         if (sisaWaktu <= 0){
             //delete thread dari daftar thread
-            Iterator<ThreadAksiPasif> it = world.getListThreadAksiPasif().iterator();
-            while (it.hasNext()){
-                ThreadAksiPasif threadAksiPasif = it.next();
-                if (threadAksiPasif.equals(this)){
-                    it.remove();
-                }
+            synchronized (world.getListThreadAksiPasif()) {
+                world.getListThreadAksiPasif().removeIf(threadAksiPasif -> threadAksiPasif.equals(this));
             }
             System.out.println(this.getNama() + " deleted");
             ((HousePanel) object).upgradeRumah();

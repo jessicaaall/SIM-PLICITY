@@ -72,6 +72,7 @@ public abstract class ThreadAksiPasif extends Thread implements Serializable {
 
     public void startThread(){
         if (!started){
+            started = true;
             System.out.println("started");
             start();
             started = true;

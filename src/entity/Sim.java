@@ -303,35 +303,33 @@ public class Sim implements Serializable {
      * memberikan efek berjangka ketika Sim tidak tidur
      */
     public void efekTidakTidur() {
+        int bagi;
+        if (theirWorld.developerMode) {
+            bagi = 20;
+        } else {
+            bagi = 600;
+        }
+
         if (waktuTidakTidur == 0){
             return;
         }
-        if (waktuTidakTidur % 600 == 0) {
+        if (waktuTidakTidur % bagi == 0) {
             setKesehatan(getKesehatan() - 5);
             setMood(getMood() - 5);
         }
     }
-
-    private Long startTime;
 
     /**
      * update kondisi ketidaktiduran sim
      */
     public void updateKondisiSim() {
         if (!getIsSudahTidur()) {
-            if (startTime == null) {
-                startTime = System.currentTimeMillis();
-            }
-            Long currentTime = System.currentTimeMillis();
-            if (currentTime - startTime >= 1000) {
-                waktuTidakTidur++;
-                startTime = currentTime;
-            }
-            efekTidakTidur();
-        } else {
-            startTime = null;
+            System.out.println("udah gak tidur");
+            waktuTidakTidur++;
         }
+        efekTidakTidur();
     }
+
 
     public void resetKondisiSim() {
         setWaktuTidur(0);
@@ -398,7 +396,6 @@ public class Sim implements Serializable {
         });
         thread.start();
         setLocRuang(sim.getKepemilikanRumah().getRuanganAcuan());
-        sim.getKepemilikanRumah().getRuanganAcuan().insertSim(this);
     }
 
     /**
@@ -426,7 +423,6 @@ public class Sim implements Serializable {
         });
         thread.start();
         setLocRuang(Sim.this.getKepemilikanRumah().getRuanganAcuan());
-        Sim.this.getKepemilikanRumah().getRuanganAcuan().insertSim(this);
     }
     public void lihatInventory() {
         inventory.showItem();
@@ -443,11 +439,15 @@ public class Sim implements Serializable {
             timeRequired = 720;
         }
         if (waktuKerja >= timeRequired) {
-            uang -= (1/2) * newPekerjaan.getGaji(); // Bayar 1/2 dari gaji pekerjaan baru
-            pekerjaan = newPekerjaan;
-            setWaktuKerja(0);
-            waktuSetelahGantiKerja = 0;
-            isPernahGantiKerja = true;
+            if (getUang() < ((1/2) * newPekerjaan.getGaji())) {
+                throw new Exception("Uangmu gacukup buat ganti pekerjaan bambang");
+            } else {
+                uang -= (1/2) * newPekerjaan.getGaji(); // Bayar 1/2 dari gaji pekerjaan baru
+                pekerjaan = newPekerjaan;
+                setWaktuKerja(0);
+                waktuSetelahGantiKerja = 0;
+                isPernahGantiKerja = true;
+            }
         } else {
             throw  new Exception("Kamu belum bekerja minimal 12 menit ngab");
         }

@@ -43,6 +43,7 @@ public class BerkunjungPanel extends JPanel {
                     TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Berkunjung", threadAksi);
                     housePanel.centerPanel.add(timerAksiPanel, 0);
                     simnya.berkunjung(visitedSim);
+                    housePanel.centerPanel.remove(housePanel.selectedSim);
                     threadAksi.startThread();
                     timerAksiPanel.startThread();
                     housePanel.centerPanel.remove(BerkunjungPanel.this);

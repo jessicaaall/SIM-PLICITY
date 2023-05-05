@@ -242,8 +242,6 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
                 }
             }
         }
-
-
     }
 
     @Override

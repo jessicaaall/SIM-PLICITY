@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
@@ -54,7 +55,6 @@ public class PerabotanLabel extends JLabel {
 
     @Override
     public void paintComponents(Graphics g) {
-        super.paintComponents(g);
         Graphics2D g2d= (Graphics2D) g;
         float alpha = 1f;
         if (this.getMousePosition() != null && !this.getMousePosition().equals(startDragPoint)){
@@ -62,6 +62,10 @@ public class PerabotanLabel extends JLabel {
         }
         AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha);
         g2d.setComposite(alphaComposite);
+
+        /* start rotating */
+
+        super.paintComponents(g);
         g2d.dispose();
 
     }
@@ -172,6 +176,11 @@ public class PerabotanLabel extends JLabel {
                         housePanel.centerPanel.remove(component);
                         housePanel.centerPanel.add(simLabel, 0);
                     }
+                }
+
+                //atur supaya inventory panel ada di atas lagi
+                if (housePanel.inventoryPanel != null){
+                    housePanel.centerPanel.setComponentZOrder(housePanel.inventoryPanel, 0);
                 }
                 housePanel.revalidate();
                 housePanel.repaint();

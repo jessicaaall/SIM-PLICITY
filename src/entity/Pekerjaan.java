@@ -69,7 +69,6 @@ public class Pekerjaan implements Serializable {
 
     public void lakukanKerja(int waktu, Sim sim)  throws Exception{
         try{
-      
             if(waktu % 120 != 0){
                 throw new Exception("Lama pekerjaan lakukan harus kelipatan 120!");
             }
@@ -88,17 +87,15 @@ public class Pekerjaan implements Serializable {
                     sim.setKekenyangan(sim.getKekenyangan()-10);
                     sim.setMood(sim.getMood()-10);
                 }
-
-                if(now - begin >= 240000){
-                    begin = now;
-                    sim.setUang(sim.getUang()+sim.getPekerjaan().getGaji());
-                }
                 now = System.currentTimeMillis();
                 
                     
             }
             System.out.println("sim "+sim.getNamaLengkap()+" selesai bekerja!");
             sim.setWaktuKerja(sim.getWaktuKerja() + waktu);
+            if(sim.getWaktuKerja() >= 240){
+                sim.setUang(sim.getUang()+sim.getPekerjaan().getGaji());
+            }
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -106,6 +103,6 @@ public class Pekerjaan implements Serializable {
 
     @Override
     public String toString() {
-        return getNamaPekerjaan() + String.format(("Gaji per menit: " + ((double) gaji/(double) 4)));
+        return getNamaPekerjaan() + String.format((" (Gaji per menit: " + ((double) gaji/(double) 4)) + ")");
     }
 }

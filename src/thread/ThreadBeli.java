@@ -37,18 +37,12 @@ public class ThreadBeli extends ThreadAksiPasif{
         }
 
         //delete thread dari daftar thread
-        if (sisaWaktu <= 0){
-            Iterator<ThreadAksiPasif> it = world.getListThreadAksiPasif().iterator();
-            while (it.hasNext()){
-                ThreadAksiPasif threadAksiPasif = it.next();
-                if (threadAksiPasif.equals(this)){
-                    it.remove();
-                }
-            }
-            started = false;
-            System.out.println(this.getNama() + " deleted");
-            bisaDibeli.beli((Sim)parameters[0], (int) parameters[1]);
+        synchronized (world.getListThreadAksiPasif()){
+            world.getListThreadAksiPasif().removeIf(threadAksiPasif -> threadAksiPasif.equals(this));
         }
+        started = false;
+        System.out.println(this.getNama() + " deleted");
+        bisaDibeli.beli((Sim)parameters[0], (int) parameters[1]);
 
     }
 }

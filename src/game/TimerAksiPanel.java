@@ -113,6 +113,7 @@ public class TimerAksiPanel extends JPanel implements MouseListener, MouseMotion
         hp.rumah.getWorld().setActive(true);
         while (hp.rumah.getWorld().getThreadAksi() != null){
             timer.setText(String.valueOf(threadAksi.getSisaWaktu()));
+            hp.centerPanel.setComponentZOrder(TimerAksiPanel.this, 0);
             try {
                 Thread.sleep(1000/60);
             } catch (InterruptedException e) {
