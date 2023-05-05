@@ -9,8 +9,11 @@ import javax.swing.border.*;
 
 public class GantiKerjaPanel extends JPanel {
 
-    public GantiKerjaPanel(Sim sim) {
+    HousePanel housePanel;
+    Pekerjaan selected;
+    public GantiKerjaPanel(Sim sim, HousePanel housePanel) {
         super(new BorderLayout());
+        this.housePanel = housePanel;
         setBounds(160,200, 350, 200);
         setBackground(new Color(150, 178, 102));
         setOpaque(true);
@@ -48,14 +51,14 @@ public class GantiKerjaPanel extends JPanel {
         JLabel gajiLabel = new JLabel();
         gajiLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        Pekerjaan selected = pekerjaan.get(choosePekerjaan.getSelectedIndex());
+        selected = pekerjaan.get(choosePekerjaan.getSelectedIndex());
         int gaji = selected.getGaji();
         gajiLabel.setText("Gaji Harian (4 menit kerja) = " + gaji);
 
                 choosePekerjaan.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Pekerjaan selected = pekerjaan.get(choosePekerjaan.getSelectedIndex());
+                selected = pekerjaan.get(choosePekerjaan.getSelectedIndex());
                 int gaji = selected.getGaji();
                 gajiLabel.setText("Gaji Harian (4 menit kerja) = " + gaji);
             }
@@ -78,6 +81,7 @@ public class GantiKerjaPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     sim.gantiPekerjaan(selected);
+                    housePanel.centerPanel.remove(GantiKerjaPanel.this);
                 } catch (Exception er) {
                     JOptionPane.showMessageDialog(null, er.getMessage(), "Penggantian Pekerjaan Gagal", JOptionPane.PLAIN_MESSAGE);
                 }
@@ -88,6 +92,8 @@ public class GantiKerjaPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
+                housePanel.centerPanel.remove(GantiKerjaPanel.this);
+
             }
         });
 

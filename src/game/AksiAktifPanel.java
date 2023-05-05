@@ -159,9 +159,9 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                         Sim simnya = housePanel.selectedSim.sim;
                         ThreadAksi aksiKerja = new ThreadAksi(simnya.getNamaLengkap() + " kerja", duration, housePanel.rumah.getWorld());
                         TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Kerja", aksiKerja);
+                        simnya.kerja(duration);
                         housePanel.centerPanel.add(timerAksiPanel, 0);
                         housePanel.rumah.getWorld().setThreadAksi(aksiKerja);
-                        simnya.kerja(duration);
                         timerAksiPanel.startThread();
                         aksiKerja.startThread();
                         housePanel.centerPanel.remove(this);
@@ -312,7 +312,7 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
 
                     }
                 }
-            } catch (NumberFormatException | HeadlessException | NullPointerException ex) {
+            } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
 

@@ -376,7 +376,8 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
         gantiPekerjaanButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GantiKerjaPanel gantiKerjaPanel = new GantiKerjaPanel(hp.selectedSim.sim);
+                GantiKerjaPanel gantiKerjaPanel = new GantiKerjaPanel(hp.selectedSim.sim, hp);
+                hp.centerPanel.remove(ActionPanel.this);
                 hp.centerPanel.add(gantiKerjaPanel, 0);
                 hp.centerPanel.revalidate();
                 hp.centerPanel.repaint();

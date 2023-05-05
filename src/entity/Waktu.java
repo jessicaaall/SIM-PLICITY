@@ -11,7 +11,7 @@ public class Waktu implements Runnable, Serializable {
     private int hariKe;
     private int sisaDetik;
 
-    private final int developerModeTime = 30;
+    private final int developerModeTime = 60;
     private transient Thread waktuThread;
 
     // Konstruktor
@@ -48,6 +48,11 @@ public class Waktu implements Runnable, Serializable {
                         sim.trackBuangAirSetelahMakan();
                     }
                 }
+                for (Sim sim : world.getDaftarSim()) {
+                    synchronized (this){
+                        sim.updateKondisiSim();
+                    }
+                }
             }
             else{
                 synchronized (this) {
@@ -82,11 +87,6 @@ public class Waktu implements Runnable, Serializable {
                         sim.setIsSudahTidur(false);
                         sim.resetKondisiSim();
                     }
-                }
-            }
-            for (Sim sim : world.getDaftarSim()) {
-                synchronized (this){
-                    sim.updateKondisiSim();
                 }
             }
             world.cekWaktu();

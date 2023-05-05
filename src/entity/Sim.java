@@ -241,22 +241,26 @@ public class Sim implements Serializable {
         }
         System.out.println("11. Kepemilikan rumah : " + getKepemilikanRumah());
         if (getIsSudahTidur()) {
-            System.out.println("12. Selama 10 menit sudah tidur");
+            System.out.println("12. Sudah tidur = yes");
         } else {
-            System.out.println("12. Selama 10 menit belum tidur");
+            System.out.println("12. Sudah tidur = no");
         }
+        System.out.println("13. sudah ganti pekerjaan = " + isPernahGantiKerja);
+        System.out.println("14. waktu bekerja = " + waktuKerja);
+        System.out.println("15. Waktu tidur = " + waktuTidur);
+        System.out.println("16. Waktu tidak tidur = " + waktuTidakTidur);
+        System.out.println("17. Waktu setelah ganti kerja = "+waktuSetelahGantiKerja);
     }
 
     /**
      * melakukan kerja pada sim ini,
      * @param waktu: durasi kerja: harus kelipatan 120 (detik)
      */
-    public void kerja(int waktu) {
+    public void kerja(int waktu) throws Exception{
         // pekerjaan baru hanya bisa dilakuin sehari setelah pergantian pekerjaan
         // Asumsi ganti hari itu acuannya hari, bukan detik
         if (isPernahGantiKerja && waktuSetelahGantiKerja < 1) {
-            System.out.println("Belum bisa ganti kerja ngab");
-            return;
+            throw new Exception("Belum bisa ganti kerja ngab");
         }
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -271,7 +275,6 @@ public class Sim implements Serializable {
             }
         });
         thread.start();
-        setWaktuKerja(getWaktuKerja() + waktu);
     }
 
     /**
@@ -432,7 +435,14 @@ public class Sim implements Serializable {
         inventory.removeItem(barang);
     }
     public void gantiPekerjaan(Pekerjaan newPekerjaan) throws Exception{
-        if (waktuKerja > 720) {
+        int timeRequired;
+        if (theirWorld.developerMode){
+            timeRequired = 120;
+        }
+        else {
+            timeRequired = 720;
+        }
+        if (waktuKerja >= timeRequired) {
             uang -= (1/2) * newPekerjaan.getGaji(); // Bayar 1/2 dari gaji pekerjaan baru
             pekerjaan = newPekerjaan;
             setWaktuKerja(0);
