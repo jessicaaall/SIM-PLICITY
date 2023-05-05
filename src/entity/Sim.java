@@ -284,8 +284,8 @@ public class Sim implements Serializable {
             return;
         }
         if (waktuTidakTidur % 600 == 0) {
-            kesehatan -= 5;
-            mood -= 5;
+            setKesehatan(getKesehatan() - 5);
+            setMood(getMood() - 5);
         }
     }
 
@@ -356,8 +356,8 @@ public class Sim implements Serializable {
                 while (sisaWaktu >= 0) {
                     sisaWaktu--;
                     if (sisaWaktu == (waktu - (periodeSiklus * siklus))) {
-                        mood += 10;
-                        kekenyangan -= 10;
+                        setMood(getMood() + 10);
+                        setKekenyangan(getKekenyangan() - 10);
                         siklus++;
                     }
                     try {
@@ -429,8 +429,8 @@ public class Sim implements Serializable {
                 for (int i = 0; i < timerTerakhirMakan.size(); i++) {
                     incrementTimerTerakhirMakan(i);
                     if (timerTerakhirMakan.get(i) >= 240) {
-                        kesehatan -= 5;
-                        mood -= 5;
+                        setKesehatan(getKesehatan() - 5);
+                        setMood(getMood() - 5);
                         removeTimerTerakhirMakan(i);
                     }
                 }
