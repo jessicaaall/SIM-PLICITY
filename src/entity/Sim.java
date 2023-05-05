@@ -262,6 +262,9 @@ public class Sim implements Serializable {
         if (isPernahGantiKerja && waktuSetelahGantiKerja < 1) {
             throw new Exception("Belum bisa ganti kerja ngab");
         }
+        if (getWaktuKerja() >= 240) {
+            throw new Exception("Jangan kelamaan kerja ngab");
+        }
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
