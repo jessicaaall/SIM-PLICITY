@@ -274,7 +274,7 @@ public class Sim implements Serializable {
         });
         thread.start();
         setWaktuTidur(getWaktuTidur() + durasi);
-        if (waktuTidur > 180) {
+        if (waktuTidur >= 180) {
             setIsSudahTidur(true);
         }
     }

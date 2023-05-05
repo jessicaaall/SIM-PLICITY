@@ -78,7 +78,7 @@ public class Waktu implements Runnable, Serializable {
                 Iterator<Sim> simIterator = world.getDaftarSim().iterator();
                 while (simIterator.hasNext()){
                     Sim sim = simIterator.next();
-                    if (sim.getWaktuTidur() < 3000){
+                    if (sim.getWaktuTidur() < 180){
                         sim.setIsSudahTidur(false);
                     }
                 }
