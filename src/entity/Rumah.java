@@ -287,4 +287,13 @@ public class Rumah implements Serializable{
         Rumah rumah = (Rumah) obj;
         return lokasi.equals(rumah.lokasi);
     }
+
+    public void showAllSim() {
+        System.out.println("===== Daftar Sim di Rumah Ini =====");
+        for (Ruangan ruangan : daftarRuangan) {
+            for (Sim sim : ruangan.getDaftarSim()) {
+                System.out.println(sim.getNamaLengkap() + " posisinya di " + sim.getPosisi());
+            }
+        }
+    }
 }
