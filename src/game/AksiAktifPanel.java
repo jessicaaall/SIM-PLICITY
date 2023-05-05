@@ -67,7 +67,7 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                 durasiText.setEnabled(false);
             }
             else {
-                durasiText.setText("30");
+                durasiText.setText("3");
                 durasiText.setEnabled(false);
             }
 
@@ -185,7 +185,7 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                 else{
                     if (perabotan instanceof Kasur kasur){
                         if (aksi.equals("tidur")){
-                            if (!(duration % 180 == 0)){
+                            if (!(duration % 5 == 0)){
                                 JOptionPane.showMessageDialog(null, "Input harus kelipatan 3 menit (180)", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
