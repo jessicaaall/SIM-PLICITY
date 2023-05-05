@@ -151,11 +151,13 @@ public class PerabotanLabel extends JLabel {
                     //dimasukin lagi ke inventory
                     PerabotanLabel.this.perabotan.setKiriAtas(null);
                     housePanel.centerPanel.remove(PerabotanLabel.this);
+                    housePanel.centerPanel.remove(housePanel.inventoryPanel);
 
                 } else if (isOutOfBoundary) {
                     System.out.println("Di luar batas");
                     PerabotanLabel.this.perabotan.setKiriAtas(null);
                     housePanel.centerPanel.remove(PerabotanLabel.this);
+                    housePanel.centerPanel.remove(housePanel.inventoryPanel);
 
                 } else {
                     PerabotanLabel.this.getPerabotan().setKiriAtas(new Point((PerabotanLabel.this.getX()- housePanel.ruanganAcuanPanel.getX())/housePanel.unitSize ,
