@@ -18,6 +18,7 @@ public class StatusSimPanel extends JPanel implements MouseListener, MouseMotion
     JLabel kesehatanLabel;
     JLabel uangLabel;
     JLabel pekerjaanLabel;
+    JLabel statusLabel;
     StatusSimPanel(Sim sim, HousePanel housePanel){
         super(new BorderLayout());
         this.sim = sim;
@@ -46,12 +47,14 @@ public class StatusSimPanel extends JPanel implements MouseListener, MouseMotion
         kesehatanLabel = new JLabel("Kesehatan: " + sim.getKesehatan());
         uangLabel = new JLabel("Uang: " + sim.getUang());
         pekerjaanLabel = new JLabel("Pekerjaan: " + sim.getPekerjaan().getNamaPekerjaan());
+        statusLabel = new JLabel("Status: " + sim.getStatus());
 
         kekenyanganLabel.setHorizontalAlignment(SwingConstants.CENTER);
         moodLabel.setHorizontalAlignment(SwingConstants.CENTER);
         kesehatanLabel.setHorizontalAlignment(SwingConstants.CENTER);
         uangLabel.setHorizontalAlignment(SwingConstants.CENTER);
         pekerjaanLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
         statusPanel.setPreferredSize(new Dimension(160,320));
         infoPanel.add(fotoSim);
         infoPanel.add(namaSim);
@@ -60,6 +63,7 @@ public class StatusSimPanel extends JPanel implements MouseListener, MouseMotion
         statusPanel.add(kesehatanLabel);
         statusPanel.add(uangLabel);
         statusPanel.add(pekerjaanLabel);
+        statusPanel.add(statusLabel);
 
         JButton closeButton = new JButton("Close");
 
@@ -139,7 +143,7 @@ public class StatusSimPanel extends JPanel implements MouseListener, MouseMotion
     }
 
     public void update(){
-        if (kekenyanganLabel == null || moodLabel == null || kesehatanLabel == null || pekerjaanLabel == null || uangLabel == null){
+        if (kekenyanganLabel == null || moodLabel == null || kesehatanLabel == null || pekerjaanLabel == null || uangLabel == null || statusLabel == null){
             return;
         }
         kekenyanganLabel.setText("Kekenyangan: "+sim.getKekenyangan());
@@ -147,6 +151,7 @@ public class StatusSimPanel extends JPanel implements MouseListener, MouseMotion
         kesehatanLabel.setText("Kesehatan: " + sim.getKesehatan());
         pekerjaanLabel.setText("Pekerjaan: " + sim.getPekerjaan().getNamaPekerjaan());
         uangLabel.setText("Uang: " + sim.getUang());
+        statusLabel.setText("Status: " + sim.getStatus());
     }
 
     @Override

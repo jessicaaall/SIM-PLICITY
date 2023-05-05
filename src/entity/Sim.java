@@ -59,6 +59,7 @@ public class Sim implements Serializable {
         waktuTidur = 0;
         waktuTidakTidur = 0;
         isSibuk = false;
+        status = "Idle";
         waktuSetelahGantiKerja = 0;
         isPernahGantiKerja = false;
         isSudahBuangAir = false;
