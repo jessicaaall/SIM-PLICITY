@@ -230,7 +230,7 @@ public class Sim implements Serializable {
         System.out.println("4. Mood : " + getMood());
         System.out.println("5. Kesehatan : " + getKesehatan());
         System.out.println("6. Uang : " + getUang());
-        System.out.println("7. Pekerjaan : " + pekerjaan.getNamaPekerjaan());
+        System.out.println("7. Pekerjaan : " + pekerjaan);
         System.out.println("8. Status : " + getStatus());
         System.out.println("9. Inventory : ");
         inventory.showItem();
@@ -482,7 +482,6 @@ public class Sim implements Serializable {
         theirWorld.getDaftarRumah().removeIf(rumah -> rumah.equals(this.getKepemilikanRumah()));
         theirWorld.getDaftarSim().removeIf(sim -> sim.equals(this));
         System.out.println("dia menemui pacar 2D nya");
-
     }
 
 }

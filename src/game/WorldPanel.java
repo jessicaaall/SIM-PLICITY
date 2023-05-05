@@ -228,9 +228,6 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
             for (Rumah rumah : world.getDaftarRumah()){
                 if (rumah.getLokasi().equals(mousePoint)){
                     if (currentClickTime - startClickTime >= 1000){
-                        System.out.println(rumah.getSim().getKesehatan());
-                        System.out.println(rumah.getSim().getMood());
-                        System.out.println(rumah.getSim().getPekerjaan().getNamaPekerjaan());
                         System.out.println("You entered the house");
                         HousePanel hp = new HousePanel(this, rumah);
                         mp.remove(wop);

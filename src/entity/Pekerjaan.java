@@ -102,6 +102,10 @@ public class Pekerjaan implements Serializable {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
+    }
 
+    @Override
+    public String toString() {
+        return getNamaPekerjaan() + String.format(("Gaji per menit: " + ((double) gaji/(double) 4)));
     }
 }
