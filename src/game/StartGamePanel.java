@@ -79,6 +79,7 @@ public class StartGamePanel extends JPanel implements ActionListener {
                 worldChoice.tambahRumah(rumahBaru);
                 worldChoice.tambahSim(rumahBaru.getSim());
                 worldChoice.startThread();
+                worldChoice.getWaktu().startThread();
                 showWorldPanel();
             }
 

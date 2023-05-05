@@ -177,11 +177,6 @@ public class PerabotanLabel extends JLabel {
                         housePanel.centerPanel.add(simLabel, 0);
                     }
                 }
-
-                //atur supaya inventory panel ada di atas lagi
-                if (housePanel.inventoryPanel != null){
-                    housePanel.centerPanel.setComponentZOrder(housePanel.inventoryPanel, 0);
-                }
                 housePanel.revalidate();
                 housePanel.repaint();
             }
