@@ -17,7 +17,9 @@ public class PerabotanLabel extends JLabel {
     public void setPut(boolean put) {
         this.put = put;
     }
-
+    public boolean getPut() {
+        return put;
+    }
     private boolean put = false;
     public Perabotan getPerabotan() {
         return perabotan;
@@ -29,6 +31,9 @@ public class PerabotanLabel extends JLabel {
 
     private Perabotan perabotan;
     private boolean isDragging = false;
+    private int width;
+    private int height;
+    private Image imagenya;
 
     private ImageIcon image;
     public Point startDragPoint;
@@ -37,9 +42,10 @@ public class PerabotanLabel extends JLabel {
         this.perabotan = perabotan;
         this.housePanel = housePanel;
         this.roomPanel = roomPanel;
-        int width = perabotan.getDimensi().width*PerabotanLabel.this.housePanel.unitSize;
-        int height = perabotan.getDimensi().height*PerabotanLabel.this.housePanel.unitSize;
-        Image imagenya = generateImage(perabotan.getNama()).getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        
+        width = perabotan.getDimensi().width*PerabotanLabel.this.housePanel.unitSize;
+        height = perabotan.getDimensi().height*PerabotanLabel.this.housePanel.unitSize;
+        imagenya = generateImage(perabotan.getNama()).getScaledInstance(width, height, Image.SCALE_DEFAULT);
         image = new ImageIcon(imagenya);
         this.setIcon(image);
         this.setOpaque(false);
@@ -468,6 +474,39 @@ public class PerabotanLabel extends JLabel {
 
     }
 
+    public void rotate() {
+        KeyHandler keyHandler = housePanel.mainPanel.keyH;
+        if (keyHandler.rKeyPressed) {
+            perabotan.rotate();
+            width = perabotan.getDimensi().width*PerabotanLabel.this.housePanel.unitSize;
+            height = perabotan.getDimensi().height*PerabotanLabel.this.housePanel.unitSize;
+            imagenya = rotateImage(90, generateImage(perabotan.getNama())).getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        }
+    }
+
+    private BufferedImage rotateImage(double degree, BufferedImage image) {
+        double theta = Math.toRadians(degree);
+        double cos = Math.abs(Math.cos(theta));
+        double sin = Math.abs(Math.sin(theta));
+        double width  = image.getWidth();
+        double height = image.getHeight();
+        int w = (int) (width * cos + height * sin);
+        int h = (int) (width * sin + height * cos);
+
+        BufferedImage rotated = new BufferedImage(w, h, image.getType());
+        Graphics2D g2 = rotated.createGraphics();
+        g2.setPaint(new Color(255,255,255,0));
+        g2.fillRect(0,0,w,h);
+        double x = w/2;
+        double y = h/2;
+        AffineTransform at = AffineTransform.getRotateInstance(theta, x, y);
+        x = (w - width)/2;
+        y = (h - height)/2;
+        at.translate(x, y);
+        g2.drawRenderedImage(image, at);
+        g2.dispose();
+        return rotated;
+    }
 
     public ImageIcon getImage() {
         return image;
