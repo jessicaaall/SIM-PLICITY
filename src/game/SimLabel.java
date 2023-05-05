@@ -118,4 +118,8 @@ public class SimLabel extends JLabel implements MouseListener {
 
     }
 
+    public void mati(){
+        housePanel.centerPanel.remove(this);
+    }
+
 }

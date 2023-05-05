@@ -281,4 +281,10 @@ public class Rumah implements Serializable{
     public String toString() {
         return String.format("Rumah Warna RGB(%d, %d, %d) dengan posisi di (%d, %d)", color.getRed(), color.getGreen(), color.getBlue(), getLokasi().x, getLokasi().y);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Rumah rumah = (Rumah) obj;
+        return lokasi.equals(rumah.lokasi);
+    }
 }

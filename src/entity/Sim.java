@@ -14,7 +14,7 @@ public class Sim implements Serializable {
     private Ruangan locRuang;
     private Point posisi;
     private int kekenyangan;
-    private int mood= 80;;
+    private int mood= 80;
     private int kesehatan= 80;
     private int uang = 100;
     private Pekerjaan pekerjaan;
@@ -29,22 +29,21 @@ public class Sim implements Serializable {
     private boolean isSibuk;
     private int waktuSetelahGantiKerja;
     private boolean isPernahGantiKerja;
-    private Kasur kasur;
     private boolean isSudahBuangAir;
     private ArrayList<Integer> timerTerakhirMakan;
-    
-    // Objek random untuk random apapun yang dirandom wkwkwk
+
+    /**
+     * randomizer
+     */
     private Random rand = new Random();
-    
-    // Konstruktor
+
+    /**
+     * Konstruktor untuk Sim
+     * @param namaLengkap nama sim tersebut
+     * @param theirWorld mau ditaruh di dunia mana sim tersebut
+     */
     public Sim(String namaLengkap, World theirWorld) {
         this.theirWorld = theirWorld;
-//        for (Sim sim: theirWorld.getDaftarSim()){
-//            if (sim.getNamaLengkap().equals(namaLengkap)){
-//                System.out.println("Nama sudah dipakai");
-//                return;
-//            }
-//        }
         this.namaLengkap = namaLengkap;
         kekenyangan = 80;
         mood = 80;
@@ -62,7 +61,6 @@ public class Sim implements Serializable {
         isSibuk = false;
         waktuSetelahGantiKerja = 0;
         isPernahGantiKerja = false;
-        kasur = null;
         isSudahBuangAir = false;
         timerTerakhirMakan = new ArrayList<Integer>();
         randomSkin = new Random().nextInt(4)+1;
@@ -139,6 +137,10 @@ public class Sim implements Serializable {
         return randomSkin;
     }
 
+    /**
+     *
+     * Atribut untuk skin karakter sim. akan digenerate secara random
+     */
     private int randomSkin;
 
     // Method : Setter
@@ -201,7 +203,6 @@ public class Sim implements Serializable {
         this.waktuSetelahGantiKerja = waktuSetelahGantiKerja;
     }
     public void setKasur(Kasur kasur) {
-        this.kasur = kasur;
     }
     public void setIsSudahBuangAir(boolean isSudahBuangAir) {
         this.isSudahBuangAir = isSudahBuangAir;
@@ -217,10 +218,14 @@ public class Sim implements Serializable {
     }
     
     // Method lain
+
+    /**
+     * Memunculkan informasi sim ini
+     */
     public void viewSimInfo() {
         System.out.println("SIM INFO");
         System.out.println("1. Nama : " + getNamaLengkap());
-        System.out.println("2. Berada di {" + posisi.getX() + "," + posisi.getY() + "}" + " dalam ruangan " + locRuang.getNama());
+        System.out.println("2. Berada di {" + posisi.x + "," + posisi.y + "}" + " dalam ruangan " + locRuang.getNama());
         System.out.println("3. Kekenyangan : " + getKekenyangan());
         System.out.println("4. Mood : " + getMood());
         System.out.println("5. Kesehatan : " + getKesehatan());
@@ -241,6 +246,11 @@ public class Sim implements Serializable {
             System.out.println("12. Selama 10 menit belum tidur");
         }
     }
+
+    /**
+     * melakukan kerja pada sim ini,
+     * @param waktu: durasi kerja: harus kelipatan 120 (detik)
+     */
     public void kerja(int waktu) {
         // pekerjaan baru hanya bisa dilakuin sehari setelah pergantian pekerjaan
         // Asumsi ganti hari itu acuannya hari, bukan detik
@@ -262,6 +272,12 @@ public class Sim implements Serializable {
         });
         thread.start();
     }
+
+    /**
+     * Meniduri Sim
+     * @param durasi: waktu tidurnya
+     * @param kasur: di kasur mana dia akan tidur
+     */
     public void tidur(int durasi, Kasur kasur) {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -279,6 +295,9 @@ public class Sim implements Serializable {
         }
     }
 
+    /**
+     * memberikan efek berjangka ketika Sim tidak tidur
+     */
     public void efekTidakTidur() {
         if (waktuTidakTidur == 0){
             return;
@@ -290,6 +309,10 @@ public class Sim implements Serializable {
     }
 
     private Long startTime;
+
+    /**
+     * update kondisi ketidaktiduran sim
+     */
     public void updateKondisiSim() {
         if (!getIsSudahTidur()) {
             if (startTime == null) {
@@ -442,6 +465,13 @@ public class Sim implements Serializable {
     public boolean equals(Object obj) {
         Sim sim = (Sim) obj;
         return namaLengkap.equals(sim.namaLengkap);
+    }
+
+    public void mati(){
+        theirWorld.getDaftarRumah().removeIf(rumah -> rumah.equals(this.getKepemilikanRumah()));
+        theirWorld.getDaftarSim().removeIf(sim -> sim.equals(this));
+        System.out.println("dia menemui pacar 2D nya");
+
     }
 
 }

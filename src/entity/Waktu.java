@@ -80,6 +80,7 @@ public class Waktu implements Runnable, Serializable {
                     Sim sim = simIterator.next();
                     if (sim.getWaktuTidur() < 180){
                         sim.setIsSudahTidur(false);
+                        sim.resetKondisiSim();
                     }
                 }
             }
