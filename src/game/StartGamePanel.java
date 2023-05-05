@@ -108,7 +108,7 @@ public class StartGamePanel extends JPanel implements ActionListener {
                 for (ThreadAksiPasif threadAksiPasif : worldChoice.getListThreadAksiPasif()) {
                     ThreadAksiPasif buffer;
                     synchronized (this) {
-                        buffer = new ThreadBeli(threadAksiPasif.getNama(), threadAksiPasif.getSavedSisaWaktu(), threadAksiPasif.getParameters(), threadAksiPasif.getObject(), threadAksiPasif.getWorld());
+                        buffer = new ThreadBeli(threadAksiPasif.getNama(), threadAksiPasif.getSisaWaktu(), threadAksiPasif.getParameters(), threadAksiPasif.getObject(), threadAksiPasif.getWorld());
                         listThreadBaru.add(buffer);
                     }
                 }

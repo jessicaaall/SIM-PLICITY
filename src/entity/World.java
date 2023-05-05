@@ -98,7 +98,6 @@ public class World  implements Runnable, Serializable {
         harike = waktu.getHariKe();
         threadAksi = null;
         listThreadAksiPasif = new ArrayList<>();
-        waktu.startThread();
         chosenSim = null;
     }
 
@@ -113,7 +112,6 @@ public class World  implements Runnable, Serializable {
         harike = waktu.getHariKe();
         threadAksi = null;
         listThreadAksiPasif = new ArrayList<>();
-        waktu.startThread();
         chosenSim = null;
     }
     public ThreadAksi getThreadAksi() {
