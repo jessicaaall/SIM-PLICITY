@@ -193,6 +193,14 @@ public class WorldOptionPanel extends JPanel implements ActionListener, MouseLis
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
                 String namaSim = namaSimField.getText();
+                if (namaSim.length() == 0){
+                    JOptionPane.showMessageDialog(null, "Nama sim gak boleh kosong");
+                    return;
+                }
+                if (color[0] == null){
+                    JOptionPane.showMessageDialog(null, "harus pilih warna");
+                    return;
+                }
                 int x = Integer.parseInt(xField.getText());
                 int y = Integer.parseInt(yField.getText());
                 // cek apakah nama sim, dan koordinat sudah dipakai sudah ada
