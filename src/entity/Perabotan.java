@@ -94,6 +94,9 @@ public class Perabotan extends Objek implements BisaDibeli {
         this.dipakai = dipakai;
     }
 
+    public void rotate() {
+        dimensi.setSize(dimensi.getHeight(), dimensi.getWidth());
+    }
 
     @Override
     public void beli(Sim sim, int totalHarga) {
