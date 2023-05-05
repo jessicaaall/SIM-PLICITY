@@ -319,7 +319,7 @@ public class Sim implements Serializable {
         }
     }
 
-    private Long startTime;
+    private Long startTime = null;
 
     /**
      * update kondisi ketidaktiduran sim
@@ -342,6 +342,7 @@ public class Sim implements Serializable {
             }
             Long currentTime = System.currentTimeMillis();
             if (currentTime - startTime >= 1000) {
+                System.out.println("udah gak tidur");
                 waktuTidakTidur++;
                 startTime = currentTime;
             }

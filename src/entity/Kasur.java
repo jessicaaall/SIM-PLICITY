@@ -26,38 +26,13 @@ public class Kasur extends Perabotan implements BisaDiduduki {
     }
     
     public void tidur(int durasi, Sim sim) {
-        /*
-        Scanner sc = new Scanner(System.in);
-        boolean valid = false;
-        while (!valid) {
-            //System.out.print("Masukkan durasi tidur dalam satuan detik >> ");
-            try {
-                //int durasi = Integer.parseInt(sc.nextLine());
-                if (durasi <= 0) {
-                    throw new IllegalArgumentException("Durasi tidur harus lebih besar dari 0 detik.");
-                }
-                valid = true;
-                long startTime = System.currentTimeMillis();
-                long currentTime = startTime;
-                long endTime = startTime + (durasi*1000);
-                while (currentTime < endTime) {
-                    if (currentTime - startTime >= 240000) {
-                        startTime = currentTime;
-                        sim.setMood(sim.getMood() + 30);
-                        sim.setKesehatan(sim.getKesehatan() + 20);
-                    }
-                    currentTime = System.currentTimeMillis();
-                    sim.setWaktuTidur(sim.getWaktuTidakTidur() + 1);
-                }
-                System.out.println("Sim " + sim.getNamaLengkap() + " selesai tidur.");
-            } catch (NumberFormatException e) {
-                System.out.println("Input tidak valid.");
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
+        int cap;
+        if (sim.getTheirWorld().developerMode){
+            cap = 20;
         }
-        sc.close();
-        */
+        else {
+            cap = 180;
+        }
         long startTime = System.currentTimeMillis();
         long currentTime = startTime;
         long endTime = startTime + (durasi*1000);
@@ -69,7 +44,7 @@ public class Kasur extends Perabotan implements BisaDiduduki {
             }
             currentTime = System.currentTimeMillis();
             sim.setWaktuTidur(sim.getWaktuTidur() + 1);
-            if (sim.getWaktuTidur() >= 180) {
+            if (sim.getWaktuTidur() >= cap) {
                 sim.setIsSudahTidur(true);
             }
         }
