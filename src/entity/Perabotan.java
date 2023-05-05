@@ -1,8 +1,6 @@
 package entity;
 
 import java.awt.*;
-import java.io.Serializable;
-import java.util.*;
 
 public class Perabotan extends Objek implements BisaDibeli {
     private Point kiriAtas;
@@ -23,6 +21,7 @@ public class Perabotan extends Objek implements BisaDibeli {
 
     private Dimension dimensi;
     private boolean dipakai;
+
 
     public Perabotan(int id) {
         super(id);
@@ -95,43 +94,11 @@ public class Perabotan extends Objek implements BisaDibeli {
         this.dipakai = dipakai;
     }
 
-    public void rotate() {
-        dimensi.setSize(dimensi.getHeight(), dimensi.getWidth());
-    }
 
     @Override
     public void beli(Sim sim, int totalHarga) {
         sim.getInventory().addItem(this, totalHarga/harga);
-//        boolean valid = false;
-//        Scanner sc = new Scanner(System.in);
-//        while (!valid) {
-////            System.out.print("Masukkan kuantitas " + super.getNama() + " yang ingin dibeli >> ");
-//            try {
-//                int kuantitas = Integer.parseInt(sc.nextLine());
-//                if (kuantitas <= 0) {
-//                    throw new IllegalArgumentException("Kuantitas harus lebih besar dari 0.");
-//                }
-//                valid = true;
-//                int totalHarga = kuantitas * getHarga();
-//                if (sim.getUang() < totalHarga) {
-//                    System.out.println("Uang tidak cukup untuk membeli " + String.valueOf(kuantitas) + " " + super.getNama() + ".");
-//                } else {
-//                    sim.setUang(sim.getUang() - totalHarga);
-//                    Random rand = new Random();
-//                    int durasi = rand.nextInt(5) + 1;
-//                    long startTime = System.currentTimeMillis();
-//                    long endTime = startTime + durasi;
-//                    while (System.currentTimeMillis() < endTime) {
-//
-//                    }
-//                    sim.getInventory().addItem(this);
-//                }
-//            } catch (NumberFormatException e) {
-//                System.out.println("Input tidak valid.");
-//            } catch (IllegalArgumentException e) {
-//                System.out.println(e.getMessage());
-//            }
-//        }
-//        sc.close();
     }
+
+
 }
