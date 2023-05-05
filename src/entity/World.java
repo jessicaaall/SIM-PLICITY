@@ -209,11 +209,13 @@ public class World  implements Runnable, Serializable {
             harike = waktu.getHariKe();
             dailySimCreation = 1;
             for (Sim sim : getDaftarSim()) {
-                sim.setWaktuSetelahGantiKerja(sim.getWaktuSetelahGantiKerja() + 1);
-                if (sim.getWaktuTidur() < 180) {
-                    sim.setIsSudahTidur(false);
+                synchronized (waktu){
+                    sim.setWaktuSetelahGantiKerja(sim.getWaktuSetelahGantiKerja() + 1);
+                    if (sim.getWaktuTidur() < 180) {
+                        sim.setIsSudahTidur(false);
+                    }
+                    sim.setWaktuTidur(0);
                 }
-                sim.setWaktuTidur(0);
             }
         }
     }

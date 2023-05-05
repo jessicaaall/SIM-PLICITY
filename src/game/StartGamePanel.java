@@ -100,7 +100,7 @@ public class StartGamePanel extends JPanel implements ActionListener {
                 worldChoice = saveload.load(loadFile);
                 worldChoice.startThread();
                 for (ThreadAksiPasif threadAksiPasif : worldChoice.getListThreadAksiPasif()){
-                    synchronized (threadAksiPasif){
+                    synchronized (this){
                         threadAksiPasif.startThread();
                     }
                 }
