@@ -305,7 +305,7 @@ public class Sim implements Serializable {
     public void efekTidakTidur() {
         int bagi;
         if (theirWorld.developerMode) {
-            bagi = 60;
+            bagi = 30;
         } else {
             bagi = 600;
         }
