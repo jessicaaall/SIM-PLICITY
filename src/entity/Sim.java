@@ -439,11 +439,15 @@ public class Sim implements Serializable {
             timeRequired = 720;
         }
         if (waktuKerja >= timeRequired) {
-            uang -= (1/2) * newPekerjaan.getGaji(); // Bayar 1/2 dari gaji pekerjaan baru
-            pekerjaan = newPekerjaan;
-            setWaktuKerja(0);
-            waktuSetelahGantiKerja = 0;
-            isPernahGantiKerja = true;
+            if (getUang() < ((1/2) * newPekerjaan.getGaji())) {
+                throw new Exception("Uangmu gacukup buat ganti pekerjaan bambang");
+            } else {
+                uang -= (1/2) * newPekerjaan.getGaji(); // Bayar 1/2 dari gaji pekerjaan baru
+                pekerjaan = newPekerjaan;
+                setWaktuKerja(0);
+                waktuSetelahGantiKerja = 0;
+                isPernahGantiKerja = true;
+            }
         } else {
             throw  new Exception("Kamu belum bekerja minimal 12 menit ngab");
         }
