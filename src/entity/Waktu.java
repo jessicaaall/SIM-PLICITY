@@ -35,7 +35,7 @@ public class Waktu implements Runnable, Serializable {
     public void run() {
         System.out.println("waktu started");
         while (waktuThread != null){
-            if (world.isActive){
+            if (world.isActive()){
                 sisaDetik--;
                 synchronized (this) {
                     for (ThreadAksiPasif aksiPasif : world.getListThreadAksiPasif()){

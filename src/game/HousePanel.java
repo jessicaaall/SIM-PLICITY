@@ -250,14 +250,14 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     if (validSectionForUpgrade){
                         rumah.busyUpgrading = true;
                         int durasi;
-                        if (rumah.world.developerMode){
+                        if (rumah.getWorld().developerMode){
                             durasi = 10;
                         }
                         else{
                             durasi = 1080;
                         }
-                        ThreadUpgradeRumah threadAksiPasif = new ThreadUpgradeRumah("Upgrade Rumah", durasi, HousePanel.this, rumah.world);
-                        rumah.world.getListThreadAksiPasif().add(threadAksiPasif);
+                        ThreadUpgradeRumah threadAksiPasif = new ThreadUpgradeRumah("Upgrade Rumah", durasi, HousePanel.this, rumah.getWorld());
+                        rumah.getWorld().getListThreadAksiPasif().add(threadAksiPasif);
 //                        threadAksiPasif.startThread();
 //                        threadAksiPasif.start();
 //                        ThreadAksi threadAksi = new ThreadAksi("Upgrade Rumah", 1080, method, HousePanel.this, rumah.world);
@@ -432,8 +432,8 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     durasi = (new Random().nextInt(5)+1)*30;
                 }
                 ThreadBeli threadBeli = new ThreadBeli("beli " + selectedItem.getNama(),
-                        durasi, parameters, buyed, rumah.world);
-                rumah.world.getListThreadAksiPasif().add((threadBeli));
+                        durasi, parameters, buyed, rumah.getWorld());
+                rumah.getWorld().getListThreadAksiPasif().add((threadBeli));
 //                threadBeli.startThread();
             }
         }

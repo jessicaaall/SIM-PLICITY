@@ -67,8 +67,8 @@ public class MasakPanel extends JPanel {
                     kompor.masak(housePanel.selectedSim.sim, makananTerpilih);
                     housePanel.centerPanel.remove(MasakPanel.this);
                     int waktu = (int) ((double)makananTerpilih.getPoinKekenyangan() * 1.5);
-                    ThreadAksi aksiMasak = new ThreadAksi("Masak "+ makananTerpilih.getNama(), waktu, housePanel.rumah.world);
-                    housePanel.rumah.world.setThreadAksi(aksiMasak);
+                    ThreadAksi aksiMasak = new ThreadAksi("Masak "+ makananTerpilih.getNama(), waktu, housePanel.rumah.getWorld());
+                    housePanel.rumah.getWorld().setThreadAksi(aksiMasak);
                     aksiMasak.start();
                     TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Masak",aksiMasak);
                     housePanel.centerPanel.add(timerAksiPanel, 0);

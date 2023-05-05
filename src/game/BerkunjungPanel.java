@@ -38,8 +38,8 @@ public class BerkunjungPanel extends JPanel {
                 try {
                     Sim simnya = housePanel.selectedSim.sim;
                     int waktu = (int)Math.sqrt(Math.pow((visitedSim.getKepemilikanRumah().getLokasi().getX() - simnya.getKepemilikanRumah().getLokasi().getX()), 2) + Math.pow((visitedSim.getKepemilikanRumah().getLokasi().getY() - simnya.getKepemilikanRumah().getLokasi().getY()), 2));
-                    ThreadAksi threadAksi = new ThreadAksi(simnya.getNamaLengkap() + " berkunjung", waktu, housePanel.rumah.world);
-                    housePanel.rumah.world.setThreadAksi(threadAksi);
+                    ThreadAksi threadAksi = new ThreadAksi(simnya.getNamaLengkap() + " berkunjung", waktu, housePanel.rumah.getWorld());
+                    housePanel.rumah.getWorld().setThreadAksi(threadAksi);
                     TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Berkunjung", threadAksi);
                     housePanel.centerPanel.add(timerAksiPanel, 0);
                     simnya.berkunjung(visitedSim);
@@ -102,7 +102,7 @@ public class BerkunjungPanel extends JPanel {
         SimTableModel model;
         JTable table;
         DaftarSimPanel(){
-            ArrayList<Sim> without_he_she = new ArrayList<>(housePanel.rumah.world.getDaftarSim());
+            ArrayList<Sim> without_he_she = new ArrayList<>(housePanel.rumah.getWorld().getDaftarSim());
             without_he_she.removeIf(sim -> sim.equals(housePanel.selectedSim.sim));
             model = new SimTableModel(without_he_she);
             table = new JTable(model);

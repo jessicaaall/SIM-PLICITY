@@ -9,7 +9,16 @@ public class Rumah implements Serializable{
     private Point lokasi = new Point();
     private ArrayList<Ruangan> daftarRuangan = new ArrayList<Ruangan>();
     private Sim sim;
-    public World world;
+
+    public World getWorld() {
+        return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
+    }
+
+    private World world;
     private Color color;
     public boolean busyUpgrading = false;
     public Ruangan getRuanganAcuan() {

@@ -29,7 +29,7 @@ public class World  implements Runnable, Serializable {
     private int height;
     private Sim chosenSim;
 
-    public boolean isActive = false;
+    private boolean isActive = false;
 
     public void setWidth(int width) {
         this.width = width;
@@ -216,5 +216,13 @@ public class World  implements Runnable, Serializable {
                 sim.setWaktuTidur(0);
             }
         }
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

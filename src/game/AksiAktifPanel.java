@@ -157,10 +157,10 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                             return;
                         }
                         Sim simnya = housePanel.selectedSim.sim;
-                        ThreadAksi aksiKerja = new ThreadAksi(simnya.getNamaLengkap() + " kerja", duration, housePanel.rumah.world);
+                        ThreadAksi aksiKerja = new ThreadAksi(simnya.getNamaLengkap() + " kerja", duration, housePanel.rumah.getWorld());
                         TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Kerja", aksiKerja);
                         housePanel.centerPanel.add(timerAksiPanel, 0);
-                        housePanel.rumah.world.setThreadAksi(aksiKerja);
+                        housePanel.rumah.getWorld().setThreadAksi(aksiKerja);
                         simnya.kerja(duration);
                         timerAksiPanel.startThread();
                         aksiKerja.startThread();
@@ -172,8 +172,8 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                             return;
                         }
                         Sim simnya = housePanel.selectedSim.sim;
-                        ThreadAksi aksiOlahraga = new ThreadAksi(simnya.getNamaLengkap() + " olahraga", duration, housePanel.rumah.world);
-                        housePanel.rumah.world.setThreadAksi(aksiOlahraga);
+                        ThreadAksi aksiOlahraga = new ThreadAksi(simnya.getNamaLengkap() + " olahraga", duration, housePanel.rumah.getWorld());
+                        housePanel.rumah.getWorld().setThreadAksi(aksiOlahraga);
                         TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Olahraga", aksiOlahraga);
                         simnya.olahraga(duration);
                         housePanel.centerPanel.add(timerAksiPanel, 0);
@@ -190,22 +190,22 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                                 return;
                             }
                             Sim simnya = housePanel.selectedSim.sim;
-                            ThreadAksi aksiTidur = new ThreadAksi(simnya.getNamaLengkap() + " tidur", duration, housePanel.rumah.world);
+                            ThreadAksi aksiTidur = new ThreadAksi(simnya.getNamaLengkap() + " tidur", duration, housePanel.rumah.getWorld());
                             TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Tidur",aksiTidur);
                             housePanel.centerPanel.add(timerAksiPanel, 0);
                             housePanel.selectedSim.sim.tidur(duration, kasur);
-                            housePanel.rumah.world.setThreadAksi(aksiTidur);
+                            housePanel.rumah.getWorld().setThreadAksi(aksiTidur);
                             timerAksiPanel.startThread();
                             aksiTidur.startThread();
                             housePanel.centerPanel.remove(this);
                         }
                         else if (aksi.equals("bersih kasur")){
                             Sim simnya = housePanel.selectedSim.sim;
-                            ThreadAksi aksiBersihKasur = new ThreadAksi(simnya.getNamaLengkap()+ " bersih kasur", duration, housePanel.rumah.world);
+                            ThreadAksi aksiBersihKasur = new ThreadAksi(simnya.getNamaLengkap()+ " bersih kasur", duration, housePanel.rumah.getWorld());
                             TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Bersih Kasur", aksiBersihKasur);
                             housePanel.centerPanel.add(timerAksiPanel, 0);
                             kasur.membersihkanKasur(simnya, duration);
-                            housePanel.rumah.world.setThreadAksi(aksiBersihKasur);
+                            housePanel.rumah.getWorld().setThreadAksi(aksiBersihKasur);
                             timerAksiPanel.startThread();
                             aksiBersihKasur.startThread();
                             housePanel.centerPanel.remove(this);
@@ -214,10 +214,10 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     else if (perabotan instanceof Toilet toilet){
                         if (aksi.equals("ngising")){
                             Sim simnya = housePanel.selectedSim.sim;
-                            ThreadAksi aksiNgising = new ThreadAksi(simnya.getNamaLengkap() + " ngising", duration, housePanel.rumah.world);
+                            ThreadAksi aksiNgising = new ThreadAksi(simnya.getNamaLengkap() + " ngising", duration, housePanel.rumah.getWorld());
                             TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Buang Air", aksiNgising);
                             housePanel.centerPanel.add(timerAksiPanel, 0);
-                            housePanel.rumah.world.setThreadAksi(aksiNgising);
+                            housePanel.rumah.getWorld().setThreadAksi(aksiNgising);
                             toilet.buangAir(simnya);
                             timerAksiPanel.startThread();
                             aksiNgising.startThread();
@@ -226,11 +226,11 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                         else if (aksi.equals("siram WC")){
                             Sim sim = housePanel.selectedSim.sim;
                             ThreadAksi aksiSiramToilet = new ThreadAksi(sim.getNamaLengkap() + " siram toilet",
-                                    duration, housePanel.rumah.world);
+                                    duration, housePanel.rumah.getWorld());
                             TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Siram Toilet", aksiSiramToilet);
                             housePanel.centerPanel.add(timerAksiPanel, 0);
                             toilet.siramToilet(sim);
-                            housePanel.rumah.world.setThreadAksi(aksiSiramToilet);
+                            housePanel.rumah.getWorld().setThreadAksi(aksiSiramToilet);
                             timerAksiPanel.startThread();
                             aksiSiramToilet.startThread();
                             housePanel.centerPanel.remove(this);
@@ -240,11 +240,11 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     }
                     else if (perabotan instanceof BakMandi bakMandi){
                         Sim simnya = housePanel.selectedSim.sim;
-                        ThreadAksi aksiMandi  = new ThreadAksi(simnya.getNamaLengkap() + " mandi", duration, housePanel.rumah.world);
+                        ThreadAksi aksiMandi  = new ThreadAksi(simnya.getNamaLengkap() + " mandi", duration, housePanel.rumah.getWorld());
                         TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, " Mandi", aksiMandi);
                         housePanel.centerPanel.add(timerAksiPanel, 0);
                         bakMandi.mandi(simnya, duration);
-                        housePanel.rumah.world.setThreadAksi(aksiMandi);
+                        housePanel.rumah.getWorld().setThreadAksi(aksiMandi);
                         timerAksiPanel.startThread();
                         aksiMandi.startThread();
                         housePanel.centerPanel.remove(this);
@@ -253,8 +253,8 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                         if (aksi.equals("cuci tangan")){
                             Sim simnya = housePanel.selectedSim.sim;
                             ThreadAksi aksiCuciTangan  = new ThreadAksi(simnya.getNamaLengkap() + " cuci tangan"
-                            , duration, housePanel.rumah.world);
-                            housePanel.rumah.world.setThreadAksi(aksiCuciTangan);
+                            , duration, housePanel.rumah.getWorld());
+                            housePanel.rumah.getWorld().setThreadAksi(aksiCuciTangan);
                             TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Cuci Tangan", aksiCuciTangan);
                             housePanel.centerPanel.add(timerAksiPanel, 0);
                             wastafel.cuciTangan(simnya, duration);
@@ -264,8 +264,8 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                         } else if (aksi.equals("sikat gigi")){
                             Sim simnya = housePanel.selectedSim.sim;
                             ThreadAksi aksiSikatGigi = new ThreadAksi(simnya.getNamaLengkap() + " sikat gigi"
-                            , duration, housePanel.rumah.world);
-                            housePanel.rumah.world.setThreadAksi(aksiSikatGigi);
+                            , duration, housePanel.rumah.getWorld());
+                            housePanel.rumah.getWorld().setThreadAksi(aksiSikatGigi);
                             TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Sikat Gigi", aksiSikatGigi);
                             housePanel.centerPanel.add(timerAksiPanel, 0);
                             wastafel.sikatGigi(simnya, duration);
@@ -277,10 +277,10 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     else if (perabotan instanceof Komputer komputer){
                         if (aksi.equals("bermain game")){
                             Sim sim = housePanel.selectedSim.sim;
-                            ThreadAksi aksiMainGame = new ThreadAksi(sim.getNamaLengkap()+" main game", duration, housePanel.rumah.world);
+                            ThreadAksi aksiMainGame = new ThreadAksi(sim.getNamaLengkap()+" main game", duration, housePanel.rumah.getWorld());
                             TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Bermain Game", aksiMainGame);
                             housePanel.centerPanel.add(timerAksiPanel, 0);
-                            housePanel.rumah.world.setThreadAksi(aksiMainGame);
+                            housePanel.rumah.getWorld().setThreadAksi(aksiMainGame);
                             komputer.mainGame(sim, duration);
                             timerAksiPanel.startThread();
                             aksiMainGame.startThread();
@@ -288,11 +288,11 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                         }
                         else if (aksi.equals("kerjain tubes")){
                             Sim sim = housePanel.selectedSim.sim;
-                            ThreadAksi aksiNgerjainTubes = new ThreadAksi(sim.getNamaLengkap()+" ngerjain tubes", duration, housePanel.rumah.world);
+                            ThreadAksi aksiNgerjainTubes = new ThreadAksi(sim.getNamaLengkap()+" ngerjain tubes", duration, housePanel.rumah.getWorld());
                             TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Gawe Tubes", aksiNgerjainTubes);
                             housePanel.centerPanel.add(timerAksiPanel, 0);
                             komputer.ngerjainTubes(sim, duration);
-                            housePanel.rumah.world.setThreadAksi(aksiNgerjainTubes);
+                            housePanel.rumah.getWorld().setThreadAksi(aksiNgerjainTubes);
                             timerAksiPanel.startThread();
                             aksiNgerjainTubes.startThread();
                             housePanel.centerPanel.remove(this);
@@ -301,11 +301,11 @@ public class AksiAktifPanel extends JPanel implements ActionListener {
                     else if (perabotan instanceof TV tv){
                         Sim sim = housePanel.selectedSim.sim;
                         ThreadAksi aksiNontonTV = new ThreadAksi(sim.getNamaLengkap() + " nonton TV",
-                                duration, housePanel.rumah.world);
+                                duration, housePanel.rumah.getWorld());
                         TimerAksiPanel timerAksiPanel = new TimerAksiPanel(housePanel, "Nonton TV", aksiNontonTV);
                         housePanel.centerPanel.add(timerAksiPanel, 0);
                         tv.nontonTV(sim, duration);
-                        housePanel.rumah.world.setThreadAksi(aksiNontonTV);
+                        housePanel.rumah.getWorld().setThreadAksi(aksiNontonTV);
                         timerAksiPanel.startThread();
                         aksiNontonTV.startThread();
                         housePanel.centerPanel.remove(this);

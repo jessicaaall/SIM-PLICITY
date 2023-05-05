@@ -1,8 +1,5 @@
 package thread;
 
-import entity.Ruangan;
-import entity.Rumah;
-import entity.Sim;
 import entity.World;
 import game.HousePanel;
 
@@ -23,7 +20,7 @@ public class ThreadUpgradeRumah extends ThreadAksiPasif{
         System.out.println("start");
 
         while (!stopped) {
-            while (sisaWaktu > 0 && world.isActive){
+            while (sisaWaktu > 0 && world.isActive()){
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {

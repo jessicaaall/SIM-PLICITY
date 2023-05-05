@@ -1,6 +1,5 @@
 package game;
 
-import entity.*;
 import thread.ThreadAksi;
 
 import javax.swing.*;
@@ -111,8 +110,8 @@ public class TimerAksiPanel extends JPanel implements MouseListener, MouseMotion
     public void run() {
         hp.isAction = true;
         hp.disabledAllButton();
-        hp.rumah.world.isActive = true;
-        while (hp.rumah.world.getThreadAksi() != null){
+        hp.rumah.getWorld().setActive(true);
+        while (hp.rumah.getWorld().getThreadAksi() != null){
             timer.setText(String.valueOf(threadAksi.getSisaWaktu()));
             try {
                 Thread.sleep(1000/60);
@@ -121,7 +120,7 @@ public class TimerAksiPanel extends JPanel implements MouseListener, MouseMotion
             }
         }
         hp.isAction = false;
-        hp.rumah.world.isActive = false;
+        hp.rumah.getWorld().setActive(false);
         hp.centerPanel.remove(this);
         hp.enabledAllButton();
 

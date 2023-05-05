@@ -359,11 +359,11 @@ public class ActionPanel extends JPanel implements MouseListener, MouseMotionLis
                         }
                         int waktu = (int)Math.sqrt(Math.pow((hp.selectedSim.sim.getKepemilikanRumah().getLokasi().getX() - hp.rumah.getLokasi().getX()), 2)
                                 + Math.pow((hp.selectedSim.sim.getKepemilikanRumah().getLokasi().getY() - hp.rumah.getLokasi().getY()), 2));
-                        ThreadAksi threadAksi = new ThreadAksi("pulang", waktu, hp.rumah.world);
+                        ThreadAksi threadAksi = new ThreadAksi("pulang", waktu, hp.rumah.getWorld());
                         TimerAksiPanel timerAksiPanel = new TimerAksiPanel(hp, "Pulang", threadAksi);
                         hp.centerPanel.add(timerAksiPanel, 0);
                         hp.selectedSim.sim.pulang(hp.rumah.getSim());
-                        hp.rumah.world.setThreadAksi(threadAksi);
+                        hp.rumah.getWorld().setThreadAksi(threadAksi);
                         timerAksiPanel.startThread();
                         threadAksi.startThread();
                         hp.centerPanel.remove(ActionPanel.this);
