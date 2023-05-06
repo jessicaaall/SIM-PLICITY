@@ -596,8 +596,11 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     }
 
     public void gameOver(){
-        mainPanel.removeAll();
-        mainPanel.add(new GameOverPanel(mainPanel), 0);
+
+        mainPanel.add(new GameOverPanel(mainPanel), BorderLayout.CENTER);
+        mainPanel.remove(this);
+        mainPanel.revalidate();
+        mainPanel.repaint();
     }
 
     public void disabledAllButton(){

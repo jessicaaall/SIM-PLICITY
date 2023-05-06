@@ -18,6 +18,7 @@ public class GameOverPanel extends JPanel implements ActionListener {
         setBounds(0,0, mp.width, mp.height);
         setVisible(true);
         setFocusable(false);
+        setDoubleBuffered(true);
         backButton = new JButton("<html>Back to Main Menu</html>");
         backButton.setBounds((mp.width -200)/2, mp.height-150, 200, 100);
         backButton.setFocusable(false);
@@ -27,9 +28,12 @@ public class GameOverPanel extends JPanel implements ActionListener {
         backButton.setForeground(Color.black);
         backButton.addActionListener(this);
         add(backButton);
+        revalidate();
+        repaint();
     }
 
     public void paintComponent(Graphics g){
+        super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
         g2D.setPaint(Color.black);
         g2D.setFont(new Font("Comic Sans MS", Font.BOLD, 80));
@@ -39,8 +43,9 @@ public class GameOverPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton){
-            mp.add(new MainMenuPanel(mp),BorderLayout.CENTER);
-            mp.removeAll();
+            mp.remove(this);
+            mmp = new MainMenuPanel(mp);
+            mp.add(mmp);
             mp.revalidate();
             mp.repaint();
         }
