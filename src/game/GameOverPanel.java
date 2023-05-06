@@ -40,7 +40,7 @@ public class GameOverPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton){
             mp.add(new MainMenuPanel(mp),BorderLayout.CENTER);
-            mp.remove(this);
+            mp.removeAll();
             mp.revalidate();
             mp.repaint();
         }
