@@ -557,10 +557,15 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                             moveRoomButton.setEnabled(true);
                         }
                         else{
+                            backToWorldButton.setEnabled(true);
+                            statusSimButton.setEnabled(true);
+                            lihatInventoryButton.setEnabled(true);
+                            editRoomButton.setEnabled(true);
+                            listObjectButton.setEnabled(true);
                             goToObjectButton.setEnabled(true);
-                            moveRoomButton.setEnabled(true);
                             actionButton.setEnabled(true);
-                            enabledAllButton();
+                            beliItemButton.setEnabled(true);
+                            moveRoomButton.setEnabled(true);
                         }
                     }
 
@@ -688,6 +693,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
             if (!exist){
                 RoomPanel roomPanel = new RoomPanel(ruangan, rumah, this);
                 centerPanel.add(roomPanel, 0);
+                rumah.busyUpgrading = false;
                 centerPanel.revalidate();
                 centerPanel.repaint();
 
