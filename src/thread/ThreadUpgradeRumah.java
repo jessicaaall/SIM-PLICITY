@@ -26,8 +26,7 @@ public class ThreadUpgradeRumah extends ThreadAksiPasif{
             } catch (InterruptedException e) {
                 System.out.println("thread interrupted");
             }
-
-            if (!stopped) {
+            if (!stopped){
                 sisaWaktu--;
             }
 //            System.out.println("sisa waktu = " + sisaWaktu);

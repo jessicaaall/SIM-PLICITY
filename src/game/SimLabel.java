@@ -120,7 +120,11 @@ public class SimLabel extends JLabel implements MouseListener {
 
     public void mati(){
         sim.mati();
-        housePanel.centerPanel.remove(this);
+        for (Component component : housePanel.centerPanel.getComponents()){
+            if (component instanceof SimLabel simLabel){
+                housePanel.centerPanel.remove(simLabel);
+            }
+        }
     }
 
 }

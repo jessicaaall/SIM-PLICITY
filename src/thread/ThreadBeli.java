@@ -25,16 +25,16 @@ public class ThreadBeli extends ThreadAksiPasif{
     public void run() {
         System.out.println("start");
         while (sisaWaktu > 0) {
-
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 System.out.println("thread interrupted");
             }
-
-            if (!stopped) {
+            if (!stopped){
                 sisaWaktu--;
             }
+
+
 //            System.out.println("sisa waktu = " + sisaWaktu);
         }
 
