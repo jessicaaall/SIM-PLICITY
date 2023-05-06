@@ -51,8 +51,8 @@ public class SimLabel extends JLabel implements MouseListener {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_R){
-                    System.out.println("pressed");
+                if (e.getKeyCode() == KeyEvent.VK_SLASH){
+                    System.out.println("you kill he/she");
                     sim.setMood(0);
                 }
             }
