@@ -249,7 +249,7 @@ public class WorldOptionPanel extends JPanel implements ActionListener, MouseLis
                 ArrayList<Sim> cloned = (ArrayList<Sim>) wp.getWorld().getDaftarSim().clone();
                 System.out.println("*===============Daftar Sim ===================*");
                 for (Sim sim : cloned){
-                    System.out.printf("%s, (%, %), %s\n", sim.getNamaLengkap(), sim.getKepemilikanRumah().getLokasi().x, sim.getKepemilikanRumah().getLokasi().y, sim.getLocRuang());
+                    System.out.printf("%s, (%d, %d), %s\n", sim.getNamaLengkap(), sim.getKepemilikanRumah().getLokasi().x, sim.getKepemilikanRumah().getLokasi().y, sim.getLocRuang());
                 }
                 wp.remove(wp.viewCurrentLocationPanel);
                 wp.viewCurrentLocationPanel = null;
