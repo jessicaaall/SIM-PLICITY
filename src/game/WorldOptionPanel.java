@@ -22,7 +22,6 @@ import java.util.ArrayList;
 public class WorldOptionPanel extends JPanel implements ActionListener, MouseListener {
     public JButton toMainMenuButton = new JButton("Back to Main Menu");
     public JButton addHouseButton = new JButton("Add Sim");
-    public JButton changeSimButton = new JButton("Change Sim");
     public JButton viewCurrentLocButton = new JButton("View Current Location");
     public JButton saveButton = new JButton("Save");
     public JSlider volumeSlider = new JSlider(500, 860, 700);
@@ -78,11 +77,6 @@ public class WorldOptionPanel extends JPanel implements ActionListener, MouseLis
         addHouseButton.setVerticalTextPosition(JButton.CENTER);                                   // done
         addHouseButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));               // done
 
-        changeSimButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
-        changeSimButton.setVerticalTextPosition(JButton.CENTER);
-        changeSimButton.setHorizontalTextPosition(JButton.CENTER);
-        changeSimButton.setFocusable(false);
-
         viewCurrentLocButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
         viewCurrentLocButton.setVerticalTextPosition(JButton.CENTER);
         viewCurrentLocButton.setHorizontalTextPosition(JButton.CENTER);
@@ -97,7 +91,6 @@ public class WorldOptionPanel extends JPanel implements ActionListener, MouseLis
 
         panel2.add(toMainMenuButton);
         panel2.add(addHouseButton);
-        panel2.add(changeSimButton);
         panel2.add(viewCurrentLocButton);
         panel2.add(saveButton);
         main.add(panel2);
