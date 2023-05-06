@@ -33,7 +33,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     HousePanelButton lihatInventoryButton = new HousePanelButton("View Inventory");
     HousePanelButton upgradeRumahButton = new HousePanelButton("Upgrade House");
     HousePanelButton moveRoomButton = new HousePanelButton("Move Room");
-    HousePanelButton editRoomButton = new HousePanelButton("Edit Room");
     HousePanelButton listObjectButton = new HousePanelButton("List Object");
     HousePanelButton goToObjectButton = new HousePanelButton("Go To Object");
     HousePanelButton actionButton = new HousePanelButton("Action");
@@ -142,8 +141,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         westPanel.add(upgradeRumahButton, gbc);
         gbc.gridy = ++gridy;
         westPanel.add(moveRoomButton, gbc);
-        gbc.gridy = ++gridy;
-        westPanel.add(editRoomButton, gbc);
         gbc.gridy = ++gridy;
         westPanel.add(listObjectButton, gbc);
         gbc.gridy = ++gridy;
@@ -549,7 +546,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                             statusSimButton.setEnabled(false);
                             lihatInventoryButton.setEnabled(false);
                             upgradeRumahButton.setEnabled(false);
-                            editRoomButton.setEnabled(false);
                             listObjectButton.setEnabled(true);
                             goToObjectButton.setEnabled(false);
                             actionButton.setEnabled(false);
@@ -560,7 +556,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                             backToWorldButton.setEnabled(true);
                             statusSimButton.setEnabled(true);
                             lihatInventoryButton.setEnabled(true);
-                            editRoomButton.setEnabled(true);
                             listObjectButton.setEnabled(true);
                             goToObjectButton.setEnabled(true);
                             actionButton.setEnabled(true);
