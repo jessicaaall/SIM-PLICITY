@@ -29,6 +29,16 @@ public class Rumah implements Serializable{
 
     private int jumlahRuangan;
 
+    public Ruangan getUpgradedRoom() {
+        return upgradedRoom;
+    }
+
+    public void setUpgradedRoom(Ruangan upgradedRoom) {
+        this.upgradedRoom = upgradedRoom;
+    }
+
+    private Ruangan upgradedRoom;
+
     public Rumah(int x, int y, Sim sim, Color color, World world){
         this.world = world;
         this.sim = sim;
@@ -172,8 +182,8 @@ public class Rumah implements Serializable{
 
  
 
-    public void upgrade(Ruangan ruangan){
-        daftarRuangan.add(ruangan);
+    public void upgrade(){
+        daftarRuangan.add(upgradedRoom);
         jumlahRuangan++;
         sim.setUang(sim.getUang()-1500);
     }

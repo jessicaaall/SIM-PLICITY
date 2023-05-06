@@ -1,5 +1,6 @@
 package thread;
 
+import entity.Rumah;
 import entity.World;
 import game.HousePanel;
 
@@ -36,7 +37,7 @@ public class ThreadUpgradeRumah extends ThreadAksiPasif{
             world.getListThreadAksiPasif().removeIf(threadAksiPasif -> threadAksiPasif.equals(this));
         }
         System.out.println(this.getNama() + " deleted");
-        ((HousePanel) object).upgradeRumah();
+        ((Rumah) object).upgrade();
 
     }
 }

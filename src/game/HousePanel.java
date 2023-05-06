@@ -69,20 +69,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     boolean isAction = false;
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-//        int notches = e.getWheelRotation();
-//        if (notches < 0){
-//            unitSize += 2;
-//        }
-//        else if (notches > 0){
-//            unitSize -= 2;
-//        }
-//
-//        if (unitSize < 10){
-//            unitSize = 10;
-//        } else if (unitSize > 160) {
-//            unitSize = 160;
-//        }
-//        repaint();
+
     }
 
     public class HousePanelButton extends JButton{
@@ -252,6 +239,10 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                 if (isUpgradeRumah){
                     isUpgradeRumah = false;
                     if (validSectionForUpgrade){
+                        Ruangan ruanganBaru = new Ruangan("Ruangan " + (rumah.getDaftarRuangan().size()+1)
+                                , rumah,new Point((highlightedRoom.getX()-ruanganAcuanPanel.getX())/unitSize,
+                                (highlightedRoom.getY()-ruanganAcuanPanel.getY())/unitSize));
+                        rumah.setUpgradedRoom(ruanganBaru);
                         rumah.busyUpgrading = true;
                         int durasi;
                         if (rumah.getWorld().developerMode){
@@ -260,13 +251,8 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                         else{
                             durasi = 1080;
                         }
-                        ThreadUpgradeRumah threadAksiPasif = new ThreadUpgradeRumah("Upgrade Rumah", durasi, HousePanel.this, rumah.getWorld());
+                        ThreadUpgradeRumah threadAksiPasif = new ThreadUpgradeRumah("Upgrade Rumah", durasi, rumah, rumah.getWorld());
                         rumah.getWorld().getListThreadAksiPasif().add(threadAksiPasif);
-//                        threadAksiPasif.startThread();
-//                        threadAksiPasif.start();
-//                        ThreadAksi threadAksi = new ThreadAksi("Upgrade Rumah", 1080, method, HousePanel.this, rumah.world);
-//                        rumah.world.getListThreadAksi().add(threadAksi);
-//                        threadAksi.start();
                     }
                     else{
                         rumah.busyUpgrading = false;
@@ -322,27 +308,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         repaint();
     }
 
-    public void upgradeRumah(){
-        if (isUpgradeRumah) {
-            isUpgradeRumah = false;
-        }
-        Ruangan ruanganBaru = new Ruangan("Ruangan " + (rumah.getDaftarRuangan().size()+1)
-                , rumah,new Point((highlightedRoom.getX()-ruanganAcuanPanel.getX())/unitSize,
-                (highlightedRoom.getY()-ruanganAcuanPanel.getY())/unitSize));
-        rumah.upgrade(ruanganBaru);
-        RoomPanel newRoomPanel = new RoomPanel(ruanganBaru, rumah, HousePanel.this);
-        centerPanel.add(newRoomPanel,0);
-        centerPanel.revalidate();
-        centerPanel.repaint();
-        rumah.busyUpgrading = false;
-        for (Component component : centerPanel.getComponents()){
-            if (component instanceof HighlightedPanel){
-                centerPanel.remove(component);
-            }
-        }
-
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backToWorldButton){
@@ -354,7 +319,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
             mainPanel.revalidate();
             mainPanel.repaint();
             worldPanel.startMainThread();
-            worldPanel.playMusic(0);
         }
         else if (e.getSource() == beliItemButton){
             //cek list harga
@@ -601,8 +565,7 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     }
 
                 }
-
-
+                checkRoom();
             }
             if (timer >= Math.pow(10, 9)){
                 currentFPS = drawCount;
@@ -708,6 +671,28 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
             statusSimPanel.update();
         }
         repaint();
+    }
+
+    public void checkRoom(){
+        for (Ruangan ruangan : rumah.getDaftarRuangan()){
+            boolean exist = false;
+            for (Component component : centerPanel.getComponents()){
+                if (component instanceof RoomPanel roomPanel){
+                    Point roomPoint = new Point(ruanganAcuanPanel.getX() + ruangan.getPosisi().x*unitSize, ruanganAcuanPanel.getY() + ruangan.getPosisi().y*unitSize);
+                    if (roomPanel.getLocation().equals(roomPoint)){
+                        exist = true;
+                        break;
+                    }
+                }
+            }
+            if (!exist){
+                RoomPanel roomPanel = new RoomPanel(ruangan, rumah, this);
+                centerPanel.add(roomPanel, 0);
+                centerPanel.revalidate();
+                centerPanel.repaint();
+
+            }
+        }
     }
 
     private class BuyItemPanel extends JPanel implements MouseListener, MouseMotionListener{
@@ -852,13 +837,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         @Override
         protected Object clone() throws CloneNotSupportedException {
             return super.clone();
-        }
-    }
-
-    private class WarningMessage extends JPanel{
-        WarningMessage(){
-            super(new FlowLayout());
-            setBackground(new Color(150, 178, 102));
         }
     }
 }
