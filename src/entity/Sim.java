@@ -485,6 +485,14 @@ public class Sim implements Serializable {
         return namaLengkap.equals(sim.namaLengkap);
     }
     public void mati(){
+        for (Ruangan ruangan : this.getKepemilikanRumah().getDaftarRuangan()) {
+            for (Sim sim : ruangan.getDaftarSim()) {
+                if (sim.equals(this)) {
+                    continue;
+                }
+                sim.setLocRuang(sim.getKepemilikanRumah().getRuanganAcuan());
+            }
+        }
         synchronized (theirWorld.getWaktu()) {
             theirWorld.getDaftarRumah().removeIf(rumah -> rumah.equals(this.getKepemilikanRumah()));
         }
