@@ -128,11 +128,7 @@ public class SimLabel extends JLabel implements MouseListener {
 
     public synchronized void mati() throws ConcurrentModificationException {
         sim.mati();
-        for (Component component : housePanel.centerPanel.getComponents()){
-            if (component instanceof SimLabel simLabel){
-                housePanel.centerPanel.remove(simLabel);
-            }
-        }
+        housePanel.centerPanel.remove(this);
     }
 
 }
