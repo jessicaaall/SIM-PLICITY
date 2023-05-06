@@ -571,6 +571,20 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 
                 }
                 checkRoom();
+                for (Component component : centerPanel.getComponents()){
+                    if (component instanceof SimLabel simLabel){
+                        if (simLabel.sim == null){
+                            centerPanel.remove(simLabel);
+                            continue;
+                        }
+                        if (simLabel.sim.getIsCalonMati()){
+                            simLabel.mati();
+                        }
+                    }
+                }
+                if (worldPanel.getWorld().getDaftarSim().size() == 0){
+                    gameOver();
+                }
             }
             if (timer >= Math.pow(10, 9)){
                 currentFPS = drawCount;
@@ -586,15 +600,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         thread.start();
     }
 
-    public boolean isLoading(){
-        boolean loading = false;
-        for (Component component : centerPanel.getComponents()){
-            if (component instanceof TimerAksiPanel){
-                loading = true;
-                break;
-            }
-        }
-        return  loading;
+    public void gameOver(){
+        mainPanel.removeAll();
+        mainPanel.add(new GameOverPanel(mainPanel), 0);
     }
 
     public void disabledAllButton(){

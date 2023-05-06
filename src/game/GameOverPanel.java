@@ -39,7 +39,7 @@ public class GameOverPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton){
-            mp.add(mmp,BorderLayout.CENTER);
+            mp.add(new MainMenuPanel(mp),BorderLayout.CENTER);
             mp.remove(this);
             mp.revalidate();
             mp.repaint();
