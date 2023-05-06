@@ -33,6 +33,8 @@ public class PerabotanLabel extends JLabel {
     private int height;
     private Image imagenya;
 
+    boolean pressed;
+
     private ImageIcon image;
     public Point startDragPoint;
     public PerabotanLabel(Perabotan perabotan, HousePanel housePanel, RoomPanel roomPanel){
@@ -54,15 +56,22 @@ public class PerabotanLabel extends JLabel {
                 , perabotan.getDimensi().height*PerabotanLabel.this.housePanel.unitSize);
         this.addMouseListener(dragListener);
         this.addMouseMotionListener(dragListener);
-//        this.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK));
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_R && put){
+                    pressed = true;
                     System.out.println("rotated");
                     rotate();
                     housePanel.centerPanel.revalidate();
                     housePanel.centerPanel.repaint();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_R && put){
+                    pressed = false;
                 }
             }
         });
@@ -71,17 +80,13 @@ public class PerabotanLabel extends JLabel {
 
     @Override
     public void paintComponents(Graphics g) {
-        Graphics2D g2d= (Graphics2D) g;
-        float alpha = 1f;
-        if (this.getMousePosition() != null && !this.getMousePosition().equals(startDragPoint)){
-            alpha = 0.5f;
-        }
-        AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha);
-        g2d.setComposite(alphaComposite);
-
-        /* start rotating */
-
         super.paintComponents(g);
+        Graphics2D g2d= (Graphics2D) g;
+        /* start rotating */
+        if (pressed){
+            g2d.rotate(Math.PI/4, (double) imagenya.getWidth(null)/2, (double) imagenya.getHeight(null)/2);
+            g2d.drawImage(imagenya, 0,0, null);
+        }
         g2d.dispose();
 
     }
@@ -489,9 +494,7 @@ public class PerabotanLabel extends JLabel {
         perabotan.rotate();
         width = perabotan.getDimensi().width*PerabotanLabel.this.housePanel.unitSize;
         height = perabotan.getDimensi().height*PerabotanLabel.this.housePanel.unitSize;
-        imagenya = rotateImage(90, generateImage(perabotan.getNama())).getScaledInstance(width, height, Image.SCALE_DEFAULT);
-        revalidate();
-        repaint();
+        setPreferredSize(new Dimension(width, height));
     }
 
     private BufferedImage rotateImage(double degree, BufferedImage image) {

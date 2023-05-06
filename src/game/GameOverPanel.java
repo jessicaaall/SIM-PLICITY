@@ -18,7 +18,7 @@ public class GameOverPanel extends JPanel implements ActionListener {
         setBounds(0,0, mp.width, mp.height);
         setVisible(true);
         setFocusable(false);
-        backButton = new JButton("Back to Main Menu");
+        backButton = new JButton("<html>Back to Main Menu</html>");
         backButton.setBounds((mp.width -200)/2, mp.height-150, 200, 100);
         backButton.setFocusable(false);
         backButton.setHorizontalTextPosition(JButton.CENTER);
@@ -39,7 +39,7 @@ public class GameOverPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton){
-            mp.add(mmp,BorderLayout.CENTER);
+            mp.add(new MainMenuPanel(mp),BorderLayout.CENTER);
             mp.remove(this);
             mp.revalidate();
             mp.repaint();

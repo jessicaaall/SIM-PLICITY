@@ -33,7 +33,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     HousePanelButton lihatInventoryButton = new HousePanelButton("View Inventory");
     HousePanelButton upgradeRumahButton = new HousePanelButton("Upgrade House");
     HousePanelButton moveRoomButton = new HousePanelButton("Move Room");
-    HousePanelButton editRoomButton = new HousePanelButton("Edit Room");
     HousePanelButton listObjectButton = new HousePanelButton("List Object");
     HousePanelButton goToObjectButton = new HousePanelButton("Go To Object");
     HousePanelButton actionButton = new HousePanelButton("Action");
@@ -142,8 +141,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         westPanel.add(upgradeRumahButton, gbc);
         gbc.gridy = ++gridy;
         westPanel.add(moveRoomButton, gbc);
-        gbc.gridy = ++gridy;
-        westPanel.add(editRoomButton, gbc);
         gbc.gridy = ++gridy;
         westPanel.add(listObjectButton, gbc);
         gbc.gridy = ++gridy;
@@ -549,7 +546,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                             statusSimButton.setEnabled(false);
                             lihatInventoryButton.setEnabled(false);
                             upgradeRumahButton.setEnabled(false);
-                            editRoomButton.setEnabled(false);
                             listObjectButton.setEnabled(true);
                             goToObjectButton.setEnabled(false);
                             actionButton.setEnabled(false);
@@ -560,7 +556,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                             backToWorldButton.setEnabled(true);
                             statusSimButton.setEnabled(true);
                             lihatInventoryButton.setEnabled(true);
-                            editRoomButton.setEnabled(true);
                             listObjectButton.setEnabled(true);
                             goToObjectButton.setEnabled(true);
                             actionButton.setEnabled(true);
@@ -571,6 +566,20 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 
                 }
                 checkRoom();
+                for (Component component : centerPanel.getComponents()){
+                    if (component instanceof SimLabel simLabel){
+                        if (simLabel.sim == null){
+                            centerPanel.remove(simLabel);
+                            continue;
+                        }
+                        if (simLabel.sim.getIsCalonMati()){
+                            simLabel.mati();
+                        }
+                    }
+                }
+                if (worldPanel.getWorld().getDaftarSim().size() == 0){
+                    gameOver();
+                }
             }
             if (timer >= Math.pow(10, 9)){
                 currentFPS = drawCount;
@@ -586,15 +595,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         thread.start();
     }
 
-    public boolean isLoading(){
-        boolean loading = false;
-        for (Component component : centerPanel.getComponents()){
-            if (component instanceof TimerAksiPanel){
-                loading = true;
-                break;
-            }
-        }
-        return  loading;
+    public void gameOver(){
+        mainPanel.removeAll();
+        mainPanel.add(new GameOverPanel(mainPanel), 0);
     }
 
     public void disabledAllButton(){
