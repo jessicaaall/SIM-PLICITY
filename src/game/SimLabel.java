@@ -7,11 +7,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.IOException;
+import java.util.ConcurrentModificationException;
 import java.util.Objects;
 import java.util.Random;
 
@@ -50,10 +48,20 @@ public class SimLabel extends JLabel implements MouseListener {
         addMouseListener(this);
         revalidate();
         repaint();
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_R){
+                    System.out.println("pressed");
+                    sim.setMood(0);
+                }
+            }
+        });
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        requestFocus();
         System.out.printf("memilih %s\n", sim.getNamaLengkap());
         for (Component component : housePanel.centerPanel.getComponents()){
             if (component instanceof SimLabel){
@@ -118,7 +126,7 @@ public class SimLabel extends JLabel implements MouseListener {
 
     }
 
-    public void mati(){
+    public synchronized void mati() throws ConcurrentModificationException {
         sim.mati();
         for (Component component : housePanel.centerPanel.getComponents()){
             if (component instanceof SimLabel simLabel){

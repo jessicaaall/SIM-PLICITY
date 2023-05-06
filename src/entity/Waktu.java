@@ -11,7 +11,7 @@ public class Waktu implements Runnable, Serializable {
     private int hariKe;
     private int sisaDetik;
 
-    private final int developerModeTime = 60;
+    private final int developerModeTime = 10;
     private transient Thread waktuThread;
 
     // Konstruktor
@@ -130,5 +130,9 @@ public class Waktu implements Runnable, Serializable {
 
     public void setWorld(World world) {
         this.world = world;
+    }
+
+    public void increment(){
+        hariKe++;
     }
 }

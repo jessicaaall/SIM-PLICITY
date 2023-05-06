@@ -57,6 +57,15 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         wop = new WorldOptionPanel( this.mp, this);
         wop.setBounds(mapX + cameraWidth - wop.getWidth() - 10, mapY + 10, 170, cameraHeight/3+70);
         mp.add(wop, BorderLayout.EAST);
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_M){
+                    System.out.println("M pressed");
+                    world.getWaktu().increment();
+                }
+            }
+        });
         revalidate();
         repaint();
     }

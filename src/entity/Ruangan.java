@@ -63,7 +63,7 @@ public class Ruangan implements Serializable {
         return daftarObjek;
     }
 
-    public ArrayList<Sim> getDaftarSim(){
+    public synchronized ArrayList<Sim> getDaftarSim(){
         return daftarSim;
     }
 
@@ -100,11 +100,16 @@ public class Ruangan implements Serializable {
 
     public void insertSim (Sim sim){
 
-        daftarSim.add(sim);
+        synchronized (this){
+            daftarSim.add(sim);
+        }
+
     }
 
     public void removeSim(Sim sim){
-        daftarSim.removeIf(sim::equals);
+        synchronized (this){
+            daftarSim.removeIf(sim::equals);
+        }
     }
 
     public int luas(){

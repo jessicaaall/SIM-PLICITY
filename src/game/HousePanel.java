@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Random;
 
@@ -573,9 +574,38 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                             continue;
                         }
                         if (simLabel.sim.getIsCalonMati()){
-                            simLabel.mati();
+                            if (simLabel.sim.equals(rumah.getSim())) {
+                                JPanel chosePanel = new JPanel(new GridLayout(0,1));
+                                JLabel label = new JLabel("pilih sim pengganti");
+                                List<Sim> daftarSim = rumah.getWorld().getDaftarSim();
+                                Sim[] array = new Sim[daftarSim.size()];
+                                for (int i = 0; i< array.length; i++){
+                                    array[i] = daftarSim.get(i);
+                                }
+                                JComboBox<Sim> simJComboBox = new JComboBox<>(array);
+                                chosePanel.add(simJComboBox);
+                                int result = JOptionPane.showConfirmDialog(null, chosePanel, "pilih sim", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                                if (result == JOptionPane.OK_OPTION){
+                                    Sim chosenSim = array[simJComboBox.getSelectedIndex()];
+                                    rumah.getWorld().setChosenSim(chosenSim);
+                                    try {
+                                        simLabel.mati();
+                                    }catch (ConcurrentModificationException e){
+                                        continue;
+                                    }
+                                    rumah = null;
+                                    break;
+                                }
+                                continue;
+                            }
+                            synchronized (this){
+                                simLabel.mati();
+                            }
                         }
                     }
+                }
+                if (HousePanel.this.rumah == null){
+
                 }
                 if (worldPanel.getWorld().getDaftarSim().size() == 0){
                     thread = null;

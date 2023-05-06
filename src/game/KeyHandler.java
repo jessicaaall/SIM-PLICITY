@@ -48,7 +48,7 @@ public class KeyHandler implements KeyListener {
             rightPressed = false;
         }
         if (code == KeyEvent.VK_R){
-            rKeyPressed = true;
+            rKeyPressed = false;
         }
     }
 }

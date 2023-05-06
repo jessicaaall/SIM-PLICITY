@@ -484,14 +484,22 @@ public class Sim implements Serializable {
         Sim sim = (Sim) obj;
         return namaLengkap.equals(sim.namaLengkap);
     }
-    public void mati(){
+    public synchronized void mati() throws ConcurrentModificationException{
         for (Ruangan ruangan : this.getKepemilikanRumah().getDaftarRuangan()) {
-            for (Sim sim : ruangan.getDaftarSim()) {
-                if (sim.equals(this)) {
-                    continue;
+            synchronized (ruangan.getDaftarSim()){
+                ArrayList<Sim> cloned = (ArrayList<Sim>) ruangan.getDaftarSim().clone();
+                for (Sim sim : cloned) {
+                    if (sim != null) {
+                        if (sim.equals(this)) {
+                            continue;
+                        }
+                        synchronized (this) {
+                            sim.setLocRuang(sim.getKepemilikanRumah().getRuanganAcuan());
+                        }
+                    }
                 }
-                sim.setLocRuang(sim.getKepemilikanRumah().getRuanganAcuan());
             }
+
         }
         synchronized (theirWorld.getWaktu()) {
             theirWorld.getDaftarRumah().removeIf(rumah -> rumah.equals(this.getKepemilikanRumah()));
@@ -500,5 +508,10 @@ public class Sim implements Serializable {
             theirWorld.getDaftarSim().removeIf(sim -> sim.equals(this));
         }
         System.out.println("dia menemui pacar 2D nya");
+    }
+
+    @Override
+    public String toString() {
+        return namaLengkap;
     }
 }
