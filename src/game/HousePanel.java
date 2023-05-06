@@ -298,10 +298,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         cameraWidth = 3*mainPanel.width/5;
         cameraHeight = mainPanel.height;
         upgradeRumahPanel = new UpgradeRumahPanel();
-        System.out.println(rumah.getSim().getKekenyangan());
-        System.out.println(rumah.getSim().getKesehatan());
-        System.out.println(rumah.getSim().getMood());
-        System.out.println(rumah.getSim().getPekerjaan());
         startThread();
         repaint();
     }
@@ -449,7 +445,12 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     centerPanel.remove(component);
                 }
             }
-            statusSimPanel = new StatusSimPanel(HousePanel.this.rumah.getSim(), HousePanel.this);
+            if (selectedSim == null){
+                statusSimPanel = new StatusSimPanel(HousePanel.this.rumah.getSim(), HousePanel.this);
+            }
+            else{
+                statusSimPanel = new StatusSimPanel(selectedSim.sim, HousePanel.this);
+            }
             HousePanel.this.rumah.getSim().viewSimInfo();
             centerPanel.add(statusSimPanel, 0);
             centerPanel.revalidate();

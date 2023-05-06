@@ -53,7 +53,6 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
         addMouseMotionListener(this);
         addMouseWheelListener(this);
         setDoubleBuffered(true);
-        playMusic(0);
         wop = new WorldOptionPanel( this.mp, this);
         wop.setBounds(mapX + cameraWidth - wop.getWidth() - 10, mapY + 10, 170, cameraHeight/3+70);
         mp.add(wop, BorderLayout.EAST);

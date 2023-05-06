@@ -303,7 +303,6 @@ public class WorldOptionPanel extends JPanel implements ActionListener, MouseLis
     @Override
     public void mouseEntered(MouseEvent e) {
         wp.isDragging = false;
-        System.out.println("entered the menu");
     }
 
     @Override

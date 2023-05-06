@@ -328,7 +328,6 @@ public class Sim implements Serializable {
      */
     public void updateKondisiSim() {
         if (!getIsSudahTidur()) {
-            System.out.println("udah gak tidur");
             waktuTidakTidur++;
         }
         efekTidakTidur();
