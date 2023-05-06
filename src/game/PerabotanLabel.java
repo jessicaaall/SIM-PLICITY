@@ -17,9 +17,7 @@ public class PerabotanLabel extends JLabel {
     public void setPut(boolean put) {
         this.put = put;
     }
-    public boolean getPut() {
-        return put;
-    }
+
     private boolean put = false;
     public Perabotan getPerabotan() {
         return perabotan;
