@@ -11,37 +11,6 @@ public class TV extends Perabotan {
     }
 
     public void nontonTV(Sim sim, int durasi) {
-        /*
-        Scanner sc = new Scanner(System.in);
-        boolean valid = false;
-        while (!valid) {
-            System.out.print("Masukkan durasi menonton TV dalam satuan detik >> ");
-            try {
-                int durasi = Integer.parseInt(sc.nextLine());
-                if (durasi <= 0) {
-                    throw new IllegalArgumentException("Durasi harus lebih besar dari 0 detik.");
-                }
-                valid = true;
-                long startTime = System.currentTimeMillis();
-                long currentTime = startTime;
-                long endTime = startTime + (durasi*1000);
-                while (currentTime < endTime) {
-                    if (currentTime - startTime >= 30000) {
-                        startTime = currentTime;
-                        sim.setMood(sim.getMood() + 5);
-                        sim.setKekenyangan(sim.getKekenyangan() - 2);
-                    }
-                    currentTime = System.currentTimeMillis();
-                }
-                System.out.println("Sim " + sim.getNamaLengkap() + " selesai menonton TV.");
-            } catch (NumberFormatException e) {
-                System.out.println("Input tidak valid.");
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        sc.close();
-        */
         Thread thread = new Thread (new Runnable() {
             @Override
             public void run() {
@@ -49,7 +18,7 @@ public class TV extends Perabotan {
                 long currentTime = startTime;
                 long endTime = startTime + (durasi*1000);
                 while (currentTime <= endTime) {
-                    if (currentTime - startTime >= 30000) {
+                    if (currentTime - startTime >= 30000+200) {
                         startTime = currentTime;
                         sim.setMood(sim.getMood() + 5);
                         sim.setKekenyangan(sim.getKekenyangan() - 2);

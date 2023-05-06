@@ -82,7 +82,7 @@ public class Pekerjaan implements Serializable {
                 long now1 = now;
                 
 
-                if(now1 - begin1 >= 30000){
+                if(now1 - begin1 >= 30000+500){
                     begin1 = now1;
                     sim.setKekenyangan(sim.getKekenyangan()-10);
                     sim.setMood(sim.getMood()-10);

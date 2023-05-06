@@ -42,7 +42,7 @@ public class Wastafel extends Perabotan {
                 long currentTime = startTime;
                 long endTime = startTime + (durasi*1000);
                 while (currentTime <= endTime) {
-                    if (currentTime - startTime >= 5000) {
+                    if (currentTime - startTime >= 5000+200) {
                         startTime = currentTime;
                         sim.setMood(sim.getMood() + 2);
                         sim.setKesehatan(sim.getKesehatan() + 3);

@@ -49,7 +49,7 @@ public class Komputer extends Perabotan {
                 long startTime = System.currentTimeMillis();
                 long currentTime = startTime;
                 long endTime = startTime + (durasi*1000);
-                while (currentTime <= endTime) {
+                while (currentTime <= endTime+500) {
                     if (currentTime - startTime >= 20000) {
                         startTime = currentTime;
                         sim.setMood(sim.getMood() + 5);
@@ -73,7 +73,7 @@ public class Komputer extends Perabotan {
                 long startTime = System.currentTimeMillis();
                 long currentTime = startTime;
                 long endTime = startTime + (durasi*1000);
-                while (currentTime <= endTime) {
+                while (currentTime <= endTime+500) {
                     if (currentTime - startTime >= 20000) {
                         startTime = currentTime;
                         sim.setMood(sim.getMood() - 6);

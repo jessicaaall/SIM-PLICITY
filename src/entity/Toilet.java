@@ -16,7 +16,7 @@ public class Toilet extends Perabotan implements BisaDiduduki {
                 long startTime = System.currentTimeMillis();
                 long endTime = startTime + (10*1000);
                 sim.setIsSudahBuangAir(true);
-                while (System.currentTimeMillis() <= endTime) {
+                while (System.currentTimeMillis() <= endTime+300) {
 
                 }
                 sim.setKekenyangan(sim.getKekenyangan() - 20);
@@ -34,7 +34,7 @@ public class Toilet extends Perabotan implements BisaDiduduki {
             @Override
             public void run() {
                 long endTime = System.currentTimeMillis() + (3*1000);
-                while (System.currentTimeMillis() <= endTime) {
+                while (System.currentTimeMillis() <= endTime+200) {
 
                 }
                 sim.setMood(sim.getMood() + 1);

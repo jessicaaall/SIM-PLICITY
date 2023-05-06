@@ -11,7 +11,6 @@ public class BakMandi extends Perabotan {
     }
 
     public void mandi(Sim sim, int duration) {
-//        Scanner sc = new Scanner(System.in);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -19,7 +18,6 @@ public class BakMandi extends Perabotan {
                 while (!valid) {
                     System.out.print("Masukkan durasi mandi dalam satuan detik >> ");
                     try {
-//                int durasi = Integer.parseInt(sc.nextLine());
                         int durasi = duration;
                         if (durasi <= 0) {
                             throw new IllegalArgumentException("Durasi harus lebih besar dari 0 detik.");
@@ -29,7 +27,7 @@ public class BakMandi extends Perabotan {
                         long currentTime = startTime;
                         long endTime = startTime + (durasi*1000);
                         while (currentTime < endTime) {
-                            if (currentTime - startTime >= 15000) {
+                            if (currentTime - startTime >= 15000 +200) {
                                 startTime = currentTime;
                                 sim.setMood(sim.getMood() + 5);
                                 sim.setKekenyangan(sim.getKekenyangan() - 1);
@@ -44,7 +42,6 @@ public class BakMandi extends Perabotan {
                         System.out.println(e.getMessage());
                     }
                 }
-//        sc.close();
             }
         });
         thread.start();
