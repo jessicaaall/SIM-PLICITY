@@ -31,6 +31,11 @@ public class Waktu implements Runnable, Serializable {
         waktuThread.start();
     }
 
+    public void stopThread(){
+        waktuThread.interrupt();
+        waktuThread = null;
+    }
+
     // Method
     @Override
     public void run() {

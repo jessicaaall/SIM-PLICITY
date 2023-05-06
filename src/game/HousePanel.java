@@ -578,7 +578,9 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                     }
                 }
                 if (worldPanel.getWorld().getDaftarSim().size() == 0){
+                    thread = null;
                     gameOver();
+                    break;
                 }
             }
             if (timer >= Math.pow(10, 9)){
@@ -596,9 +598,8 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
     }
 
     public void gameOver(){
-
-        mainPanel.add(new GameOverPanel(mainPanel), BorderLayout.CENTER);
         mainPanel.remove(this);
+        mainPanel.add(new GameOverPanel(mainPanel));
         mainPanel.revalidate();
         mainPanel.repaint();
     }

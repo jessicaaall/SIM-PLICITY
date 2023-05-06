@@ -48,6 +48,7 @@ public class GameOverPanel extends JPanel implements ActionListener {
             mp.add(mmp);
             mp.revalidate();
             mp.repaint();
+            System.out.println("quit");
         }
     }
 }

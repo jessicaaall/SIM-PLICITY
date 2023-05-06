@@ -200,6 +200,12 @@ public class World  implements Runnable, Serializable {
         worldThread.start();
     }
 
+    public void stopThread(){
+        waktu.stopThread();
+        worldThread.interrupt();
+        worldThread =  null;
+    }
+
     /**
      * memperbaharui jumlah pembuatan sim dengan mengecek keadaan waktunya.
      * jika waktu sudah berganti hari, maka dailySimCreation direset kembali
