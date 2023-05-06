@@ -55,6 +55,18 @@ public class PerabotanLabel extends JLabel {
         this.addMouseListener(dragListener);
         this.addMouseMotionListener(dragListener);
 //        this.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK));
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_R && put){
+                    System.out.println("rotated");
+                    rotate();
+                    housePanel.centerPanel.revalidate();
+                    housePanel.centerPanel.repaint();
+                }
+            }
+        });
+
     }
 
     @Override
@@ -266,6 +278,7 @@ public class PerabotanLabel extends JLabel {
         public void mouseMoved(MouseEvent e) {
             if (put){
                 //item follow the mouse
+                requestFocus();
                 Component component = e.getComponent();
                 Point p = e.getPoint();
                 location = component.getLocation();
@@ -473,13 +486,12 @@ public class PerabotanLabel extends JLabel {
     }
 
     public void rotate() {
-        KeyHandler keyHandler = housePanel.mainPanel.keyH;
-        if (keyHandler.rKeyPressed) {
-            perabotan.rotate();
-            width = perabotan.getDimensi().width*PerabotanLabel.this.housePanel.unitSize;
-            height = perabotan.getDimensi().height*PerabotanLabel.this.housePanel.unitSize;
-            imagenya = rotateImage(90, generateImage(perabotan.getNama())).getScaledInstance(width, height, Image.SCALE_DEFAULT);
-        }
+        perabotan.rotate();
+        width = perabotan.getDimensi().width*PerabotanLabel.this.housePanel.unitSize;
+        height = perabotan.getDimensi().height*PerabotanLabel.this.housePanel.unitSize;
+        imagenya = rotateImage(90, generateImage(perabotan.getNama())).getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        revalidate();
+        repaint();
     }
 
     private BufferedImage rotateImage(double degree, BufferedImage image) {
