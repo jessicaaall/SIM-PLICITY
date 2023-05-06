@@ -244,7 +244,6 @@ public class WorldPanel extends JPanel implements Runnable, MouseListener, Mouse
                         mp.revalidate();
                         mp.repaint();
                         startClickTime = currentClickTime;
-                        stopMusic();
                         mainThread = null;
                     }
                 }
