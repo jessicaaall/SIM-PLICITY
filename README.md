@@ -13,9 +13,6 @@ Game yang diminta Asisten untuk Tugas Besar IF2212. Pokoknya mainin aja deh
 | 18221107 | Ken Azizan |  
 | 18221161 | Reyhan Putra Ananda |  
 
-### Panduan pengerjaan
-1. mau nambah class bisa ke folder entity misal mau nambah World, House, Sim, Item, atau Room
-2. tambah file .java nya, jangan lupa tambahin "package entity;" di baris pertama program
 
 ### **Tahapan Kompilasi**
 
