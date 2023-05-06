@@ -72,18 +72,6 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
 
     }
 
-    public class HousePanelButton extends JButton{
-        HousePanelButton(String text){
-            super(text);
-            Font font = new Font("Comic Sans MS", Font.PLAIN, 15);
-            this.setFont(font);
-            this.setBackground(Color.white);
-            this.setForeground(Color.black);
-            this.setFocusable(false);
-//            this.setPreferredSize(new Dimension(getFontMetrics(font).stringWidth(text) + 20, 30));
-            this.addActionListener(HousePanel.this);
-        }
-    }
     HousePanel(WorldPanel worldPanel, Rumah rumah){
         this.worldPanel = worldPanel;
         this.rumah = rumah;
@@ -576,12 +564,24 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
                         }
                         if (simLabel.sim.getIsCalonMati()){
                             if (simLabel.sim.equals(rumah.getSim())) {
+                                if (rumah.getWorld().getDaftarSim().size() == 1){
+                                    try {
+                                        simLabel.mati();
+                                    }catch (ConcurrentModificationException e){
+                                        continue;
+                                    }
+                                    break;
+                                }
                                 JPanel chosePanel = new JPanel(new GridLayout(0,1));
                                 JLabel label = new JLabel("pilih sim pengganti");
                                 List<Sim> daftarSim = rumah.getWorld().getDaftarSim();
                                 Sim[] array = new Sim[daftarSim.size()];
+                                int j = 0;
                                 for (int i = 0; i< array.length; i++){
-                                    array[i] = daftarSim.get(i);
+                                    if (!daftarSim.get(j).equals(simLabel.sim)){
+                                        array[j] = daftarSim.get(i);
+                                        j++;
+                                    }
                                 }
                                 JComboBox<Sim> simJComboBox = new JComboBox<>(array);
                                 chosePanel.add(simJComboBox);
@@ -881,6 +881,17 @@ public class HousePanel extends JPanel implements ActionListener, Runnable, Mous
         @Override
         protected Object clone() throws CloneNotSupportedException {
             return super.clone();
+        }
+    }
+    public class HousePanelButton extends JButton{
+        HousePanelButton(String text){
+            super(text);
+            Font font = new Font("Comic Sans MS", Font.PLAIN, 15);
+            this.setFont(font);
+            this.setBackground(Color.white);
+            this.setForeground(Color.black);
+            this.setFocusable(false);
+            this.addActionListener(HousePanel.this);
         }
     }
 }
