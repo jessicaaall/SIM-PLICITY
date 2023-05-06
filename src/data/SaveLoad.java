@@ -52,7 +52,6 @@ public class SaveLoad {
             return ds.getWorld();
         } catch(Exception e) {
             System.out.println("Load Exception!");
-            System.out.println("MASUK SINI MAS");
             return null;
         }
         

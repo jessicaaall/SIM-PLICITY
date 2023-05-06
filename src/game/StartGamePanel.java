@@ -102,23 +102,28 @@ public class StartGamePanel extends JPanel implements ActionListener {
                 String loadFile = namaFile.getText();
                 SaveLoad saveload = new SaveLoad();
                 worldChoice = saveload.load(loadFile);
-                worldChoice.startThread();
-                worldChoice.getWaktu().startThread();
-                ArrayList<ThreadAksiPasif> listThreadBaru = new ArrayList<>();
-                for (ThreadAksiPasif threadAksiPasif : worldChoice.getListThreadAksiPasif()) {
-                    ThreadAksiPasif buffer;
-                    synchronized (this) {
-                        if (threadAksiPasif instanceof ThreadBeli) {
-                            buffer = new ThreadBeli(threadAksiPasif.getNama(), threadAksiPasif.getSisaWaktu(), threadAksiPasif.getParameters(), threadAksiPasif.getObject(), threadAksiPasif.getWorld());
-                            listThreadBaru.add(buffer);
-                        } else if (threadAksiPasif instanceof ThreadUpgradeRumah) {
-                            buffer = new ThreadUpgradeRumah(threadAksiPasif.getNama(), threadAksiPasif.getSisaWaktu(), threadAksiPasif.getParameters(), threadAksiPasif.getObject(), threadAksiPasif.getWorld());
-                            listThreadBaru.add(buffer);
+                if (worldChoice != null) {
+                    worldChoice.startThread();
+                    worldChoice.getWaktu().startThread();
+                    ArrayList<ThreadAksiPasif> listThreadBaru = new ArrayList<>();
+                    for (ThreadAksiPasif threadAksiPasif : worldChoice.getListThreadAksiPasif()) {
+                        ThreadAksiPasif buffer;
+                        synchronized (this) {
+                            if (threadAksiPasif instanceof ThreadBeli) {
+                                buffer = new ThreadBeli(threadAksiPasif.getNama(), threadAksiPasif.getSisaWaktu(), threadAksiPasif.getParameters(), threadAksiPasif.getObject(), threadAksiPasif.getWorld());
+                                listThreadBaru.add(buffer);
+                            } else if (threadAksiPasif instanceof ThreadUpgradeRumah) {
+                                buffer = new ThreadUpgradeRumah(threadAksiPasif.getNama(), threadAksiPasif.getSisaWaktu(), threadAksiPasif.getParameters(), threadAksiPasif.getObject(), threadAksiPasif.getWorld());
+                                listThreadBaru.add(buffer);
+                            }
                         }
                     }
+                    worldChoice.setListThreadAksiPasif(listThreadBaru);
+                    showWorldPanel();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Tidak ada file save", "load gagal", JOptionPane.ERROR_MESSAGE);
                 }
-                worldChoice.setListThreadAksiPasif(listThreadBaru);
-                showWorldPanel();
+
             }
 
             
