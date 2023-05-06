@@ -137,6 +137,9 @@ public class Sim implements Serializable {
     public int getRandomSkin() {
         return randomSkin;
     }
+    public boolean getIsCalonMati() {
+        return (mood <= 0 || kekenyangan <= 0 || kesehatan <= 0);
+    }
 
     /**
      *
@@ -329,6 +332,9 @@ public class Sim implements Serializable {
             waktuTidakTidur++;
         }
         efekTidakTidur();
+        if (getIsCalonMati()) {
+            mati();
+        }
     }
 
 
@@ -478,11 +484,13 @@ public class Sim implements Serializable {
         Sim sim = (Sim) obj;
         return namaLengkap.equals(sim.namaLengkap);
     }
-
     public void mati(){
-        theirWorld.getDaftarRumah().removeIf(rumah -> rumah.equals(this.getKepemilikanRumah()));
-        theirWorld.getDaftarSim().removeIf(sim -> sim.equals(this));
+        synchronized (theirWorld.getWaktu()) {
+            theirWorld.getDaftarRumah().removeIf(rumah -> rumah.equals(this.getKepemilikanRumah()));
+        }
+        synchronized (theirWorld.getWaktu()) {
+            theirWorld.getDaftarSim().removeIf(sim -> sim.equals(this));
+        }
         System.out.println("dia menemui pacar 2D nya");
     }
-
 }

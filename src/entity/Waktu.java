@@ -52,7 +52,7 @@ public class Waktu implements Runnable, Serializable {
                 }
                 for (Sim sim : world.getDaftarSim()) {
                     synchronized (this){
-                        if (sim !=  null){
+                        if (sim != null){
                             sim.updateKondisiSim();
                         }
                     }
