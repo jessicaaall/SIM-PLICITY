@@ -21,6 +21,15 @@ Sim-Plicity merupakan blablabla. Fitur-fitur yang terdapat dalam game ini di ant
 2. tambah file .java nya, jangan lupa tambahin "package entity;" di baris pertama program
 
 ### **Tahapan Kompilasi**
-1. Blabla
-2. Blabla
-3. Blabla
+
+#### Alternatif 1
+1. Lakukan clone repository dengan terminal menggunakan command berikut ""git clone https://github.com/ReyhanPA/Tubes-OOP-Kelompok-3.git""
+2. Buka ke cmd atau terminal dan masuk ke directory clone
+"cd <lokasi directory>/Tubes-OOP-Kelompok-3"
+3. Jalankan program dengan command berikut
+"java -cp ./out/production/Tubes-OOP-Kelompok-3/game.Main"
+
+#### Alternatif 2
+1. Lakukan clone repository dengan terminal menggunakan command berikut ""git clone https://github.com/ReyhanPA/Tubes-OOP-Kelompok-3.git""
+2. Masuk ke directory clone menggunakan VSCode
+3. Jalankan program dengan pilih file Main.java lalu tekan "run"
