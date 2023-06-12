@@ -139,7 +139,6 @@ public class WorldOptionPanel extends JPanel implements ActionListener, MouseLis
                     , JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
             if (result == JOptionPane.OK_OPTION){
                 System.out.println("Exit Game");
-                wp.stopMusic();
                 wp.mainThread.interrupt();
                 wp.mainThread =null;
                 mp.remove(toMainMenuButton);
