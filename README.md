@@ -30,19 +30,24 @@ Sim-Plicity dikembangkan dengan menerapkan konsep-konsep dalam Object-Oriented P
 - Design Pattern, yaitu Factory Pattern dan Command Pattern
 
 ## Tahapan Kompilasi
-Untuk menjalankan program, pertama-tama, lakukan clone repository pada terminal menggunakan command berikut.
+Pertama-tama, lakukan clone repository pada terminal menggunakan command berikut.
+```
+git clone https://github.com/jessicaaall/SIM-PLICITY.git
+```
+Selanjutnya, terdapat dua alternatif cara yang dapat dilakukan untuk menjalankan program.
+### Alternatif 1
+- Buka command prompt atau terminal, lalu masuk ke directory clone
+  ```
+  cd {lokasi directory}/SIM-PLICITY
+  ```
+- Jalankan program dengan command berikut
+  ```
+  java -cp ./out/production/SIM-PLICITY/game.Main
+  ```
 
-#### Alternatif 1
-1. Lakukan clone repository dengan terminal menggunakan command berikut ""git clone https://github.com/ReyhanPA/Tubes-OOP-Kelompok-3.git""
-2. Buka ke cmd atau terminal dan masuk ke directory clone
-"cd <lokasi directory>/Tubes-OOP-Kelompok-3"
-3. Jalankan program dengan command berikut
-"java -cp ./out/production/Tubes-OOP-Kelompok-3/game.Main"
-
-#### Alternatif 2
-1. Lakukan clone repository dengan terminal menggunakan command berikut ""git clone https://github.com/ReyhanPA/Tubes-OOP-Kelompok-3.git""
-2. Masuk ke directory clone menggunakan VSCode
-3. Jalankan program dengan pilih file Main.java lalu tekan "run"
+### Alternatif 2
+- Masuk ke directory clone menggunakan VSCode
+- Jalankan program dengan pilih file Main.java, lalu klik "Run"
 
 ## Anggota Kelompok
 
